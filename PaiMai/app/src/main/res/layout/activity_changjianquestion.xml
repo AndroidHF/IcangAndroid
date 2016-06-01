@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <ExpandableListView
+        android:id="@+id/expand_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:scrollbars="none"
+        android:visibility="gone"
+        android:minHeight="80dip"
+        android:layout_marginBottom="@dimen/commen_padding"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="@dimen/commen_padding"
+        android:background="@drawable/shape_white_black"
+        android:divider="@null"
+        android:footerDividersEnabled="false"
+        android:headerDividersEnabled="false"
+        android:padding="2dip" />
+
+
+</LinearLayout>

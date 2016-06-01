@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:orientation="vertical"
+    android:padding="10dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_black"
+        android:orientation="vertical"
+        android:paddingBottom="2dip"
+        android:paddingTop="2dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@color/orange"
+            android:gravity="left"
+            android:orientation="horizontal"
+            android:padding="10dip">
+
+            <ImageView
+                android:layout_width="22dip"
+                android:layout_height="22dip"
+                android:layout_marginTop="2dip"
+                android:src="@drawable/faq_question" />
+
+            <TextView
+                android:id="@+id/tv_qst_content"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:text="真的是正版的吗？？真的是正版的吗？？真的是正版的吗？？真的是正版的吗？？真的是正版的吗？？真的是正版的吗？？真的是正版的吗？？真的是正版的吗？？"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@color/orange"
+            android:gravity="right|center_vertical"
+            android:orientation="horizontal"
+            android:paddingBottom="10dip"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dip">
+
+
+            <TextView
+                android:id="@+id/tv_qst_user_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:maxEms="9"
+                android:singleLine="true"
+                android:text="自己的用户自己的用户名自己的用户名名"
+                android:textColor="@color/gray_tv"
+                android:textSize="@dimen/commen_tv_size_smallest" />
+
+            <LinearLayout
+                android:layout_width="1dip"
+                android:layout_height="10dip"
+                android:layout_marginLeft="15dip"
+                android:layout_marginRight="15dip"
+                android:background="@color/gray_tv"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/tv_qst_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:singleLine="true"
+                android:text="2016-09-08 12:09:56"
+                android:textColor="@color/gray_tv"
+                android:textSize="@dimen/commen_tv_size_smallest" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_other_huida"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="2dip"
+            android:layout_marginRight="2dip"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="1dip"
+                android:background="@color/black"
+                android:orientation="vertical" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left"
+                android:orientation="horizontal"
+                android:padding="10dip">
+
+                <ImageView
+                    android:layout_width="22dip"
+                    android:layout_height="22dip"
+                    android:layout_marginTop="2dip"
+                    android:src="@drawable/faq_ask" />
+
+                <TextView
+                    android:id="@+id/tv_aws_content"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:text="童叟无欺放心吧，托人从日本带回来的，拿去撸，放心使用"
+                    android:textColor="#0A0A0A"
+                    android:textSize="@dimen/commen_tv_size" />
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="28dip"
+                android:gravity="right|center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dip">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="18dip"
+                    android:layout_height="18dip"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/user_defaut_avatar" />
+
+                <TextView
+                    android:id="@+id/tv_aws_user_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="15dip"
+                    android:maxEms="9"
+                    android:singleLine="true"
+                    android:text="回答者的用户名称"
+                    android:textColor="@color/gray_tv"
+                    android:textSize="@dimen/commen_tv_size_smallest" />
+
+                <LinearLayout
+                    android:layout_width="1dip"
+                    android:layout_height="10dip"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginRight="15dip"
+                    android:background="@color/gray_tv"
+                    android:orientation="vertical" />
+
+                <TextView
+                    android:id="@+id/tv_aws_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:singleLine="true"
+                    android:text="2016-09-08 12:09:56"
+                    android:textColor="@color/gray_tv"
+                    android:textSize="@dimen/commen_tv_size_smallest" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_maijia_lay"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="right|center_vertical"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:id="@+id/tv_maijia"
+            android:layout_width="90dip"
+            android:layout_height="30dip"
+            android:background="@drawable/shape_white_black"
+            android:gravity="center"
+            android:text="回复"
+            android:textColor="@color/black_tv" />
+
+    </LinearLayout>
+
+</LinearLayout>

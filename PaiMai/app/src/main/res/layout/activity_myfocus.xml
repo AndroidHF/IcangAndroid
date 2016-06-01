@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dip"
+        android:layout_marginTop="15dip"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_focus_saler"
+            android:layout_width="110dip"
+            android:layout_height="30dip"
+            android:layout_marginRight="-1dip"
+            android:background="@drawable/shape_orange_black"
+            android:gravity="center"
+            android:text="关注的卖家"
+            android:textColor="@color/black"
+            android:textSize="@dimen/commen_tv_size_smaller"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_focus_goods"
+            android:layout_width="110dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="-2dip"
+            android:layout_marginRight="-2dip"
+            android:background="@drawable/shape_white_black"
+            android:gravity="center"
+            android:text="关注的拍品"
+            android:textColor="@color/black"
+            android:textSize="@dimen/commen_tv_size_smaller"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_focus_show"
+            android:layout_width="110dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="-2dip"
+            android:background="@drawable/shape_white_black"
+            android:gravity="center"
+            android:text="关注的晒物"
+            android:textColor="@color/black"
+            android:textSize="@dimen/commen_tv_size_smaller"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="#BCBCBC" />
+
+    <com.buycolle.aicang.ui.view.FixedViewPager
+        android:id="@+id/vp_main_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/bg_gray" />
+</LinearLayout>

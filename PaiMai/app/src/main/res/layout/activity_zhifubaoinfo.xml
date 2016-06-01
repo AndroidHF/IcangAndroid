@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:background="@color/bg_gray"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dip"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="@dimen/commen_padding"
+        android:background="@drawable/shape_white_black"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/commen_padding">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/commen_zhifubao_icon" />
+
+        <TextView
+            android:id="@+id/tv_card_info"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:textColor="@color/black_tv"
+            android:textSize="@dimen/commen_tv_size" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commen_btn_hight"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="35dip"
+        android:background="@drawable/shape_orange_black"
+        android:text="重新添加"
+        android:textSize="@dimen/commen_tv_size" />
+
+
+</LinearLayout>

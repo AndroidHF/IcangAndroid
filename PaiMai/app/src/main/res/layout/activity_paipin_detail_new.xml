@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/my_header">
+
+        <com.buycolle.aicang.ui.view.XScrollView.XScrollView
+            android:id="@+id/mScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/bg_gray"
+            android:scrollbars="none" />
+
+
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/ll_maimaimai"
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:layout_alignParentBottom="true"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="5dip"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_maimaimai"
+                android:layout_width="240dip"
+                android:layout_height="match_parent"
+                android:background="@drawable/maimaimai_bg"
+                android:gravity="center"
+                android:text="买买买"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:visibility="visible" />
+
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+</RelativeLayout>

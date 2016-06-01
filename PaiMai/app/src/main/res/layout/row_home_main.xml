@@ -1,0 +1,354 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_gray"
+    android:orientation="horizontal"
+    android:padding="10dip">
+
+    <LinearLayout
+        android:id="@+id/ll_item_1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="7dip"
+        android:layout_weight="1"
+        android:background="@drawable/shape_white_black"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_good_title_1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dip"
+            android:layout_marginRight="8dip"
+            android:layout_marginTop="8dp"
+            android:ellipsize="end"
+            android:maxEms="11"
+            android:singleLine="true"
+            android:text="标题标题标题标标题标题标题标题题"
+            android:textColor="@color/black"
+            android:textSize="@dimen/commen_tv_size_smaller" />
+
+        <RelativeLayout
+            android:layout_gravity="center_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="160dip"
+            android:layout_marginTop="5dip">
+
+            <ImageView
+                android:id="@+id/iv_1"
+                android:layout_centerInParent="true"
+                android:layout_width="160dip"
+                android:layout_height="160dip"
+                android:layout_marginLeft="2dip"
+                android:layout_marginRight="2dip"
+                android:scaleType="centerCrop"
+                android:src="@drawable/default_image" />
+
+            <ImageView
+                android:id="@+id/iv_rate_1"
+                android:layout_width="40dip"
+                android:layout_height="20dip"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentTop="true"
+                android:layout_marginRight="5dip"
+                android:layout_marginTop="5dip"
+                android:src="@drawable/post_rare_icon" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="25dip"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="5dip"
+                android:background="@color/orange">
+
+                <LinearLayout
+                    android:id="@+id/ll_yikoujia_lay_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center|center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="5dip"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="47dip"
+                        android:layout_height="18dip"
+                        android:background="@drawable/main_yikoujia_bg_new"
+                        android:gravity="center"
+                        android:text="一口价"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/commen_tv_size_smallest" />
+
+                    <TextView
+                        android:id="@+id/tv_yikou_price_value_1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dip"
+                        android:text="￥ 999"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size_smallest" />
+
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_baoyou_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="18dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/shape_white_round"
+                    android:gravity="center"
+                    android:paddingLeft="8dip"
+                    android:paddingRight="8dip"
+                    android:text="包邮"
+                    android:textColor="@color/black_tv"
+                    android:textSize="@dimen/commen_tv_size_smallest" />
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:layout_marginBottom="3dip"
+            android:layout_marginTop="3dip"
+            android:gravity="center_vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingLeft="10dip">
+
+                <ImageView
+                    android:layout_width="13dip"
+                    android:layout_height="13dip"
+                    android:src="@drawable/clock_icon" />
+
+                <TextView
+                    android:id="@+id/tv_time_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dip"
+                    android:text="06:09"
+                    android:textColor="@color/black_tv"
+                    android:textSize="10dip" />
+
+                <ImageView
+                    android:layout_width="13dip"
+                    android:layout_height="13dip"
+                    android:layout_marginLeft="17dip"
+                    android:src="@drawable/chuizi_icon_1" />
+
+                <TextView
+                    android:id="@+id/tv_count_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="6dip"
+                    android:text="59"
+                    android:textColor="@color/black_tv"
+                    android:textSize="10dip" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_curret_price_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="10dip"
+                android:gravity="center"
+                android:text="￥233"
+                android:textColor="@color/red"
+                android:textSize="@dimen/commen_tv_size_smallest" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="7dip"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/ll_item_2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_white_black"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_good_title_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dip"
+                android:layout_marginRight="8dip"
+                android:layout_marginTop="8dp"
+                android:ellipsize="end"
+                android:maxEms="11"
+                android:singleLine="true"
+                android:text="标题标题标题标标题标题标题标题题"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="160dip"
+                android:layout_marginTop="5dip">
+
+                <ImageView
+                    android:id="@+id/iv_2"
+                    android:layout_width="160dip"
+                    android:layout_height="160dip"
+                    android:layout_marginLeft="2dip"
+                    android:layout_marginRight="2dip"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_image" />
+
+                <ImageView
+                    android:id="@+id/iv_rate_2"
+                    android:layout_width="40dip"
+                    android:layout_height="20dip"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginRight="5dip"
+                    android:layout_marginTop="5dip"
+                    android:src="@drawable/post_rare_icon" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="25dip"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="5dip"
+                    android:background="@color/orange">
+
+                    <LinearLayout
+                        android:id="@+id/ll_yikoujia_lay_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:gravity="center|center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingLeft="5dip"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="47dip"
+                            android:layout_height="18dip"
+                            android:background="@drawable/main_yikoujia_bg_new"
+                            android:gravity="center"
+                            android:text="一口价"
+                            android:textStyle="bold"
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+
+                        <TextView
+                            android:id="@+id/tv_yikou_price_value_2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="10dip"
+                            android:text="￥ 999"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tv_baoyou_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="18dip"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dip"
+                        android:background="@drawable/shape_white_round"
+                        android:gravity="center"
+                        android:paddingLeft="8dip"
+                        android:paddingRight="8dip"
+                        android:text="包邮"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size_smallest" />
+                </RelativeLayout>
+
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dip"
+                android:layout_marginBottom="3dip"
+                android:layout_marginTop="3dip"
+                android:gravity="center_vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dip">
+
+                    <ImageView
+                        android:layout_width="13dip"
+                        android:layout_height="13dip"
+                        android:src="@drawable/clock_icon" />
+
+                    <TextView
+                        android:id="@+id/tv_time_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dip"
+                        android:text="06:09"
+                        android:textColor="@color/black_tv"
+                        android:textSize="10dip" />
+
+                    <ImageView
+                        android:layout_width="13dip"
+                        android:layout_height="13dip"
+                        android:layout_marginLeft="17dip"
+                        android:src="@drawable/chuizi_icon_1" />
+
+                    <TextView
+                        android:id="@+id/tv_count_2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="6dip"
+                        android:text="59"
+                        android:textColor="@color/black_tv"
+                        android:textSize="10dip" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/tv_curret_price_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="10dip"
+                    android:gravity="center"
+                    android:text="￥233"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/commen_tv_size_smallest" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+</LinearLayout>

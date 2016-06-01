@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/bg_gray"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_input"
+        android:layout_width="match_parent"
+        android:layout_height="150dip"
+        android:textSize="@dimen/commen_tv_size"
+        android:maxLength="30"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="@dimen/commen_padding"
+        android:background="@drawable/shape_white_black"
+        android:gravity="left"
+        android:hint="在这里编辑你的个性签名"
+        android:padding="15dip" />
+    
+    <Button
+        android:id="@+id/btn_save"
+        android:background="@drawable/shape_orange_black"
+        android:text="保存"
+        android:layout_marginTop="35dip"
+        android:textSize="@dimen/commen_tv_size"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commen_btn_hight" />
+
+</LinearLayout>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/red"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+
+    <LinearLayout
+        android:id="@+id/ll_top"
+        android:layout_width="match_parent"
+        android:layout_height="200dip"
+        android:layout_below="@id/my_header"
+        android:background="@color/bg_gray"
+        android:orientation="vertical"></LinearLayout>
+
+
+    <com.buycolle.aicang.ui.view.xlistview.XListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_above="@+id/sendMsgLayout"
+        android:layout_below="@id/ll_top"
+        android:layout_weight="1.0" />
+
+
+    <LinearLayout
+        android:id="@+id/sendMsgLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="@drawable/shape_white_black"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <FrameLayout
+                android:layout_width="45dp"
+                android:layout_height="45dp"
+                android:background="@color/black">
+
+                <ImageView
+                    android:id="@+id/iv_edit_input"
+                    android:layout_width="40dip"
+                    android:layout_height="40dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:padding="5dip"
+                    android:src="@drawable/key_bord" />
+            </FrameLayout>
+
+            <EditText
+                android:id="@+id/et_input"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_toLeftOf="@+id/tv_send"
+                android:layout_toRightOf="@id/iv_edit_input"
+                android:layout_weight="1.0"
+                android:background="@null"
+                android:gravity="center_vertical"
+                android:hint="在这里可以提问~"
+                android:paddingLeft="10dip"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@null"
+                android:textSize="@dimen/commen_tv_size_smaller"
+                tools:ignore="TextFields" />
+
+            <TextView
+                android:id="@+id/tv_send"
+                android:layout_width="60dip"
+                android:layout_height="match_parent"
+                android:background="@color/black"
+                android:gravity="center"
+                android:text="发送"
+                android:textColor="@color/white"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+        </LinearLayout>
+
+        <!--下面的内容区域，高度应该和软键盘弹出高度一致-->
+        <FrameLayout
+            android:id="@+id/fl_chat_activity_container"
+            android:layout_width="match_parent"
+            android:layout_height="220dip"
+            android:background="@color/white"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="15dip"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:padding="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dip"
+            android:paddingRight="13dip">
+
+            <ImageView
+                android:id="@+id/iv_psw"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_psw_icon" />
+
+            <ImageView
+                android:id="@+id/iv_psw_visible"
+                android:layout_width="27dip"
+                android:layout_height="27dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_psw_unvislble" />
+
+            <EditText
+                android:id="@+id/et_psw"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dip"
+                android:layout_toLeftOf="@id/iv_psw_visible"
+                android:layout_toRightOf="@id/iv_psw"
+                android:background="@null"
+                android:hint="旧密码"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="13dip"
+            android:paddingRight="13dip">
+
+            <ImageView
+                android:id="@+id/iv_psw_1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_psw_icon" />
+
+            <ImageView
+                android:id="@+id/iv_psw_visible_1"
+                android:layout_width="27dip"
+                android:layout_height="27dip"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/login_psw_unvislble" />
+
+            <EditText
+                android:id="@+id/et_psw_1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="13dip"
+                android:layout_toLeftOf="@id/iv_psw_visible_1"
+                android:layout_toRightOf="@id/iv_psw_1"
+                android:background="@null"
+                android:hint="新密码"
+                android:inputType="textPassword"
+                android:singleLine="true"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commen_btn_hight"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/shape_orange_black"
+        android:text="保存"
+        android:textSize="@dimen/commen_tv_size" />
+
+
+</LinearLayout>

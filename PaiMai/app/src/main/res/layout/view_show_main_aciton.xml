@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/parent"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/transparent">
+
+
+    <LinearLayout
+        android:id="@+id/scroll"
+        android:layout_width="150dip"
+        android:layout_height="70dip"
+        android:background="@drawable/liupai_notice_bg"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:ellipsize="end"
+            android:paddingBottom="10dip"
+            android:paddingTop="10dip"
+            android:lines="3"
+            android:text="修改拍品的标题、\n修改拍品的标题、\n修改拍品的标题、\n修改拍品的标题、\n照片和描述需要经过\n重新审核"
+            android:textColor="@color/black"
+            android:textSize="@dimen/commen_tv_size_smallest" />
+
+    </LinearLayout>
+
+
+</RelativeLayout>

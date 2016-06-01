@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="20dip"
+    android:paddingRight="20dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_black"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/commen_tv_size"
+            android:textStyle="bold" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:background="@color/orange"
+            android:gravity="center_vertical"
+            android:paddingLeft="17dip"
+            android:paddingRight="17dip">
+
+            <TextView
+                android:id="@+id/tv_price_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:gravity="center"
+                android:text="现价"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_current_value"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:gravity="center"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="60dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="17dip"
+            android:paddingRight="17dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="出价"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="10dip"
+                android:background="@drawable/shape_white_black"
+                android:gravity="center_vertical"
+                android:paddingLeft="6dip"
+                android:paddingRight="6dip">
+
+                <TextView
+                    android:id="@+id/tv_price_title_msg"
+                    android:layout_width="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_height="wrap_content"
+                    android:text="*您输入的价格必须\n比当前价格更高"
+                    android:textColor="@color/black"
+                    android:textSize="10dip" />
+
+                <TextView
+                    android:text="￥"
+                    android:textColor="@color/red"
+                    android:layout_alignParentBottom="true"
+                    android:paddingBottom="8dip"
+                    android:layout_toLeftOf="@+id/et_input_value"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <EditText
+                    android:layout_alignParentRight="true"
+                    android:id="@+id/et_input_value"
+                    android:layout_centerVertical="true"
+                    android:layout_width="wrap_content"
+                    android:minWidth="30dip"
+                    android:layout_height="match_parent"
+                    android:textColor="@color/red"
+                    android:background="@null"
+                    android:gravity="right|center_vertical"
+                    android:inputType="number"/>
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:background="@color/white"
+            android:gravity="center_vertical|right"
+            android:orientation="horizontal"
+            android:paddingLeft="17dip"
+            android:paddingRight="17dip">
+
+            <TextView
+                android:id="@+id/tv_plus_1"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/shape_orange_black"
+                android:gravity="center"
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
+                android:text="+1"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_lage"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_plus_5"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dip"
+                android:background="@drawable/shape_orange_black"
+                android:gravity="center"
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
+                android:text="+5"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_lage"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_plus_10"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:background="@drawable/shape_orange_black"
+                android:gravity="center"
+                android:paddingLeft="8dip"
+                android:paddingRight="8dip"
+                android:text="+10"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_lage"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dip"
+            android:background="@drawable/shape_white_round_bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/commen_padding"
+            android:paddingRight="@dimen/commen_padding">
+
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/bg_cancle"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_sure"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/bg_sure"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

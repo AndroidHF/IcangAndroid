@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/orange"
+    android:orientation="vertical"
+    android:paddingBottom="30dip">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:gravity="center"
+        android:text="分享到"
+        android:textColor="@color/black"
+        android:textSize="@dimen/commen_tv_size"
+        android:textStyle="bold" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:id="@+id/ll_wechat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="57dp"
+                android:layout_height="50dp"
+                android:src="@drawable/wechat_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:text="微信"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_circle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="57dp"
+                android:layout_height="50dp"
+                android:src="@drawable/circle_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:text="朋友圈"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_qq"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="57dp"
+                android:layout_height="50dp"
+                android:src="@drawable/qq_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:text="QQ"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_sina"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="57dp"
+                android:layout_height="50dp"
+                android:src="@drawable/weibo_icon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dip"
+                android:text="新浪微博"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>

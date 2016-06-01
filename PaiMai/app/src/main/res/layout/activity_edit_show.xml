@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/ll_bottom"
+        android:layout_width="match_parent"
+        android:layout_height="38dip"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tv_save_draft"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dip"
+            android:layout_marginLeft="20dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="3dip"
+            android:layout_weight="1"
+            android:background="@color/black"
+            android:gravity="center"
+            android:text="存为草稿"
+            android:textColor="@color/white"
+            android:textSize="@dimen/commen_tv_size" />
+
+        <TextView
+            android:id="@+id/tv_publish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dip"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="20dip"
+            android:layout_marginTop="3dip"
+            android:layout_weight="1"
+            android:background="@drawable/shape_orange_black"
+            android:gravity="center"
+            android:text="发布"
+            android:textColor="@color/black_tv"
+            android:textSize="@dimen/commen_tv_size" />
+
+
+        <TextView
+            android:id="@+id/tv_public_main"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:text="发布"
+            android:textColor="@color/black_tv"
+            android:textSize="@dimen/commen_tv_size_lage"
+            android:textStyle="bold"
+            android:visibility="gone" />
+    </LinearLayout>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/ll_bottom">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.buycolle.aicang.ui.view.MyHeader
+                android:id="@+id/my_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true" />
+
+            <com.buycolle.aicang.ui.view.draglist.DragSortListView xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:dslv="http://schemas.android.com/apk/res-auto"
+                android:id="@+id/ds_list"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_below="@id/my_header"
+                android:layout_margin="3dp"
+                android:divider="@null"
+                android:padding="3dp"
+                android:scrollbars="none"
+                dslv:collapsed_height="2dp"
+                dslv:drag_enabled="true"
+                dslv:drag_scroll_start="0.33"
+                dslv:float_alpha="0.6"
+                dslv:max_drag_scroll_speed="0.5"
+                dslv:slide_shuffle_speed="0.3"
+                dslv:track_drag_sort="false"
+                dslv:use_default_controller="false" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:background="@android:color/transparent"
+            android:paddingBottom="10dip"
+            android:paddingRight="10dip">
+
+        </FrameLayout>
+    </FrameLayout>
+</RelativeLayout>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="@dimen/commen_padding"
+        android:background="@color/black"
+        android:padding="2dp">
+
+        <EditText
+            android:id="@+id/et_input"
+            android:layout_width="match_parent"
+            android:layout_height="180dip"
+            android:background="@color/white"
+            android:gravity="left"
+            android:hint="写下您的意见反馈"
+            android:padding="@dimen/commen_padding"
+            android:textColor="@color/black_tv"
+            android:textSize="@dimen/commen_tv_size" />
+    </LinearLayout>
+
+    <EditText
+        android:id="@+id/et_contact"
+        android:layout_width="match_parent"
+        android:layout_height="45dip"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="@dimen/commen_padding"
+        android:inputType="number"
+        android:background="@drawable/shape_white_black"
+        android:hint="写下您的联系方式以方便我们联系您"
+        android:paddingLeft="@dimen/commen_padding"
+        android:textColor="@color/black_tv"
+        android:textSize="@dimen/commen_tv_size" />
+
+
+    <Button
+        android:id="@+id/btn_save"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commen_btn_hight"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="35dip"
+        android:background="@drawable/shape_orange_black"
+        android:text="发送"
+        android:textSize="@dimen/commen_tv_size" />
+
+</LinearLayout>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="40dip"
+    android:paddingRight="40dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_black"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/commen_tv_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="140dip"
+            android:background="@color/orange"
+            android:gravity="center"
+            android:textColor="@color/black_tv"
+            android:textSize="@dimen/commen_tv_size" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dip"
+            android:background="@drawable/shape_white_round_bottom"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/commen_padding"
+            android:paddingRight="@dimen/commen_padding">
+
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/shape_gray"
+                android:gravity="center"
+                android:text="取消"
+                android:visibility="gone"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_sure"
+                android:layout_width="130dip"
+                android:layout_height="40dip"
+                android:layout_marginLeft="8dip"
+                android:background="@drawable/bg_sure"
+                android:gravity="center"
+                android:text="我知道了"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:padding="10dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shape_orange_black"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="10dip">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dip"
+                android:orientation="horizontal">
+
+                <FrameLayout
+                    android:layout_width="110dip"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/iv_paimai"
+                        android:layout_width="110dip"
+                        android:layout_height="match_parent"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/default_image" />
+
+                    <ImageView
+                        android:id="@+id/iv_range"
+                        android:layout_width="30dip"
+                        android:layout_height="20dip"
+                        android:layout_gravity="right|top"
+                        android:layout_marginRight="5dip"
+                        android:layout_marginTop="5dip"
+                        android:src="@drawable/post_rare_icon" />
+
+                </FrameLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="120dip"
+                    android:layout_marginLeft="8dip"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_good_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/commen_tv_size_smaller" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dip"
+                        android:gravity="center_vertical">
+
+                        <TextView
+                            android:id="@+id/tv_good_status"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/shape_orange_black"
+                            android:paddingBottom="3dip"
+                            android:paddingLeft="20dip"
+                            android:paddingRight="20dip"
+                            android:paddingTop="3dip"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:id="@+id/tv_good_desc"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dip"
+                        android:ellipsize="end"
+                        android:maxLines="4"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/commen_tv_size_smallest" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:gravity="center_vertical"
+        android:text="违规类型"
+        android:textColor="@color/black_tv"
+        android:textSize="@dimen/commen_tv_size_smaller" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:padding="2dip">
+
+        <RelativeLayout
+            android:id="@+id/rl_select_weigui_type"
+            android:layout_width="match_parent"
+            android:layout_height="48dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:id="@+id/tv_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:hint="选择违规类型"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="30dip"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:gravity="center_vertical"
+        android:text="举报原因"
+        android:textColor="@color/black_tv"
+        android:textSize="@dimen/commen_tv_size_smaller" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:background="@drawable/shape_white_black"
+        android:orientation="vertical"
+        android:padding="2dip">
+
+        <EditText
+            android:id="@+id/ev_input"
+            android:layout_width="match_parent"
+            android:layout_height="130dip"
+            android:background="@null"
+            android:gravity="left"
+            android:hint="请在这里说明举报原因"
+            android:maxLength="100"
+            android:padding="10dip"
+            android:textColor="@color/black_tv"
+            android:textSize="@dimen/commen_tv_size" />
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/btn_register"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commen_btn_hight"
+        android:layout_marginLeft="14dip"
+        android:layout_marginRight="14dip"
+        android:layout_marginTop="20dip"
+        android:background="@drawable/shape_orange_black"
+        android:text="发送"
+        android:textColor="@color/black"
+        android:textSize="18dip"
+        android:textStyle="bold" />
+
+</LinearLayout>

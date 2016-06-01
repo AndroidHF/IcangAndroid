@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_black"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="10dip">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="120dip"
+            android:orientation="horizontal">
+
+            <FrameLayout
+                android:layout_width="110dip"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/iv_paimai"
+                    android:layout_width="110dip"
+                    android:layout_height="match_parent"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_image" />
+
+                <TextView
+                    android:id="@+id/tv_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="30dip"
+                    android:layout_gravity="bottom"
+                    android:background="@drawable/pai_status"
+                    android:gravity="bottom|center_horizontal"
+                    android:paddingBottom="3dip"
+                    android:text="拍品审核中"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/commen_tv_size_smallest"
+                    android:visibility="gone" />
+                <ImageView
+                    android:id="@+id/iv_rate"
+                    android:layout_width="40dip"
+                    android:layout_height="20dip"
+                    android:layout_gravity="right|top"
+                    android:layout_marginRight="5dip"
+                    android:layout_marginTop="8dip"
+                    android:src="@drawable/post_rare_icon" />
+
+            </FrameLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dip"
+                android:layout_marginLeft="8dip"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_good_title"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="大保健有木有"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/commen_tv_size_smaller" />
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dip"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:id="@+id/tv_good_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/shape_white_black"
+                        android:paddingBottom="3dip"
+                        android:paddingLeft="20dip"
+                        android:paddingRight="20dip"
+                        android:paddingTop="3dip"
+                        android:text="全 新"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size_smallest" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="13dip"
+                            android:layout_height="13dip"
+                            android:src="@drawable/chuizi_icon" />
+
+                        <TextView
+                            android:id="@+id/tv_good_pai_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="5dip"
+                            android:text="11"
+                            android:textSize="12dip" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dip"
+                    android:orientation="horizontal">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="5dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_white_black"
+                        android:gravity="center_vertical"
+                        android:padding="5dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="起拍价"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+
+                        <TextView
+                            android:id="@+id/tv_good_begin_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="￥ 3"
+                            android:textColor="@color/gray_tv"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="5dip"
+                        android:layout_weight="1"
+                        android:background="@drawable/shape_white_black"
+                        android:gravity="center_vertical"
+                        android:padding="5dip">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="一口价"
+                            android:textColor="@color/black"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+
+                        <TextView
+                            android:id="@+id/tv_good_yikoujia_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:text="￥ 300"
+                            android:textColor="@color/gray_tv"
+                            android:textSize="@dimen/commen_tv_size_smallest" />
+                    </RelativeLayout>
+
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_weitongguo_lay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_good_check_faile_resean"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dip"
+                android:background="@drawable/shenhe_msg"
+                android:gravity="left"
+                android:paddingBottom="10dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="20dip"
+                android:text="审核失败的原因是因为涉黄"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dip"
+                android:layout_marginTop="10dip"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+
+                    <TextView
+                        android:id="@+id/tv_re_edit"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="3dip"
+                        android:layout_marginTop="4dip"
+                        android:background="@drawable/shape_red_black"
+                        android:gravity="center"
+                        android:text="重新编辑"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/commen_tv_size" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="3dip"
+                    android:layout_marginRight="3dip"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_cancle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="4dip"
+                        android:background="@drawable/shape_orange_black"
+                        android:gravity="center"
+                        android:text="取消拍卖"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/commen_tv_size" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_cancle_watting"
+            android:layout_width="180dip"
+            android:layout_height="45dip"
+            android:layout_marginTop="20dip"
+            android:visibility="gone"
+            android:background="@drawable/shape_orange_black"
+            android:gravity="center"
+            android:text="取消拍卖"
+            android:textColor="@color/black"
+            android:textSize="@dimen/commen_tv_size" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="20dip"
+        android:background="@color/transparent"
+        android:orientation="horizontal" />
+</LinearLayout>
+
+

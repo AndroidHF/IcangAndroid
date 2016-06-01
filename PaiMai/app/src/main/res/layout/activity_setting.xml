@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/bg_gray"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="@dimen/commen_padding"
+        android:background="@color/black"
+        android:orientation="vertical"
+        android:padding="2dip">
+
+        <RelativeLayout
+            android:id="@+id/rl_about_us"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="关于我们"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_user_deal"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="用户协议"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_push_setting"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="推送设置"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_clear_cache"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="清除缓存"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_share_app"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="分享APP"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rl_feed_back"
+            android:layout_width="match_parent"
+            android:layout_height="45dip"
+            android:layout_marginTop="1dip"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:paddingLeft="10dip"
+            android:paddingRight="10dip">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="意见反馈"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/commen_right_arrow_white" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_logout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/commen_btn_hight"
+        android:layout_marginLeft="@dimen/commen_padding"
+        android:layout_marginRight="@dimen/commen_padding"
+        android:layout_marginTop="30dip"
+        android:background="@drawable/shape_orange_black"
+        android:text="退出当前账号"
+        android:textSize="@dimen/commen_tv_size" />
+
+</LinearLayout>
