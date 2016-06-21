@@ -7,10 +7,10 @@
 
     <ImageView
         android:id="@+id/iv_cover"
-        android:background="@drawable/default_image"
         android:layout_width="match_parent"
         android:layout_height="185dip"
-        android:scaleType="centerCrop"/>
+        android:background="@drawable/default_image_show"
+        android:scaleType="centerCrop" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -58,10 +58,10 @@
         android:layout_marginRight="20dip"
         android:layout_marginTop="8dip"
         android:ellipsize="end"
-        android:textStyle="bold"
         android:gravity="center_vertical"
         android:textColor="@color/black_tv"
-        android:textSize="16dp" />
+        android:textSize="16dp"
+        android:textStyle="bold" />
 
 
     <RelativeLayout
@@ -77,12 +77,12 @@
             android:layout_height="40dip"
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
-            android:src="@drawable/default_image" />
+            android:src="@drawable/default_image_tou" />
 
         <TextView
             android:id="@+id/tv_user_name"
-            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
             android:layout_toRightOf="@id/iv_user_image"
@@ -163,11 +163,11 @@
     <TextView
         android:id="@+id/tv_user_desc"
         android:layout_width="match_parent"
-        android:layout_height="60dip"
+        android:layout_height="wrap_content"
         android:layout_below="@id/tv_user_name"
         android:layout_marginLeft="20dip"
         android:layout_marginRight="20dip"
-        android:background="@drawable/usercenter_user_desc"
+        android:background="@drawable/show_detail_desc"
         android:paddingBottom="10dip"
         android:paddingLeft="10dip"
         android:paddingRight="10dip"

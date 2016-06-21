@@ -5,7 +5,11 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -99,6 +103,26 @@ public class ZhiFuActivity extends BaseActivity {
     private boolean addressHasInit = false;
     private IWXAPI api;
 
+    //add by hufeng
+    @Bind(R.id.cb_youhuima_status)
+    CheckBox cb_youhuima_status;//小卡片选择框
+    @Bind(R.id.et_youhuima_value)
+    EditText et_youhuima_value;//小卡片输入框
+    @Bind(R.id.rl_youhuima_input)
+    RelativeLayout rl_youhuima_input;//用于设置优惠码输入框的是否可见
+    @Bind(R.id.ll_shijiprice)
+    LinearLayout ll_shijiprice;//使用优惠码后，实际金额的是否可见
+    @Bind(R.id.tv_shijiprice_title)
+    TextView tv_shijiprice_title;//实际金额的标题
+    @Bind(R.id.tv_shijiprice_value)
+    TextView tv_shijiprice_value;//实际金额的数字
+    @Bind(R.id.ll_youhuima)
+    LinearLayout ll_youhuima;//优惠码全部控件，是否可见用
+    @Bind(R.id.ll_shiyongguo_youhuima)
+    LinearLayout ll_shiyongguo_youhuima;//已经使用优惠码的显示框
+    @Bind(R.id.ll_price)
+    LinearLayout ll_price;//成交价的显示与隐藏
+
 
     public void onEventMainThread(EditAddressEvent event) {
         loadData(true);
@@ -110,6 +134,41 @@ public class ZhiFuActivity extends BaseActivity {
             finish();
             EventBus.getDefault().post(new ZhifueEvent(1));
         }
+//        else if(event.getStatus() == -2){
+//            /***
+//             * add by :胡峰
+//             * 微信支付失败解锁优惠码
+//             */
+//            Toast.makeText(mActivity, "支付失败", Toast.LENGTH_SHORT).show();
+//            if (cb_youhuima_status.isChecked()){
+//                JSONObject jsonObject = new JSONObject();
+//                try {
+//                    jsonObject.put("order_no", paiPinDetailBean.getOrder_no());
+//                    jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//
+//                mApplication.apiClient.coupon_failNotifyByApp(jsonObject, new ApiCallback() {
+//                    @Override
+//                    public void onApiStart() {
+//
+//                    }
+//
+//                    @Override
+//                    public void onApiSuccess(String response) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onApiFailure(Request request, Exception e) {
+//
+//                    }
+//                });
+//                EventBus.getDefault().post(new ZhifueEvent(1));
+//            }
+//
+//        }
     }
 
 
@@ -152,11 +211,38 @@ public class ZhiFuActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     tvSubmitPay.setEnabled(false);
-                    if (addressHasInit) {
-                        getOrderInfo(isZhiFuBaoPay);
+//                    if (addressHasInit) {
+//                        getOrderInfo(isZhiFuBaoPay);
+//                    } else {
+//                        tvSubmitPay.setEnabled(true);
+//                        UIHelper.t(mContext, "请您完善您的地址信息");
+//                    }
+                    /***
+                     * change by :胡峰
+                     * 功能：优惠码的添加
+                     */
+                    if (cb_youhuima_status.isChecked()) {
+                        if (TextUtils.isEmpty(et_youhuima_value.getText().toString())) {
+                            tvSubmitPay.setEnabled(true);
+                            UIHelper.t(mContext, "请填写优惠码");
+                        } else if (et_youhuima_value.getText().toString().trim().length() > 10 || et_youhuima_value.getText().toString().trim().length() < 8) {
+                            tvSubmitPay.setEnabled(true);
+                            UIHelper.t(mContext, "请输入8-10位的验证码！");
+                        } else {
+                            if (addressHasInit) {
+                                getOrderInfo(isZhiFuBaoPay);
+                            } else {
+                                tvSubmitPay.setEnabled(true);
+                                UIHelper.t(mContext, "请您完善您的地址信息");
+                            }
+                        }
                     } else {
-                        tvSubmitPay.setEnabled(true);
-                        UIHelper.t(mContext, "请您完善您的地址信息");
+                        if (addressHasInit) {
+                            getOrderInfo(isZhiFuBaoPay);
+                        } else {
+                            tvSubmitPay.setEnabled(true);
+                            UIHelper.t(mContext, "请您完善您的地址信息");
+                        }
                     }
                 }
             });
@@ -190,6 +276,40 @@ public class ZhiFuActivity extends BaseActivity {
                         } else {
                             // 其他值就可以判断为支付失败，包括用户主动取消支付，或者系统返回的错误
                             Toast.makeText(mActivity, "支付失败", Toast.LENGTH_SHORT).show();
+//                            /***
+//                             * add by :胡峰
+//                             * 解锁小卡片用
+//                             */
+//                        if (cb_youhuima_status.isChecked()){
+//                            JSONObject jsonObject = new JSONObject();
+//                            try {
+//                                jsonObject.put("order_no", paiPinDetailBean.getOrder_no());
+//                                jsonObject.put("sessionid",LoginConfig.getUserInfo(mContext).getSessionid());
+//                                //jsonObject.put("cou_no", et_youhuima_value.getText().toString().trim());
+//                                Log.i("order_no----", paiPinDetailBean.getOrder_no());
+//                                Log.i("sessionid---",LoginConfig.getUserInfo(mContext).getSessionid());
+//                                //Log.i("cou_no---", et_youhuima_value.getText().toString().trim());
+//                            } catch (JSONException e) {
+//                                e.printStackTrace();
+//                            }
+//                            mApplication.apiClient.coupon_failNotifyByApp(jsonObject, new ApiCallback() {
+//                                @Override
+//                                public void onApiStart() {
+//
+//                                }
+//
+//                                @Override
+//                                public void onApiSuccess(String response) {
+//
+//                                }
+//
+//                                @Override
+//                                public void onApiFailure(Request request, Exception e) {
+//
+//                                }
+//                            });
+//                        }
+
                         }
                     }
                     break;
@@ -210,7 +330,14 @@ public class ZhiFuActivity extends BaseActivity {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("order_no", paiPinDetailBean.getOrder_no());
+                Log.i("order_no2----", paiPinDetailBean.getOrder_no());
                 jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+                Log.i("sessionid2---", LoginConfig.getUserInfo(mContext).getSessionid());
+                //add by hufeng :获取支付宝信息的传递数据：优惠券号
+                if (cb_youhuima_status.isChecked()){
+                    jsonObject.put("cou_no", et_youhuima_value.getText().toString().trim());
+                    Log.i("cou_no", et_youhuima_value.getText().toString().trim());
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -226,20 +353,73 @@ public class ZhiFuActivity extends BaseActivity {
                         return;
                     try {
                         JSONObject resultObj = new JSONObject(response);
-                        if (JSONUtil.isOK(resultObj)) {
-                            final String payInfo = resultObj.getString("pay_str");
-                            new Thread() {
-                                public void run() {
-                                    // 构造PayTask 对象
-                                    PayTask alipay = new PayTask(mActivity);
-                                    // 调用支付接口，获取支付结果
-                                    String result = alipay.pay(payInfo, true);
-                                    Message msg = new Message();
-                                    msg.what = 1;
-                                    msg.obj = result;
-                                    alipayHandler.sendMessage(msg);
+//                        if (JSONUtil.isOK(resultObj)) {
+//                            final String payInfo = resultObj.getString("pay_str");
+//                            new Thread() {
+//                                public void run() {
+//                                    // 构造PayTask 对象
+//                                    PayTask alipay = new PayTask(mActivity);
+//                                    // 调用支付接口，获取支付结果
+//                                    String result = alipay.pay(payInfo, true);
+//                                    Message msg = new Message();
+//                                    msg.what = 1;
+//                                    msg.obj = result;
+//                                    alipayHandler.sendMessage(msg);
+//                                }
+//                            }.start();
+//                        } else {
+//                            UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+//                        }
+
+                        /***
+                         * change by :胡峰
+                         * 功能：优惠码的调用逻辑
+                         */
+                        if (JSONUtil.isOK(resultObj)){
+                            if (cb_youhuima_status.isChecked()){
+                                final String payInfo = resultObj.getString("paymode");
+                                if (payInfo.equals("0")){
+                                    Toast.makeText(mActivity, "支付成功", Toast.LENGTH_SHORT).show();
+                                    EventBus.getDefault().post(new ZhifueEvent(1));
+                                    finish();
+                                } else if (payInfo.equals("-1")){
+                                    final String payInfo1 = resultObj.getString("pay_str");
+                                    Log.i("hufeng",payInfo1);
+
+                                    new Thread() {
+                                        public void run() {
+                                            // 构造PayTask 对象
+                                            PayTask alipay = new PayTask(mActivity);
+                                            // 调用支付接口，获取支付结果
+                                            String result = alipay.pay(payInfo1, true);
+
+                                            Message msg = new Message();
+                                            //Message msg2 = new Message();
+                                            msg.what = 1;
+                                            msg.obj = result;
+
+                                            alipayHandler.sendMessage(msg);
+                                        }
+                                    }.start();
                                 }
-                            }.start();
+                            }else {
+                                final String payInfo2 = resultObj.getString("pay_str");
+                                new Thread() {
+                                    public void run() {
+                                        // 构造PayTask 对象
+                                        PayTask alipay = new PayTask(mActivity);
+                                        // 调用支付接口，获取支付结果
+                                        String result = alipay.pay(payInfo2, true);
+
+                                        Message msg = new Message();
+                                        //Message msg2 = new Message();
+                                        msg.what = 1;
+                                        msg.obj = result;
+
+                                        alipayHandler.sendMessage(msg);
+                                    }
+                                }.start();
+                            }
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                         }
@@ -265,6 +445,11 @@ public class ZhiFuActivity extends BaseActivity {
             try {
                 jsonObject.put("order_no", paiPinDetailBean.getOrder_no());
                 jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+                //add by hufeng :获取支付宝信息的传递数据：优惠券号
+                if (cb_youhuima_status.isChecked()){
+                    jsonObject.put("cou_no", et_youhuima_value.getText().toString().trim());
+                    Log.i("cou_no", et_youhuima_value.getText().toString().trim());
+                }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -280,23 +465,77 @@ public class ZhiFuActivity extends BaseActivity {
                         return;
                     try {
                         JSONObject resultObj = new JSONObject(response);
+//                        if (JSONUtil.isOK(resultObj)) {
+//                            JSONObject payInfo = resultObj.getJSONObject("infos");
+//                            WXPayBean orderInfo = new Gson().fromJson(payInfo.toString(), WXPayBean.class);
+//
+//                            api = WXAPIFactory.createWXAPI(mActivity, orderInfo.getAppid());
+//
+//                            PayReq req = new PayReq();
+//                            req.appId = orderInfo.getAppid();
+//                            req.partnerId = orderInfo.getPartnerid();
+//                            req.prepayId = orderInfo.getPrepayid();
+//                            req.nonceStr = orderInfo.getNoncestr();
+//                            req.timeStamp = orderInfo.getTimestamp();
+//                            req.packageValue = payInfo.getString("package");
+//                            req.sign = orderInfo.getPaySign();
+//                            // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+//                            api.registerApp(orderInfo.getAppid());
+//                            api.sendReq(req);
+//
+//                        } else {
+//                            UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+//                        }
+                        /***
+                         * change by :胡峰
+                         * 功能：优惠码调用微信接口逻辑
+                         */
                         if (JSONUtil.isOK(resultObj)) {
-                            JSONObject payInfo = resultObj.getJSONObject("infos");
-                            WXPayBean orderInfo = new Gson().fromJson(payInfo.toString(), WXPayBean.class);
+                            //add by hufeng:优惠码使用逻辑
+                            if (cb_youhuima_status.isChecked()) {//如果选择优惠码
+                                final String payInfo = resultObj.getString("paymode");//获取返回的paymode的值
+                                Log.i("wx",payInfo);
+                                if (payInfo.equals("0")) {//当前优惠码的价格>= 当前物品的价格
+                                    Toast.makeText(mActivity, "支付成功", Toast.LENGTH_SHORT).show();
+                                    EventBus.getDefault().post(new ZhifueEvent(1));
+                                    finish();
+                                } else if (payInfo.equals("-1")) {//当前优惠码的价格 < 当前物品的价格
+                                    JSONObject payInfo1 = resultObj.getJSONObject("infos");
+                                    WXPayBean orderInfo1 = new Gson().fromJson(payInfo1.toString(), WXPayBean.class);
 
-                            api = WXAPIFactory.createWXAPI(mActivity, orderInfo.getAppid());
+                                    api = WXAPIFactory.createWXAPI(mActivity, orderInfo1.getAppid());
 
-                            PayReq req = new PayReq();
-                            req.appId = orderInfo.getAppid();
-                            req.partnerId = orderInfo.getPartnerid();
-                            req.prepayId = orderInfo.getPrepayid();
-                            req.nonceStr = orderInfo.getNoncestr();
-                            req.timeStamp = orderInfo.getTimestamp();
-                            req.packageValue = payInfo.getString("package");
-                            req.sign = orderInfo.getPaySign();
-                            // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
-                            api.registerApp(orderInfo.getAppid());
-                            api.sendReq(req);
+                                    PayReq req = new PayReq();
+                                    req.appId = orderInfo1.getAppid();
+                                    req.partnerId = orderInfo1.getPartnerid();
+                                    req.prepayId = orderInfo1.getPrepayid();
+                                    req.nonceStr = orderInfo1.getNoncestr();
+                                    req.timeStamp = orderInfo1.getTimestamp();
+                                    req.packageValue = payInfo1.getString("package");
+                                    req.sign = orderInfo1.getPaySign();
+                                    // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                                    api.registerApp(orderInfo1.getAppid());
+                                    api.sendReq(req);
+                                }
+
+                            } else {//不选择优惠码
+                                JSONObject payInfo2 = resultObj.getJSONObject("infos");
+                                WXPayBean orderInfo2 = new Gson().fromJson(payInfo2.toString(), WXPayBean.class);
+
+                                api = WXAPIFactory.createWXAPI(mActivity, orderInfo2.getAppid());
+
+                                PayReq req = new PayReq();
+                                req.appId = orderInfo2.getAppid();
+                                req.partnerId = orderInfo2.getPartnerid();
+                                req.prepayId = orderInfo2.getPrepayid();
+                                req.nonceStr = orderInfo2.getNoncestr();
+                                req.timeStamp = orderInfo2.getTimestamp();
+                                req.packageValue = payInfo2.getString("package");
+                                req.sign = orderInfo2.getPaySign();
+                                // 在支付之前，如果应用没有注册到微信，应该先调用IWXMsg.registerApp将应用注册到微信
+                                api.registerApp(orderInfo2.getAppid());
+                                api.sendReq(req);
+                            }
 
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -429,9 +668,56 @@ public class ZhiFuActivity extends BaseActivity {
         if (paiPinDetailBean.getCj_type() == 1) {//没有开启一口价
             tvPriceTitle.setText("竞拍价");
         } else {
-            tvPriceTitle.setText("一口价");
+            //change by :胡峰，“一口价”改为“成交价”
+            //tvPriceTitle.setText("一口价");
+            tvPriceTitle.setText("成交价");
         }
         tvPriceValue.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getOrder_price()));
+
+        /***
+         * 实际价格的显示问题
+         */
+        if (paiPinDetailBean.getCou_flag().equals("1")){
+            Log.i("flag----", paiPinDetailBean.getCou_flag());
+            //设置优惠码选择框为不可见
+            ll_youhuima.setVisibility(View.GONE);
+            //设置已经使用小卡片可见
+            ll_shiyongguo_youhuima.setVisibility(View.VISIBLE);
+            //成交价设置不可见
+            ll_price.setVisibility(View.GONE);
+            //设置应付金额可见
+            ll_shijiprice.setVisibility(View.VISIBLE);
+            //设置应付金额的标题
+            tv_shijiprice_title.setText("应付金额");
+            //设置实际金额的值
+            tv_shijiprice_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getReal_price()));
+            Log.i("real-----",paiPinDetailBean.getReal_price());
+        }else {
+            ll_youhuima.setVisibility(View.VISIBLE);
+            ll_price.setVisibility(View.VISIBLE);
+            ll_shiyongguo_youhuima.setVisibility(View.GONE);
+            ll_shijiprice.setVisibility(View.GONE);
+        }
+
+        /**
+         * add by ：胡峰
+         * 对于优惠码的选用和不选用
+         */
+        cb_youhuima_status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    rl_youhuima_input.setVisibility(View.VISIBLE);
+                    et_youhuima_value.setText(et_youhuima_value.getText().toString().trim());
+                    Log.i("et_youhuima_value", et_youhuima_value.getText().toString().trim());
+                } else {
+                    rl_youhuima_input.setVisibility(View.GONE);
+                    if (!TextUtils.isEmpty(et_youhuima_value.getText().toString())) {
+                        et_youhuima_value.setText("");
+                    }
+                }
+            }
+        });
 
 
         if (!TextUtils.isEmpty(paiPinDetailBean.getReceipt_name())) {

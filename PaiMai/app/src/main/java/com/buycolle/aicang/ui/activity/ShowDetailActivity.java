@@ -8,6 +8,7 @@ import android.text.Editable;
 import android.text.Selection;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -46,6 +47,7 @@ import com.buycolle.aicang.util.SmileUtils;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.UIUtil;
 import com.buycolle.aicang.util.superlog.JSONUtil;
+import com.buycolle.aicang.util.superlog.KLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -246,17 +248,34 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                     @Override
                     public void share(int position) {
                         switch (position) {
+//                            case 1:
+//                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+//                                break;
+//                            case 2:
+//                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+//                                break;
+//                            case 3:
+//                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle(), shareImagePath, new BaseUiListener());
+//                                break;
+//                            case 4:
+//                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL, showDetailBean.getTitle());
+//                                break;
+                            /***
+                             * cahnge by :胡峰
+                             * 分享界面的跳转
+                             */
                             case 1:
-                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/show.html?" + show_id, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+                                Log.i("show_id-----", showDetailBean.getShow_id() + "");
                                 break;
                             case 2:
-                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL+"/show.html?"+show_id, Constans.shareTitle_Type_2, showDetailBean.getTitle());
                                 break;
                             case 3:
-                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle(), shareImagePath, new BaseUiListener());
+                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL+"/show.html?"+showDetailBean.getShow_id(), Constans.shareTitle_Type_2, showDetailBean.getTitle(), shareImagePath, new BaseUiListener());
                                 break;
                             case 4:
-                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL, showDetailBean.getTitle());
+                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL+"/show.html?"+show_id, showDetailBean.getTitle());
                                 break;
                         }
                     }
@@ -549,7 +568,9 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
             }
         });
 
-        mApplication.setImages(showDetailBean.getCover_pic(), iv_cover);
+        //change by :胡峰，晒物默认的加载图片的修改
+        mApplication.setShowImages(showDetailBean.getCover_pic(), iv_cover);
+        //mApplication.setImages(showDetailBean.getCover_pic(), iv_cover);
         iv_cover.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -563,10 +584,12 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
             }
         });
         mApplication.setImages(showDetailBean.getCate_icon(), iv_goods_type_arrow);
-        mApplication.setImages(showDetailBean.getUser_avatar(), iv_user_image);
+        //mApplication.setImages(showDetailBean.getUser_avatar(), iv_user_image);
+        //change by :胡峰，头像的修改
+        mApplication.setTouImages(showDetailBean.getUser_avatar(),iv_user_image);
         tv_user_name.setText(showDetailBean.getUser_nick());
         tv_goods_type.setText(showDetailBean.getCate_name());
-        tv_goods_time.setText(showDetailBean.getCreate_date());
+        tv_goods_time.setText(showDetailBean.getLast_update_date());
         tv_goods_content.setText(showDetailBean.getTitle());
         tv_like_count.setText(showDetailBean.getZ_count() + "");
         tv_comment_count.setText(showDetailBean.getComment_count() + "");
@@ -588,24 +611,28 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                     if (ziDingYi.getType() == 2) {//1 表示文字，2 表示图  3表示链接
                         View imges = inflater.inflate(R.layout.view_show_detail_header_image, null);
                         final ImageView iv_zidingyi_image = (ImageView) imges.findViewById(R.id.iv_zidingyi_image);
+                        final ImageView iv_invisible = (ImageView) imges.findViewById(R.id.iv_invisible);
+                        //图片显示方式不是按照比例来了  全部显示 和 ios 一样
+                        iv_invisible.setVisibility(View.GONE);
                         mApplication.setImages(ziDingYi.getContent(), iv_zidingyi_image);
-
+                        KLog.d("--加载图片--getWidth--", "---");
 //                        Glide.with(this)
 //                                .load(ziDingYi.getContent())
 //                                .asBitmap()
 //                                .dontAnimate()
-//                                .into(new BitmapImageViewTarget(iv_zidingyi_image) {
+//                                .into(new BitmapImageViewTarget(iv_invisible) {
 //
 //                                    @Override
 //                                    protected void setResource(Bitmap resource) {
 //                                        super.setResource(resource);
-//                                        KLog.d("--getHeight--", resource.getHeight() + "---");
-//                                        KLog.d("--getWidth--", resource.getWidth() + "---");
-////                                        iv_zidingyi_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 5000));
-//
-//                                        int w = UIUtil.getWindowWidth(mContext) - UIUtil.dip2px(mContext, 40);
-//                                        int h = resource.getHeight() * (UIUtil.getWindowWidth(mContext) - UIUtil.dip2px(mContext, 10)) / resource.getWidth()+UIUtil.dip2px(mContext, 16);
-//                                        mApplication.setImagesByBitmap(ziDingYi.getContent(), iv_zidingyi_image, w, h);
+//                                        KLog.d("--加载图片---getHeight--", resource.getHeight() + "---");
+//                                        KLog.d("--加载图片--getWidth--", resource.getWidth() + "---");
+//                                        int wight = UIUtil.getWindowWidth(mContext)-UIUtil.dip2px(mContext,40);
+//                                        int height = (resource.getHeight()*wight)/resource.getWidth()+UIUtil.dip2px(mContext,16);
+//                                        KLog.d("--计算得到的---wight--", wight + "---");
+//                                        KLog.d("--计算得到的--height--",height + "---");
+//                                        iv_zidingyi_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
+//                                        mApplication.setImagesByBitmap(ziDingYi.getContent(), iv_zidingyi_image, wight, height);
 //
 //                                    }
 //                                });
@@ -813,6 +840,10 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
 
     @Override
     public void onSmileClick(String filename) {
+        if (etInput.getText().toString().length() >= 25) {
+            UIHelper.t(mActivity, "输入字数超出30个限制");
+            return;
+        }
         try {
             if (filename != "delete_expression") { // 不是删除键，显示表情
                 // 这里用的反射，所以混淆的时候不要混淆SmileUtils这个类
@@ -917,7 +948,9 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
 
             final ShowDetailBean.RecomListEntity recomListEntity = recomListEntities.get(position);
 
-            mApplication.setImages(recomListEntity.getC_user_avatar(), holder.iv_user_image);
+            //mApplication.setImages(recomListEntity.getC_user_avatar(), holder.iv_user_image);
+            //change by :胡峰，晒物评论中头像的修改
+            mApplication.setTouImages(recomListEntity.getC_user_avatar(),holder.iv_user_image);
             holder.tv_user_name.setText(recomListEntity.getC_user_nick());
             holder.tv_time.setText(recomListEntity.getCreate_date());
             holder.tv_range.setText("#" + (position + 1));

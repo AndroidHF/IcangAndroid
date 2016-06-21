@@ -603,7 +603,9 @@ public class AskAndQuestionNewActivity extends BaseActivity implements SmileFrag
                 holder.tv_aws_content.setText(SmileUtils.getSmiledCommentText(mContext, subEntity.getContext()));
                 holder.tv_aws_user_name.setText(subEntity.getC_user_nick());
                 holder.tv_aws_time.setText(subEntity.getCreate_date());
-                mApplication.setImages(subEntity.getC_user_avatar(), holder.profile_image);
+                //mApplication.setImages(subEntity.getC_user_avatar(), holder.profile_image);
+                //change by :胡峰
+                mApplication.setTouImages(subEntity.getC_user_avatar(),holder.profile_image);
             }
             return convertView;
         }

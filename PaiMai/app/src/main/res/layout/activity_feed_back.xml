@@ -40,7 +40,6 @@
         android:layout_marginLeft="@dimen/commen_padding"
         android:layout_marginRight="@dimen/commen_padding"
         android:layout_marginTop="@dimen/commen_padding"
-        android:inputType="number"
         android:background="@drawable/shape_white_black"
         android:hint="写下您的联系方式以方便我们联系您"
         android:paddingLeft="@dimen/commen_padding"

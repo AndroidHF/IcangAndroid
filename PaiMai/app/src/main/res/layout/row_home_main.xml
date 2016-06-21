@@ -61,7 +61,8 @@
                 android:layout_height="25dip"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="5dip"
-                android:background="@color/orange">
+                android:alpha="90"
+                android:background="@color/orange1">
 
                 <LinearLayout
                     android:id="@+id/ll_yikoujia_lay_1"
@@ -87,8 +88,8 @@
                         android:id="@+id/tv_yikou_price_value_1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="10dip"
-                        android:text="￥ 999"
+                        android:layout_marginLeft="4dip"
+                        android:text="￥99999"
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size_smallest" />
 
@@ -146,7 +147,7 @@
                 <ImageView
                     android:layout_width="13dip"
                     android:layout_height="13dip"
-                    android:layout_marginLeft="17dip"
+                    android:layout_marginLeft="5dip"
                     android:src="@drawable/chuizi_icon_1" />
 
                 <TextView
@@ -234,7 +235,8 @@
                     android:layout_height="25dip"
                     android:layout_alignParentBottom="true"
                     android:layout_marginBottom="5dip"
-                    android:background="@color/orange">
+                    android:alpha="90"
+                    android:background="@color/orange1">
 
                     <LinearLayout
                         android:id="@+id/ll_yikoujia_lay_2"
@@ -260,8 +262,8 @@
                             android:id="@+id/tv_yikou_price_value_2"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="10dip"
-                            android:text="￥ 999"
+                            android:layout_marginLeft="4dip"
+                            android:text="￥99999"
                             android:textColor="@color/black_tv"
                             android:textSize="@dimen/commen_tv_size_smallest" />
 
@@ -319,7 +321,7 @@
                     <ImageView
                         android:layout_width="13dip"
                         android:layout_height="13dip"
-                        android:layout_marginLeft="17dip"
+                        android:layout_marginLeft="5dip"
                         android:src="@drawable/chuizi_icon_1" />
 
                     <TextView

@@ -97,8 +97,8 @@ public class HomeMenuDialog extends Dialog {
         orinalBeans.add(new MainMenuBean("动画", R.drawable.show_menu_2));
         orinalBeans.add(new MainMenuBean("游戏", R.drawable.show_menu_3));
         orinalBeans.add(new MainMenuBean("书籍", R.drawable.show_menu_4));
-        orinalBeans.add(new MainMenuBean("手办", R.drawable.show_menu_5));
-        orinalBeans.add(new MainMenuBean("周边", R.drawable.show_menu_6));
+        orinalBeans.add(new MainMenuBean("周边", R.drawable.show_menu_5));
+        orinalBeans.add(new MainMenuBean("手办", R.drawable.show_menu_6));
         orinalBeans.add(new MainMenuBean("演出", R.drawable.show_menu_7));
         orinalBeans.add(new MainMenuBean("COS", R.drawable.show_menu_8));
         orinalBeans.add(new MainMenuBean("定制", R.drawable.show_menu_9));
@@ -208,9 +208,9 @@ public class HomeMenuDialog extends Dialog {
         } else if ("书籍".equals(title)) {
             return R.drawable.show_menu_4_sel;
         } else if ("手办".equals(title)) {
-            return R.drawable.show_menu_5_sel;
-        } else if ("周边".equals(title)) {
             return R.drawable.show_menu_6_sel;
+        } else if ("周边".equals(title)) {
+            return R.drawable.show_menu_5_sel;
         } else if ("演出".equals(title)) {
             return R.drawable.show_menu_7_sel;
         } else if ("COS".equals(title)) {
@@ -231,9 +231,9 @@ public class HomeMenuDialog extends Dialog {
         } else if ("书籍".equals(title)) {
             return R.drawable.show_menu_4;
         } else if ("手办".equals(title)) {
-            return R.drawable.show_menu_5;
-        } else if ("周边".equals(title)) {
             return R.drawable.show_menu_6;
+        } else if ("周边".equals(title)) {
+            return R.drawable.show_menu_5;
         } else if ("演出".equals(title)) {
             return R.drawable.show_menu_7;
         } else if ("COS".equals(title)) {

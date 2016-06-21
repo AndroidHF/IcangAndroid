@@ -319,7 +319,7 @@ public class MySalePaiMaiIngFrag extends BaseFragment {
 
             if (myBuyPaiMainIngBean.getJp_count() > 0) {
                 holder.btn_pai_again.setVisibility(View.GONE);
-                holder.tv_highest.setText("￥" + StringFormatUtil.getDoubleFormat(Double.valueOf(myBuyPaiMainIngBean.getMax_pric())));
+                holder.tv_highest.setText("￥"+ StringFormatUtil.getDoubleFormat(Double.valueOf(myBuyPaiMainIngBean.getMax_pric())));
             } else {
                 holder.btn_pai_again.setVisibility(View.VISIBLE);
                 holder.tv_highest.setText("￥ 0");

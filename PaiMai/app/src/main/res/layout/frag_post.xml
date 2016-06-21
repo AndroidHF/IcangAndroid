@@ -9,7 +9,7 @@
 
     <com.buycolle.aicang.ui.view.MyHeader
         android:id="@+id/my_header"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
 
@@ -26,10 +26,11 @@
 
 
             <ImageView
+                android:id="@+id/iv_top_icon"
                 android:layout_width="match_parent"
-                android:layout_height="70dip"
+                android:layout_height="wrap_content"
                 android:scaleType="fitXY"
-                android:src="@drawable/post_top_icon" />
+                />
 
             <LinearLayout
                 android:id="@+id/ll_not_maijia_lay"
@@ -38,13 +39,13 @@
                 android:gravity="center_horizontal"
                 android:orientation="vertical"
                 android:visibility="gone">
-
+            <!--change by ：胡峰，还不是卖家身份的内容修改-->
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="80dip"
                     android:gravity="center"
-                    android:text="您还不是卖家身份，无法出品\n请进入申请成为卖家通道"
+                    android:text="您还未通过卖家身份验证。\n根据国家相关法律规定,\n必须通过实名认证操作后才能成为卖家。"
                     android:textColor="@color/black"
                     android:textSize="@dimen/commen_tv_size" />
 
@@ -190,6 +191,7 @@
 
                 </LinearLayout>
 
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -313,7 +315,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
-                            android:text="结束时间"
+                            android:text="拍卖时间"
                             android:textColor="@color/black_tv"
                             android:textSize="@dimen/commen_tv_size" />
 
@@ -339,6 +341,124 @@
                             android:layout_centerVertical="true"
                             android:src="@drawable/commen_right_arrow_white" />
                     </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_start_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dip"
+                        android:layout_marginTop="1dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip">
+
+                        <TextView
+                            android:id="@+id/tv_start_price_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="起拍价格"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size" />
+
+                        <EditText
+                            android:id="@+id/tv_start_price_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="40dip"
+                            android:layout_toRightOf="@id/tv_start_price_title"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:hint="请填写"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size" />
+                    </RelativeLayout>
+
+
+                    <RelativeLayout
+                        android:id="@+id/rl_yikou_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dip"
+                        android:layout_marginTop="1dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip">
+
+                        <TextView
+                            android:id="@+id/tv_yikou_price_title"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:text="一口价"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size" />
+
+                        <EditText
+                            android:id="@+id/tv_yikou_price_value"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="57dip"
+                            android:layout_toRightOf="@id/tv_yikou_price_title"
+                            android:background="@null"
+                            android:ellipsize="end"
+                            android:hint="请填写"
+                            android:inputType="number"
+                            android:singleLine="true"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size" />
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:id="@+id/rl_yikoujia_status"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dip"
+                        android:layout_marginTop="1dip"
+                        android:background="@color/white"
+                        android:gravity="center_vertical"
+                        android:paddingLeft="10dip"
+                        android:paddingRight="10dip">
+
+                        <CheckBox
+                            android:id="@+id/cb_yikoujia_status"
+                            android:layout_width="21dip"
+                            android:layout_height="21dip"
+                            android:layout_centerVertical="true"
+                            android:background="@drawable/selector_post_check_status"
+                            android:button="@null"
+                            android:checked="true" />
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="8dip"
+                            android:layout_toRightOf="@id/cb_yikoujia_status"
+                            android:ellipsize="end"
+                            android:singleLine="true"
+                            android:text="开启一口价"
+                            android:textColor="@color/black_tv"
+                            android:textSize="@dimen/commen_tv_size" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_marginTop="15dip"
+                    android:background="@color/black"
+                    android:orientation="vertical"
+                    android:padding="2dip">
+
+
 
 
                     <RelativeLayout
@@ -505,121 +625,81 @@
 
                 </LinearLayout>
 
+
+
+                <!--交易流程-->
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dip"
-                    android:layout_marginRight="10dip"
+                    android:layout_height="20dip"
+                    android:layout_marginLeft="25dip"
                     android:layout_marginTop="15dip"
-                    android:background="@color/black"
-                    android:orientation="vertical"
-                    android:padding="2dip">
+                    android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:id="@+id/rl_start_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dip"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="10dip"
-                        android:paddingRight="10dip">
-
-                        <TextView
-                            android:id="@+id/tv_start_price_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="起拍价格"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size" />
-
-                        <EditText
-                            android:id="@+id/tv_start_price_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="40dip"
-                            android:layout_toRightOf="@id/tv_start_price_title"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:hint="请填写"
-                            android:inputType="number"
-                            android:singleLine="true"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size" />
-                    </RelativeLayout>
-
-
-                    <RelativeLayout
-                        android:id="@+id/rl_yikou_price"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dip"
-                        android:layout_marginTop="1dip"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="10dip"
-                        android:paddingRight="10dip">
-
-                        <TextView
-                            android:id="@+id/tv_yikou_price_title"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_centerVertical="true"
-                            android:text="一口价"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size" />
-
-                        <EditText
-                            android:id="@+id/tv_yikou_price_value"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="57dip"
-                            android:layout_toRightOf="@id/tv_yikou_price_title"
-                            android:background="@null"
-                            android:ellipsize="end"
-                            android:hint="请填写"
-                            android:inputType="number"
-                            android:singleLine="true"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size" />
-                    </RelativeLayout>
-
-                    <RelativeLayout
-                        android:id="@+id/rl_yikoujia_status"
-                        android:layout_width="match_parent"
-                        android:layout_height="45dip"
-                        android:layout_marginTop="1dip"
-                        android:background="@color/white"
-                        android:gravity="center_vertical"
-                        android:paddingLeft="10dip"
-                        android:paddingRight="10dip">
-
-                        <CheckBox
-                            android:id="@+id/cb_yikoujia_status"
-                            android:layout_width="21dip"
-                            android:layout_height="21dip"
-                            android:layout_centerVertical="true"
-                            android:background="@drawable/selector_post_check_status"
-                            android:button="@null"
-                            android:checked="true" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_centerVertical="true"
-                            android:layout_marginLeft="8dip"
-                            android:layout_toRightOf="@id/cb_yikoujia_status"
-                            android:ellipsize="end"
-                            android:singleLine="true"
-                            android:text="开启一口价"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size" />
-                    </RelativeLayout>
+                    <ImageView
+                        android:layout_width="18dip"
+                        android:layout_height="18dip"
+                        android:src="@drawable/paimai_jiaoyi_liucheng"
+                        />
+                    <TextView
+                        android:id="@+id/tv_jiaoyi_liucheng"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="7dip"
+                        android:text="交易流程"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>
 
+                <!--发货指导-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dip"
+                    android:layout_marginLeft="25dip"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dip"
+                        android:layout_height="18dip"
+                        android:src="@drawable/paimai_xieyi_icon"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_fahuo_zhidao"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="7dip"
+                        android:text="发货指导"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size" />
+                </LinearLayout>
+
+                <!--常见问题-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="20dip"
+                    android:layout_marginLeft="25dip"
+                    android:layout_marginTop="10dip"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="18dip"
+                        android:layout_height="18dip"
+                        android:src="@drawable/paimai_changjian_wenti"
+                        />
+
+                    <TextView
+                        android:id="@+id/tv_changjianwenti"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="7dip"
+                        android:text="常见问题"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size" />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/btn_save"

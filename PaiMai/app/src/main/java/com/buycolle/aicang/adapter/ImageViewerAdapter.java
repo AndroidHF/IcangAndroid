@@ -55,7 +55,13 @@ public class ImageViewerAdapter extends PagerAdapter {
                 image.setScaleType(ImageView.ScaleType.FIT_CENTER);
             }
         }
-        MainApplication.getInstance().setImages(imageBeans.get(position), image);
+        //change by :胡峰，拍品详情界面对于一般拍品和竞拍会拍品的默认加载图片的修改
+        if (isEvent){
+            MainApplication.getInstance().setShowImages(imageBeans.get(position), image);
+        }else {
+            MainApplication.getInstance().setImages(imageBeans.get(position), image);
+        }
+        //MainApplication.getInstance().setImages(imageBeans.get(position), image);
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

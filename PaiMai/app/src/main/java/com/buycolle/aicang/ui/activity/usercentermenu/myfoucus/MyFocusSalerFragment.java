@@ -248,7 +248,9 @@ public class MyFocusSalerFragment extends BaseFragment {
             }
 
             final ForcusSallerBean forcusSallerBean = datas.get(position);
-            mApplication.setImages(forcusSallerBean.getUser_avatar(), holder.profile_image);
+            //mApplication.setImages(forcusSallerBean.getUser_avatar(), holder.profile_image);
+            //change by :胡峰，头像的修改
+            mApplication.setTouImages(forcusSallerBean.getUser_avatar(),holder.profile_image);
             holder.tv_user_name.setText(forcusSallerBean.getUser_nick());
             holder.tv_all_comment.setText(forcusSallerBean.getTotal_comment() + "");
             holder.tv_good_comment.setText(forcusSallerBean.getGood_comment() + "");

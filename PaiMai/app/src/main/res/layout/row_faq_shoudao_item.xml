@@ -165,7 +165,7 @@
                     android:layout_height="18dip"
                     android:layout_centerVertical="true"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/user_defaut_avatar" />
+                    android:src="@drawable/default_image_tou" />
 
                 <TextView
                     android:id="@+id/tv_my_name"

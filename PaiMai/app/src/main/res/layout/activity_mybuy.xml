@@ -24,7 +24,7 @@
             android:layout_height="70dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="30dip"
-            android:src="@drawable/default_image" />
+            android:src="@drawable/default_image_tou" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -46,7 +46,7 @@
 
             <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="30dip"
                 android:layout_marginTop="4dip">
 
                 <LinearLayout
@@ -58,7 +58,7 @@
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:paddingBottom="3dip"
-                    android:paddingLeft="40dip"
+                    android:paddingLeft="30dip"
                     android:paddingRight="8dip"
                     android:paddingTop="3dip"
                     android:visibility="gone">
@@ -74,7 +74,7 @@
                         android:id="@+id/iv_share"
                         android:layout_width="15dip"
                         android:layout_height="15dip"
-                        android:layout_marginLeft="20dip"
+                        android:layout_marginLeft="10dip"
                         android:src="@drawable/commen_share_icon" />
 
 
@@ -82,12 +82,11 @@
 
                 <ImageView
                     android:id="@+id/iv_exland_icon"
-                    android:layout_width="23dip"
-                    android:layout_height="22dip"
+                    android:layout_width="25dip"
+                    android:layout_height="25dip"
                     android:layout_gravity="center_vertical"
-                    android:layout_marginLeft="10dip"
                     android:background="@drawable/shape_white_oval"
-                    android:padding="5dip"
+                    android:padding="1dip"
                     android:src="@drawable/icon_money_expand" />
             </FrameLayout>
 

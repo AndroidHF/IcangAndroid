@@ -3,6 +3,7 @@ package com.buycolle.aicang.ui.fragment;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,10 +16,12 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -29,20 +32,25 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
-import com.bigkoo.pickerview.TimePickerView;
+import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.api.AppUrl;
 import com.buycolle.aicang.api.callback.ResultCallback;
 import com.buycolle.aicang.api.request.OkHttpRequest;
+import com.buycolle.aicang.bean.HomeTopAddBeanNew;
 import com.buycolle.aicang.bean.PostAddressInfo;
 import com.buycolle.aicang.bean.PostImageBean;
 import com.buycolle.aicang.event.EditPostEvent;
 import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.event.PublicGoodEvent;
 import com.buycolle.aicang.event.TobeSallerEvent;
+import com.buycolle.aicang.ui.activity.ChangJianQuestionActivity;
 import com.buycolle.aicang.ui.activity.FaHuoTimeActivity;
+import com.buycolle.aicang.ui.activity.PaiMaiEndTimeActivity;
+import com.buycolle.aicang.ui.activity.PaiMaiFaHuoZhiDaoActivity;
+import com.buycolle.aicang.ui.activity.PaiMaiJiaoYiLiuChengActivity;
 import com.buycolle.aicang.ui.activity.ToBeSallerActivity;
 import com.buycolle.aicang.ui.activity.comment.CommentCropImageActivity;
 import com.buycolle.aicang.ui.activity.post.YunFeiActivity;
@@ -51,22 +59,25 @@ import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinTypesActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
+import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.ImageUtils;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.buycolle.aicang.util.superlog.KLog;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -178,13 +189,27 @@ public class PostFragment extends BaseFragment {
     @Bind(R.id.et_input_good_desc)
     EditText etInputGoodDesc;
 
+    //add by hufeng:顶部的图片
+    @Bind(R.id.iv_top_icon)
+    ImageView iv_top_icon;
+
+    //add by hufeng :出品界面增加的三个按钮：交易流程、发货指导、常见问题
+    @Bind(R.id.tv_jiaoyi_liucheng)
+    TextView tv_jiaoyi_liucheng;//交易流程
+
+    @Bind(R.id.tv_fahuo_zhidao)
+    TextView tv_fahuo_zhidao;//发货指导
+
+    @Bind(R.id.tv_changjianwenti)
+    TextView tv_changjianwenti;//常见问题
+
     private GalleryAdapter mAdapter;
 
 
     private ArrayList<PostImageBean> postImageBeans;
     private PostImageBean mainImageBean = new PostImageBean();
 
-    TimePickerView pvTime;
+    //TimePickerView pvTime;
 
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
@@ -192,11 +217,12 @@ public class PostFragment extends BaseFragment {
 
     private String good_type = "";//商品类型
     private String good_status = "";//商品状态 id
-    private String good_end_time = "";//结束时间
+    //private String good_end_time = "";//结束时间
     private String good_yunfei = "";//承担运费方
     private String fahou_city = "";//发货地址 市
     private String fahou_province = "";//发货地址 省
     private String good_fahuo_time = "";//发货时间
+    private String paimai_end_time = "";//拍卖结束时间
 
     private Uri photoUri;
     private static String recentPicPath;//当前拍照的路径
@@ -214,6 +240,7 @@ public class PostFragment extends BaseFragment {
     private final int REQUEST_GOOD_STATUS = 2000;
     private final int REQUEST_GOOD_YUNFEI_CHENGDAN = 3000;
     private final int REQUEST_GOOD_FAHUO_TIME = 4000;
+    private final int REQUEST_GOOD_PAIMAI_END_TIME = 5000;
 
 
     //登录触发
@@ -224,16 +251,22 @@ public class PostFragment extends BaseFragment {
             initSallerView(false);
         }
         initAddressInfo();
+        //loadTopAds();
+
     }
 
     //发布拍品触发 更新发布的 默认地址信息
     public void onEventMainThread(PublicGoodEvent event) {
         initAddressInfo();
+        //loadTopAds();
+
     }
 
     //发布拍品触发 更新发布的 默认地址信息
     public void onEventMainThread(EditPostEvent event) {
         initAddressInfo();
+        //loadTopAds();
+
     }
 
     //成为卖家事件
@@ -335,6 +368,71 @@ public class PostFragment extends BaseFragment {
         }
     }
 
+    /**
+     * add by 胡峰
+     * banner图的获取
+     * @param savedInstanceState
+     *
+     *
+     */
+
+    private ACache aCache;
+    private ArrayList<HomeTopAddBeanNew> homeTopAddBeens;
+    private HomeTopAddBeanNew homeTopAddBeanNew;
+    private void loadTopAds() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (mApplication.isLogin()) {
+                jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+                Log.i("sessionid_banner_icon",LoginConfig.getUserInfo(mContext).getSessionid());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.appbanner_getsellerlistbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        JSONArray jsonArray = resultObj.getJSONArray("rows");
+                        if (jsonArray.length() > 0) {
+                            aCache.put(Constans.TAG_TOBE_SALLER_TOP_ADS, resultObj);
+                            ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
+                            }.getType());
+                            for (Iterator iterator = homarrays.iterator(); iterator.hasNext();) {
+                                HomeTopAddBeanNew homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
+                                Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
+                                mApplication.setImages(homeTopAddBeanNew.getBanner_icon(), iv_top_icon);
+                            }
+
+                            WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                            int width = windowManager.getDefaultDisplay().getWidth();
+                            Log.i("width", width + "");
+                            ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
+                            layoutParams.height = width / 3;//将高度设置为宽度的三分之一
+                            Log.i("height",layoutParams.height + "");
+                            iv_top_icon.setLayoutParams(layoutParams);
+                        }
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                UIHelper.t(mContext, R.string.net_error);
+            }
+        });
+
+    }
 
     @OnClick(R.id.iv_fisrt)
     public void selectFirstImg() {
@@ -383,6 +481,7 @@ public class PostFragment extends BaseFragment {
         super.onCreate(savedInstanceState);
         EventBus.getDefault().register(this);
         postImageBeans = new ArrayList<>();
+        aCache = ACache.get(mContext);
     }
 
     @Nullable
@@ -390,6 +489,53 @@ public class PostFragment extends BaseFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.frag_post, container, false);
         ButterKnife.bind(this, view);
+        /**
+         * add by :胡峰
+         * 对顶部图片的宽度做修改
+         */
+//        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+//        int width = windowManager.getDefaultDisplay().getWidth();
+//        Log.i("width", width + "");
+//        ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
+//        layoutParams.height = width/3;//将高度设置为宽度的三分之一
+//        Log.i("height",layoutParams.height+"");
+//        iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
+        /**
+         * add by :胡峰
+         * 对顶部图片的宽度做修改
+         */
+        JSONObject topaAdsObj = aCache.getAsJSONObject(Constans.TAG_TOBE_SALLER_TOP_ADS);
+        if (topaAdsObj != null) {
+            try {
+                JSONArray adsArray = topaAdsObj.getJSONArray("rows");
+                if (adsArray.length() > 0) {
+                    aCache.put(Constans.TAG_TOBE_SALLER_TOP_ADS, adsArray);
+                    homeTopAddBeens = new Gson().fromJson(adsArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
+                    }.getType());
+
+                    WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                    int width = windowManager.getDefaultDisplay().getWidth();
+                    Log.i("width", width + "");
+                    ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
+                    layoutParams.height = width/3;//将高度设置为宽度的三分之一
+                    Log.i("height",layoutParams.height+"");
+                    //iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
+                    for (Iterator iterator = homeTopAddBeens.iterator(); iterator.hasNext();) {
+                        homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
+                        Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
+
+                    }
+                    mApplication.setImages(homeTopAddBeanNew.getBanner_icon(),iv_top_icon);
+                    iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+            loadTopAds();
+        } else {
+            loadTopAds();
+        }
         return view;
     }
 
@@ -415,6 +561,9 @@ public class PostFragment extends BaseFragment {
             initSallerView(false);
         }
         initAddressInfo();
+        loadTopAds();
+
+
     }
 
     private void initListener() {
@@ -424,6 +573,19 @@ public class PostFragment extends BaseFragment {
                 uploadMainImages(mainImageBean);
             }
         });
+
+        /**
+         * add by :胡峰
+         * 下划线和文字平滑处理
+         */
+        //add by hufeng:三个按钮的下滑线
+        tv_jiaoyi_liucheng.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_jiaoyi_liucheng.getPaint().setAntiAlias(true);//抗锯齿处理
+        tv_fahuo_zhidao.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_fahuo_zhidao.getPaint().setAntiAlias(true);
+        tv_changjianwenti.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_changjianwenti.getPaint().setAntiAlias(true);
+
 
 //        ivMainClose.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -457,27 +619,35 @@ public class PostFragment extends BaseFragment {
             }
         });
 
-        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
-        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+//        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
+//        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+//
+//            @Override
+//            public void onTimeSelect(Date date) {
+//                tv_end_time_value.setText(getTime(date));
+//                good_end_time = tv_end_time_value.getText().toString();
+//                tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
+//
+//            }
+//        });
 
-            @Override
-            public void onTimeSelect(Date date) {
-                tv_end_time_value.setText(getTime(date));
-                good_end_time = tv_end_time_value.getText().toString();
-                tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
+//        rl_end_time.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Calendar calendar = Calendar.getInstance();
+//                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
+//                pvTime.setTime(new Date());
+//                pvTime.setCyclic(false);
+//                pvTime.setCancelable(true);
+//                pvTime.show();
+//            }
+//        });
 
-            }
-        });
-
+        //change by ：胡峰，拍卖结束时间的修改
         rl_end_time.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
-                pvTime.setTime(new Date());
-                pvTime.setCyclic(false);
-                pvTime.setCancelable(true);
-                pvTime.show();
+            public void onClick(View v) {
+                UIHelper.jumpForResultByFragment(mFragment, PaiMaiEndTimeActivity.class,REQUEST_GOOD_PAIMAI_END_TIME);
             }
         });
 
@@ -615,6 +785,33 @@ public class PostFragment extends BaseFragment {
                         edt.delete(posDot + 3, posDot + 4);
                     }
                 }
+            }
+        });
+
+        /**
+         * add by hufeng :设置三个按钮的设置监听
+         * 交易流程监听
+         */
+        tv_jiaoyi_liucheng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, PaiMaiJiaoYiLiuChengActivity.class);
+            }
+        });
+
+        //发货指导监听
+        tv_fahuo_zhidao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, PaiMaiFaHuoZhiDaoActivity.class);
+            }
+        });
+
+        //常见问题监听
+        tv_changjianwenti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, ChangJianQuestionActivity.class);
             }
         });
     }
@@ -1000,6 +1197,15 @@ public class PostFragment extends BaseFragment {
 
         }
 
+        //add by :胡峰，拍品结束时间的获取逻辑
+        if (requestCode == REQUEST_GOOD_PAIMAI_END_TIME && resultCode == mActivity.RESULT_OK){
+            paimai_end_time = data.getStringExtra("value");
+            Log.i("paimai_end_time--",data.getStringExtra("value"));
+            tv_end_time_value.setText(data.getStringExtra("time"));
+            Log.i("tv_end_time_value--",data.getStringExtra("time"));
+            tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
+        }
+
         //封面图片返回来  相册
         if (requestCode == RESULT_PIC_1_GALLARY && resultCode == mActivity.RESULT_OK) {
             Uri uri = data.getData();
@@ -1224,7 +1430,7 @@ public class PostFragment extends BaseFragment {
             UIHelper.t(mContext, "请选择商品状态");
             return;
         }
-        if (TextUtils.isEmpty(good_end_time)) {
+        if (TextUtils.isEmpty(paimai_end_time)) {
             UIHelper.t(mContext, "请选择结束时间");
             return;
         }
@@ -1299,7 +1505,9 @@ public class PostFragment extends BaseFragment {
             //是否开启一口价
             jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
             //结束时间
-            jsonObject.put("pm_end_time", good_end_time);
+            //jsonObject.put("pm_end_time", good_end_time);
+            //change by :胡峰，拍卖结束时间上传
+            jsonObject.put("pm_end_type",paimai_end_time);
             //拍品介绍
             jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
             //标题
@@ -1408,11 +1616,12 @@ public class PostFragment extends BaseFragment {
 
         good_type = "";
         good_status = "";
-        good_end_time = "";
+        //good_end_time = "";
         good_yunfei = "";
         fahou_city = "";
         fahou_province = "";
         good_fahuo_time = "";
+        paimai_end_time = "";
 
         etInputGoodTitle.setText("");
         etInputGoodDesc.setText("");

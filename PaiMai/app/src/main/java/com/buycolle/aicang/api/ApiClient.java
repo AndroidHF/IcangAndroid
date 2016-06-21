@@ -78,17 +78,19 @@ public class ApiClient {
                         KLog.json(tag + "--onResponse--", resultObj);
                         try {
                             JSONObject finalResult = new JSONObject(resultObj);
-                            if (40401 == finalResult.getInt("status")) {
-                                UIHelper.t(MainApplication.getInstance(), "登录超时，请重新登录");
-                                Intent intent = new Intent(MainApplication.getInstance(), LoginActivity.class);
-                                intent.putExtra("isDoubleLogin",true);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                MainApplication.getInstance().startActivity(intent);
-                            } else if (-1 == finalResult.getInt("status")) {
-                                callback.onApiSuccess(resultObj);
-                            } else {
-                                callback.onApiSuccess(resultObj);
-                            }
+                           if (finalResult != null){
+                               if (40401 == finalResult.getInt("status")) {
+                                   UIHelper.t(MainApplication.getInstance(), "登录超时，请重新登录");
+                                   Intent intent = new Intent(MainApplication.getInstance(), LoginActivity.class);
+                                   intent.putExtra("isDoubleLogin",true);
+                                   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                   MainApplication.getInstance().startActivity(intent);
+                               } else if (-1 == finalResult.getInt("status")) {
+                                   callback.onApiSuccess(resultObj);
+                               } else {
+                                   callback.onApiSuccess(resultObj);
+                               }
+                           }
                         } catch (JSONException e) {
                             UIHelper.t(MainApplication.getInstance(), "服务器返回解析错误");
                             e.printStackTrace();
@@ -1045,5 +1047,13 @@ public class ApiClient {
     public void login_updateloginpwd(JSONObject data, ApiCallback callback) {
         post(callback, AppUrl.LOGIN_UPDATELOGINPWD, data, "修改密码");
     }
+
+    /**
+     * 作者：胡峰
+     * 传递解锁优惠码的订单信息
+     */
+//    public void coupon_failNotifyByApp(JSONObject data,ApiCallback callback){
+//        post(callback,AppUrl.COUPON_FAILNOTIFYBYAPP,data,"解锁优惠码");
+//    }
 
 }

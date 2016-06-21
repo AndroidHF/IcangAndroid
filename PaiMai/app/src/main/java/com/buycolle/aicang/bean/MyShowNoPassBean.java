@@ -32,11 +32,20 @@ public class MyShowNoPassBean {
     private int comment_count;
     private String cover_pic;
     private String create_date;
+    private String last_update_date;
     private int item_status;
     private int show_id;
     private String title;
     private String user_avatar;
     private String user_nick;
+
+    public String getLast_update_date() {
+        return last_update_date;
+    }
+
+    public void setLast_update_date(String last_update_date) {
+        this.last_update_date = last_update_date;
+    }
 
     public String getCate_icon() {
         return cate_icon;

@@ -19,6 +19,7 @@ public class ShowMenuDialog extends Dialog implements View.OnClickListener {
     private Context mContext;
     private Activity mActivity;
 
+    private LinearLayout ll_show_menu_all;
     private LinearLayout ll_show_menu_1;
     private LinearLayout ll_show_menu_2;
     private LinearLayout ll_show_menu_3;
@@ -47,6 +48,7 @@ public class ShowMenuDialog extends Dialog implements View.OnClickListener {
         w.setAttributes(lp);
         this.setCanceledOnTouchOutside(true);
         View view = View.inflate(context, R.layout.dialog_show_menu, null);
+        ll_show_menu_all = (LinearLayout) view.findViewById(R.id.ll_show_menu_all);
         ll_show_menu_1 = (LinearLayout) view.findViewById(R.id.ll_show_menu_1);
         ll_show_menu_2 = (LinearLayout) view.findViewById(R.id.ll_show_menu_2);
         ll_show_menu_3 = (LinearLayout) view.findViewById(R.id.ll_show_menu_3);
@@ -60,6 +62,7 @@ public class ShowMenuDialog extends Dialog implements View.OnClickListener {
         this.setContentView(view);
 
         ll_show_menu.setOnClickListener(this);
+        ll_show_menu_all.setOnClickListener(this);
         ll_show_menu_1.setOnClickListener(this);
         ll_show_menu_2.setOnClickListener(this);
         ll_show_menu_3.setOnClickListener(this);
@@ -74,6 +77,12 @@ public class ShowMenuDialog extends Dialog implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_show_menu_all:
+                if (callBack != null) {
+                    dismiss();
+                    callBack.action(0);
+                }
+                break;
             case R.id.ll_show_menu_1:
                 if (callBack != null) {
                     dismiss();

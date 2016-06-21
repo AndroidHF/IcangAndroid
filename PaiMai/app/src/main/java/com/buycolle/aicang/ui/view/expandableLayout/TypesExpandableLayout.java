@@ -108,8 +108,8 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 R.drawable.show_menu_2,//
                 R.drawable.show_menu_3,//
                 R.drawable.show_menu_4,//
-                R.drawable.show_menu_5,//
                 R.drawable.show_menu_6,//
+                R.drawable.show_menu_5,//
                 R.drawable.show_menu_7,//
                 R.drawable.show_menu_8,//
                 R.drawable.show_menu_9,//
@@ -129,8 +129,8 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 R.drawable.show_menu_2,//
                 R.drawable.show_menu_3,//
                 R.drawable.show_menu_4,//
-                R.drawable.show_menu_5,//
                 R.drawable.show_menu_6,//
+                R.drawable.show_menu_5,//
                 R.drawable.show_menu_7,//
                 R.drawable.show_menu_8,//
                 R.drawable.show_menu_9,//
@@ -139,8 +139,8 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 R.drawable.show_menu_2_sel,//
                 R.drawable.show_menu_3_sel,//
                 R.drawable.show_menu_4_sel,//
-                R.drawable.show_menu_5_sel,//
                 R.drawable.show_menu_6_sel,//
+                R.drawable.show_menu_5_sel,//
                 R.drawable.show_menu_7_sel,//
                 R.drawable.show_menu_8_sel,//
                 R.drawable.show_menu_9_sel,//
@@ -209,8 +209,8 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
         typesImages.add(iv_type_2);
         typesImages.add(iv_type_3);
         typesImages.add(iv_type_4);
-        typesImages.add(iv_type_5);
         typesImages.add(iv_type_6);
+        typesImages.add(iv_type_5);
         typesImages.add(iv_type_7);
         typesImages.add(iv_type_8);
         typesImages.add(iv_type_9);
@@ -358,10 +358,10 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 selectIndex(3);
                 break;
             case R.id.iv_type_5:
-                selectIndex(4);
+                selectIndex(5);
                 break;
             case R.id.iv_type_6:
-                selectIndex(5);
+                selectIndex(4);
                 break;
             case R.id.iv_type_7:
                 selectIndex(6);

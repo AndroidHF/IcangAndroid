@@ -10,8 +10,16 @@ android {
 
     signingConfigs {
         debug {
+            keyAlias 'jiwa'
+            keyPassword '123456'
+            storeFile file('D:/android/PaiMai/app/JW_key_Store')
+            storePassword '123456'
         }
         release {
+            keyAlias 'jiwa'
+            keyPassword '123456'
+            storeFile file('D:/android/PaiMai/app/JW_key_Store')
+            storePassword '123456'
         }
     }
 
@@ -26,6 +34,17 @@ android {
             //设置支持的SO库架构
             abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
         }
+
+        /***
+         * add by:胡峰，个推的相关配置
+         */
+        manifestPlaceholders = [
+                GETUI_APP_ID : "4EyTFkGVQR6I03A8dmmOM1",
+                GETUI_APP_KEY : "NUgRFCapay7cRGYOuU9RF2",
+                GETUI_APP_SECRET : "A0JdVW1nv58suMIpu3nVi6",
+                //PACKAGE_NAME : applicationId
+                PACKAGE_NAME:"com.buycolle.aicang"
+        ]
     }
     // 移除lint检查的error
     lintOptions {
@@ -71,7 +90,7 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:support-v4:22.1.0'
@@ -91,4 +110,13 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.14'
     compile project(':cropper')
+}
+/***
+ * add by :胡峰，个推的相关配置
+ */
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.getui:sdk:2.8.1.0'
+    compile 'com.getui:ext:2.0.3'
+    compile 'com.android.support:support-v4:+'
 }

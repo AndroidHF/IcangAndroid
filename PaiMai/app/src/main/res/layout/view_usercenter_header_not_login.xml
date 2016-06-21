@@ -18,7 +18,7 @@
             android:layout_height="90dip"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dip"
-            android:src="@drawable/user_defaut_avatar" />
+            android:src="@drawable/default_image_touxiang" />
 
         <RelativeLayout
             android:id="@+id/rl_action_lay"
@@ -82,7 +82,7 @@
             android:layout_height="90dip"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dip"
-            android:src="@drawable/user_defaut_avatar" />
+            android:src="@drawable/default_image_tou"/>
 
         <TextView
             android:id="@+id/tv_user_name"

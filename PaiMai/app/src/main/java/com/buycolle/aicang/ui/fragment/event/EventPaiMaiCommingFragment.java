@@ -257,6 +257,9 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
                 holder.tv_hour = (TextView) convertView.findViewById(R.id.tv_hour);
                 holder.tv_min = (TextView) convertView.findViewById(R.id.tv_min);
                 holder.tv_secs = (TextView) convertView.findViewById(R.id.tv_secs);
+
+                holder.tv_yikoujia_biaoshi = (TextView) convertView.findViewById(R.id.yikoujia_biaoshi);//一口价标识
+                holder.tv_qipaijia_biaoshi = (TextView) convertView.findViewById(R.id.qipaijia_biaoshi);//起拍价标识
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -265,9 +268,18 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
 
             final EventPaiMaiIngBean myBuyPaiMainIngBean = mySaleMainIngBeans.get(position);
             holder.tv_title.setText(myBuyPaiMainIngBean.getProduct_title());
+            //change by :胡峰，默认图片的修改
+            mApplication.setShowImages(myBuyPaiMainIngBean.getCover_pic(), holder.iv_cover);
 
-            mApplication.setImages(myBuyPaiMainIngBean.getCover_pic(), holder.iv_cover);
+
+            //add by 胡峰：即将进行的拍卖会列表的星级处理
+            ViewGroup.LayoutParams layoutParams = holder.iv_rate.getLayoutParams();
+            layoutParams.width = 79;
+            layoutParams.height = 40;
+            holder.iv_rate.setLayoutParams(layoutParams);
             mApplication.setImages(myBuyPaiMainIngBean.getRaretag_icon(), holder.iv_rate);
+
+
             String[] times = StringFormatUtil.getTimeFromInt(myBuyPaiMainIngBean.getTime() / 1000);
 
             holder.iv_notice.setVisibility(View.VISIBLE);
@@ -310,10 +322,18 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
             holder.iv_rate.setVisibility(View.VISIBLE);
             holder.ll_finish_time.setVisibility(View.GONE);
             holder.tv_daojishi_title.setText("拍卖倒计时");
-            holder.tv_pai_count.setText("----");
-            holder.tv_yikoujia_value.setText("------");
-            holder.tv_jiage_title.setText("现价");
-            holder.tv_jiage_value.setText("------");
+            holder.tv_pai_count.setText("——");
+            holder.tv_yikoujia_biaoshi.setVisibility(View.GONE);
+            holder.tv_yikoujia_value.setTextColor(mContext.getResources().getColor(R.color.black_tv));
+            holder.tv_yikoujia_value.setText("无");
+            //holder.tv_jiage_title.setText("现价");
+            //change by:胡峰，将"现价"改为“起拍价”
+            holder.tv_jiage_title.setText("起拍价");
+            //change by :胡峰，即将进行的拍卖，起拍价动态取得
+            //holder.tv_jiage_value.setText("￥1");
+            //holder.tv_jiage_value.setText("￥"+myBuyPaiMainIngBean.getBegin_auct_price());
+            holder.tv_qipaijia_biaoshi.setVisibility(View.VISIBLE);
+            holder.tv_jiage_value.setText(myBuyPaiMainIngBean.getBegin_auct_price());
 //            holder.ll_main.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View view) {
@@ -345,6 +365,8 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
             TextView tv_hour;
             TextView tv_min;
             TextView tv_secs;
+            TextView tv_yikoujia_biaoshi;
+            TextView tv_qipaijia_biaoshi;
         }
 
     }

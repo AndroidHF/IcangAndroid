@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
 import com.bumptech.glide.request.target.ImageViewTarget;
@@ -294,14 +293,31 @@ public class MainApplication extends MultiDexApplication {
                 .into(imageView);
     }
 
-    public void setImagesByBitmap(String url, final ImageView imageView, int w, int h) {
+    /**
+     * add by :胡峰
+     * 晒物和竞拍会的默认首图加载时候的图片加载方法
+     * @param url
+     * @param imageView
+     */
+    public void setShowImages(String url, final ImageView imageView) {
         Glide.with(this)
                 .load(url)
-                .dontAnimate()
                 .fitCenter()
-                .placeholder(R.drawable.default_image)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .override(w, h)
+                .dontAnimate()
+                .placeholder(R.drawable.default_image_show)
+                .into(imageView);
+    }
+
+    /**
+     * add by :胡峰
+     * 头像的处理
+     */
+    public void setTouImages(String url,final ImageView imageView){
+        Glide.with(this)
+                .load(url)
+                .fitCenter()
+                .dontAnimate()
+                .placeholder(R.drawable.default_image_tou)
                 .into(imageView);
     }
 

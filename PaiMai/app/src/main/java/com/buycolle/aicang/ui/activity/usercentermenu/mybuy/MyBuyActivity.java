@@ -210,7 +210,9 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         vpMainContainer.setAdapter(pagerAdapter);
         vpMainContainer.setOffscreenPageLimit(fragList.size() - 1);
         vpMainContainer.setCurrentItem(0);
-        mApplication.setImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
+        //mApplication.setImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
+        //change by :胡峰，头像的处理
+        mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(),profileImage);
         tvName.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
 
 
@@ -250,7 +252,8 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
                     if (JSONUtil.isOK(resultObj)) {
                         JSONObject infosObj = resultObj.getJSONObject("infos");
                         cost = infosObj.getInt("purchase_cost");
-                        tvTotalCost.setText("总计消费 " + StringFormatUtil.getDoubleFormatNew(infosObj.getString("purchase_cost")) + "元");
+                        tvTotalCost.setText("总计剁手 " + StringFormatUtil.getDoubleFormatNew(infosObj.getString("purchase_cost")) + "元");
+                        //tvTotalCost.setText("总计消费 " + 50000 + "元");
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                     }

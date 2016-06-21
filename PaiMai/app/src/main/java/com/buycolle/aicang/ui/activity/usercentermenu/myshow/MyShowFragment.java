@@ -266,10 +266,12 @@ public class MyShowFragment extends BaseFragment {
             holder.ll_status_myshow.setVisibility(View.VISIBLE);
             mApplication.setImages(myShowPassBean.getCate_icon(), holder.iv_type_icon);
             holder.iv_type_name.setText(myShowPassBean.getCate_name());
-            holder.tv_time.setText(myShowPassBean.getCreate_date());
+            holder.tv_time.setText(myShowPassBean.getLast_update_date());
             mApplication.setImages(myShowPassBean.getCover_pic(), holder.iv_show_main);
             holder.tv_show_content.setText(myShowPassBean.getTitle());
-            mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
+            //mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
+            //change by :胡峰，头像的修改
+            mApplication.setTouImages(myShowPassBean.getUser_avatar(),holder.iv_user_image);
             holder.tv_user_name.setText(myShowPassBean.getUser_nick());
             holder.tv_comment_content.setText(myShowPassBean.getComment_count() + "");
             holder.tv_like_content.setText(myShowPassBean.getZ_count() + "");

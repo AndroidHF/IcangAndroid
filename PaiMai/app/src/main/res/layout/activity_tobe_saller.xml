@@ -26,7 +26,7 @@
             <com.buycolle.aicang.ui.view.autoscrollviewpager.AutoScrollViewPager
                 android:id="@+id/convenientBanner"
                 android:layout_width="match_parent"
-                android:layout_height="160dip"
+                android:layout_height="wrap_content"
                 android:background="@color/black_tv" />
 
             <LinearLayout
@@ -267,7 +267,7 @@
                     <ImageView
                         android:layout_width="18dip"
                         android:layout_height="18dip"
-                        android:src="@drawable/paimai_xieyi_icon" />
+                        android:src="@drawable/paimai_jiaoyi_liucheng" />
 
                     <TextView
                         android:id="@+id/tv_jiaoyi_liucheng"
@@ -279,7 +279,7 @@
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>
-
+<!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="20dip"
@@ -302,7 +302,7 @@
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>
-
+-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="20dip"

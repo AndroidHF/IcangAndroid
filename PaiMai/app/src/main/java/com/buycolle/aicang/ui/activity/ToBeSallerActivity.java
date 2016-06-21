@@ -1,15 +1,20 @@
 package com.buycolle.aicang.ui.activity;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -80,8 +85,8 @@ public class ToBeSallerActivity extends BaseActivity {
     RelativeLayout rlAddres;
     @Bind(R.id.tv_jiaoyi_liucheng)
     TextView tvJiaoyiLiucheng;
-    @Bind(R.id.tv_fahuo_zhidao)
-    TextView tvFahuoZhidao;
+//    @Bind(R.id.tv_fahuo_zhidao)
+//    TextView tvFahuoZhidao;
     @Bind(R.id.tv_kuaidi_jubao)
     TextView tvKuaidiJubao;
     @Bind(R.id.btn_save)
@@ -140,6 +145,17 @@ public class ToBeSallerActivity extends BaseActivity {
                 if (adsArray.length() > 0) {
                     homeTopAddBeens = new Gson().fromJson(adsArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
                     }.getType());
+                    /**
+                     * add by :胡峰
+                     * 验证卖家身份界面中的banner图的比例设置为3：1
+                     */
+                    WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+                    int width = windowManager.getDefaultDisplay().getWidth();
+                    Log.i("seller---width", width + "");
+                    ViewGroup.LayoutParams layoutParams = viewPager.getLayoutParams();//获取当前的控件的参数
+                    layoutParams.height = width/3;//将高度设置为宽度的三分之一
+                    Log.i("seller---height",layoutParams.height+"");
+                    viewPager.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
                     viewPager.setAdapter(new HomeAddImagePagerAdapter(mActivity, homeTopAddBeens).setInfiniteLoop(false));
                     viewPager.setInterval(5000);
                     viewPager.startAutoScroll();
@@ -260,18 +276,31 @@ public class ToBeSallerActivity extends BaseActivity {
             }
         });
 
+        /**
+         * change by :胡峰
+         * 发货指导去掉
+         */
         //发货知道
-        tvFahuoZhidao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                UIHelper.jump(mActivity,PaiMaiFaHuoZhiDaoActivity.class);
-            }
-        });
+//        tvFahuoZhidao.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                UIHelper.jump(mActivity,PaiMaiFaHuoZhiDaoActivity.class);
+//            }
+//        });
+
+        /**
+         * add by :胡峰
+         * 添加下划线，和文字平滑处理
+         */
+        tvKuaidiJubao.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下滑线
+        tvKuaidiJubao.getPaint().setAntiAlias(true);//抗锯齿处理
+        tvJiaoyiLiucheng.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);
+        tvJiaoyiLiucheng.getPaint().setAntiAlias(true);
         //常见问题
         tvKuaidiJubao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                UIHelper.jump(mActivity,TobeChangJianQuestionActivity.class);
+                UIHelper.jump(mActivity,ChangJianQuestionActivity.class);
             }
         });
         //交易流程

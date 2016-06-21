@@ -252,7 +252,9 @@ public class MyAskFragment extends BaseFragment {
                 holder.tv_other_asw.setText(SmileUtils.getSmiledCommentText(mContext,myAskAnGetAskBean.getSubVec().get(0).getContext()));
 
 
-                mApplication.setImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(),holder.profile_image);
+                //mApplication.setImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(),holder.profile_image);
+                //change by :胡峰。头像的处理
+                mApplication.setTouImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(),holder.profile_image);
                 holder.tv_other_name.setText(myAskAnGetAskBean.getSubVec().get(0).getC_user_nick());
                 holder.tv_other_asw_time.setText(myAskAnGetAskBean.getSubVec().get(0).getCreate_date());
             }else{

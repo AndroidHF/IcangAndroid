@@ -11,6 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -351,6 +352,13 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         tvKuaidiPaimaixieyi.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tvKuaidiJubao.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tvKuaidiChangjianwenti.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        /***
+         * add by :胡峰
+         * 文字的平滑处理
+         */
+        tvKuaidiPaimaixieyi.getPaint().setAntiAlias(true);
+        tvKuaidiJubao.getPaint().setAntiAlias(true);
+        tvKuaidiChangjianwenti.getPaint().setAntiAlias(true);
         loadData(false);
         //获取举报类型
         loadJuBao();
@@ -392,18 +400,55 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     @Override
                     public void share(int position) {
                         switch (position) {
+//                            case 1:
+//                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+//                                break;
+//                            case 2:
+//                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+//                                break;
+//                            case 3:
+//                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
+//                                break;
+//                            case 4:
+//                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL, paiPinDetailBean.getProduct_title());
+//                                break;
+                            /***
+                             * change by :胡峰
+                             * 分享接口的修改
+                             */
                             case 1:
-                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
-                                break;
+                                if (paiPinDetailBean.getEnt_id() == 1){
+                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+                                    break;
+                                }else {
+                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" +paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+                                    break;
+                                }
+
                             case 2:
-                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
-                                break;
+                                if (paiPinDetailBean.getEnt_id() == 1){
+                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
+                                    break;
+                                }else {
+                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" + paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
+                                    break;
+                                }
                             case 3:
-                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
-                                break;
+                                if (paiPinDetailBean.getEnt_id() == 1){
+                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/item.html?" + product_id, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
+                                    break;
+                                }else {
+                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/event.html?" + product_id, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
+                                    break;
+                                }
                             case 4:
-                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL, paiPinDetailBean.getProduct_title());
-                                break;
+                                if (paiPinDetailBean.getEnt_id() == 1){
+                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/item.html?" + product_id, paiPinDetailBean.getProduct_title());
+                                    break;
+                                }else {
+                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/event.html?" + product_id, paiPinDetailBean.getProduct_title());
+                                    break;
+                                }
                         }
                     }
                 }).show();
@@ -414,8 +459,8 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         tvKuaidiPaimaixieyi.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // TODO: 16/3/10 拍卖协议
-                UIHelper.jump(mActivity, PaiMaiDealActivity.class);
+                // TODO: 16/3/10 交易流程
+                UIHelper.jump(mActivity, PaiMaiJiaoYiLiuChengActivity.class);
             }
         });
         tvKuaidiJubao.setOnClickListener(new View.OnClickListener() {
@@ -789,17 +834,36 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
 
             }
         });
+        /**
+         * change by :胡峰
+         * 对星级图片的处理
+         */
+        if (isEvent){
+            ViewGroup.LayoutParams layoutParams = ivRange.getLayoutParams();
+            layoutParams.width = 79;
+            layoutParams.height = 40;
+            ivRange.setLayoutParams(layoutParams);
+            mApplication.setImages(paiPinDetailBean.getRaretag_icon(), ivRange);
+        }else {
+            ViewGroup.LayoutParams layoutParams = ivRange.getLayoutParams();
+            layoutParams.width = 63;
+            layoutParams.height = 37;
+            ivRange.setLayoutParams(layoutParams);
+            mApplication.setImages(paiPinDetailBean.getRaretag_icon(), ivRange);
+        }
 
-        mApplication.setImages(paiPinDetailBean.getRaretag_icon(), ivRange);
+
         tvPaipinName.setText(paiPinDetailBean.getProduct_title());
         tvPaipinDesc.setText(paiPinDetailBean.getSt_name());
         tvShangpinValue.setText(paiPinDetailBean.getAll_cate_name());
         tvPaipinPaiCount.setText("" + paiPinDetailBean.getJp_count());
 
         if (Double.valueOf(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getMax_pric())) > Double.valueOf(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()))) {
-            tvPaipinValueNow.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getMax_pric()));
+            //tvPaipinValueNow.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getMax_pric()));
+            tvPaipinValueNow.setText(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getMax_pric()));
         } else {
-            tvPaipinValueNow.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()));
+            //tvPaipinValueNow.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()));
+            tvPaipinValueNow.setText(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()));
         }
         if (!isFinish) {
             ll_jubao.setVisibility(View.VISIBLE);
@@ -809,7 +873,8 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     tv_jiage_change.setText("现价");
                     rl_yikoujia.setVisibility(View.GONE);
                     tvYikoujiaTitle.setText("起拍价");
-                    tvPaipinValueYikoujia.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()));
+                    //tvPaipinValueYikoujia.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()));
+                    tvPaipinValueYikoujia.setText(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()));
                 } else {
                     tv_jiage_change.setText("起拍价");
 //                    ll_jubao.setVisibility(View.GONE);
@@ -828,7 +893,9 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     tv_jiage_change.setText("起拍价");
                 }
                 tvYikoujiaTitle.setText("一口价");
-                tvPaipinValueYikoujia.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBut_it_price()));
+                //tvPaipinValueYikoujia.setText("￥" + StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBut_it_price()));
+                tvPaipinValueYikoujia.setText(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBut_it_price()));
+
             }
         } else {
             ll_jubao.setVisibility(View.GONE);
@@ -906,7 +973,9 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         }
 
         //出品人信息
-        mApplication.setImages(paiPinDetailBean.getUser_avatar(), profileImage);
+        //mApplication.setImages(paiPinDetailBean.getUser_avatar(), profileImage);
+        //change by :胡峰，头像的处理
+        mApplication.setTouImages(paiPinDetailBean.getUser_avatar(),profileImage);
         tvKuaidiUsername.setText(paiPinDetailBean.getUser_name());
         tvKuaidiUserCommentGood.setText(paiPinDetailBean.getGood_comment() + "");
         tvKuaidiUserCommentBad.setText(paiPinDetailBean.getBad_comment() + "");

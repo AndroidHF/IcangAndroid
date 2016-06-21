@@ -55,9 +55,9 @@ public class HomeFilterFrament extends BaseFragment {
         } else if ("书籍".equals(title)) {
             return R.drawable.show_menu_4_sel;
         } else if ("手办".equals(title)) {
-            return R.drawable.show_menu_5_sel;
-        } else if ("周边".equals(title)) {
             return R.drawable.show_menu_6_sel;
+        } else if ("周边".equals(title)) {
+            return R.drawable.show_menu_5_sel;
         } else if ("演出".equals(title)) {
             return R.drawable.show_menu_7_sel;
         } else if ("COS".equals(title)) {

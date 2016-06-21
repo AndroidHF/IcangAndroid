@@ -268,7 +268,9 @@ public class MyShouDaoAskFragment extends BaseFragment {
 //                holder.tv_my_asw.setText(myAskAnGetAskBean.getSubVec().get(0).getContext());
                 holder.tv_my_asw.setText(SmileUtils.getSmiledCommentText(mContext, myAskAnGetAskBean.getSubVec().get(0).getContext()));
 
-                mApplication.setImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(), holder.profile_image);
+                //mApplication.setImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(), holder.profile_image);
+                //change by :胡峰，头像的处理
+                mApplication.setTouImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(),holder.profile_image);
                 holder.tv_my_name.setText(myAskAnGetAskBean.getSubVec().get(0).getC_user_nick());
                 holder.tv_my_time.setText(myAskAnGetAskBean.getSubVec().get(0).getCreate_date());
             } else {

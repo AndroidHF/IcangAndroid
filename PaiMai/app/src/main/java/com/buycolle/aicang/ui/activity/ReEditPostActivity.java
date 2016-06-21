@@ -13,6 +13,7 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,7 +57,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -206,6 +206,7 @@ public class ReEditPostActivity extends BaseActivity {
     private final int REQUEST_GOOD_STATUS = 2000;
     private final int REQUEST_GOOD_YUNFEI_CHENGDAN = 3000;
     private final int REQUEST_GOOD_FAHUO_TIME = 4000;
+    private final int REQUEST_GOOD_PAIMAI_END_TIME = 5000;//拍卖结束时间标识
 
 
     private int productId;
@@ -478,32 +479,42 @@ public class ReEditPostActivity extends BaseActivity {
         tvGoodsStatusValue.setTextColor(getResources().getColor(R.color.black_tv));
 
         //结束时间
-        good_end_time = paiPinDetailBean.getPm_end_time();
-        tv_end_time_value.setText(paiPinDetailBean.getPm_end_time());
-        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
-        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+//        good_end_time = paiPinDetailBean.getPm_end_time();
+//        tv_end_time_value.setText(paiPinDetailBean.getPm_end_time());
+//        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
+//        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
+//
+//            @Override
+//            public void onTimeSelect(Date date) {
+//                tv_end_time_value.setText(getTime(date));
+//                good_end_time = tv_end_time_value.getText().toString();
+//            }
+//        });
+        //change by :胡峰，拍品结束时间的修改
+        good_end_time = "";
+        tv_end_time_value.setText("请选择");
+        tv_end_time_value.setTextColor(getResources().getColor(R.color.gray_tv));
 
-            @Override
-            public void onTimeSelect(Date date) {
-                tv_end_time_value.setText(getTime(date));
-                good_end_time = tv_end_time_value.getText().toString();
-            }
-        });
 
-        tv_end_time_value.setTextColor(getResources().getColor(R.color.black_tv));
-
-
+//        rl_end_time.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Calendar calendar = Calendar.getInstance();
+//                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
+//                pvTime.setTime(new Date());
+//                pvTime.setCyclic(false);
+//                pvTime.setCancelable(true);
+//                pvTime.show();
+//            }
+//        });
         rl_end_time.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Calendar calendar = Calendar.getInstance();
-                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
-                pvTime.setTime(new Date());
-                pvTime.setCyclic(false);
-                pvTime.setCancelable(true);
-                pvTime.show();
+            public void onClick(View v) {
+                UIHelper.jumpForResult(mActivity,PaiMaiEndTimeActivity.class,REQUEST_GOOD_PAIMAI_END_TIME);
             }
         });
+
+
 
 
         //运费承担方
@@ -1149,7 +1160,7 @@ public class ReEditPostActivity extends BaseActivity {
             //是否开启一口价
             jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
             //结束时间
-            jsonObject.put("pm_end_time", good_end_time);
+            jsonObject.put("pm_end_type", good_end_time);
             //拍品介绍
             jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
             //标题
@@ -1262,6 +1273,15 @@ public class ReEditPostActivity extends BaseActivity {
             mainImageBean.setLocalPath(path);
             mainImageBean.setStatus(PostImageBean.Status.INIT);
             uploadMainImages(mainImageBean);
+        }
+
+        //add by :胡峰，拍品结束时间的获取逻辑
+        if (requestCode == REQUEST_GOOD_PAIMAI_END_TIME && resultCode == mActivity.RESULT_OK){
+            good_end_time = data.getStringExtra("value");
+            Log.i("paimai_end_time--", data.getStringExtra("value"));
+            tv_end_time_value.setText(data.getStringExtra("time"));
+            Log.i("tv_end_time_value--",data.getStringExtra("time"));
+            tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
         }
         //列表返回来  相册
         if (requestCode == RESULT_PIC_2_GALLARY && resultCode == mActivity.RESULT_OK) {

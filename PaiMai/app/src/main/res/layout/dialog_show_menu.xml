@@ -39,6 +39,29 @@
                 android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/ll_show_menu_all"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/show_menu_hight"
+                    android:gravity="left|center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="25dip">
+
+                    <ImageView
+                        android:layout_width="@dimen/show_menu_width"
+                        android:layout_height="@dimen/show_menu_width"
+                        android:src="@drawable/all_menu_show" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="18dip"
+                        android:text="全部"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/commen_tv_size" />
+                </LinearLayout>
+
+
+                <LinearLayout
                     android:id="@+id/ll_show_menu_1"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/show_menu_hight"
@@ -129,8 +152,10 @@
                         android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>
 
+
+
                 <LinearLayout
-                    android:id="@+id/ll_show_menu_5"
+                    android:id="@+id/ll_show_menu_6"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/show_menu_hight"
                     android:layout_marginTop="7dip"
@@ -147,13 +172,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dip"
-                        android:text="手办"
+                        android:text="周边"
                         android:textColor="@color/white"
                         android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:id="@+id/ll_show_menu_6"
+                    android:id="@+id/ll_show_menu_5"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/show_menu_hight"
                     android:layout_marginTop="7dip"
@@ -170,7 +195,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dip"
-                        android:text="周边"
+                        android:text="手办"
                         android:textColor="@color/white"
                         android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>

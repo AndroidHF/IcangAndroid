@@ -6,8 +6,10 @@ package com.buycolle.aicang.api;
 public class AppUrl {
 
 //    public static final String BASE_URL = "http://120.24.70.253:6080/paimais/";
-    public static final String BASE_URL = "http://120.24.70.253:6080/paimai/";
-
+//    public static final String BASE_URL = "http://120.24.70.253:6080/paimai/";
+    //public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
+    public static final String BASE_URL = "http://139.196.195.196/paimai/";//测试url
+    //public static final String BASE_URL = "http://192.168.33.22:8080/paimai/";//景旭的环境
     public static final String FILEUPLAOD = BASE_URL + "fileuplaod.up";
 
 
@@ -235,6 +237,9 @@ public class AppUrl {
         public static final String PRODUCT_GETCURPMRESULTBYAPP = BASE_URL + "product_getCurPMResultByApp.action";
     //              修改密码
         public static final String LOGIN_UPDATELOGINPWD = BASE_URL + "login_updateLoginPwd.action";
+
+    //add by hufeng :解锁优惠码传递数据
+    //public static final String COUPON_FAILNOTIFYBYAPP = BASE_URL + "coupon_failNotifyByApp.action";
 
 
 }

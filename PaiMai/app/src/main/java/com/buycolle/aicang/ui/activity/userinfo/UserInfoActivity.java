@@ -440,7 +440,9 @@ public class UserInfoActivity extends BaseActivity {
     private void initView() {
         UserBean userBean = LoginConfig.getUserInfo(mContext);
         tvUserName.setText(userBean.getUser_nick());
-        mApplication.setImages(userBean.getUser_avatar(), profileImage);
+        //mApplication.setImages(userBean.getUser_avatar(), profileImage);
+        //change by :胡峰，头像的处理
+        mApplication.setTouImages(userBean.getUser_avatar(),profileImage);
         tvQianmingValue.setText(userBean.getPerson_tip());
         if (userBean.getSex() == 1) {
             tvSexValue.setText("男");

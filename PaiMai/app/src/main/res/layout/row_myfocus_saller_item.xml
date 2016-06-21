@@ -17,7 +17,7 @@
             android:layout_width="80dip"
             android:layout_height="match_parent"
             android:layout_centerVertical="true"
-            android:src="@drawable/user_defaut_avatar" />
+            android:src="@drawable/default_image_tou" />
 
         <RelativeLayout
             android:layout_width="match_parent"

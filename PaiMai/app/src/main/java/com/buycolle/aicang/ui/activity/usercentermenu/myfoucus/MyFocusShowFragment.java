@@ -258,7 +258,9 @@ public class MyFocusShowFragment extends BaseFragment {
             holder.tv_time.setText(myShowPassBean.getCreate_date());
             mApplication.setImages(myShowPassBean.getCover_pic(), holder.iv_show_main);
             holder.tv_show_content.setText(myShowPassBean.getTitle());
-            mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
+            //mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
+            //change by :胡峰 ，头像的处理
+            mApplication.setTouImages(myShowPassBean.getUser_avatar(),holder.iv_user_image);
             holder.tv_user_name.setText(myShowPassBean.getUser_nick());
             holder.tv_comment_content.setText(myShowPassBean.getComment_count() + "");
             holder.tv_like_content.setText(myShowPassBean.getZ_count() + "");

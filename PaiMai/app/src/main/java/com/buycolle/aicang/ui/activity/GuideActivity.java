@@ -1,11 +1,15 @@
 package com.buycolle.aicang.ui.activity;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.widget.ImageView;
 
 import com.buycolle.aicang.MainActivity;
 import com.buycolle.aicang.R;
@@ -14,29 +18,36 @@ import com.buycolle.aicang.util.UIHelper;
 
 import java.util.ArrayList;
 
-/**
- * author: hufeng
- * date:2016/06/01
- * functional description:引导界面
- */
+/************************************
+ * 作者: 胡峰
+ * 时间：2016/06/13
+ * 功能:引导界面
+ ************************************/
 public class GuideActivity extends Activity implements ViewPager.OnPageChangeListener {
     //定义ViewPager对象
     private ViewPager viewPager;
-    //定义引导界面的各个view对象
-    private View view1;
-    private View view2;
-    private View view3;
-    private View view4;
     //定义一个ArrayList来存放View对象
     private ArrayList<View> list;
     //定义开始按钮对象
-    private Button btnStart;
+    private ImageView btnStart;
+
+    private View view1,view2,view3,view4;
+    private int width = 0;
+    private int height = 0;
+    private ViewGroup.LayoutParams layoutParams;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_guide);
+        WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
+        width = windowManager.getDefaultDisplay().getWidth();
+        height = windowManager.getDefaultDisplay().getHeight();
+        Log.i("width-----", width + "");
+        Log.i("height----", height + "");
+
         initView();
+
     }
 
     /**
@@ -45,13 +56,16 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
     private void initView() {
         //实例化Viewpager
         viewPager = (ViewPager) findViewById(R.id.viewpager);
-
         //实例化各个界面的布局对象
         LayoutInflater layoutInflater = LayoutInflater.from(this);
         view1 = layoutInflater.inflate(R.layout.guide_view1,null);
+
         view2 = layoutInflater.inflate(R.layout.guide_view2,null);
+
         view3 = layoutInflater.inflate(R.layout.guide_view3,null);
+
         view4 = layoutInflater.inflate(R.layout.guide_view4,null);
+
 
         //实例化ArrayList对象
         list = new ArrayList<View>();
@@ -69,7 +83,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         viewPager.setAdapter(new ViewPagerAdapter(list));
 
         //实例化开始按钮对象
-        btnStart = (Button) view4.findViewById(R.id.btnStart);
+        btnStart = (ImageView) view4.findViewById(R.id.btnStart);
 
         //给开始按钮设置监听
         btnStart.setOnClickListener(new View.OnClickListener() {
@@ -84,6 +98,7 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
 
 
     }
+
 
     /**
      *当页面滑动时候调用

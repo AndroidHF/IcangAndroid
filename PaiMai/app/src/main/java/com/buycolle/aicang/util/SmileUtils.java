@@ -24,7 +24,6 @@ import android.text.SpannableStringBuilder;
 import android.text.style.ImageSpan;
 
 import com.buycolle.aicang.R;
-import com.buycolle.aicang.util.superlog.KLog;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -131,7 +130,7 @@ public class SmileUtils {
                     Bitmap bmp = BitmapFactory.decodeResource(res, entry.getValue());
 
                     int imgSize = UIUtil.dip2px(context, 25);
-                    int imgSize11 = UIUtil.dip2px(context, 20);
+                    int imgSize11 = UIUtil.dip2px(context, 23);
 
                     spannable.setSpan(new ImageSpan(context, zoomImage(bmp, imgSize, imgSize11), ImageSpan.ALIGN_BOTTOM),
                             matcher.start(), matcher.end(),
@@ -170,8 +169,8 @@ public class SmileUtils {
                     Resources res = context.getResources();
                     Bitmap bmp = BitmapFactory.decodeResource(res, entry.getValue());
 
-                    int imgSize = UIUtil.dip2px(context, 36);
-                    int imgSizess = UIUtil.dip2px(context, 26);
+                    int imgSize = UIUtil.dip2px(context, 34);
+                    int imgSizess = UIUtil.dip2px(context, 30);
 
                     spannable.setSpan(new ImageSpan(context, zoomImage(bmp, imgSize, imgSizess), ImageSpan.ALIGN_BOTTOM),
                             matcher.start(), matcher.end(),
@@ -211,7 +210,7 @@ public class SmileUtils {
                     Bitmap bmp = BitmapFactory.decodeResource(res, entry.getValue());
 
                     int imgSize = UIUtil.dip2px(context, 30);
-                    int imgSize11 = UIUtil.dip2px(context, 23);
+                    int imgSize11 = UIUtil.dip2px(context, 27);
 
                     spannable.setSpan(new ImageSpan(context, zoomImage(bmp, imgSize, imgSize11), ImageSpan.ALIGN_BOTTOM),
                             matcher.start(), matcher.end(),
@@ -234,8 +233,6 @@ public class SmileUtils {
         float scaleWidth = ((float) newWidth) / width;
         float scaleHeight = ((float) newHeight) / height;
         matrix.postScale(scaleWidth, scaleHeight);
-        KLog.d("这里的高度是-----"+width);
-        KLog.d("这里的高度是-----"+height);
         Bitmap bitmap = Bitmap.createBitmap(bgimage, 0, 0, (int) width,
                 (int) height, matrix, true);
         return bitmap;

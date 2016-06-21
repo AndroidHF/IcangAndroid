@@ -203,7 +203,9 @@ public class MainUserCenterActivity extends BaseActivity {
 
 
     private void initUserView() {
-        mApplication.setImages(userInfo.getUser_avatar(), profileImage);
+        //mApplication.setImages(userInfo.getUser_avatar(), profileImage);
+        //change by :胡峰，头像的处理
+        mApplication.setTouImages(userInfo.getUser_avatar(),profileImage);
         tvKuaidiUsername.setText(userInfo.getUser_nick());
         tvKuaidiUserComment.setText(userInfo.getTotal_comment() + "");
         tvKuaidiUserCommentGood.setText(userInfo.getGood_comment() + "");

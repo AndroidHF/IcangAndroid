@@ -8,19 +8,19 @@ public class EventPaiMaiIngBean {
     private long time;
     private boolean isFinish;
     /**
-     * begin_auct_price : 测试内容mjmp
-     * but_it_price : 测试内容47c6
-     * cover_pic : 测试内容jh6m
-     * express_out_type : 55324
-     * jp_count : 85323
-     * max_pric : 测试内容4q97
-     * open_but_it : 73580
-     * pm_end_time : 测试内容ph67
-     * pm_start_time : 测试内容6x7u
-     * product_id : 67870
-     * product_title : 测试内容8865
-     * raretag_icon : 测试内容4ake
-     * raretag_level : 40447
+     * begin_auct_price : 起拍价价格
+     * but_it_price : 一口价价格
+     * cover_pic : 封面图
+     * express_out_type : 运费承担方：1：买家 2：卖家
+     * jp_count : 竞拍次数
+     * max_pric : 最高价
+     * open_but_it : 一口价是否开启的标识位：0：无  1：有
+     * pm_end_time : 拍卖结束时间
+     * pm_start_time : 拍卖开始时间
+     * product_id : 拍品主键id
+     * product_title : 拍品标题
+     * raretag_icon : 拍品稀有度图标
+     * raretag_level : 拍品稀有度等级
      */
 
     private String begin_auct_price;

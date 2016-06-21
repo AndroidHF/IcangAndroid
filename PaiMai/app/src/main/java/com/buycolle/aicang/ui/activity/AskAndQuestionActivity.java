@@ -369,6 +369,10 @@ public class AskAndQuestionActivity extends BaseActivity implements SmileFragmen
     }
 
     private void initTop() {
+        //add by :胡峰，拍卖会的商品问与答的图片处理
+//        if (paiPinDetailBean.getEnt_id() ==1){
+//            ivPaimai.setScaleType(ImageView.ScaleType.CENTER_CROP);
+//        }
         mApplication.setImages(paiPinDetailBean.getCover_pic(), ivPaimai);
         mApplication.setImages(paiPinDetailBean.getRaretag_icon(), ivRange);
         tvGoodTitle.setText(paiPinDetailBean.getProduct_title());

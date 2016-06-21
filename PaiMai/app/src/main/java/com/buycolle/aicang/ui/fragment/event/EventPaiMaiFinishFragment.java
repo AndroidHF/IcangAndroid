@@ -219,14 +219,25 @@ public class EventPaiMaiFinishFragment extends BaseScrollListFragment {
                 holder.tv_hour = (TextView) convertView.findViewById(R.id.tv_hour);
                 holder.tv_min = (TextView) convertView.findViewById(R.id.tv_min);
                 holder.tv_secs = (TextView) convertView.findViewById(R.id.tv_secs);
+                holder.tv_yikoujia_biaoshi = (TextView) convertView.findViewById(R.id.yikoujia_biaoshi);//一口价标识
+                holder.tv_qipaijia_biaoshi = (TextView) convertView.findViewById(R.id.qipaijia_biaoshi);//起拍价标识
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
             }
             final EventPaiMaiIngBean myBuyPaiMainIngBean = mySaleMainIngBeans.get(position);
             holder.tv_title.setText(myBuyPaiMainIngBean.getProduct_title());
-            mApplication.setImages(myBuyPaiMainIngBean.getCover_pic(), holder.iv_cover);
+            //change by :胡峰，默认加载图片的修改
+            mApplication.setShowImages(myBuyPaiMainIngBean.getCover_pic(), holder.iv_cover);
+
+            //add by 胡峰：已经结束的拍卖会列表的星级处理
+            ViewGroup.LayoutParams layoutParams = holder.iv_rate.getLayoutParams();
+            layoutParams.width = 79;
+            layoutParams.height = 40;
+            holder.iv_rate.setLayoutParams(layoutParams);
             mApplication.setImages(myBuyPaiMainIngBean.getRaretag_icon(), holder.iv_rate);
+
+
             holder.tv_start_time.setText("开始时间：" + myBuyPaiMainIngBean.getPm_start_time());
             holder.tv_end_time.setText("结束时间：" + myBuyPaiMainIngBean.getPm_end_time());
             holder.ll_time_count.setVisibility(View.GONE);
@@ -238,19 +249,29 @@ public class EventPaiMaiFinishFragment extends BaseScrollListFragment {
 
             if (myBuyPaiMainIngBean.getOpen_but_it() == 1) {//一口价
                 holder.tv_yikoujia_title.setText("一口价");
-                holder.tv_yikoujia_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
+                //holder.tv_yikoujia_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
+                holder.tv_yikoujia_biaoshi.setVisibility(View.VISIBLE);
+                holder.tv_yikoujia_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
             } else {
                 holder.tv_yikoujia_title.setText("起拍价");
-                holder.tv_yikoujia_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
+                //holder.tv_yikoujia_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
+                holder.tv_yikoujia_biaoshi.setVisibility(View.VISIBLE);
+                holder.tv_yikoujia_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
             }
             holder.tv_jiage_title.setText("成交价");
             if (Double.valueOf(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric())) > Double.valueOf(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()))) {
-                holder.tv_jiage_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric()));
+                //holder.tv_jiage_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric()));
+                holder.tv_qipaijia_biaoshi.setVisibility(View.VISIBLE);
+                holder.tv_jiage_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric()));
             } else {
                 if(myBuyPaiMainIngBean.getJp_count()==0){
-                    holder.tv_jiage_value.setText("￥" + "---");
+                    //
+                    holder.tv_qipaijia_biaoshi.setVisibility(View.GONE);
+                    holder.tv_jiage_value.setText("——");
                 }else{
-                    holder.tv_jiage_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
+                    //holder.tv_jiage_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
+                    holder.tv_qipaijia_biaoshi.setVisibility(View.VISIBLE);
+                    holder.tv_jiage_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
                 }
             }
             holder.ll_1.setBackgroundResource(R.drawable.shape_orange_black);
@@ -298,6 +319,8 @@ public class EventPaiMaiFinishFragment extends BaseScrollListFragment {
             TextView tv_hour;
             TextView tv_min;
             TextView tv_secs;
+            TextView tv_yikoujia_biaoshi;
+            TextView tv_qipaijia_biaoshi;
         }
 
     }

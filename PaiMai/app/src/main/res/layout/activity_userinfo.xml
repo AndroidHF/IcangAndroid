@@ -33,7 +33,7 @@
                     android:layout_height="90dip"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="18dip"
-                    android:src="@drawable/default_image" />
+                    android:src="@drawable/default_image_tou" />
 
                 <ImageView
                     android:layout_width="22dip"

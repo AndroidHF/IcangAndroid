@@ -44,7 +44,12 @@ public class Constans {
     public static final String APP_TX_KEY = "1105173111";
 
 
-    public static String SHARE_URL = "http://www.baidu.com";
+    //public static String SHARE_URL = "http://www.baidu.com";
+    /**
+     * change by :胡峰
+     * 分享的URL
+     */
+    public static String SHARE_URL = "http://www.buycolle.com";
 
 
     //分享我们的APP：

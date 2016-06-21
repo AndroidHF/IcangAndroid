@@ -190,13 +190,60 @@
                 </RelativeLayout>
             </LinearLayout>
 
+            <!--add by hufeng :接受协议的选择框-->
+            <RelativeLayout
+                android:id="@+id/rl_xieyi_status"
+                android:layout_width="match_parent"
+                android:layout_height="30dip"
+                android:layout_marginLeft="135px"
+                android:layout_marginTop="30px">
+
+                <CheckBox
+                    android:id="@+id/cb_xieyi_status"
+                    android:layout_width="21dip"
+                    android:layout_height="21dip"
+                    android:layout_alignParentLeft="true"
+                    android:layout_centerVertical="true"
+                    android:background="@drawable/selector_post_check_status"
+                    android:button="@null"
+                    android:checked="true" />
+
+                <TextView
+                    android:id="@+id/tv_miaosu"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="20px"
+                    android:layout_toRightOf="@id/cb_xieyi_status"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="我同意"
+                    android:textColor="@color/black"
+                    android:textSize="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_xieyi"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toRightOf="@id/tv_miaosu"
+                    android:ellipsize="end"
+                    android:singleLine="true"
+                    android:text="《会玩APP用户协议》"
+                    android:textColor="@color/tv_blue"
+                    android:textSize="16dp"
+                    android:textStyle="bold"/>
+            </RelativeLayout>
+
             <Button
                 android:id="@+id/btn_register"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/commen_btn_hight"
+                android:layout_height="43dp"
                 android:layout_marginLeft="14dip"
                 android:layout_marginRight="14dip"
-                android:layout_marginTop="40dip"
+                android:layout_marginTop="40px"
+                android:layout_marginBottom="20dp"
                 android:background="@drawable/shape_orange_black"
                 android:text="注册"
                 android:textColor="@color/black"

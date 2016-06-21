@@ -30,7 +30,7 @@
             android:visibility="gone"
             android:id="@+id/ll_maimaimai"
             android:layout_width="match_parent"
-            android:layout_height="35dip"
+            android:layout_height="50dip"
             android:layout_alignParentBottom="true"
             android:layout_gravity="bottom"
             android:layout_marginBottom="5dip"
@@ -40,13 +40,11 @@
 
             <TextView
                 android:id="@+id/tv_maimaimai"
-                android:layout_width="240dip"
+                android:layout_width="175dip"
                 android:layout_height="match_parent"
-                android:background="@drawable/maimaimai_bg"
+                android:background="@drawable/maimaimai_bg_new"
                 android:gravity="center"
-                android:text="买买买"
                 android:textColor="@color/black"
-                android:textSize="@dimen/commen_tv_size"
                 android:visibility="visible" />
 
         </LinearLayout>

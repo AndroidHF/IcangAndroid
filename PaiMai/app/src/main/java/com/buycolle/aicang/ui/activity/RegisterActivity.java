@@ -10,6 +10,7 @@ import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +20,7 @@ import android.widget.TextView;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.service.RegisterCodeTimerService;
+import com.buycolle.aicang.ui.activity.usercentermenu.setting.UserDealActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.util.Md5Util;
 import com.buycolle.aicang.util.UIHelper;
@@ -61,7 +63,11 @@ public class RegisterActivity extends BaseActivity {
     EditText etPhone;
     @Bind(R.id.et_phone_code)
     EditText etPhoneCode;
-
+    //add by hufeng :注册的协议
+    @Bind(R.id.tv_xieyi)
+    TextView tv_xieyi;//协议内容
+    @Bind(R.id.cb_xieyi_status)
+    CheckBox cb_xieyi_status;//是否选中
     private TimeHandler mCodeHandler = new TimeHandler(this);
     private Intent mIntent;
 
@@ -121,6 +127,17 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 subMit();
+            }
+        });
+
+        /**
+         * add by :胡峰
+         * app协议的监听
+         */
+        tv_xieyi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(RegisterActivity.this, UserDealActivity.class);
             }
         });
     }
@@ -196,6 +213,14 @@ public class RegisterActivity extends BaseActivity {
             btnRegister.setEnabled(true);
             return;
         }
+
+        //add by hufeng:注册协议逻辑
+        if(!cb_xieyi_status.isChecked()){
+            UIHelper.t(mContext,"您必须同意用户协议");
+            btnRegister.setEnabled(true);
+            return;
+        }
+
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("user_login_pwd", Md5Util.getEncodeByMD5(etPsw.getText().toString().trim()));

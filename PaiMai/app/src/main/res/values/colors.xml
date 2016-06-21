@@ -11,6 +11,8 @@
     <color name="black">#000000</color>
     <color name="black_tv">#272727</color>
     <color name="orange">#efd131</color>
+    <color name="orange1">#e6efd131</color>
+    <color name="orange_guide">#fad202</color>
     <color name="bg_gray">#E9E9E9</color>
     <color name="gray_tv">#7F7F7F</color>
     <color name="divider_color">#E5E5E5</color>
@@ -18,4 +20,7 @@
     <color name="c_1">#FF69B4</color>
     <color name="c_2">#6495ED</color>
     <color name="c_3">#FFBF00</color>
+    <color name="tv_blue">#0088CC</color>
+    <color name="price_red">#ff0000</color>
+    <color name="title_backgroud">#efd12f</color>
 </resources>

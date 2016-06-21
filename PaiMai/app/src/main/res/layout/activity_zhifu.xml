@@ -22,13 +22,15 @@
         android:gravity="center_vertical">
 
         <LinearLayout
+            android:id="@+id/ll_price"
             android:layout_width="wrap_content"
             android:layout_height="28dip"
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dip"
             android:background="@drawable/shape_white_black"
             android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
 
             <TextView
                 android:id="@+id/tv_price_title"
@@ -41,6 +43,38 @@
 
             <TextView
                 android:id="@+id/tv_price_value"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="18dip"
+                android:paddingRight="8dip"
+                android:textColor="@color/gray_tv"
+                android:textSize="@dimen/commen_tv_size_smaller" />
+
+        </LinearLayout>
+
+        <!--add by :胡峰，应付金额的添加-->
+        <LinearLayout
+            android:id="@+id/ll_shijiprice"
+            android:layout_width="wrap_content"
+            android:layout_height="28dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dip"
+            android:background="@drawable/shape_white_black"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <TextView
+                android:id="@+id/tv_shijiprice_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingLeft="8dip"
+                android:textColor="@color/black_tv"
+                android:textSize="@dimen/commen_tv_size_smaller"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_shijiprice_value"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="18dip"
@@ -327,6 +361,120 @@
 
             </LinearLayout>
 
+            <!--add by hufeng 优惠码-->
+            <LinearLayout
+                android:id="@+id/ll_youhuima"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="13dip"
+                android:background="@drawable/shape_white_black"
+                android:orientation="vertical"
+                android:visibility="visible">
+                <RelativeLayout
+                    android:id="@+id/rl_youhuima_status"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip">
+
+                    <CheckBox
+                        android:id="@+id/cb_youhuima_status"
+                        android:layout_width="21dip"
+                        android:layout_height="21dip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:background="@drawable/selector_post_check_status"
+                        android:button="@null"
+                        android:checked="false" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="8dip"
+                        android:layout_toRightOf="@id/cb_youhuima_status"
+                        android:ellipsize="end"
+                        android:singleLine="true"
+                        android:text="我有神秘小卡片"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/commen_tv_size"
+                        android:textStyle="bold"
+                        />
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="1dip"
+                    android:background="@color/black" />
+
+                <RelativeLayout
+                    android:id="@+id/rl_youhuima_input"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_marginRight="10dip"
+                    android:layout_marginLeft="10dip"
+                    android:visibility="gone"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_youhuima_title"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:text="卡片号"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size_smaller" />
+
+                    <EditText
+                        android:id="@+id/et_youhuima_value"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="71dip"
+                        android:layout_toRightOf="@id/tv_youhuima_title"
+                        android:background="@null"
+                        android:ellipsize="end"
+                        android:hint="请填写"
+                        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ"
+                        android:singleLine="true"
+                        android:textColor="@color/black_tv"
+                        android:textSize="@dimen/commen_tv_size_smaller"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
+
+            <!--add by :胡峰：使用过神秘小卡片显示-->
+            <LinearLayout
+                android:id="@+id/ll_shiyongguo_youhuima"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dip"
+                android:layout_marginRight="10dip"
+                android:layout_marginTop="13dip"
+                android:background="@drawable/shape_white_black"
+                android:orientation="vertical"
+                android:visibility="gone">
+                <RelativeLayout
+                    android:id="@+id/rl_youhuima_used"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dip"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentLeft="true"
+                        android:text="该订单已经使用过神秘小卡片"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/commen_tv_size"
+                        android:textStyle="bold"
+                        />
+                </RelativeLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

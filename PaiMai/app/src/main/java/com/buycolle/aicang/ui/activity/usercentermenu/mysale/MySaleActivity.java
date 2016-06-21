@@ -218,7 +218,9 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         vpMainContainer.setAdapter(pagerAdapter);
         vpMainContainer.setOffscreenPageLimit(fragList.size() - 1);
         vpMainContainer.setCurrentItem(0);
-        mApplication.setImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
+        //mApplication.setImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
+        //change by ：胡峰，头像的处理
+        mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(),profileImage);
         tvName.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
 
         if(_Bundle!=null){
@@ -258,6 +260,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
                         JSONObject infosObj = resultObj.getJSONObject("infos");
                         cost = infosObj.getInt("business_cost");
                         tvTotalCost.setText("总计回血 " + StringFormatUtil.getDoubleFormatNew(infosObj.getString("business_cost")) + "元");
+                        //tvTotalCost.setText("总计回血 " + "50000" + "元");
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                     }

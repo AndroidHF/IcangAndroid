@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.buycolle.aicang">
+    package="com.buycolle.aicang"
+    >
 
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
@@ -37,6 +38,14 @@
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
+    <!--add by :胡峰，个推的权限设置-->
+    <!-- iBeancon功能所需权限 -->;
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <!-- 个推3.0电子围栏功能所需权限 -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
@@ -59,6 +68,17 @@
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <!--add by :胡峰，调用app的协议-->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <data android:scheme="buycolle"
+                    android:host="buycolle"
+                    android:pathPrefix="/"
+                    >
+                </data>
             </intent-filter>
         </activity>
         <activity
@@ -328,6 +348,7 @@
             android:windowSoftInputMode="adjustResize"></activity>
 
 
+
         <!--微信配置-->
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -388,6 +409,25 @@
                 <category android:name="${applicationId}" />
             </intent-filter>
         </activity>
+
+
+        <!--add by :胡峰，引导界面-->
+        <activity android:name=".ui.activity.GuideActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <!--add by :胡峰，拍卖结束时间选择界面-->
+        <activity android:name=".ui.activity.PaiMaiEndTimeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustPan"/>
+
+        <!--add by :胡峰，个推recever-->
+        <receiver android:name=".reciver.PushDemoReceiver"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.igexin.sdk.action.4EyTFkGVQR6I03A8dmmOM1" />
+            </intent-filter>
+        </receiver>
         <!-- Required  SDK核心功能-->
         <service
             android:name="cn.jpush.android.service.DownloadService"
@@ -478,10 +518,16 @@
         <meta-data
             android:name="JPUSH_CHANNEL"
             android:value="developer-default" />
+        <!--酷峰的极光推送的key5f58f3bcb8abfb7384d65049-->
+        <!--
         <meta-data
             android:name="JPUSH_APPKEY"
             android:value="5f58f3bcb8abfb7384d65049" />
-
+-->
+        <!--我们的key-->
+        <meta-data
+            android:name="JPUSH_APPKEY"
+            android:value="2cbb486e77b0f1b7ba22c7c6" />
 
         <service
             android:name=".service.RegisterCodeTimerService"

@@ -263,10 +263,12 @@ public class ShowNoPassFragment extends BaseFragment {
 
             mApplication.setImages(bean.getCate_icon(),holder.iv_type_icon);
             holder.iv_type_name.setText(bean.getCate_name());
-            holder.tv_time.setText(bean.getCreate_date());
+            holder.tv_time.setText(bean.getLast_update_date());
             mApplication.setImages(bean.getCover_pic(),holder.iv_show_main);
             holder.tv_show_content.setText(bean.getTitle());
-            mApplication.setImages(bean.getUser_avatar(),holder.iv_user_image);
+            //mApplication.setImages(bean.getUser_avatar(),holder.iv_user_image);
+            //change by :胡峰，头像的处理
+            mApplication.setTouImages(bean.getUser_avatar(),holder.iv_user_image);
             holder.tv_user_name.setText(bean.getUser_nick());
 
             holder.tv_edit_show.setOnClickListener(new View.OnClickListener() {

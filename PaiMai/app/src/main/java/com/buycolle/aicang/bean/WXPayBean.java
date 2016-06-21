@@ -23,6 +23,7 @@ public class WXPayBean {
     private String prepayid;
     private String timestamp;
 
+
     public String getAppid() {
         return appid;
     }

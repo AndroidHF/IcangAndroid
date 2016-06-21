@@ -37,6 +37,7 @@ public class ShowDetailBean {
     private String context;
     private String cover_pic;
     private String create_date;
+    private String last_update_date;
     private String intro;
     private int show_id;
     private String title;
@@ -44,6 +45,15 @@ public class ShowDetailBean {
     private String user_nick;
     private int z_count;
     private int z_id;
+
+    public String getLast_update_date() {
+        return last_update_date;
+    }
+
+    public void setLast_update_date(String last_update_date) {
+        this.last_update_date = last_update_date;
+    }
+
     /**
      * a_user_avatar : 1
      * a_user_nick : 1
@@ -59,6 +69,8 @@ public class ShowDetailBean {
      * subVec : []
      * z_count : 1
      */
+
+
 
     private ArrayList<RecomListEntity> recomList;
 

@@ -122,7 +122,9 @@ public class UserCenterFragment extends BaseFragment {
                 UIHelper.jump(mActivity, UserInfoActivity.class);
             }
         });
-        mApplication.setImages(Constans.canglaoshiPath, profile_image);
+        //mApplication.setImages(Constans.canglaoshiPath, profile_image);
+        //change by :胡峰，头像的处理
+        mApplication.setTouImages(Constans.canglaoshiPath,profile_image);
 
     }
 
@@ -376,7 +378,9 @@ public class UserCenterFragment extends BaseFragment {
         }
         tv_user_name.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
         String path = LoginConfig.getUserInfoImage(mContext);
-        mApplication.setImages(path, profile_image);
+        //mApplication.setImages(path, profile_image);
+        //change by :胡峰，头像的处理
+        mApplication.setTouImages(path,profile_image);
 
     }
 

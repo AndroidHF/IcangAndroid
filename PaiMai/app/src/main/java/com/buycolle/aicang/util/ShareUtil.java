@@ -102,6 +102,14 @@ public class ShareUtil {
         mTencent.shareToQQ(activity, params, baseUiListener);
     }
 
+    /***
+     * 分享到微博
+     * @param activity
+     * @param mWeiboShareAPI
+     * @param thumb
+     * @param link
+     * @param title
+     */
     public static void shareToSina(Activity activity, IWeiboShareAPI mWeiboShareAPI, Bitmap thumb, String link, String title) {
         WeiboMultiMessage weiboMessage = new WeiboMultiMessage();
 

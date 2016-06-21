@@ -28,7 +28,7 @@
                     android:layout_height="40dip"
                     android:layout_alignParentLeft="true"
                     android:layout_centerVertical="true"
-                    android:src="@drawable/user_defaut_avatar" />
+                    android:src="@drawable/default_image_tou" />
 
                 <TextView
                     android:id="@+id/tv_user_name"

@@ -42,11 +42,12 @@
                 android:textColor="@color/black_tv"
                 android:textSize="@dimen/commen_tv_size" />
 
+            <!--change by :胡峰，将“联系方式”改为“手机号码”-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="45dip"
                 android:gravity="center_vertical"
-                android:text="联系方式"
+                android:text="手机号码"
                 android:textColor="@color/black_tv"
                 android:textSize="@dimen/commen_tv_size" />
 
@@ -58,7 +59,7 @@
                 android:inputType="number"
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/commen_padding"
-                android:hint="联系方式"
+                android:hint="手机号码"
                 android:textColor="@color/black_tv"
                 android:textSize="@dimen/commen_tv_size" />
 

@@ -77,6 +77,7 @@ public class MyHomeAdapter extends BaseAdapter {
             myholder.tv_curret_price_2 = (TextView) convertView.findViewById(R.id.tv_curret_price_2);
             myholder.iv_rate_2 = (ImageView) convertView.findViewById(R.id.iv_rate_2);
 
+
             convertView.setTag(myholder);
 
         } else {
@@ -91,10 +92,12 @@ public class MyHomeAdapter extends BaseAdapter {
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getCover_pic(), myholder.iv_1);
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getOpen_but_it() == 0) {//没有一口价
                 myholder.ll_yikoujia_lay_1.setVisibility(View.VISIBLE);
-                myholder.tv_yikou_price_value_1.setText("￥ " + "---");
+                //change by:胡峰：没有一口价，显示“无”
+                //myholder.tv_yikou_price_value_1.setText("￥ " + "---");
+                myholder.tv_yikou_price_value_1.setText("无");
             } else {
                 myholder.ll_yikoujia_lay_1.setVisibility(View.VISIBLE);
-                myholder.tv_yikou_price_value_1.setText("￥ " + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBut_it_price()));
+                myholder.tv_yikou_price_value_1.setText("￥"+ StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBut_it_price()));
             }
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getExpress_out_type() == 1) {//买家
                 myholder.tv_baoyou_1.setText("不包邮");
@@ -106,7 +109,7 @@ public class MyHomeAdapter extends BaseAdapter {
             } else {
                 myholder.tv_time_1.setText(StringFormatUtil.getHomeDaoJiShiTime(homeGoodsBean.getHomeGoodsChildBeens().get(0).getTime() / 1000));
             }
-            myholder.tv_curret_price_1.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getMax_pric()));
+            myholder.tv_curret_price_1.setText("￥"+StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getMax_pric()));
             myholder.tv_count_1.setText(homeGoodsBean.getHomeGoodsChildBeens().get(0).getJp_count() + "");
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getRaretag_icon(), myholder.iv_rate_1);
             myholder.ll_item_1.setOnClickListener(new View.OnClickListener() {
@@ -125,10 +128,12 @@ public class MyHomeAdapter extends BaseAdapter {
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getCover_pic(), myholder.iv_1);
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getOpen_but_it() == 0) {//没有一口价
                 myholder.ll_yikoujia_lay_1.setVisibility(View.VISIBLE);
-                myholder.tv_yikou_price_value_1.setText("￥ " + "---");
+                //change by :胡峰，没有开启一口价显示"无"
+                //myholder.tv_yikou_price_value_1.setText("￥ " + "---");
+                myholder.tv_yikou_price_value_1.setText("无");
             } else {
                 myholder.ll_yikoujia_lay_1.setVisibility(View.VISIBLE);
-                myholder.tv_yikou_price_value_1.setText("￥ " + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBut_it_price()));
+                myholder.tv_yikou_price_value_1.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBut_it_price()));
             }
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getExpress_out_type() == 1) {//买家
                 myholder.tv_baoyou_1.setText("不包邮");
@@ -149,16 +154,19 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_time_1.setText(StringFormatUtil.getHomeDaoJiShiTime(homeGoodsBean.getHomeGoodsChildBeens().get(0).getTime() / 1000));
             }
 
+            //add by :胡峰，透明色的修改
 
             myholder.tv_good_title_2.setText(homeGoodsBean.getHomeGoodsChildBeens().get(1).getProduct_title());
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(1).getCover_pic(), myholder.iv_2);
 
             if (homeGoodsBean.getHomeGoodsChildBeens().get(1).getOpen_but_it() == 0) {//没有一口价
                 myholder.ll_yikoujia_lay_2.setVisibility(View.VISIBLE);
-                myholder.tv_yikou_price_value_2.setText("￥ " + "---");
+                //change by：胡峰，没有一口价，显示"无"
+                //myholder.tv_yikou_price_value_2.setText("￥ " + "---");
+                myholder.tv_yikou_price_value_2.setText("无");
             } else {
                 myholder.ll_yikoujia_lay_2.setVisibility(View.VISIBLE);
-                myholder.tv_yikou_price_value_2.setText("￥ " + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(1).getBut_it_price()));
+                myholder.tv_yikou_price_value_2.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(1).getBut_it_price()));
             }
             if (homeGoodsBean.getHomeGoodsChildBeens().get(1).getExpress_out_type() == 1) {//买家
                 myholder.tv_baoyou_2.setText("不包邮");

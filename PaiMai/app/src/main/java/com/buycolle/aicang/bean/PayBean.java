@@ -49,6 +49,12 @@ public class PayBean {
     private String st_name;
     private String zip_code;
 
+
+
+    //add by:胡峰
+    private String real_price;//使用小卡片的实际金额
+    private String cou_flag;//是否使用过小卡片的标识，0：表示没有使用过，1：表示已经使用过
+
     public String getOrder_no() {
         return order_no;
     }
@@ -207,5 +213,21 @@ public class PayBean {
 
     public void setZip_code(String zip_code) {
         this.zip_code = zip_code;
+    }
+
+    public String getReal_price() {
+        return real_price;
+    }
+
+    public void setReal_price(String real_price) {
+        this.real_price = real_price;
+    }
+
+    public String getCou_flag() {
+        return cou_flag;
+    }
+
+    public void setCou_flag(String cou_flag) {
+        this.cou_flag = cou_flag;
     }
 }

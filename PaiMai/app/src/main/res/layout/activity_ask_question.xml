@@ -45,19 +45,21 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="120dip"
-                        android:orientation="horizontal">
+                        android:orientation="horizontal"
+                        >
 
                         <FrameLayout
                             android:layout_width="110dip"
-                            android:layout_height="match_parent">
+                            android:layout_height="match_parent"
+                            >
 
                             <ImageView
                                 android:id="@+id/iv_paimai"
-                                android:layout_width="110dip"
+                                android:layout_width="wrap_content"
                                 android:background="@color/bg_gray"
-                                android:layout_height="match_parent"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/default_image" />
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/default_image"
+                                android:scaleType="fitXY"/>
 
                             <ImageView
                                 android:id="@+id/iv_range"
@@ -66,6 +68,7 @@
                                 android:layout_gravity="right|top"
                                 android:layout_marginRight="5dip"
                                 android:layout_marginTop="5dip"
+                                android:scaleType="fitXY"
                                 android:src="@drawable/post_rare_icon" />
 
                         </FrameLayout>
