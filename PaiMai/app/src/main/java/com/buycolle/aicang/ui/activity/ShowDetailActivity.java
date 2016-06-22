@@ -292,7 +292,7 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                 if (mApplication.isLogin()) {
                     tvSend.setEnabled(false);
                     if (TextUtils.isEmpty(etInput.getText().toString().trim())) {
-                        UIHelper.t(mContext, "请输入评论内容");
+                        UIHelper.t(mContext, "请输入内容");
                         tvSend.setEnabled(true);
                         return;
                     }
@@ -377,7 +377,7 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 30) {
-                    UIHelper.t(mContext, "输入字数超出30个限制");
+                    UIHelper.t(mContext, "您输入的字数过多");
                     etInput.getEditableText().delete(s.length() - 1, s.length());
                 }
             }
@@ -841,7 +841,7 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
     @Override
     public void onSmileClick(String filename) {
         if (etInput.getText().toString().length() >= 25) {
-            UIHelper.t(mActivity, "输入字数超出30个限制");
+            UIHelper.t(mActivity, "您输入的字数过多");
             return;
         }
         try {

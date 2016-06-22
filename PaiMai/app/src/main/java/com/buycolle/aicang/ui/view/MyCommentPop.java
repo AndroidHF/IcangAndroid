@@ -157,7 +157,9 @@ public class MyCommentPop extends PopupWindow implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() > 30) {
-                    UIHelper.t(_mActivity, "输入字数超出30个限制");
+                    //UIHelper.t(_mActivity, "输入字数超出30个限制");
+                    //change by :胡峰，提示内容修改
+                    UIHelper.t(_mActivity,"您输入的字数过多");
                     _commentEdit.getEditableText().delete(s.length() - 1, s.length());
                 }
             }
@@ -210,9 +212,15 @@ public class MyCommentPop extends PopupWindow implements View.OnClickListener {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.send_sms://发送评论
+                //change by :胡峰，输入内容的判断
+                if (TextUtils.isEmpty(_commentEdit.getText().toString().trim())){
+                    UIHelper.t(_mActivity,"请输入内容");
+                    return;
+                }
                 if (callBack != null)
                     callBack.send(commentButton, _commentEdit);
                 break;
+
         }
     }
 
@@ -237,7 +245,7 @@ public class MyCommentPop extends PopupWindow implements View.OnClickListener {
 
     //初始化内置表情
     private void initInnerSmile() {
-        smileList.add(getChildGridView(getSmileRes(16), 16));
+        smileList.add(getChildGridView(getSmileRes(18), 18));
     }
 
     //取得环信表情资源
@@ -277,7 +285,9 @@ public class MyCommentPop extends PopupWindow implements View.OnClickListener {
                         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
                             if (_commentEdit.getText().toString().length() >= 25) {
-                                UIHelper.t(_mActivity, "输入字数超出30个限制");
+                                //UIHelper.t(_mActivity, "输入字数超出30个限制");
+                                //change by :胡峰，提示内容修改
+                                UIHelper.t(_mActivity,"您输入的字数过多");
                                 return;
                             }
 

@@ -63,8 +63,12 @@ public class SmileFragment extends BaseFragment {
     }
 
     //初始化内置表情
+//    private void initInnerSmile() {
+//        smileList.add(getChildGridView(getSmileRes(16), 16));
+//    }
+    //change by:胡峰，表情添加，长度限制
     private void initInnerSmile() {
-        smileList.add(getChildGridView(getSmileRes(16), 16));
+        smileList.add(getChildGridView(getSmileRes(18), 18));
     }
 
     //取得环信表情资源
