@@ -137,7 +137,7 @@
                 android:layout_toLeftOf="@id/iv_psw_visible"
                 android:layout_toRightOf="@id/iv_psw"
                 android:background="@null"
-                android:hint="密码6-20个字符"
+                android:hint="密码限长为6-20个字符"
                 android:inputType="textPassword"
                 android:singleLine="true"
                 android:textSize="17dip" />

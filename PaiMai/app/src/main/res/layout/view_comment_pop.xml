@@ -45,7 +45,7 @@
             android:layout_weight="1.0"
             android:background="@color/white"
             android:gravity="center_vertical"
-            android:hint="在这里可以回复"
+            android:hint="请输入您的答复"
             android:textColor="@color/black_tv"
             android:textSize="@dimen/commen_tv_size" />
 

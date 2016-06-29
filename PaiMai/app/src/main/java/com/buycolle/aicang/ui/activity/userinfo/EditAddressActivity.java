@@ -263,7 +263,7 @@ public class EditAddressActivity extends BaseActivity {
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
-                        UIHelper.t(mContext, R.string.up_success);
+                        UIHelper.t(mContext, "更新收货地址成功！");
                         EventBus.getDefault().post(new EditAddressEvent(0));
                         finish();
                     }

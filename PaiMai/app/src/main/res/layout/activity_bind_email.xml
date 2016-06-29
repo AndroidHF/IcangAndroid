@@ -34,7 +34,7 @@
             android:layout_height="45dip"
             android:background="@null"
             android:gravity="center_vertical"
-            android:hint="电子邮箱"
+            android:hint="请输入您的电子邮箱"
             android:paddingLeft="10dip"
             android:textSize="@dimen/commen_tv_size" />
     </LinearLayout>

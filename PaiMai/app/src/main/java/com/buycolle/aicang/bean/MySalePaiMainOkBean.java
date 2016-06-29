@@ -27,6 +27,16 @@ public class MySalePaiMainOkBean {
     private String st_name;
     private long pm_end_remain_second;
     private long last_pay_remain_second;
+    //add by ：胡峰，包邮不包邮标识
+    private int express_out_type;
+
+    public int getExpress_out_type() {
+        return express_out_type;
+    }
+
+    public void setExpress_out_type(int express_out_type) {
+        this.express_out_type = express_out_type;
+    }
 
     public int getPm_status() {
         return pm_status;

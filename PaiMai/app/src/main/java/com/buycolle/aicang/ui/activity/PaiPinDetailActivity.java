@@ -418,35 +418,35 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                              */
                             case 1:
                                 if (paiPinDetailBean.getEnt_id() == 1){
-                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
                                     break;
                                 }else {
-                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" +paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" +paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
                                     break;
                                 }
 
                             case 2:
                                 if (paiPinDetailBean.getEnt_id() == 1){
-                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
                                     break;
                                 }else {
-                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" + paiPinDetailBean.getProduct_id(), Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
                                     break;
                                 }
                             case 3:
                                 if (paiPinDetailBean.getEnt_id() == 1){
-                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/item.html?" + product_id, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
+                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/item.html?" + product_id+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
                                     break;
                                 }else {
-                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/event.html?" + product_id, Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
+                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/event.html?" + product_id+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
                                     break;
                                 }
                             case 4:
                                 if (paiPinDetailBean.getEnt_id() == 1){
-                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/item.html?" + product_id, paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/item.html?"+ product_id+"z", paiPinDetailBean.getProduct_title());
                                     break;
                                 }else {
-                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/event.html?" + product_id, paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/event.html?" + product_id+"z", paiPinDetailBean.getProduct_title());
                                     break;
                                 }
                         }

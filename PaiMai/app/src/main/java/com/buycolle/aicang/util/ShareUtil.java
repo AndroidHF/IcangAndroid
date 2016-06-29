@@ -97,7 +97,7 @@ public class ShareUtil {
         params.putString(QQShare.SHARE_TO_QQ_SUMMARY, subTitle);
         params.putString(QQShare.SHARE_TO_QQ_TARGET_URL, link);
         params.putString(QQShare.SHARE_TO_QQ_IMAGE_LOCAL_URL, localPath);
-        params.putString(QQShare.SHARE_TO_QQ_APP_NAME, "会玩");
+        params.putString(QQShare.SHARE_TO_QQ_APP_NAME,"荟玩");
         params.putInt(QQShare.SHARE_TO_QQ_EXT_INT, QQShare.SHARE_TO_QQ_FLAG_QZONE_ITEM_HIDE);
         mTencent.shareToQQ(activity, params, baseUiListener);
     }

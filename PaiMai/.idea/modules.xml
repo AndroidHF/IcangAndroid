@@ -6,6 +6,7 @@
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/cropper/cropper.iml" filepath="$PROJECT_DIR$/cropper/cropper.iml" />
       <module fileurl="file://$PROJECT_DIR$/pikerview/pikerview.iml" filepath="$PROJECT_DIR$/pikerview/pikerview.iml" />
+      <module fileurl="file://$PROJECT_DIR$/updateSoftDemo/updateSoftDemo.iml" filepath="$PROJECT_DIR$/updateSoftDemo/updateSoftDemo.iml" />
     </modules>
   </component>
 </project>

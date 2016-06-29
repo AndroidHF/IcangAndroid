@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">会玩</string>
+    <string name="app_name">荟玩</string>
 
     <string name="header_hint_refresh_normal">下拉刷新</string>
     <string name="header_hint_refresh_ready">松开刷新数据</string>

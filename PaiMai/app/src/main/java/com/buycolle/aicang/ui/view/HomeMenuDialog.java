@@ -94,13 +94,13 @@ public class HomeMenuDialog extends Dialog {
 
     private void initOrinal() {
         orinalBeans.add(new MainMenuBean("漫画", R.drawable.show_menu_1));
-        orinalBeans.add(new MainMenuBean("动画", R.drawable.show_menu_2));
+        orinalBeans.add(new MainMenuBean("BD、DVD", R.drawable.show_menu_2));
         orinalBeans.add(new MainMenuBean("游戏", R.drawable.show_menu_3));
         orinalBeans.add(new MainMenuBean("书籍", R.drawable.show_menu_4));
         orinalBeans.add(new MainMenuBean("周边", R.drawable.show_menu_5));
-        orinalBeans.add(new MainMenuBean("手办", R.drawable.show_menu_6));
-        orinalBeans.add(new MainMenuBean("演出", R.drawable.show_menu_7));
-        orinalBeans.add(new MainMenuBean("COS", R.drawable.show_menu_8));
+        orinalBeans.add(new MainMenuBean("手办、模型", R.drawable.show_menu_6));
+        orinalBeans.add(new MainMenuBean("音乐、演出", R.drawable.show_menu_7));
+        orinalBeans.add(new MainMenuBean("服装、COS", R.drawable.show_menu_8));
         orinalBeans.add(new MainMenuBean("定制", R.drawable.show_menu_9));
 
         for (MainMenuBean selectBean : selectBeans) {
@@ -201,19 +201,19 @@ public class HomeMenuDialog extends Dialog {
     private int getTitleBeanRes(String title) {
         if ("漫画".equals(title)) {
             return R.drawable.show_menu_1_sel;
-        } else if ("动画".equals(title)) {
+        } else if ("BD、DVD".equals(title)) {
             return R.drawable.show_menu_2_sel;
         } else if ("游戏".equals(title)) {
             return R.drawable.show_menu_3_sel;
         } else if ("书籍".equals(title)) {
             return R.drawable.show_menu_4_sel;
-        } else if ("手办".equals(title)) {
+        } else if ("手办、模型".equals(title)) {
             return R.drawable.show_menu_6_sel;
         } else if ("周边".equals(title)) {
             return R.drawable.show_menu_5_sel;
-        } else if ("演出".equals(title)) {
+        } else if ("音乐、演出".equals(title)) {
             return R.drawable.show_menu_7_sel;
-        } else if ("COS".equals(title)) {
+        } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8_sel;
         } else if ("定制".equals(title)) {
             return R.drawable.show_menu_9_sel;
@@ -224,19 +224,19 @@ public class HomeMenuDialog extends Dialog {
     private int getTitleBeanUnSelRes(String title) {
         if ("漫画".equals(title)) {
             return R.drawable.show_menu_1;
-        } else if ("动画".equals(title)) {
+        } else if ("BD、DVD".equals(title)) {
             return R.drawable.show_menu_2;
         } else if ("游戏".equals(title)) {
             return R.drawable.show_menu_3;
         } else if ("书籍".equals(title)) {
             return R.drawable.show_menu_4;
-        } else if ("手办".equals(title)) {
+        } else if ("手办、模型".equals(title)) {
             return R.drawable.show_menu_6;
         } else if ("周边".equals(title)) {
             return R.drawable.show_menu_5;
-        } else if ("演出".equals(title)) {
+        } else if ("音乐、演出".equals(title)) {
             return R.drawable.show_menu_7;
-        } else if ("COS".equals(title)) {
+        } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8;
         } else if ("定制".equals(title)) {
             return R.drawable.show_menu_9;

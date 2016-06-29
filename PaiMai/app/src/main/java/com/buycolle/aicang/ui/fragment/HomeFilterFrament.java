@@ -48,19 +48,19 @@ public class HomeFilterFrament extends BaseFragment {
             return R.drawable.main_menu_all;
         } else if ("漫画".equals(title)) {
             return R.drawable.show_menu_1_sel;
-        } else if ("动画".equals(title)) {
+        } else if ("BD、DVD".equals(title)) {
             return R.drawable.show_menu_2_sel;
         } else if ("游戏".equals(title)) {
             return R.drawable.show_menu_3_sel;
         } else if ("书籍".equals(title)) {
             return R.drawable.show_menu_4_sel;
-        } else if ("手办".equals(title)) {
+        } else if ("手办、模型".equals(title)) {
             return R.drawable.show_menu_6_sel;
         } else if ("周边".equals(title)) {
             return R.drawable.show_menu_5_sel;
-        } else if ("演出".equals(title)) {
+        } else if ("音乐、演出".equals(title)) {
             return R.drawable.show_menu_7_sel;
-        } else if ("COS".equals(title)) {
+        } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8_sel;
         } else if ("定制".equals(title)) {
             return R.drawable.show_menu_9_sel;

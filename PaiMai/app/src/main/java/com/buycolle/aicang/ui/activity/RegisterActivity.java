@@ -107,7 +107,7 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 if (!Validator.isMobile(etPhone.getText().toString())) {
-                    UIHelper.t(mContext, "请输入正确的电话号码");
+                    UIHelper.t(mContext, "请输入正确的手机号码");
                     return;
                 }
                 tvGetCode.setEnabled(false);
@@ -194,12 +194,12 @@ public class RegisterActivity extends BaseActivity {
     private void subMit() {
         btnRegister.setEnabled(false);
         if (TextUtils.isEmpty(etUsername.getText().toString())) {
-            UIHelper.t(mContext, "用户名不能为空");
+            UIHelper.t(mContext, "昵称不能为空");
             btnRegister.setEnabled(true);
             return;
         }
         if (TextUtils.isEmpty(etPhone.getText().toString())) {
-            UIHelper.t(mContext, "电话号码不能为空");
+            UIHelper.t(mContext, "请输入手机号码");
             btnRegister.setEnabled(true);
             return;
         }

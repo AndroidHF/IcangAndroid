@@ -288,7 +288,7 @@ public class AskAndQuestionActivity extends BaseActivity implements SmileFragmen
             @Override
             public void onClick(View v) {
                 if (TextUtils.isEmpty(etInput.getText().toString().trim())) {
-                    UIHelper.t(mContext, "请输入内容");
+                    UIHelper.t(mContext, "请输入提问内容");
                     return;
                 }
                 tvSend.setEnabled(false);

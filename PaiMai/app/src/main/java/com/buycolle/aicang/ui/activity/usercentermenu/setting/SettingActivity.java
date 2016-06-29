@@ -219,7 +219,7 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
 
     @OnClick(R.id.btn_logout)
     public void logout() {
-        new NoticeDialog(mContext, "退出提示", "您确认退出当前登录？").setCallBack(new NoticeDialog.CallBack() {
+        new NoticeDialog(mContext, "退出提示", "您确定退出当前账号吗？").setCallBack(new NoticeDialog.CallBack() {
             @Override
             public void ok() {
                 logOut();

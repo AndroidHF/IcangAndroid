@@ -30,10 +30,11 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:gravity="center"
             android:layout_marginLeft="20dip"
             android:layout_marginRight="20dip"
             android:layout_marginTop="10dip"
-            android:text="*说明一下操作，选中自己想显示的分类。\n  然后点击确定"
+            android:text="※选择自己关注的分类，\n选中的分类会出现在分类栏中"
             android:textColor="@color/black_tv"
             android:textSize="@dimen/commen_tv_size_smallest" />
 

@@ -1,6 +1,5 @@
 package com.buycolle.aicang.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
@@ -75,10 +74,10 @@ public class SplashActivity extends BaseActivity {
                     /****
                      * add by :胡峰，引导界面的跳转
                      */
-                    sharedPreferences = getSharedPreferences("Y_Setting", Context.MODE_PRIVATE);
-                    if (sharedPreferences.getInt("VERSION", 0) != VERSION) {
-                        UIHelper.jump(mActivity,GuideActivity.class);
-                    }else{
+//                    sharedPreferences = getSharedPreferences("Y_Setting", Context.MODE_PRIVATE);
+//                    if (sharedPreferences.getInt("VERSION", 0) != VERSION) {
+//                        UIHelper.jump(mActivity,GuideActivity.class);
+//                    }else{
                         /***
                          * add by :胡峰
                          * 功能：分享界面的跳转
@@ -100,7 +99,7 @@ public class SplashActivity extends BaseActivity {
                         }else {
                             UIHelper.jump(mActivity,MainActivity.class);
                         }
-                    }
+//                    }
                     finish();
                 }
                 finish();

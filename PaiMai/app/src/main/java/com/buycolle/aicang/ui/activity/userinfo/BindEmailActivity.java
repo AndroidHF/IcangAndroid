@@ -55,7 +55,7 @@ public class BindEmailActivity extends BaseActivity {
             public void onClick(View v) {
                 btnSave.setEnabled(false);
                 if (TextUtils.isEmpty(etInput.getText().toString().trim())) {
-                    UIHelper.t(mContext, "输入的内容不能为空");
+                    UIHelper.t(mContext, "请输入邮箱");
                     btnSave.setEnabled(true);
                     return;
                 }

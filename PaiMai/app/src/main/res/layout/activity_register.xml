@@ -59,7 +59,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="16dip"
                         android:background="@null"
-                        android:hint="昵称限于10个字符，注册后不能修改"
+                        android:hint="请输入昵称，限长为10个字符"
                         android:maxLength="10"
                         android:singleLine="true"
                         android:textColor="@color/black_tv"
@@ -87,7 +87,7 @@
                         android:layout_height="match_parent"
                         android:layout_marginLeft="16dip"
                         android:background="@null"
-                        android:hint="手机号码"
+                        android:hint="请输入手机号码"
                         android:inputType="phone"
                         android:singleLine="true"
                         android:textColor="@color/black_tv"
@@ -183,7 +183,7 @@
                         android:layout_toLeftOf="@id/iv_psw_visible"
                         android:layout_toRightOf="@id/iv_psw"
                         android:background="@null"
-                        android:hint="密码6-20个字符"
+                        android:hint="请输入密码，限长为6-20个字符"
                         android:inputType="textPassword"
                         android:singleLine="true"
                         android:textSize="16dip" />
@@ -206,7 +206,7 @@
                     android:layout_centerVertical="true"
                     android:background="@drawable/selector_post_check_status"
                     android:button="@null"
-                    android:checked="true" />
+                    android:checked="false" />
 
                 <TextView
                     android:id="@+id/tv_miaosu"

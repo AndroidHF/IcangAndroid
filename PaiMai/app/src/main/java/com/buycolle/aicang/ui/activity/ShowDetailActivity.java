@@ -265,17 +265,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                              * 分享界面的跳转
                              */
                             case 1:
-                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/show.html?" + show_id, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/show.html?" + show_id+"z", Constans.shareTitle_Type_2, showDetailBean.getTitle());
                                 Log.i("show_id-----", showDetailBean.getShow_id() + "");
                                 break;
                             case 2:
-                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL+"/show.html?"+show_id, Constans.shareTitle_Type_2, showDetailBean.getTitle());
+                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL+"/show.html?"+show_id+"z", Constans.shareTitle_Type_2, showDetailBean.getTitle());
                                 break;
                             case 3:
-                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL+"/show.html?"+showDetailBean.getShow_id(), Constans.shareTitle_Type_2, showDetailBean.getTitle(), shareImagePath, new BaseUiListener());
+                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL+"/show.html?"+showDetailBean.getShow_id()+"z", Constans.shareTitle_Type_2, showDetailBean.getTitle(), shareImagePath, new BaseUiListener());
                                 break;
                             case 4:
-                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL+"/show.html?"+show_id, showDetailBean.getTitle());
+                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL+"/show.html?"+show_id+"z", showDetailBean.getTitle());
                                 break;
                         }
                     }
@@ -292,7 +292,7 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                 if (mApplication.isLogin()) {
                     tvSend.setEnabled(false);
                     if (TextUtils.isEmpty(etInput.getText().toString().trim())) {
-                        UIHelper.t(mContext, "请输入内容");
+                        UIHelper.t(mContext, "请输入评论内容");
                         tvSend.setEnabled(true);
                         return;
                     }

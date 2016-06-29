@@ -66,7 +66,7 @@
                     android:layout_marginLeft="13dip"
                     android:layout_toRightOf="@id/iv_phone"
                     android:background="@null"
-                    android:hint="手机号码"
+                    android:hint="请输入手机号码"
                     android:inputType="phone"
                     android:singleLine="true"
                     android:textSize="17dip" />
@@ -110,7 +110,7 @@
                     android:layout_toLeftOf="@id/iv_psw_visible"
                     android:layout_toRightOf="@id/iv_psw"
                     android:background="@null"
-                    android:hint="密码"
+                    android:hint="请输入密码"
                     android:inputType="textPassword"
                     android:singleLine="true"
                     android:textSize="17dip" />

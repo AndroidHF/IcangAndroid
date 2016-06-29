@@ -33,7 +33,7 @@ public class Constans {
     // 举报 ---- 类型
     public static final String TAG_REPORT_TYPE = "tag_report_type";
 
-    //微信支付的id
+    //微信支付和分享的id
     public  static String APP_ID = "wx827bab983b19b81f";
 
     /**
@@ -41,7 +41,14 @@ public class Constans {
      *
      */
     public static final String APP_KEY = "1684917016";
-    public static final String APP_TX_KEY = "1105173111";
+
+    /**
+     * QQ分享需要
+     */
+    //"会玩"的QQ分享id
+    //public static final String APP_TX_KEY = "1105173111";
+    //"荟玩"的新申请的QQ分享id
+    public static final String APP_TX_KEY = "1105431053";
 
 
     //public static String SHARE_URL = "http://www.baidu.com";

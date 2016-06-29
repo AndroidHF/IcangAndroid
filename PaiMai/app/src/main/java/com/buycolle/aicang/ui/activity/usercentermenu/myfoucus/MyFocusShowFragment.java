@@ -370,6 +370,8 @@ public class MyFocusShowFragment extends BaseFragment {
                     try {
                         JSONObject resultObj = new JSONObject(response);
                         if (JSONUtil.isOK(resultObj)) {
+                            //add by :胡峰，关注的晒物的取消提示信息
+                            UIHelper.t(mContext, "取消关注成功");
                             datas.remove(myShowPassBean);
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

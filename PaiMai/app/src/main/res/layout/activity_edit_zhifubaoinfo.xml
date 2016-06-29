@@ -35,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@null"
-            android:hint="请输入您的支付宝收款账号"
+            android:hint="请输入您的支付宝账号"
             android:gravity="center_vertical"
             android:paddingLeft="10dip"
             android:textColor="@color/black_tv"
@@ -47,7 +47,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="8dip"
         android:gravity="center"
-        android:text="*添加支付宝收款账号可进行拍卖商品，向平台收钱等操作"
+        android:text="*平台会在买卖双方完成交易后，向卖家的支付宝账\n号转入本次交易的收入。
+\n请确保您填写的支付宝账号正确，且该支付宝账号\n可以用于收款。"
         android:textSize="12dip" />
 
     <Button

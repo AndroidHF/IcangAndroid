@@ -159,7 +159,7 @@ public class JingPaiDialog extends Dialog {
 
                     if (isHasPai) {
                         if (Double.valueOf(et_input_value.getText().toString()) <= Double.valueOf(currentValuee)) {
-                            UIHelper.t(mContext, "出价要大于现价哦亲~~");
+                            UIHelper.t(mContext,"您的出价必须高于现价");
                         } else {
                             callBack.ok(et_input_value.getText().toString().trim());
                         }

@@ -544,6 +544,19 @@
             </LinearLayout>
 
         </LinearLayout>
+        <!--add by :胡峰，包邮不包邮提醒控件-->
+
+        <TextView
+            android:id="@+id/tv_baoyou_show"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="※您在上架时选择的是不包邮，请在发货时选择到付"
+            android:gravity="center"
+            android:textStyle="bold"
+            android:textColor="@color/red"
+            android:paddingTop="5dip"
+            android:textSize="14dip"
+            android:visibility="gone"/>
 
 
     </LinearLayout>

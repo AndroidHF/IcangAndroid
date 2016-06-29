@@ -407,7 +407,7 @@ public class PostFragment extends BaseFragment {
                             for (Iterator iterator = homarrays.iterator(); iterator.hasNext();) {
                                 HomeTopAddBeanNew homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
                                 Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
-                                mApplication.setImages(homeTopAddBeanNew.getBanner_icon(), iv_top_icon);
+                                mApplication.setShowImages(homeTopAddBeanNew.getBanner_icon(), iv_top_icon);
                             }
 
                             WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
@@ -562,8 +562,6 @@ public class PostFragment extends BaseFragment {
         }
         initAddressInfo();
         loadTopAds();
-
-
     }
 
     private void initListener() {
@@ -1396,7 +1394,7 @@ public class PostFragment extends BaseFragment {
     private void submint() {
 
         if (TextUtils.isEmpty(mainImageBean.getServerPath())) {
-            UIHelper.t(mContext, "请选择一张拍品封面的主图");
+            UIHelper.t(mContext, "请至少选择一张图片作为封面");
             return;
         }
 
@@ -1452,7 +1450,7 @@ public class PostFragment extends BaseFragment {
         }
         if (cbYikoujiaStatus.isChecked()) {
             if (TextUtils.isEmpty(tvYikouPriceValue.getText().toString().trim())) {
-                UIHelper.t(mContext, "你已开启一口价，请填写一口价");
+                UIHelper.t(mContext, "您已开启一口价，请输入一口价");
                 return;
             }
             if (Integer.valueOf(tvYikouPriceValue.getText().toString().trim()) < Integer.valueOf(tvStartPriceValue.getText().toString().trim())) {

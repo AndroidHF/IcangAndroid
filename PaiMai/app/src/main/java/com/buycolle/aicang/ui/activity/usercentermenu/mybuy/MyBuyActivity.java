@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -219,8 +220,17 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
 
         if (_Bundle != null) {
             if (_Bundle.getBoolean("isPush")) {
-                vpMainContainer.setCurrentItem(1);
-                initStatus(1);
+                Log.i("type----",_Bundle.getInt("type")+"");
+//                vpMainContainer.setCurrentItem(0);
+//                initStatus(0);
+                //推送点击跳转界面的处理
+                if (_Bundle.getInt("type") == 1){//出价被超，跳转到我买到的，正在拍卖的列表
+                    vpMainContainer.setCurrentItem(0);
+                    initStatus(0);
+                }else if (_Bundle.getInt("type") == 2 || _Bundle.getInt("type") == 3 || _Bundle.getInt("type") == 8){//中拍提醒、付款提醒、付款还剩3小时提醒，跳转到我买到的已落拍的列表界面
+                    vpMainContainer.setCurrentItem(1);
+                    initStatus(1);
+                }
             }
         }
         loadCostData();

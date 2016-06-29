@@ -12,6 +12,7 @@ import android.text.TextPaint;
 import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -307,6 +308,9 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 holder.tv_good_deal_price = (TextView) convertView.findViewById(R.id.tv_good_deal_price);
                 holder.tv_order_no = (TextView) convertView.findViewById(R.id.tv_order_no);
 
+                //add by :胡峰，包邮不包邮的提醒控件
+                holder.tv_baoyou_show = (TextView) convertView.findViewById(R.id.tv_baoyou_show);
+
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -357,8 +361,19 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 0) {
                     setViewVisible(holder.ll_status_after_fukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
                     holder.tv_action_after.setVisibility(View.VISIBLE);
+                    //add by ：胡峰，包邮不包邮提示控件可见
+                    holder.tv_baoyou_show.setVisibility(View.VISIBLE);
                     holder.tv_after_msg.setText("买家已付款，请尽快安排发货");
                     holder.tv_action_after.setText("我要发货");
+
+                    //add by :胡峰，包邮不包邮提醒信息：1代表不包邮，2代表包邮
+                    Log.i("express_out_type---",myBuyPaiMainFinishBean.getExpress_out_type()+"");
+                    if (myBuyPaiMainFinishBean.getExpress_out_type() == 2){
+                        holder.tv_baoyou_show.setText("※您在上架时选择的是包邮，请在发货时承担运费");
+                    }else {
+                        holder.tv_baoyou_show.setText("※您在上架时选择的是不包邮，请在发货时选择到付");
+                    }
+
                     holder.tv_action_after.setBackgroundResource(R.drawable.shape_orange_black);
                     holder.tv_action_after.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -373,6 +388,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 1) {
                     setViewVisible(holder.ll_status_after_fukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
                     holder.tv_action_after.setVisibility(View.VISIBLE);
+                    holder.tv_baoyou_show.setVisibility(View.GONE);
                     holder.tv_after_msg.setText("您已发货，等待买家确认收货");
                     holder.tv_action_after.setText("我已发货");
                     holder.tv_action_after.setBackgroundResource(R.drawable.shape_orange_black);
@@ -389,6 +405,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                     setViewVisible(holder.ll_status_after_fukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
                     holder.tv_after_msg.setText("买家确认收货，交易已完成");
                     holder.tv_action_after.setVisibility(View.GONE);
+                    holder.tv_baoyou_show.setVisibility(View.GONE);
                 } else if (myBuyPaiMainFinishBean.getPay_status() == 2 && myBuyPaiMainFinishBean.getOrder_status() == 0) {
                     setViewVisible(holder.tv_msg_info, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
 //                holder.tv_msg_info.setText("由于买家未按时付款，导致交易失败\n该买家可能受到惩罚请参阅《竞拍规则》");
@@ -460,6 +477,9 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
             LinearLayout ll_status_after_fukuang;
             TextView tv_after_msg;
             TextView tv_action_after;
+
+            //add by :胡峰，包邮不包邮提醒
+            TextView tv_baoyou_show;
 
         }
 

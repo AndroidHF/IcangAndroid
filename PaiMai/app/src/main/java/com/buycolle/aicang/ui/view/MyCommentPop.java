@@ -214,7 +214,7 @@ public class MyCommentPop extends PopupWindow implements View.OnClickListener {
             case R.id.send_sms://发送评论
                 //change by :胡峰，输入内容的判断
                 if (TextUtils.isEmpty(_commentEdit.getText().toString().trim())){
-                    UIHelper.t(_mActivity,"请输入内容");
+                    UIHelper.t(_mActivity,"请输入答复内容");
                     return;
                 }
                 if (callBack != null)

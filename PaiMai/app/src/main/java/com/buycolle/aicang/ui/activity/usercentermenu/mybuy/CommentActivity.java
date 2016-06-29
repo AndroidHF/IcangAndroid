@@ -225,14 +225,16 @@ public class CommentActivity extends BaseActivity {
             is_good = true;
             tvGood.setTextColor(getResources().getColor(R.color.black_tv));
             tvBad.setTextColor(getResources().getColor(R.color.gray_tv));
-//            llGoodCommentLay.setBackgroundResource(R.color.orange);
-//            llBadCommentLay.setBackgroundResource(R.color.transparent);
+            //add by :胡峰，评价选中时候的背景色的添加
+            llGoodCommentLay.setBackgroundResource(R.color.orange);
+            llBadCommentLay.setBackgroundResource(R.color.transparent);
         } else {
             is_good = false;
             tvGood.setTextColor(getResources().getColor(R.color.gray_tv));
             tvBad.setTextColor(getResources().getColor(R.color.black_tv));
-//            llGoodCommentLay.setBackgroundResource(R.color.transparent);
-//            llBadCommentLay.setBackgroundResource(R.color.orange);
+            //add by :胡峰，评价选中时候的背景色的添加
+            llGoodCommentLay.setBackgroundResource(R.color.transparent);
+            llBadCommentLay.setBackgroundResource(R.color.orange);
         }
     }
 }

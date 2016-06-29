@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -225,8 +226,14 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
 
         if(_Bundle!=null){
             if(_Bundle.getBoolean("isPush")){
-                vpMainContainer.setCurrentItem(1);
-                initStatus(1);
+//                vpMainContainer.setCurrentItem(1);
+//                initStatus(1);
+                //推送界面的跳转
+                if (_Bundle.getInt("type") == 4 || _Bundle.getInt("type") == 9 || _Bundle.getInt("type") == 10){//发货、卖家东西卖出、买家付款
+                    Log.i("type-----",_Bundle.getInt("type")+"");
+                    vpMainContainer.setCurrentItem(1);
+                    initStatus(1);
+                }
             }
         }
         loadCostData();

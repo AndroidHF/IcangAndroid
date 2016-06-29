@@ -418,10 +418,10 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
                         JSONObject resultObj = new JSONObject(response);
                         if (JSONUtil.isOK(resultObj)) {
                             if (myShowPassBean.getDy_id() > 0) {
-                                UIHelper.t(mContext, "您已取消本场竞拍会的订阅");
+                                UIHelper.t(mContext, "成功取消预约");
                                 myShowPassBean.setDy_id(0);
                             } else {
-                                UIHelper.t(mContext, "您已成功订阅本场竞拍会，竞拍会开始前您会收到提醒消息");
+                                UIHelper.t(mContext, "                预约成功\n" + "竞拍会开始前您将收到提醒");
                                 myShowPassBean.setDy_id(1);
                             }
                             myAdapter.notifyDataSetChanged();

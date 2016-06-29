@@ -166,7 +166,7 @@
                         android:layout_marginTop="10dip"
                         android:background="@null"
                         android:hint="请输入商品名称"
-                        android:maxLength="30"
+                        android:maxLength="50"
                         android:singleLine="true"
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size" />

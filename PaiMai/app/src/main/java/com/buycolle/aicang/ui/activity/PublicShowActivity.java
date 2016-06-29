@@ -151,19 +151,20 @@ public class PublicShowActivity extends BaseActivity {
 
             }
         });
-        promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.public_link_icon), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (promotedActionsLibrary.isable) {
-                    PostShowBean postShowBean = new PostShowBean();
-                    postShowBean.setType(3);
-                    postShowBean.setContent("http://");
-                    postShowBeans.add(postShowBean);
-                    myAdapter.notifyDataSetChanged();
-                    dsList.setSelection(postShowBeans.size() - 1);
-                }
-            }
-        });
+        //change by:胡峰，添加链接这个暂时不需要
+//        promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.public_link_icon), new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (promotedActionsLibrary.isable) {
+//                    PostShowBean postShowBean = new PostShowBean();
+//                    postShowBean.setType(3);
+//                    postShowBean.setContent("http://");
+//                    postShowBeans.add(postShowBean);
+//                    myAdapter.notifyDataSetChanged();
+//                    dsList.setSelection(postShowBeans.size() - 1);
+//                }
+//            }
+//        });
         promotedActionsLibrary.addMainItem(getResources().getDrawable(R.drawable.public_show_add));
 
 
@@ -188,7 +189,7 @@ public class PublicShowActivity extends BaseActivity {
      */
     private void submitPublish() {
         if (TextUtils.isEmpty(mainServerPath)) {
-            UIHelper.t(mContext, "请上传一张图片做为晒物封面");
+            UIHelper.t(mContext, "请上传封面图");
             return;
         }
 
@@ -546,6 +547,8 @@ public class PublicShowActivity extends BaseActivity {
 
             EditText et_input_link = (EditText) view.findViewById(R.id.et_input_link);
             EditText et_input_content = (EditText) view.findViewById(R.id.et_input_content);
+            //add by :胡峰，添加的图片的默认框的控件
+            LinearLayout ll_add1 = (LinearLayout) view.findViewById(R.id.ll_add1);
 
 //            et_input_content.setOnTouchListener(new View.OnTouchListener() {
 //                @Override
@@ -616,6 +619,7 @@ public class PublicShowActivity extends BaseActivity {
                         iv_status.setVisibility(View.VISIBLE);
 //                        iv_close.setVisibility(View.VISIBLE);
                         iv_add.setVisibility(View.GONE);
+                        ll_add1.setVisibility(View.GONE);
 //                        iv_close.setOnClickListener(new View.OnClickListener() {
 //                            @Override
 //                            public void onClick(View v) {
@@ -632,19 +636,23 @@ public class PublicShowActivity extends BaseActivity {
                     } else if (postShowBean.getStatus() == PostShowBean.Status.INIT) {
                         iv_status.setVisibility(View.GONE);
 //                        iv_close.setVisibility(View.VISIBLE);
+                        ll_add1.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
                         mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                     } else {
                         iv_status.setVisibility(View.GONE);
 //                        iv_close.setVisibility(View.VISIBLE);
                         iv_add.setVisibility(View.GONE);
+                        ll_add1.setVisibility(View.GONE);
                         mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                     }
                 }
             } else {//链接
                 et_input_link.setText(postShowBean.getContent());
                 iv_add_item.setVisibility(View.GONE);
-                et_input_link.setVisibility(View.VISIBLE);
+                //change by :胡峰，链接去掉
+                //et_input_link.setVisibility(View.VISIBLE);
+                et_input_link.setVisibility(View.GONE);
                 et_input_content.setVisibility(View.GONE);
                 et_input_link.addTextChangedListener(new TextWatcher() {
                     @Override

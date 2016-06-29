@@ -395,7 +395,7 @@ public class PaiMaiFinishFragment extends BaseFragment {
                 holder.iv_status_tag.setImageResource(R.drawable.zhongbiao_icon);
 
                 setViewVisible(holder.tv_msg_info, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_yifahuo, holder.ll_status_queren_shouhuo);
-                holder.tv_msg_info.setText("耐心等待卖家发货");
+                holder.tv_msg_info.setText("请耐心等待卖家发货");
 
                 //已经付款 -- 已发货---
             } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 1) {

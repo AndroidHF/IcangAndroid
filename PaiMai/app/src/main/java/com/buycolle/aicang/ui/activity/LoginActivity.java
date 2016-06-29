@@ -99,12 +99,12 @@ public class LoginActivity extends BaseActivity {
     public void login() {
         btnLogin.setEnabled(false);
         if (TextUtils.isEmpty(etPhone.getText().toString().trim())) {
-            UIHelper.t(mContext, "请填写手机号码");
+            UIHelper.t(mContext, "请输入手机号码");
             btnLogin.setEnabled(true);
             return;
         }
         if (TextUtils.isEmpty(etPsw.getText().toString().trim())) {
-            UIHelper.t(mContext, "请填密码");
+            UIHelper.t(mContext, "请输入密码");
             btnLogin.setEnabled(true);
             return;
         }
