@@ -87,6 +87,10 @@ public class EditPswActivity extends BaseActivity {
                     UIHelper.t(mContext, "请输入新密码");
                     btnSave.setEnabled(true);
                     return;
+                }else if (etPsw1.getText().toString().trim().length() < 6 || etPsw1.getText().toString().trim().length() > 20){
+                    UIHelper.t(mContext, "请输入新密码为6-20个字符");
+                    btnSave.setEnabled(true);
+                    return;
                 }
                 updateUserInfo(etPsw.getText().toString().trim(),etPsw1.getText().toString().trim());
             }

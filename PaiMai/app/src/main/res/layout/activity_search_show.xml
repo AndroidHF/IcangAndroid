@@ -63,6 +63,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/tv_null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="您当前搜索的内容没有结果"
+            android:textColor="@color/black"
+            android:textSize="20dip"
+           android:visibility="gone"/>
+
         <com.buycolle.aicang.ui.view.xlistview.XListView
             android:id="@+id/list"
             android:layout_width="fill_parent"

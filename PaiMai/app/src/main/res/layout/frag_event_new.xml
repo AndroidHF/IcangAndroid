@@ -65,7 +65,7 @@
         <RelativeLayout
             android:id="@+id/rl_head"
             android:layout_width="match_parent"
-            android:layout_height="150dip">
+            android:layout_height="wrap_content">
 
             <com.buycolle.aicang.ui.view.autoscrollviewpager.AutoScrollViewPager
                 android:id="@+id/convenientBanner"
@@ -136,4 +136,9 @@
             android:textSize="@dimen/commen_tv_size"
             android:textStyle="bold" />
     </LinearLayout>
+
+
+
+
+
 </RelativeLayout>

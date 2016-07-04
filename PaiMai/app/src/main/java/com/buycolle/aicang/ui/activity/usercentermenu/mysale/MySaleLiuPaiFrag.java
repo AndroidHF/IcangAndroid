@@ -51,6 +51,8 @@ public class MySaleLiuPaiFrag extends BaseFragment {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<MySalePaiMainLiuPaiBean> mySalePaiMainLiuPaiBeans;
     private MyAdapter myAdapter;
@@ -59,6 +61,7 @@ public class MySaleLiuPaiFrag extends BaseFragment {
     private boolean isloadMore = false;
     private int pageIndex = 1;
     private int pageNum = 10;
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,6 +167,8 @@ public class MySaleLiuPaiFrag extends BaseFragment {
                             } else {
                                 list.isShowFoot(false);
                             }
+                        }else {
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

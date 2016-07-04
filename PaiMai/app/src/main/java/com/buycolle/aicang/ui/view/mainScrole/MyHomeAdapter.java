@@ -109,7 +109,12 @@ public class MyHomeAdapter extends BaseAdapter {
             } else {
                 myholder.tv_time_1.setText(StringFormatUtil.getHomeDaoJiShiTime(homeGoodsBean.getHomeGoodsChildBeens().get(0).getTime() / 1000));
             }
-            myholder.tv_curret_price_1.setText("￥"+StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getMax_pric()));
+            //无人出价的时候，显示起拍价，而不是显示0，如果有人出价的时候，显示当前价格
+            if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getJp_count() == 0){
+                myholder.tv_curret_price_1.setText("￥"+StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBegin_auct_price()));
+            }else {
+                myholder.tv_curret_price_1.setText("￥"+StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getMax_pric()));
+            }
             myholder.tv_count_1.setText(homeGoodsBean.getHomeGoodsChildBeens().get(0).getJp_count() + "");
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getRaretag_icon(), myholder.iv_rate_1);
             myholder.ll_item_1.setOnClickListener(new View.OnClickListener() {

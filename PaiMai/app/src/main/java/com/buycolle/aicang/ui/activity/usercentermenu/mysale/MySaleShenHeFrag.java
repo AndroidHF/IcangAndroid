@@ -49,6 +49,8 @@ public class MySaleShenHeFrag extends BaseFragment {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<MySaleShenHeBean> mySaleShenHeBeanArrayList;
     private MyAdapter myAdapter;
@@ -177,6 +179,8 @@ public class MySaleShenHeFrag extends BaseFragment {
                             } else {
                                 list.isShowFoot(false);
                             }
+                        }else {
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

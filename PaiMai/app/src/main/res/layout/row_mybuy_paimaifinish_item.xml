@@ -545,7 +545,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:text="耐心等待卖家发货"
+            android:text="系统结算中，请稍后刷新重试"
             android:textColor="@color/black"
             android:textSize="@dimen/commen_tv_size"
             android:textStyle="bold"

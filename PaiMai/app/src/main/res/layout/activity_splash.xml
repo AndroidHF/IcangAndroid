@@ -13,6 +13,6 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:scaleType="centerInside"
-        android:src="@drawable/splash_bg" />
+        android:src="@drawable/splash_bg_new" />
 
 </RelativeLayout>

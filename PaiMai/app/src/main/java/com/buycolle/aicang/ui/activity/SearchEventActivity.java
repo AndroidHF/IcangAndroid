@@ -78,6 +78,8 @@ public class SearchEventActivity extends BaseActivity {
     ImageButton ibFloatBtn;
     @Bind(R.id.iv_haoping)
     ImageView iv_haoping;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<TextView> titles;
     private ArrayList<ImageView> titleImages;
@@ -509,6 +511,7 @@ public class SearchEventActivity extends BaseActivity {
                                 ArrayList<HomeGoodsChildBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeGoodsChildBean>>() {
                                 }.getType());
                                 if (pageIndex == 1) {
+                                    tv_null.setVisibility(View.GONE);
                                     homeGoodsBeanArrayList.clear();
                                 }
                                 ArrayList<HomeGoodsBean> resultFormatS = formatData(resultArray);
@@ -524,7 +527,9 @@ public class SearchEventActivity extends BaseActivity {
                                 }
                             } else {
                                 if (pageIndex == 1) {
-                                    UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                    //UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                    tv_null.setText("您当前搜索的内容没有结果");
+                                    tv_null.setVisibility(View.VISIBLE);
                                     homeGoodsBeanArrayList.clear();
                                     myAdapter.notifyDataSetChanged();
                                 } else {
@@ -577,6 +582,7 @@ public class SearchEventActivity extends BaseActivity {
                                 ArrayList<HomeGoodsChildBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeGoodsChildBean>>() {
                                 }.getType());
                                 if (pageIndex == 1) {
+                                    tv_null.setVisibility(View.GONE);
                                     homeGoodsBeanArrayList.clear();
                                 }
                                 ArrayList<HomeGoodsBean> resultFormatS = formatData(resultArray);
@@ -592,7 +598,9 @@ public class SearchEventActivity extends BaseActivity {
                                 }
                             } else {
                                 if (pageIndex == 1) {
-                                    UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                    //UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                    tv_null.setText("您当前搜索的内容没有结果");
+                                    tv_null.setVisibility(View.VISIBLE);
                                     homeGoodsBeanArrayList.clear();
                                     myAdapter.notifyDataSetChanged();
                                 } else {
@@ -645,6 +653,7 @@ public class SearchEventActivity extends BaseActivity {
                                 ArrayList<HomeGoodsChildBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeGoodsChildBean>>() {
                                 }.getType());
                                 if (pageIndex == 1) {
+                                    tv_null.setVisibility(View.GONE);
                                     homeGoodsBeanArrayList.clear();
                                 }
                                 ArrayList<HomeGoodsBean> resultFormatS = formatData(resultArray);
@@ -660,7 +669,9 @@ public class SearchEventActivity extends BaseActivity {
                                 }
                             } else {
                                 if (pageIndex == 1) {
-                                    UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                    //UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                    tv_null.setText("您当前搜索的内容没有结果");
+                                    tv_null.setVisibility(View.VISIBLE);
                                     homeGoodsBeanArrayList.clear();
                                     myAdapter.notifyDataSetChanged();
                                 } else {

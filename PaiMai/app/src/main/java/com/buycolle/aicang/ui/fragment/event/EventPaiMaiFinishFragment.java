@@ -125,19 +125,26 @@ public class EventPaiMaiFinishFragment extends BaseScrollListFragment {
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
-                        JSONArray jsonArray = resultObj.getJSONArray("rows");
-                        ArrayList<EventPaiMaiIngBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EventPaiMaiIngBean>>() {
-                        }.getType());
-                        if (pageIndex == 1) {
-                            mySaleMainIngBeans.clear();
+                        if (JSONUtil.isHasData(resultObj)){
+                            JSONArray jsonArray = resultObj.getJSONArray("rows");
+                            ArrayList<EventPaiMaiIngBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EventPaiMaiIngBean>>() {
+                            }.getType());
+                            if (pageIndex == 1) {
+                                tv_null.setVisibility(View.GONE);
+                                mySaleMainIngBeans.clear();
+                            }
+                            mySaleMainIngBeans.addAll(resultArray);
+                            myAdapter.notifyDataSetChanged();
+                            if (JSONUtil.isCanLoadMore(resultObj)) {
+                                list.isShowFoot(true);
+                            } else {
+                                list.isShowFoot(false);
+                            }
+                        }else {
+                            tv_null.setText("暂无数据");
+                            tv_null.setVisibility(View.VISIBLE);
                         }
-                        mySaleMainIngBeans.addAll(resultArray);
-                        myAdapter.notifyDataSetChanged();
-                        if (JSONUtil.isCanLoadMore(resultObj)) {
-                            list.isShowFoot(true);
-                        } else {
-                            list.isShowFoot(false);
-                        }
+
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                     }

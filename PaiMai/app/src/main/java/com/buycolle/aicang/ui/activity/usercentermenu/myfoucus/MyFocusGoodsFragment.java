@@ -48,6 +48,8 @@ public class MyFocusGoodsFragment extends BaseFragment {
     ImageButton ibFloatBtn;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private MyAdapter myAdapter;
 
@@ -167,6 +169,7 @@ public class MyFocusGoodsFragment extends BaseFragment {
                             }
                             myAdapter.notifyDataSetChanged();
                             list.isShowFoot(false);
+                           tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

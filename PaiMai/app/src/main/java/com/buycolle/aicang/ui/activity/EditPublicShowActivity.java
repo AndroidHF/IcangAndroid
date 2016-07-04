@@ -79,6 +79,9 @@ public class EditPublicShowActivity extends BaseActivity {
     TextView tvPublish;
 
     private ArrayList<PostShowBean> postShowBeans;
+    private PostShowBean mainImgBean = new PostShowBean();
+
+
 
     private MyAdapter myAdapter;
 
@@ -91,6 +94,9 @@ public class EditPublicShowActivity extends BaseActivity {
 //    private ImageView iv_add;
 
     private LinearLayout ll_add;
+    private FrameLayout iv_add_item;
+    private EditText et_input_link;
+    private EditText et_input_content;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,6 +108,7 @@ public class EditPublicShowActivity extends BaseActivity {
             @Override
             public void leftActio() {
                 finish();
+//                UIHelper.jump(mActivity,PublicShowActivity.class);
             }
         });
         show_id = _Bundle.getInt("show_id");
@@ -151,19 +158,19 @@ public class EditPublicShowActivity extends BaseActivity {
 
             }
         });
-        promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.public_link_icon), new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (promotedActionsLibrary.isable) {
-                    PostShowBean postShowBean = new PostShowBean();
-                    postShowBean.setType(3);
-                    postShowBean.setContent("http://");
-                    postShowBeans.add(postShowBean);
-                    myAdapter.notifyDataSetChanged();
-                    dsList.setSelection(postShowBeans.size() - 1);
-                }
-            }
-        });
+//        promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.public_link_icon), new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (promotedActionsLibrary.isable) {
+//                    PostShowBean postShowBean = new PostShowBean();
+//                    postShowBean.setType(3);
+//                    postShowBean.setContent("http://");
+//                    postShowBeans.add(postShowBean);
+//                    myAdapter.notifyDataSetChanged();
+//                    dsList.setSelection(postShowBeans.size() - 1);
+//                }
+//            }
+//        });
         promotedActionsLibrary.addMainItem(getResources().getDrawable(R.drawable.public_show_add));
 
 
@@ -370,6 +377,7 @@ public class EditPublicShowActivity extends BaseActivity {
                         noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
                             @Override
                             public void onDismiss(DialogInterface dialog) {
+                                //EventBus.getDefault().post(new EditShowEvent(2));
                                 finish();
                             }
                         });
@@ -631,16 +639,16 @@ public class EditPublicShowActivity extends BaseActivity {
 //            ImageView iv_drag = (ImageView) view.findViewById(R.id.iv_drag);
 //            ImageView iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
 
-
-            FrameLayout iv_add_item = (FrameLayout) view.findViewById(R.id.iv_add_item);
+            iv_add_item = (FrameLayout) view.findViewById(R.id.iv_add_item);
             ImageView iv_main = (ImageView) view.findViewById(R.id.iv_main);
             ImageView iv_add = (ImageView) view.findViewById(R.id.iv_add);
+            LinearLayout ll_add1 = (LinearLayout) view.findViewById(R.id.ll_add1);
             ImageView iv_status = (ImageView) view.findViewById(R.id.iv_status);
 //            ImageView iv_close = (ImageView) view.findViewById(R.id.iv_close);
 
 
-            EditText et_input_link = (EditText) view.findViewById(R.id.et_input_link);
-            EditText et_input_content = (EditText) view.findViewById(R.id.et_input_content);
+            et_input_link = (EditText) view.findViewById(R.id.et_input_link);
+            et_input_content = (EditText) view.findViewById(R.id.et_input_content);
 
 //            et_input_content.setOnTouchListener(new View.OnTouchListener() {
 //                @Override
@@ -685,6 +693,7 @@ public class EditPublicShowActivity extends BaseActivity {
                 if (TextUtils.isEmpty(postShowBean.getImageLocal()) && !postShowBean.isServer()) {
                     iv_status.setVisibility(View.GONE);
 //                    iv_close.setVisibility(View.GONE);
+                    ll_add1.setVisibility(View.VISIBLE);
                     iv_add.setVisibility(View.VISIBLE);
                     iv_main.setImageResource(R.color.transparent);
                     iv_add.setOnClickListener(new View.OnClickListener() {
@@ -711,12 +720,14 @@ public class EditPublicShowActivity extends BaseActivity {
                         iv_status.setVisibility(View.GONE);
 //                        iv_close.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
+                        ll_add1.setVisibility(View.GONE);
                         mApplication.setImages(postShowBean.getContent(), iv_main);
                     } else {
                         if (postShowBean.getStatus() == PostShowBean.Status.FAIL) {
                             iv_status.setVisibility(View.VISIBLE);
 //                            iv_close.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
+                            ll_add1.setVisibility(View.GONE);
 //                            iv_close.setOnClickListener(new View.OnClickListener() {
 //                                @Override
 //                                public void onClick(View v) {
@@ -734,38 +745,41 @@ public class EditPublicShowActivity extends BaseActivity {
                             iv_status.setVisibility(View.GONE);
 //                            iv_close.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
+                            ll_add1.setVisibility(View.GONE);
                             mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                         } else {
                             iv_status.setVisibility(View.GONE);
 //                            iv_close.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
+                            ll_add1.setVisibility(View.GONE);
                             mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                         }
                     }
 
                 }
-            } else {//链接
-                et_input_link.setText(postShowBean.getContent());
-                iv_add_item.setVisibility(View.GONE);
-                et_input_link.setVisibility(View.VISIBLE);
-                et_input_content.setVisibility(View.GONE);
-                et_input_link.addTextChangedListener(new TextWatcher() {
-                    @Override
-                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-                    }
-
-                    @Override
-                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                        postShowBean.setContent(charSequence.toString());
-                    }
-
-                    @Override
-                    public void afterTextChanged(Editable editable) {
-
-                    }
-                });
             }
+//            else {//链接
+//                et_input_link.setText(postShowBean.getContent());
+//                iv_add_item.setVisibility(View.GONE);
+//                et_input_link.setVisibility(View.VISIBLE);
+//                et_input_content.setVisibility(View.GONE);
+//                et_input_link.addTextChangedListener(new TextWatcher() {
+//                    @Override
+//                    public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//                        postShowBean.setContent(charSequence.toString());
+//                    }
+//
+//                    @Override
+//                    public void afterTextChanged(Editable editable) {
+//
+//                    }
+//                });
+//            }
 
             return view;
         }
@@ -977,4 +991,24 @@ public class EditPublicShowActivity extends BaseActivity {
                     }
                 });
     }
+
+    /***
+     * add by :胡峰，晒物草稿发布成功后，我要晒物界面内容清空
+     */
+    private void initSuccessView(){
+        mainImgBean.setImageLocal("");
+        iv_fisrt.setImageResource(R.color.transparent);
+        iv_main_close.setVisibility(View.GONE);
+        ll_add.setVisibility(View.VISIBLE);
+        iv_fisrt_status.setVisibility(View.GONE);
+        tv_goods_type_value.setText("请选择");
+        tv_goods_type_value.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+        et_title_top.setText("");
+        et_desc_top.setText("");
+        iv_add_item.setVisibility(View.GONE);
+        et_input_content.setVisibility(View.GONE);
+        et_input_link.setVisibility(View.GONE);
+        myAdapter.notifyDataSetChanged();
+    }
+
 }

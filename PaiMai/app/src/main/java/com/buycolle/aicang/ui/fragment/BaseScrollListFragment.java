@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.ui.view.mainScrole.ScrollAbleFragment;
@@ -24,6 +25,8 @@ public class BaseScrollListFragment extends ScrollAbleFragment {
     public XListView list;
     @Bind(R.id.ib_float_btn)
     public ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    public TextView tv_null;
 
     @Nullable
     @Override

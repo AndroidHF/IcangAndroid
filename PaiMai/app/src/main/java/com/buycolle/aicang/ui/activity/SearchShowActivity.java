@@ -51,6 +51,8 @@ public class SearchShowActivity extends BaseActivity {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private MyAdapter myAdapter;
 
@@ -196,7 +198,8 @@ public class SearchShowActivity extends BaseActivity {
                             }
                         } else {
                             if (pageIndex == 1) {
-                                UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                //UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                tv_null.setVisibility(View.VISIBLE);
                                 datas.clear();
                             }
                             myAdapter.notifyDataSetChanged();
@@ -272,7 +275,8 @@ public class SearchShowActivity extends BaseActivity {
             holder.tv_time.setText(myShowPassBean.getCreate_date());
             mApplication.setImages(myShowPassBean.getCover_pic(), holder.iv_show_main);
             holder.tv_show_content.setText(myShowPassBean.getTitle());
-            mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
+            //mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
+            mApplication.setTouImages(myShowPassBean.getUser_avatar(),holder.iv_user_image);
             holder.tv_user_name.setText(myShowPassBean.getUser_nick());
             holder.tv_comment_content.setText(myShowPassBean.getComment_count() + "");
             holder.tv_like_content.setText(myShowPassBean.getZ_count() + "");

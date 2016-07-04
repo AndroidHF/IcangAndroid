@@ -40,6 +40,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             // 9：卖家拍品被中拍提醒
             // 10:买家付款了，给卖家提醒
             // 11:卖家身份审核成功
+            // 12:卖家身份没有通过审核
 //            if (type == 1) {
 //                if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
 //                    Bundle bundle = new Bundle();
@@ -153,6 +154,20 @@ public class NotificationReceiver extends BroadcastReceiver {
                     context.startActivity(intent1);
                 }
             }
+
+            if (type == 12) {
+                if (!ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
+                    Intent intent1 = new Intent(context, SplashActivity.class);
+                    intent1.putExtra("isPush", true);
+                    intent1.putExtra("type", type);
+                    intent1.putExtra("id", id);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent1);
+                }
+            }
+
             if (type == 9 || type == 10) {
                 if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
                     Intent update = new Intent(context, MySaleActivity.class);

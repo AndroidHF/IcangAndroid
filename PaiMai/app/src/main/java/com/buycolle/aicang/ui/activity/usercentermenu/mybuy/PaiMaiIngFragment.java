@@ -54,6 +54,8 @@ public class PaiMaiIngFragment extends BaseFragment {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<MyBuyPaiMainIngBean> myBuyPaiMainIngBeans;
     private MyAdapter myAdapter;
@@ -187,6 +189,8 @@ public class PaiMaiIngFragment extends BaseFragment {
                             } else {
                                 list.isShowFoot(false);
                             }
+                        }else{
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

@@ -1,10 +1,13 @@
 package com.buycolle.aicang.ui.fragment.event;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -83,6 +86,7 @@ public class EventFragment extends BaseFragment {
     TextView tvPaimaiFinish;
     @Bind(R.id.ll_tab_parent)
     LinearLayout llTabParent;
+
     private ScrollAbleFragment paiMaiIngFrag, paiMaiCommingFrag, paiMaiFinishFrag;
     private MainPagerAdapter pagerAdapter;
     private ArrayList<TextView> tvArrayList;
@@ -178,6 +182,12 @@ public class EventFragment extends BaseFragment {
                 if (adsArray.length() > 0) {
                     homeTopAddBeens = new Gson().fromJson(adsArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
                     }.getType());
+                    WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                    int width = windowManager.getDefaultDisplay().getWidth();
+                    Log.i("width", width + "");
+                    ViewGroup.LayoutParams layoutParams = convenientBanner.getLayoutParams();//获取当前的控件的参数
+                    layoutParams.height = width/2;
+                    convenientBanner.setLayoutParams(layoutParams);
                     convenientBanner.setAdapter(new HomeAddImagePagerAdapter(mActivity, homeTopAddBeens).setInfiniteLoop(false));
                     convenientBanner.setInterval(5000);
                     convenientBanner.startAutoScroll();
@@ -207,17 +217,17 @@ public class EventFragment extends BaseFragment {
             }
         });
 
-        ivShowSmile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!isShow) {
-                    ivShowSmile.setImageResource(R.drawable.event_top_icon);
-                } else {
-                    ivShowSmile.setImageResource(R.drawable.smail_none);
-                }
-                isShow = isShow ? false : true;
-            }
-        });
+//        ivShowSmile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (!isShow) {
+//                    ivShowSmile.setImageResource(R.drawable.event_top_icon);
+//                } else {
+//                    ivShowSmile.setImageResource(R.drawable.smail_none);
+//                }
+//                isShow = isShow ? false : true;
+//            }
+//        });
     }
 
     private void loadTopAds() {
@@ -246,6 +256,12 @@ public class EventFragment extends BaseFragment {
                             aCache.put(Constans.TAG_EVENT_TOP_ADS, resultObj);
                             ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
                             }.getType());
+                            WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+                            int width = windowManager.getDefaultDisplay().getWidth();
+                            Log.i("width", width + "");
+                            ViewGroup.LayoutParams layoutParams = convenientBanner.getLayoutParams();//获取当前的控件的参数
+                            layoutParams.height = width/2;//将高度设置为宽度的三分之一
+                            convenientBanner.setLayoutParams(layoutParams);
                             convenientBanner.setAdapter(new HomeAddImagePagerAdapter(mActivity, homarrays).setInfiniteLoop(false));
                             convenientBanner.setInterval(5000);
                             convenientBanner.startAutoScroll();

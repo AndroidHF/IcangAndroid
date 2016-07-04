@@ -223,13 +223,23 @@ public class PaiPinSearchDialog extends Dialog implements View.OnClickListener {
 
                     //开始价格
                     if (!TextUtils.isEmpty(et_input_start_price.getText().toString().trim())) {
-                        start_price = et_input_start_price.getText().toString().trim();
+                        if (et_input_start_price.getText().toString().trim().startsWith("0")){
+                            UIHelper.t(mContext,"请输入正确的开始价格");
+                            return;
+                        }else{
+                            start_price = et_input_start_price.getText().toString().trim();
+                        }
                     } else {
                         start_price = "";
                     }
                     //结束价格
                     if (!TextUtils.isEmpty(et_input_end_price.getText().toString().trim())) {
-                        end_price = et_input_end_price.getText().toString().trim();
+                        if (et_input_end_price.getText().toString().trim().startsWith("0")){
+                            UIHelper.t(mContext,"请输入正确的结束价格");
+                            return;
+                        }else {
+                            end_price = et_input_end_price.getText().toString().trim();
+                        }
                     } else {
                         end_price = "";
                     }

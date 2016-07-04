@@ -27,7 +27,7 @@
                 android:layout_height="150dip"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="30dip"
-                android:src="@drawable/register_logo" />
+                android:src="@drawable/register_logo_new" />
 
 
             <LinearLayout
@@ -185,6 +185,7 @@
                         android:background="@null"
                         android:hint="请输入密码，限长为6-20个字符"
                         android:inputType="textPassword"
+                        android:maxLength="20"
                         android:singleLine="true"
                         android:textSize="16dip" />
                 </RelativeLayout>

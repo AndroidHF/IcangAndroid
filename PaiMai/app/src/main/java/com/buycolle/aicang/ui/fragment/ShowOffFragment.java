@@ -62,6 +62,8 @@ public class ShowOffFragment extends BaseFragment {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<MyShowPassBean> datas;
 
@@ -225,6 +227,7 @@ public class ShowOffFragment extends BaseFragment {
                     if (JSONUtil.isOK(resultObj)) {
                         if (JSONUtil.isHasData(resultObj)) {
                             if (pageIndex == 1) {
+                                tv_null.setVisibility(View.GONE);
                                 datas.clear();
                             }
                             JSONArray rows = resultObj.getJSONArray("rows");
@@ -239,7 +242,7 @@ public class ShowOffFragment extends BaseFragment {
                             }
                         } else {
                             if (pageIndex == 1) {
-                                UIHelper.t(mContext,"该分类下暂无晒物");
+                                tv_null.setVisibility(View.VISIBLE);
                                 datas.clear();
                             }
                             myAdapter.notifyDataSetChanged();

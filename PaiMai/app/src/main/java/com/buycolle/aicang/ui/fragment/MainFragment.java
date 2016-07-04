@@ -155,17 +155,17 @@ public class MainFragment extends BasePagerFragment {
             }
         });
 
-        ll_event_menu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!isShow) {
-                    iv_show_smile.setImageResource(R.drawable.event_top_icon);
-                } else {
-                    iv_show_smile.setImageResource(R.drawable.smail_none);
-                }
-                isShow = isShow ? false : true;
-            }
-        });
+//        ll_event_menu.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (!isShow) {
+//                    iv_show_smile.setImageResource(R.drawable.event_top_icon);
+//                } else {
+//                    iv_show_smile.setImageResource(R.drawable.smail_none);
+//                }
+//                isShow = isShow ? false : true;
+//            }
+//        });
 
         JSONObject topaAdsObj = aCache.getAsJSONObject(Constans.TAG_HOME_TOP_ADS);
         if (topaAdsObj != null) {

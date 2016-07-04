@@ -127,22 +127,28 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
-                        JSONArray jsonArray = resultObj.getJSONArray("rows");
-                        ArrayList<EventPaiMaiIngBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EventPaiMaiIngBean>>() {
-                        }.getType());
-                        if (pageIndex == 1) {
-                            mySaleMainIngBeans.clear();
-                        }
-                        ArrayList<EventPaiMaiIngBean> resultFormatS = formatData(resultArray);
-                        mySaleMainIngBeans.addAll(resultFormatS);
-                        if (pageIndex == 1 && resultArray.size() > 0 && headIsRun == false) {
-                            handler.sendEmptyMessage(1);
-                        }
-                        myAdapter.notifyDataSetChanged();
-                        if (JSONUtil.isCanLoadMore(resultObj)) {
-                            list.isShowFoot(true);
-                        } else {
-                            list.isShowFoot(false);
+                        if (JSONUtil.isHasData(resultObj)){
+                            JSONArray jsonArray = resultObj.getJSONArray("rows");
+                            ArrayList<EventPaiMaiIngBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EventPaiMaiIngBean>>() {
+                            }.getType());
+                            if (pageIndex == 1) {
+                                tv_null.setVisibility(View.GONE);
+                                mySaleMainIngBeans.clear();
+                            }
+                            ArrayList<EventPaiMaiIngBean> resultFormatS = formatData(resultArray);
+                            mySaleMainIngBeans.addAll(resultFormatS);
+                            if (pageIndex == 1 && resultArray.size() > 0 && headIsRun == false) {
+                                handler.sendEmptyMessage(1);
+                            }
+                            myAdapter.notifyDataSetChanged();
+                            if (JSONUtil.isCanLoadMore(resultObj)) {
+                                list.isShowFoot(true);
+                            } else {
+                                list.isShowFoot(false);
+                            }
+                        }else {
+                            tv_null.setText("暂无数据");
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -260,6 +266,7 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
 
                 holder.tv_yikoujia_biaoshi = (TextView) convertView.findViewById(R.id.yikoujia_biaoshi);//一口价标识
                 holder.tv_qipaijia_biaoshi = (TextView) convertView.findViewById(R.id.qipaijia_biaoshi);//起拍价标识
+                holder.tv_null = (TextView) convertView.findViewById(R.id.tv_null);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
@@ -367,6 +374,7 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
             TextView tv_secs;
             TextView tv_yikoujia_biaoshi;
             TextView tv_qipaijia_biaoshi;
+            TextView tv_null;
         }
 
     }

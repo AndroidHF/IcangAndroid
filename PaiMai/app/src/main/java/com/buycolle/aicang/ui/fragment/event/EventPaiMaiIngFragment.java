@@ -141,22 +141,28 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
-                        JSONArray jsonArray = resultObj.getJSONArray("rows");
-                        ArrayList<EventPaiMaiIngBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EventPaiMaiIngBean>>() {
-                        }.getType());
-                        if (pageIndex == 1) {
-                            mySaleMainIngBeans.clear();
-                        }
-                        ArrayList<EventPaiMaiIngBean> resultFormatS = formatData(resultArray);
-                        mySaleMainIngBeans.addAll(resultFormatS);
-                        if (pageIndex == 1 && resultArray.size() > 0 && headIsRun == false) {
-                            handler.sendEmptyMessage(1);
-                        }
-                        myAdapter.notifyDataSetChanged();
-                        if (JSONUtil.isCanLoadMore(resultObj)) {
-                            list.isShowFoot(true);
-                        } else {
-                            list.isShowFoot(false);
+                        if (JSONUtil.isHasData(resultObj)){
+                            JSONArray jsonArray = resultObj.getJSONArray("rows");
+                            ArrayList<EventPaiMaiIngBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<EventPaiMaiIngBean>>() {
+                            }.getType());
+                            if (pageIndex == 1) {
+                                tv_null.setVisibility(View.GONE);
+                                mySaleMainIngBeans.clear();
+                            }
+                            ArrayList<EventPaiMaiIngBean> resultFormatS = formatData(resultArray);
+                            mySaleMainIngBeans.addAll(resultFormatS);
+                            if (pageIndex == 1 && resultArray.size() > 0 && headIsRun == false) {
+                                handler.sendEmptyMessage(1);
+                            }
+                            myAdapter.notifyDataSetChanged();
+                            if (JSONUtil.isCanLoadMore(resultObj)) {
+                                list.isShowFoot(true);
+                            } else {
+                                list.isShowFoot(false);
+                            }
+                        }else {
+                            tv_null.setText("暂无数据");
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

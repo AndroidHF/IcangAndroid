@@ -151,6 +151,10 @@ public class EditAddressActivity extends BaseActivity {
                     showNotice("提示", "请填写姓名", "我知道了");
                     btnSave.setEnabled(true);
                     return;
+                }else if (etName.getText().toString().trim().length() > 40){
+                    showNotice("提示", "您输入的姓名过长", "我知道了");
+                    btnSave.setEnabled(true);
+                    return;
                 }
                 if (TextUtils.isEmpty(etPhone.getText().toString().trim())) {
                     showNotice("提示", "请填写联系方式", "我知道了");

@@ -50,6 +50,9 @@ public class ShowCaoGaoFragment extends BaseFragment {
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
 
+    @Bind(R.id.tv_null)
+    TextView tv_null;
+
     private MyAdapter myAdapter;
 
     private ArrayList<MyShowDraftBean> datas;
@@ -58,10 +61,18 @@ public class ShowCaoGaoFragment extends BaseFragment {
     private int pageIndex = 1;
     private int pageNum = 10;
 
+
     public void onEventMainThread(EditShowEvent event) {
         pageIndex = 1;
         loadData(false);
     }
+
+
+//    //登出触发
+//    public void onEventMainThread(LogOutEvent event) {
+//        loadData(false);
+//        myAdapter.notifyDataSetChanged();
+//    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -168,6 +179,13 @@ public class ShowCaoGaoFragment extends BaseFragment {
                             } else {
                                 list.isShowFoot(false);
                             }
+                        }else {
+                            if (pageIndex == 1) {
+                                datas.clear();
+                            }
+                            myAdapter.notifyDataSetChanged();
+                            list.isShowFoot(false);
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

@@ -80,6 +80,9 @@ public class SearchPaiPinActivity extends BaseActivity {
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
 
+    @Bind(R.id.tv_null)
+    TextView tv_null;
+
     private ArrayList<TextView> titles;
     private ArrayList<ImageView> titleImages;
 
@@ -525,10 +528,10 @@ public class SearchPaiPinActivity extends BaseActivity {
                             }
                         } else {
                             if (pageIndex == 1) {
-                                UIHelper.t(mContext,"您当前搜索的内容没有结果");
+                                //UIHelper.t(mContext, "您当前搜索的内容没有结果");
+                                tv_null.setVisibility(View.VISIBLE);
                                 homeGoodsBeanArrayList.clear();
                                 myAdapter.notifyDataSetChanged();
-                            } else {
                                 list.isShowFoot(false);
                             }
                         }
@@ -542,6 +545,9 @@ public class SearchPaiPinActivity extends BaseActivity {
                 if (!isLoadMore) {
                     dismissLoadingDialog();
                 }
+
+
+
             }
 
             @Override

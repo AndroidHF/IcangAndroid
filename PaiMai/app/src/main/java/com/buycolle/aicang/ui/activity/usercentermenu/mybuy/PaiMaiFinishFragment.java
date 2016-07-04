@@ -9,6 +9,7 @@ import android.text.Spannable;
 import android.text.SpannableStringBuilder;
 import android.text.Spanned;
 import android.text.TextPaint;
+import android.text.TextUtils;
 import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
 import android.view.LayoutInflater;
@@ -64,6 +65,8 @@ public class PaiMaiFinishFragment extends BaseFragment {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<MyBuyPaiMainFinishBean> myBuyPaiMainFinishBeans;
     private MyAdapter myAdapter;
@@ -205,6 +208,8 @@ public class PaiMaiFinishFragment extends BaseFragment {
                             } else {
                                 list.isShowFoot(false);
                             }
+                        }else {
+                           tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -233,8 +238,8 @@ public class PaiMaiFinishFragment extends BaseFragment {
     private void formatData(ArrayList<MyBuyPaiMainFinishBean> allDataArrayList) {
         for (MyBuyPaiMainFinishBean mySaleMainIngBean : allDataArrayList) {
             if (mySaleMainIngBean.getPay_status() == 0) {//未付款
-                mySaleMainIngBean.setTime(mySaleMainIngBean.getLast_pay_remain_second() * 1000);
-                mySaleMainIngBean.setIsFinish(false);
+                    mySaleMainIngBean.setTime(mySaleMainIngBean.getLast_pay_remain_second() * 1000);
+                    mySaleMainIngBean.setIsFinish(false);
             }
         }
     }
@@ -369,27 +374,54 @@ public class PaiMaiFinishFragment extends BaseFragment {
             //未付款
             if (myBuyPaiMainFinishBean.getPay_status() == 0) {
                 holder.iv_status_tag.setImageResource(R.drawable.zhongbiao_icon);
-                setViewVisible(holder.ll_status_weifukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_yifahuo, holder.ll_status_queren_shouhuo);
-                String[] times = StringFormatUtil.getTimeFromInt(myBuyPaiMainFinishBean.getTime() / 1000);
-                if (!myBuyPaiMainFinishBean.isFinish()) {//还没结束才显示倒计时
-                    holder.tv_day.setText(times[0]);
-                    holder.tv_hour.setText(times[1]);
-                    holder.tv_min.setText(times[2]);
-                    holder.tv_secs.setText(times[3]);
-                } else {
-                    holder.tv_day.setText("00");
-                    holder.tv_hour.setText("00");
-                    holder.tv_min.setText("00");
-                    holder.tv_secs.setText("00");
-                }
-                holder.btn_pay.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Bundle bundle = new Bundle();
-                        bundle.putInt("product_id", myBuyPaiMainFinishBean.getProduct_id());
-                        UIHelper.jump(mActivity, ZhiFuActivity.class, bundle);
+                if(!TextUtils.isEmpty(myBuyPaiMainFinishBean.getLast_pay_time())){
+                    setViewVisible(holder.ll_status_weifukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_yifahuo, holder.ll_status_queren_shouhuo);
+                    String[] times = StringFormatUtil.getTimeFromInt(myBuyPaiMainFinishBean.getTime() / 1000);
+                    if (!myBuyPaiMainFinishBean.isFinish()) {//还没结束才显示倒计时
+                        holder.tv_day.setText(times[0]);
+                        holder.tv_hour.setText(times[1]);
+                        holder.tv_min.setText(times[2]);
+                        holder.tv_secs.setText(times[3]);
+                    } else {
+                        holder.tv_day.setText("00");
+                        holder.tv_hour.setText("00");
+                        holder.tv_min.setText("00");
+                        holder.tv_secs.setText("00");
                     }
-                });
+                    holder.btn_pay.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Bundle bundle = new Bundle();
+                            bundle.putInt("product_id", myBuyPaiMainFinishBean.getProduct_id());
+                            UIHelper.jump(mActivity, ZhiFuActivity.class, bundle);
+                        }
+                    });
+                }else {
+                    setViewVisible(holder.tv_msg_info, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_yifahuo, holder.ll_status_queren_shouhuo);
+                    holder.tv_msg_info.setText("系统结算中，请稍后刷新重试");
+                }
+
+
+//                String[] times = StringFormatUtil.getTimeFromInt(myBuyPaiMainFinishBean.getTime() / 1000);
+//                if (!myBuyPaiMainFinishBean.isFinish()) {//还没结束才显示倒计时
+//                    holder.tv_day.setText(times[0]);
+//                    holder.tv_hour.setText(times[1]);
+//                    holder.tv_min.setText(times[2]);
+//                    holder.tv_secs.setText(times[3]);
+//                } else {
+//                    holder.tv_day.setText("00");
+//                    holder.tv_hour.setText("00");
+//                    holder.tv_min.setText("00");
+//                    holder.tv_secs.setText("00");
+//                }
+//                holder.btn_pay.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Bundle bundle = new Bundle();
+//                        bundle.putInt("product_id", myBuyPaiMainFinishBean.getProduct_id());
+//                        UIHelper.jump(mActivity, ZhiFuActivity.class, bundle);
+//                    }
+//                });
                 //已经付款 -- 未发货---
             } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 0) {
                 holder.iv_status_tag.setImageResource(R.drawable.zhongbiao_icon);

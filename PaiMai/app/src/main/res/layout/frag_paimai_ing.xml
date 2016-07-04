@@ -9,6 +9,17 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/tv_null"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dip"
+            android:gravity="center"
+            android:text="暂无数据"
+            android:textColor="@color/black"
+            android:textSize="20dip"
+            />
+
         <com.buycolle.aicang.ui.view.xlistview.XListView
             android:id="@+id/list"
             android:layout_width="fill_parent"

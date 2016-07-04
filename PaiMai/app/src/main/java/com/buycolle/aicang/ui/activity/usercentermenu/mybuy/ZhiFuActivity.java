@@ -29,6 +29,7 @@ import com.buycolle.aicang.pay.PayResult;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.activity.userinfo.EditAddressActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
+import com.buycolle.aicang.util.PackageUtil;
 import com.buycolle.aicang.util.StringFormatUtil;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
@@ -217,6 +218,16 @@ public class ZhiFuActivity extends BaseActivity {
 //                        tvSubmitPay.setEnabled(true);
 //                        UIHelper.t(mContext, "请您完善您的地址信息");
 //                    }
+
+                    /***
+                     * add by :胡峰
+                     * 支付的时候，如果没有安装微信，提示没有安装
+                     */
+                    if (!PackageUtil.isWeixinAvilible(mContext)){
+                        tvSubmitPay.setEnabled(true);
+                        UIHelper.t(mContext, "您的设备还未安装微信");
+                        return;
+                    }
                     /***
                      * change by :胡峰
                      * 功能：优惠码的添加

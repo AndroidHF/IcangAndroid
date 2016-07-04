@@ -745,6 +745,7 @@ public class PostFragment extends BaseFragment {
                         edt.delete(posDot + 3, posDot + 4);
                     }
                 }
+
             }
         });
         tvYikouPriceValue.addTextChangedListener(new TextWatcher() {
@@ -1447,14 +1448,22 @@ public class PostFragment extends BaseFragment {
         if (TextUtils.isEmpty(tvStartPriceValue.getText().toString().trim())) {
             UIHelper.t(mContext, "请填写起拍价格");
             return;
+        }else if (tvStartPriceValue.getText().toString().trim().startsWith("0")){
+            UIHelper.t(mContext,"请输入正确的起拍价");
+            return;
         }
         if (cbYikoujiaStatus.isChecked()) {
             if (TextUtils.isEmpty(tvYikouPriceValue.getText().toString().trim())) {
                 UIHelper.t(mContext, "您已开启一口价，请输入一口价");
                 return;
             }
+            if (tvYikouPriceValue.getText().toString().trim().startsWith("0")){
+                UIHelper.t(mContext,"请输入正确的一口价");
+                return;
+            }
             if (Integer.valueOf(tvYikouPriceValue.getText().toString().trim()) < Integer.valueOf(tvStartPriceValue.getText().toString().trim())) {
                 UIHelper.t(mContext, "一口价应该大于或等于起拍价");
+                Log.i("interger--",Integer.MAX_VALUE+"");
                 return;
             }
         }

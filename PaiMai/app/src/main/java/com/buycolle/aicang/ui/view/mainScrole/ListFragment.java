@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
@@ -44,6 +45,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
     List<String> strlist;
     MyHomeAdapter myAdapter;
     ImageButton ib_float_btn;
+    TextView tv_null;
     private String index = "0";//全部
 
     private ArrayList<HomeGoodsBean> homeGoodsBeanArrayList;
@@ -70,6 +72,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mListview = (XListView) view.findViewById(R.id.listview);
         ib_float_btn = (ImageButton) view.findViewById(R.id.ib_float_btn);
+        tv_null = (TextView) view.findViewById(R.id.tv_null);
         return view;
     }
 
@@ -200,7 +203,9 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                         }
 
                         if (pageIndex == 1 && resultArray.size() == 0) {
-                            UIHelper.t(mContext, "该分类目前还没有商品");
+                           tv_null.setVisibility(View.VISIBLE);
+                        }else {
+                            tv_null.setVisibility(View.GONE);
                         }
 
                     } else {

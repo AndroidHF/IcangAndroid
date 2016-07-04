@@ -7,8 +7,8 @@ public class AppUrl {
 
 //    public static final String BASE_URL = "http://120.24.70.253:6080/paimais/";
 //    public static final String BASE_URL = "http://120.24.70.253:6080/paimai/";
-    //public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
-    public static final String BASE_URL = "http://139.196.195.196/paimai/";//测试url
+    public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
+    //public static final String BASE_URL = "http://139.196.195.196/paimai/";//测试url
     //public static final String BASE_URL = "http://192.168.33.22:8080/paimai/";//景旭的环境
     public static final String FILEUPLAOD = BASE_URL + "fileuplaod.up";
 

@@ -140,6 +140,7 @@ public class RegisterActivity extends BaseActivity {
                 UIHelper.jump(RegisterActivity.this, UserDealActivity.class);
             }
         });
+
     }
 
     /**
@@ -210,6 +211,10 @@ public class RegisterActivity extends BaseActivity {
         }
         if (TextUtils.isEmpty(etPsw.getText().toString())) {
             UIHelper.t(mContext, "密码不能为空");
+            btnRegister.setEnabled(true);
+            return;
+        }else if(etPsw.getText().toString().trim().length() < 6 || etPsw.getText().toString().trim().length() > 20){
+            UIHelper.t(mContext,"请输入6-20个字符");
             btnRegister.setEnabled(true);
             return;
         }

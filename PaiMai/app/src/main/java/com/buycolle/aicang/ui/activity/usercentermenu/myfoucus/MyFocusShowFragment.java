@@ -48,6 +48,8 @@ public class MyFocusShowFragment extends BaseFragment {
     XListView list;
     @Bind(R.id.ib_float_btn)
     ImageButton ibFloatBtn;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private MyAdapter myAdapter;
 
@@ -174,6 +176,7 @@ public class MyFocusShowFragment extends BaseFragment {
                             }
                             myAdapter.notifyDataSetChanged();
                             list.isShowFoot(false);
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

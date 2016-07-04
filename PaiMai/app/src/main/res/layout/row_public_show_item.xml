@@ -13,6 +13,7 @@
         android:paddingTop="5dip">
 
         <LinearLayout
+            android:id="@+id/ll_add_all"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/shape_white_black"
