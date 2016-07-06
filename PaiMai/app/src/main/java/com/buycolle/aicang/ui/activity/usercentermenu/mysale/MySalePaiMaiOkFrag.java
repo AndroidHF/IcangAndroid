@@ -143,6 +143,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
     private boolean isCount = false;
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -156,6 +157,9 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
         mApplication.apiClient.product_getcenterendlistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isloadMore){
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -197,6 +201,9 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 }
                 isRun = false;
                 list.onRefreshComplete();
+                if (!isloadMore){
+                    dismissLoadingDialog();
+                }
             }
 
             @Override

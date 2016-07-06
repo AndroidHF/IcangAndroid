@@ -87,6 +87,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
             public void onRefresh() {
                 pageIndex = 1;
                 loadData(index, false, false);
+                mListview.setPullRefreshEnable(true);
             }
 
             @Override
@@ -115,6 +116,8 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                 } else {
                     ib_float_btn.setVisibility(View.GONE);
                 }
+
+
             }
         });
         ib_float_btn.setOnClickListener(new View.OnClickListener() {
@@ -154,6 +157,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
     private int pageNum = 20;
 
     private void loadData(String cate_id, final boolean isLoadMore, final boolean isAction) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -173,6 +177,9 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
             @Override
             public void onApiStart() {
                 if (!isLoadMore && !isAction) {
+                    tv_null.setVisibility(View.GONE);
+                    showLoadingDialog();
+                }else {
                     showLoadingDialog();
                 }
             }
@@ -216,6 +223,8 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                 }
                 isRun = false;
                 if (!isLoadMore && !isAction) {
+                    dismissLoadingDialog();
+                }else {
                     dismissLoadingDialog();
                 }
                 if (!isLoadMore) {

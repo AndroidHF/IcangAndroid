@@ -266,7 +266,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
                     if (JSONUtil.isOK(resultObj)) {
                         JSONObject infosObj = resultObj.getJSONObject("infos");
                         cost = infosObj.getInt("business_cost");
-                        tvTotalCost.setText("总计回血 " + StringFormatUtil.getDoubleFormatNew(infosObj.getString("business_cost")) + "元");
+                        tvTotalCost.setText("总计回血 " + StringFormatUtil.getDoubleFormatNew2(infosObj.getString("business_cost")) + "元");
                         //tvTotalCost.setText("总计回血 " + "50000" + "元");
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

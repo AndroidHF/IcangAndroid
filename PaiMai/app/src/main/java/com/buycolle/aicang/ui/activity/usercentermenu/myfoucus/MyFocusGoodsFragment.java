@@ -125,6 +125,7 @@ public class MyFocusGoodsFragment extends BaseFragment {
     }
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -140,6 +141,9 @@ public class MyFocusGoodsFragment extends BaseFragment {
         mApplication.apiClient.product_getcollistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isloadMore){
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -179,7 +183,9 @@ public class MyFocusGoodsFragment extends BaseFragment {
                 }
                 isRun = false;
                 list.onRefreshComplete();
-
+                if (!isloadMore){
+                    dismissLoadingDialog();
+                }
             }
 
             @Override

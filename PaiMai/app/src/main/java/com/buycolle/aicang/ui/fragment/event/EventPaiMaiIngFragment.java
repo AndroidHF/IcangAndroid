@@ -117,6 +117,7 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
     }
 
     private void loadData(final boolean isLoadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -132,6 +133,12 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
         mApplication.apiClient.product_getauctinglistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isLoadMore && !isAdded()){
+                    tv_null.setVisibility(View.GONE);
+                    showLoadingDialog();
+                }else{
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -161,6 +168,11 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
                                 list.isShowFoot(false);
                             }
                         }else {
+                            if (pageIndex == 1){
+                                mySaleMainIngBeans.clear();
+                                list.isShowFoot(false);
+                                myAdapter.notifyDataSetChanged();
+                            }
                             tv_null.setText("暂无数据");
                             tv_null.setVisibility(View.VISIBLE);
                         }
@@ -173,6 +185,11 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
                 isRun = false;
                 if (pageIndex == 1) {
                     list.onRefreshComplete();
+                }
+                if (!isLoadMore && !isAdded()){
+                    dismissLoadingDialog();
+                }else {
+                    dismissLoadingDialog();
                 }
             }
 

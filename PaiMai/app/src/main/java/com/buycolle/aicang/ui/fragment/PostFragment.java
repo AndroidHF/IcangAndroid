@@ -384,7 +384,7 @@ public class PostFragment extends BaseFragment {
         try {
             if (mApplication.isLogin()) {
                 jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
-                Log.i("sessionid_banner_icon",LoginConfig.getUserInfo(mContext).getSessionid());
+                //Log.i("sessionid_banner_icon",LoginConfig.getUserInfo(mContext).getSessionid());
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -406,7 +406,7 @@ public class PostFragment extends BaseFragment {
                             }.getType());
                             for (Iterator iterator = homarrays.iterator(); iterator.hasNext();) {
                                 HomeTopAddBeanNew homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
-                                Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
+                                //Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
                                 mApplication.setShowImages(homeTopAddBeanNew.getBanner_icon(), iv_top_icon);
                             }
 
@@ -415,7 +415,7 @@ public class PostFragment extends BaseFragment {
                             Log.i("width", width + "");
                             ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
                             layoutParams.height = width / 3;//将高度设置为宽度的三分之一
-                            Log.i("height",layoutParams.height + "");
+                            //Log.i("height",layoutParams.height + "");
                             iv_top_icon.setLayoutParams(layoutParams);
                         }
                     } else {
@@ -515,10 +515,10 @@ public class PostFragment extends BaseFragment {
 
                     WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
                     int width = windowManager.getDefaultDisplay().getWidth();
-                    Log.i("width", width + "");
+                    //Log.i("width", width + "");
                     ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
                     layoutParams.height = width/3;//将高度设置为宽度的三分之一
-                    Log.i("height",layoutParams.height+"");
+                    //Log.i("height",layoutParams.height+"");
                     //iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
                     for (Iterator iterator = homeTopAddBeens.iterator(); iterator.hasNext();) {
                         homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
@@ -1199,9 +1199,9 @@ public class PostFragment extends BaseFragment {
         //add by :胡峰，拍品结束时间的获取逻辑
         if (requestCode == REQUEST_GOOD_PAIMAI_END_TIME && resultCode == mActivity.RESULT_OK){
             paimai_end_time = data.getStringExtra("value");
-            Log.i("paimai_end_time--",data.getStringExtra("value"));
+            //Log.i("paimai_end_time--",data.getStringExtra("value"));
             tv_end_time_value.setText(data.getStringExtra("time"));
-            Log.i("tv_end_time_value--",data.getStringExtra("time"));
+            //Log.i("tv_end_time_value--",data.getStringExtra("time"));
             tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
         }
 
@@ -1686,4 +1686,5 @@ public class PostFragment extends BaseFragment {
             }
         }).start();
     }
+
 }

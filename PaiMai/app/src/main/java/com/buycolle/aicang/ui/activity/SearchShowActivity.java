@@ -173,6 +173,9 @@ public class SearchShowActivity extends BaseActivity {
         mApplication.apiClient.show_getlistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isloadMore){
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -212,6 +215,9 @@ public class SearchShowActivity extends BaseActivity {
                     e.printStackTrace();
                 }
                 isRun = false;
+                if (!isloadMore){
+                    dismissLoadingDialog();
+                }
             }
 
             @Override

@@ -227,7 +227,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
                 if (_Bundle.getInt("type") == 1){//出价被超，跳转到我买到的，正在拍卖的列表
                     vpMainContainer.setCurrentItem(0);
                     initStatus(0);
-                }else if (_Bundle.getInt("type") == 2 || _Bundle.getInt("type") == 3 || _Bundle.getInt("type") == 8){//中拍提醒、付款提醒、付款还剩3小时提醒，跳转到我买到的已落拍的列表界面
+                }else if (_Bundle.getInt("type") == 2 || _Bundle.getInt("type") == 3 ||_Bundle.getInt("type") == 4|| _Bundle.getInt("type") == 8){//中拍提醒、付款提醒、卖家已经发货，付款还剩3小时提醒，跳转到我买到的已落拍的列表界面
                     vpMainContainer.setCurrentItem(1);
                     initStatus(1);
                 }
@@ -262,7 +262,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
                     if (JSONUtil.isOK(resultObj)) {
                         JSONObject infosObj = resultObj.getJSONObject("infos");
                         cost = infosObj.getInt("purchase_cost");
-                        tvTotalCost.setText("总计剁手 " + StringFormatUtil.getDoubleFormatNew(infosObj.getString("purchase_cost")) + "元");
+                        tvTotalCost.setText("总计剁手 " + StringFormatUtil.getDoubleFormatNew2(infosObj.getString("purchase_cost")) + "元");
                         //tvTotalCost.setText("总计消费 " + 50000 + "元");
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

@@ -435,6 +435,7 @@ public class SearchEventActivity extends BaseActivity {
     }
 
     private void loadData(final boolean isLoadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {

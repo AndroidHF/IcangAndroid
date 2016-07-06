@@ -89,7 +89,7 @@ public class ImageUtils {
                 file = File.createTempFile("cache" + "_" + (int) (Math.random() * 100 + 1)+ System.currentTimeMillis(), ".jpg", rootFile);
             }
             fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 80, fos);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 90, fos);//图片的压缩
             fos.flush();
             fos.close();
             recycleBitmap(bmp);

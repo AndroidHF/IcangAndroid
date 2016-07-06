@@ -311,6 +311,7 @@ public class EventFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
+
     //
     private void initStatus(int index) {
         event_type = index;

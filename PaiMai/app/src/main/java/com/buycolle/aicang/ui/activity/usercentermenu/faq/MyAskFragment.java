@@ -73,11 +73,9 @@ public class MyAskFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        list.setPullRefreshEnable(false);
         myAdapter = new MyAdapter();
         list.setAdapter(myAdapter);
-
+        list.setPullRefreshEnable(false);
         list.setOnScrollListener(new XListView.OnXScrollListener() {
             @Override
             public void onXScrolling(View view) {
@@ -129,6 +127,7 @@ public class MyAskFragment extends BaseFragment {
     }
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -142,7 +141,9 @@ public class MyAskFragment extends BaseFragment {
         mApplication.apiClient.commoncomment_getselfsendlistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
-                if(!isloadMore){
+                if (!isloadMore && !isAdded()) {
+                    showLoadingDialog();
+                } else {
                     showLoadingDialog();
                 }
             }
@@ -170,12 +171,8 @@ public class MyAskFragment extends BaseFragment {
                                 list.isShowFoot(false);
                             }
                         } else {
-                            if (pageIndex == 1) {
-                                datas.clear();
-                            }
-                            myAdapter.notifyDataSetChanged();
-                            list.isShowFoot(false);
-                           tv_null.setVisibility(View.VISIBLE);
+
+                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -184,6 +181,11 @@ public class MyAskFragment extends BaseFragment {
                     e.printStackTrace();
                 }
                 isRun = false;
+                if (!isloadMore && !isAdded()) {
+                    dismissLoadingDialog();
+                } else {
+                    dismissLoadingDialog();
+                }
             }
 
             @Override

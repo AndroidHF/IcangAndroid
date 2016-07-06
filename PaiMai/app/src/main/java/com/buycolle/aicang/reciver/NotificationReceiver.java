@@ -32,7 +32,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         if (type > 0) {//1：出价被超，
             // 2：中拍提醒 ，
             // 3：付款提醒，
-            // 4：发货提醒
+            // 4：卖家已经发货，买家收到推送
             // 5:订阅即将开始的竞拍推送提醒
             // 6:冻结用户提醒
             // 7:解锁
@@ -60,7 +60,7 @@ public class NotificationReceiver extends BroadcastReceiver {
 //                    context.startActivity(intent1);
 //                }
 //            }
-            if (type == 2 || type == 3 || type == 8 || type == 1) {
+            if (type == 2 || type == 3 || type == 8 || type == 1||type == 4) {
                 if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
                     Intent update = new Intent(context, MyBuyActivity.class);
                     update.putExtra("isPush", true);
@@ -78,24 +78,24 @@ public class NotificationReceiver extends BroadcastReceiver {
                     context.startActivity(intent1);
                 }
             }
-            if (type == 4) {
-                if (!ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
-                    Intent intent1 = new Intent(context, SplashActivity.class);
-                    intent1.putExtra("isPush", true);
-                    intent1.putExtra("type", type);
-                    intent1.putExtra("id", id);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(intent1);
-                } else {
-                    Intent update = new Intent(context, MySaleActivity.class);
-                    update.putExtra("isPush", true);
-                    update.putExtra("type", type);
-                    update.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    context.startActivity(update);
-                }
-            }
+//            if (type == 4) {
+//                if (!ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
+//                    Intent intent1 = new Intent(context, SplashActivity.class);
+//                    intent1.putExtra("isPush", true);
+//                    intent1.putExtra("type", type);
+//                    intent1.putExtra("id", id);
+//                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    context.startActivity(intent1);
+//                } else {
+//                    Intent update = new Intent(context, MySaleActivity.class);
+//                    update.putExtra("isPush", true);
+//                    update.putExtra("type", type);
+//                    update.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                    context.startActivity(update);
+//                }
+//            }
             if (type == 5) {
                 if (!ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
                     Intent intent1 = new Intent(context, SplashActivity.class);

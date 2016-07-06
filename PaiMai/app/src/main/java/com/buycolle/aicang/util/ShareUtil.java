@@ -148,7 +148,9 @@ public class ShareUtil {
 
     private static byte[] Bitmap2Bytes(Bitmap bm) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bm.compress(Bitmap.CompressFormat.PNG, 50, baos);
+        if (bm != null){
+            bm.compress(Bitmap.CompressFormat.PNG, 50, baos);
+        }
         return baos.toByteArray();
     }
 }

@@ -146,6 +146,7 @@ public class PaiMaiIngFragment extends BaseFragment {
     private boolean isHandRun = false;
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -159,7 +160,7 @@ public class PaiMaiIngFragment extends BaseFragment {
         mApplication.apiClient.product_getsjoininglistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
-                if (!isAction && !isloadMore) {
+                if (!isloadMore) {
                     showLoadingDialog();
                 }
             }
@@ -200,7 +201,7 @@ public class PaiMaiIngFragment extends BaseFragment {
                 }
                 isRun = false;
                 list.onRefreshComplete();
-                if (!isAction && !isloadMore) {
+                if (!isloadMore) {
                     dismissLoadingDialog();
                 }
                 isAction = false;
@@ -211,9 +212,9 @@ public class PaiMaiIngFragment extends BaseFragment {
                 if (!isAdded())
                     return;
                 list.onRefreshComplete();
-                if (!isAction && !isloadMore) {
-                    dismissLoadingDialog();
-                }
+//                if (!isAction && !isloadMore) {
+//                    dismissLoadingDialog();
+//                }
                 isAction = false;
                 UIHelper.t(mContext, R.string.net_error);
                 if (isloadMore) {

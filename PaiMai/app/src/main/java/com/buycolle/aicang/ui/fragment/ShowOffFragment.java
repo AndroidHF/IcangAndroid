@@ -199,6 +199,7 @@ public class ShowOffFragment extends BaseFragment {
 
     private void loadData(final boolean isloadMore) {
         isRun = true;
+        tv_null.setVisibility(View.GONE);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("page", pageIndex);
@@ -216,6 +217,11 @@ public class ShowOffFragment extends BaseFragment {
         mApplication.apiClient.show_getlistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isloadMore&& !isAdded()){
+                    showLoadingDialog();
+                }else {
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -257,6 +263,11 @@ public class ShowOffFragment extends BaseFragment {
                 isRun = false;
                 if (pageIndex == 1) {
                     list.onRefreshComplete();
+                }
+                if (!isloadMore&&!isAdded()){
+                    dismissLoadingDialog();
+                }else {
+                    dismissLoadingDialog();
                 }
             }
 

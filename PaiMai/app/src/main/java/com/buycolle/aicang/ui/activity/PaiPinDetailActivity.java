@@ -265,8 +265,11 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
     Tencent mTencent;
     private IWeiboShareAPI mWeiboShareAPI;
     private Bitmap shareBitmap;
+    private Bitmap shareBitmap2;
     private String shareImagePath = "";
+    private String shareImagePath2 = "";
 
+    //一般拍品
     private void getShareBitmap() {
         new Thread(new Runnable() {
             @Override
@@ -275,7 +278,7 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     GlideUrl glideUrl = new GlideUrl(paiPinDetailBean.getCover_pic(), new LazyHeaders.Builder()
                             .build());
                     shareBitmap = Glide.with(mActivity).load(glideUrl).asBitmap().into(150, 150).get();
-                    shareBitmap = Bitmap.createScaledBitmap(shareBitmap, 100, 100, true);
+                    //shareBitmap = Bitmap.createScaledBitmap(shareBitmap, 100, 100, true);
                     shareImagePath = saveLocalImg(shareBitmap);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -286,7 +289,27 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         }).start();
     }
 
-    //为QQ存储分享图片
+    //拍卖会图片分享到qq
+    private void getShareBitmap2() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    GlideUrl glideUrl = new GlideUrl(paiPinDetailBean.getCover_pic(), new LazyHeaders.Builder()
+                            .build());
+                    shareBitmap2 = Glide.with(mActivity).load(glideUrl).asBitmap().into(100,50).get();
+                    //shareBitmap = Bitmap.createScaledBitmap(shareBitmap, 100, 100, true);
+                    shareImagePath2 = saveLocalImg2(shareBitmap2);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    //为QQ存储分享一般图片
     private String saveLocalImg(Bitmap bitmap) {
         String serverPath = paiPinDetailBean.getCover_pic();
         String name = serverPath.substring(serverPath.lastIndexOf("/") + 1, serverPath.length());
@@ -297,7 +320,27 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         }
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
+            outputStream.flush();
+            outputStream.close();
+            return filePath;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String saveLocalImg2(Bitmap bitmap) {
+        String serverPath = paiPinDetailBean.getCover_pic();
+        String name = serverPath.substring(serverPath.lastIndexOf("/") + 1, serverPath.length());
+        String filePath = FileUtil.getShareCathe() + File.separator + name;
+        File file = new File(filePath);
+        if (file.exists()) {
+            file.delete();
+        }
+        try {
+            FileOutputStream outputStream = new FileOutputStream(file);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
             return filePath;
@@ -421,7 +464,7 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                                     ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
                                     break;
                                 }else {
-                                    ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" +paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToWeChat(mActivity, shareBitmap2, Constans.SHARE_URL + "/event.html?" +paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title());
                                     break;
                                 }
 
@@ -430,7 +473,7 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                                     ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/item.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
                                     break;
                                 }else {
-                                    ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL + "/event.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToCicle(mActivity, shareBitmap2, Constans.SHARE_URL + "/event.html?" + paiPinDetailBean.getProduct_id()+"z", Constans.shareTitle_Type_2,paiPinDetailBean.getProduct_title());
                                     break;
                                 }
                             case 3:
@@ -438,7 +481,7 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                                     ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/item.html?" + product_id+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
                                     break;
                                 }else {
-                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/event.html?" + product_id+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath, new BaseUiListener());
+                                    ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL + "/event.html?" + product_id+"z", Constans.shareTitle_Type_2, paiPinDetailBean.getProduct_title(), shareImagePath2, new BaseUiListener());
                                     break;
                                 }
                             case 4:
@@ -446,7 +489,7 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                                     ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/item.html?"+ product_id+"z", paiPinDetailBean.getProduct_title());
                                     break;
                                 }else {
-                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL + "/event.html?" + product_id+"z", paiPinDetailBean.getProduct_title());
+                                    ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap2, Constans.SHARE_URL + "/event.html?" + product_id+"z", paiPinDetailBean.getProduct_title());
                                     break;
                                 }
                         }
@@ -711,6 +754,7 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                         paiPinDetailBean = new Gson().fromJson(userInfoObj.toString(), PaiPinDetailBean.class);
                         //获取需要分享的bitmap
                         getShareBitmap();
+                        getShareBitmap2();
                         initData();
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

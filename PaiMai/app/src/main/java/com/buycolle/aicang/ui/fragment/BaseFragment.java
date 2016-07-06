@@ -109,6 +109,7 @@ public class BaseFragment extends Fragment {
             mProgressDialog.setCanceledOnTouchOutside(true);
         }
         mProgressDialog.show();
+
         return true;
     }
 

@@ -141,8 +141,9 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                 try {
                     GlideUrl glideUrl = new GlideUrl(showDetailBean.getCover_pic(), new LazyHeaders.Builder()
                             .build());
-                    shareBitmap = Glide.with(mActivity).load(glideUrl).asBitmap().into(150, 150).get();
-                    shareBitmap = Bitmap.createScaledBitmap(shareBitmap, 100, 100, true);
+                    //shareBitmap = Glide.with(mActivity).load(glideUrl).asBitmap().into(150, 150).get();
+                    shareBitmap = Glide.with(mActivity).load(glideUrl).asBitmap().into(100, 50).get();
+                    //shareBitmap = Bitmap.createScaledBitmap(shareBitmap, 100, 100, true);
                     shareImagePath = saveLocalImg(shareBitmap);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -164,7 +165,7 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
         }
         try {
             FileOutputStream outputStream = new FileOutputStream(file);
-            bitmap.compress(Bitmap.CompressFormat.PNG, 50, outputStream);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream);
             outputStream.flush();
             outputStream.close();
             return filePath;

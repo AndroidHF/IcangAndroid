@@ -84,6 +84,10 @@ public class MyFAQActivity extends BaseActivity {
                 tvArrayList.get(i).setBackgroundResource(R.drawable.shape_white_black);
             }
         }
+
         vpMainContainer.setCurrentItem(index);
+        fragList.get(index).refreshByState(0,true);
     }
+
+
 }

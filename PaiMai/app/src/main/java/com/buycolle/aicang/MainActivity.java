@@ -70,11 +70,16 @@ public class MainActivity extends BaseActivity {
             mApplication.updatePushId();
         }
 
+
     }
 
     //登出触发
     public void onEventMainThread(LogOutEvent event) {
         menuHomeClick();
+        menuEventclick();
+        menuPostclick();
+        menuShowclick();
+        menuUserclick();
     }
 
 
@@ -173,6 +178,7 @@ public class MainActivity extends BaseActivity {
         currentIndex = 1;
         initStatus(1);
         mainViewPager.setCurrentItem(currentIndex, false);
+        eventFrag.refreshByState(0);
     }
 
     @OnClick(R.id.iv_main_menu_3)
@@ -180,6 +186,7 @@ public class MainActivity extends BaseActivity {
         currentIndex = 2;
         initStatus(2);
         mainViewPager.setCurrentItem(currentIndex, false);
+        postFrag.refreshByState(0);
     }
 
     @OnClick(R.id.iv_main_menu_4)
@@ -187,6 +194,7 @@ public class MainActivity extends BaseActivity {
         currentIndex = 3;
         initStatus(3);
         mainViewPager.setCurrentItem(currentIndex, false);
+        showFrag.refreshByState(0);
     }
 
     @OnClick(R.id.iv_main_menu_5)

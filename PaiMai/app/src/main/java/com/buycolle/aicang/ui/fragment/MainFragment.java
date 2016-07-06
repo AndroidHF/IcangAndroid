@@ -192,7 +192,7 @@ public class MainFragment extends BasePagerFragment {
             @Override
             public void callBack(String name) {
                 int type = getMenuType(name);
-                listFragment.refreshByState(type,true);
+                listFragment.refreshByState(type, true);
             }
         });
     }

@@ -558,6 +558,25 @@ public class StringFormatUtil {
         }
     }
 
+    /**
+     * 总计回血和消费的显示为字符串
+     * @param value
+     * @return
+     */
+    public static String getDoubleFormatNew2(String value) {
+        if (TextUtils.isEmpty(value)) {
+            return "0.00";
+        }
+        double valueee = Double.valueOf(value);
+        DecimalFormat df = new DecimalFormat("0.00");
+        if (valueee > (int) valueee) {
+            double fee = Double.parseDouble(valueee + "");
+            return df.format(fee) + "";
+        } else {
+            return valueee + "";
+        }
+    }
+
 
     /**
      * 两个数据对比操作

@@ -146,6 +146,7 @@ public class MyShowFragment extends BaseFragment {
     }
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {

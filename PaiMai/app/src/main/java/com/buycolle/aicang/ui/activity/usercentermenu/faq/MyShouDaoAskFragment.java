@@ -140,6 +140,7 @@ public class MyShouDaoAskFragment extends BaseFragment {
     }
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
@@ -153,6 +154,11 @@ public class MyShouDaoAskFragment extends BaseFragment {
         mApplication.apiClient.commoncomment_getselfreceivelistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isloadMore&&!isAdded()){
+                    showLoadingDialog();
+                }else {
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -177,11 +183,6 @@ public class MyShouDaoAskFragment extends BaseFragment {
                                 list.isShowFoot(false);
                             }
                         } else {
-                            if (pageIndex == 1) {
-                                datas.clear();
-                            }
-                            myAdapter.notifyDataSetChanged();
-                            list.isShowFoot(false);
                            tv_null.setVisibility(View.VISIBLE);
                         }
                     } else {
@@ -191,6 +192,11 @@ public class MyShouDaoAskFragment extends BaseFragment {
                     e.printStackTrace();
                 }
                 isRun = false;
+                if (!isloadMore&&!isAdded()){
+                    dismissLoadingDialog();
+                }else {
+                    dismissLoadingDialog();
+                }
             }
 
             @Override

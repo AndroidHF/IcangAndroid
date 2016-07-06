@@ -129,6 +129,7 @@ public class MySalePaiMaiIngFrag extends BaseFragment {
     private boolean isCount = false;
 
     private void loadData(final boolean isloadMore) {
+        tv_null.setVisibility(View.GONE);
         isRun = true;
         JSONObject jsonObject = new JSONObject();
         try {
