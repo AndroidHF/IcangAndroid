@@ -62,8 +62,6 @@ public class MainFragment extends BasePagerFragment {
 
     @Bind(R.id.convenientBanner)
     AutoScrollViewPager viewPager;
-    //    @Bind(R.id.pagerStrip)
-//    ViewPager pagerStrip;
     @Bind(R.id.pagerStrip)
     FixedViewPager pagerStrip;
     @Bind(R.id.viewpager)
@@ -78,19 +76,10 @@ public class MainFragment extends BasePagerFragment {
     ImageView iv_show_smile;
     @Bind(R.id.circle_indicator)
     CircleIndicator circleIndicator;
-
     private ACache aCache;
     private ArrayList<HomeTopAddBeanNew> homeTopAddBeens;
-
     private ArrayList<HomeFilterMenuBean> menuFilters;
-
     HomeFilterFrament homeFilterFrament;
-
-
-//    ArrayList<MainMenuPage> mDatas = new ArrayList<>();
-//    ArrayList<MainMenuBean> allbeans = new ArrayList<>();
-
-    //    MyViewPagerAdapter myViewPagerAdapter;
     private int userTotalDelta;
     private ArrayList<BaseFragment> fragList;
 
@@ -211,122 +200,6 @@ public class MainFragment extends BasePagerFragment {
         }
         //添加一个空数据
         menuFilters.add(new HomeFilterMenuBean("", 0, true));
-        //如果可以确定每个item的高度是固定的，设置这个选项可以提高性能
-//        pagerStrip.setHasFixedSize(true);
-//        pagerStrip.setNestedScrollingEnabled(false);
-//
-//        //创建布局管理器
-//        final CustomLinearLayoutManager linearLayoutManager = new CustomLinearLayoutManager(mActivity,OrientationHelper.HORIZONTAL,false);
-//
-//        //设置横向
-////        linearLayoutManager.setOrientation(OrientationHelper.HORIZONTAL);
-//        //设置布局管理器
-//        pagerStrip.setLayoutManager(linearLayoutManager);
-//        galleryRecyclerAdapter = new GalleryRecyclerAdapter(mContext, menuFilters);
-//        pagerStrip.setAdapter(galleryRecyclerAdapter);
-//        galleryRecyclerAdapter.setOnRecyclerViewItemClickListener(new OnRecyclerViewItemClickListener() {
-//            @Override
-//            public void onItemClick(View view, int position) {
-//                flag = false;
-//                if (position == 0) {
-//                    ArrayList<MainMenuBean> mainMenuBeans = new ArrayList<>();
-//                    String initMenusStr = LoginConfig.getHomeMenu(mContext);
-//                    String[] strings = initMenusStr.split(",");
-//                    if (strings.length > 2) {//有选择
-//                        for (int i = 2; i < strings.length; i++) {
-//                            mainMenuBeans.add(new MainMenuBean(strings[i], getTitleBeanRes(strings[i])));
-//                        }
-//                    }
-//                    new HomeMenuDialog(mContext, mainMenuBeans).setCallBack(new HomeMenuDialog.CallBack() {
-//                        @Override
-//                        public void ok(boolean isChange) {
-//                            if (isChange) {
-//                                initHomeMenu();
-//                                listFragment.refreshByState(0);
-//                            } else {//没选中
-//                                initHomeMenu();
-//                                listFragment.refreshByState(0);
-//                            }
-//                        }
-//
-//                        @Override
-//                        public void cancle() {
-//
-//                        }
-//                    }).show();
-//                } else if (position == menuFilters.size()) {
-//
-//                } else {
-//                    if (currentIndex == position) {
-//                        return;
-//                    }
-//                    currentIndex = position;
-//                    RecyclerView.State  state = new RecyclerView.State();
-//                    if (position > 0) {
-//                        KLog.d("点击到的位置----","position---"+position+"");
-//                        pagerStrip.scrollToPosition(position - 1);
-////                        linearLayoutManager.smoothScrollToPosition(pagerStrip,null,position - 1);
-//                    } else {
-//                        pagerStrip.scrollToPosition(0);
-//
-////                        linearLayoutManager.smoothScrollToPosition(pagerStrip,null,0);
-////                        linearLayoutManager.smoothScrollToPosition(0);
-//                    }
-//                    int type = getMenuType(menuFilters.get(position).getName());
-//                    listFragment.refreshByState(type);
-//                }
-//
-//            }
-//        });
-//        pagerStrip.addOnScrollListener(new RecyclerView.OnScrollListener() {
-//            @Override
-//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
-//                super.onScrollStateChanged(recyclerView, newState);
-//                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
-//                    flag = true;
-//                }
-//                if (newState == RecyclerView.SCROLL_STATE_IDLE && flag) {
-//
-//                    int fistPosition = linearLayoutManager.findFirstVisibleItemPosition();
-//                    int firstcompletelPosition = linearLayoutManager.findFirstCompletelyVisibleItemPosition();
-//                    int width = UIUtil.getWindowWidth(mContext) / 3;
-//                    float delta = ((float) userTotalDelta % width) / width;
-//                    if (delta > 0.5) {
-//                        KLog.d("国道了这里----","position---"+firstcompletelPosition+"");
-//                        linearLayoutManager.smoothScrollToPosition(pagerStrip,null,firstcompletelPosition);
-//
-////                        pagerStrip.smoothScrollToPosition(firstcompletelPosition);
-//                        int type = getMenuType(menuFilters.get(firstcompletelPosition + 1).getName());
-//                        if (currentIndex == (firstcompletelPosition + 1)) {
-//                            return;
-//                        }
-//                        currentIndex = (firstcompletelPosition + 1);
-//                        listFragment.refreshByState(type);
-//                    } else {
-//                        KLog.d("国道了这里----","position---"+fistPosition+"");
-//                        linearLayoutManager.smoothScrollToPosition(pagerStrip,null,fistPosition);
-//
-////                        pagerStrip.smoothScrollToPosition(fistPosition);
-//                        int type = getMenuType(menuFilters.get(fistPosition + 1).getName());
-//                        if (currentIndex == (firstcompletelPosition + 1)) {
-//                            return;
-//                        }
-//                        currentIndex = (firstcompletelPosition + 1);
-//                        listFragment.refreshByState(type);
-//                    }
-//
-//                    flag = false;
-//                }
-//            }
-//
-//            @Override
-//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-//                super.onScrolled(recyclerView, dx, dy);
-//                userTotalDelta += dx;
-//            }
-//        });
-
-
     }
 
 

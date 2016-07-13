@@ -344,25 +344,15 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
             holder.ll_time_count.setVisibility(View.VISIBLE);
             holder.iv_rate.setVisibility(View.VISIBLE);
             holder.ll_finish_time.setVisibility(View.GONE);
-            holder.tv_daojishi_title.setText("拍卖倒计时");
+            holder.tv_daojishi_title.setText("开始倒计时");
             holder.tv_pai_count.setText("——");
             holder.tv_yikoujia_biaoshi.setVisibility(View.GONE);
             holder.tv_yikoujia_value.setTextColor(mContext.getResources().getColor(R.color.black_tv));
             holder.tv_yikoujia_value.setText("无");
-            //holder.tv_jiage_title.setText("现价");
-            //change by:胡峰，将"现价"改为“起拍价”
             holder.tv_jiage_title.setText("起拍价");
             //change by :胡峰，即将进行的拍卖，起拍价动态取得
-            //holder.tv_jiage_value.setText("￥1");
-            //holder.tv_jiage_value.setText("￥"+myBuyPaiMainIngBean.getBegin_auct_price());
             holder.tv_qipaijia_biaoshi.setVisibility(View.VISIBLE);
             holder.tv_jiage_value.setText(myBuyPaiMainIngBean.getBegin_auct_price());
-//            holder.ll_main.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//                    UIHelper.jump(mActivity, PaiPinDetailActivity.class);
-//                }
-//            });
             return convertView;
         }
 

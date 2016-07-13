@@ -142,15 +142,9 @@ public class SmileUtils {
                     //这里是修改表情在输入框中的大小
                     int imgSize = UIUtil.dip2px(context, 25);
                     int imgSize11 = UIUtil.dip2px(context, 23);
-//                    int imgSize = UIUtil.dip2px(context,50);
-//                    int imgSize11 = UIUtil.dip2px(context,48);
-
                     spannable.setSpan(new ImageSpan(context, zoomImage(bmp, imgSize, imgSize11), ImageSpan.ALIGN_BOTTOM),
                             matcher.start(), matcher.end(),
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    spannable.setSpan(new ImageSpan(context, entry.getValue()),
-//                            matcher.start(), matcher.end(),
-//                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
 
@@ -182,9 +176,6 @@ public class SmileUtils {
                     hasChanges = true;
                     Resources res = context.getResources();
                     Bitmap bmp = BitmapFactory.decodeResource(res, entry.getValue());
-
-//                    int imgSize = UIUtil.dip2px(context, 34);
-//                    int imgSizess = UIUtil.dip2px(context, 30);
                     //change by :胡峰，评论表情的修改，这个是设置商品问与答界面的显示图标
                     int imgSize = UIUtil.dip2px(context,55);
                     int imgSizess = UIUtil.dip2px(context,48);
@@ -192,9 +183,6 @@ public class SmileUtils {
                     spannable.setSpan(new ImageSpan(context, zoomImage(bmp, imgSize, imgSizess), ImageSpan.ALIGN_BOTTOM),
                             matcher.start(), matcher.end(),
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    spannable.setSpan(new ImageSpan(context, entry.getValue()),
-//                            matcher.start(), matcher.end(),
-//                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
         }
@@ -225,9 +213,6 @@ public class SmileUtils {
                     hasChanges = true;
                     Resources res = context.getResources();
                     Bitmap bmp = BitmapFactory.decodeResource(res, entry.getValue());
-
-//                    int imgSize = UIUtil.dip2px(context, 30);
-//                    int imgSize11 = UIUtil.dip2px(context, 27);
                     //change by :胡峰，评论表情的修改，这个是修改拍品详情界面的表情的大小
                     int imgSize = UIUtil.dip2px(context,55);
                     int imgSize11 = UIUtil.dip2px(context,48);
@@ -235,9 +220,6 @@ public class SmileUtils {
                     spannable.setSpan(new ImageSpan(context, zoomImage(bmp, imgSize, imgSize11), ImageSpan.ALIGN_BOTTOM),
                             matcher.start(), matcher.end(),
                             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
-//                    spannable.setSpan(new ImageSpan(context, entry.getValue()),
-//                            matcher.start(), matcher.end(),
-//                            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
                 }
             }
         }

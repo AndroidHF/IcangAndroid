@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by joe on 16/4/30.
  */
-public class CommentCropImageActivity extends BaseActivity implements CropImageView.OnSetImageUriCompleteListener, CropImageView.OnGetCroppedImageCompleteListener {
+public class CommentIdCardCropImageActivity extends BaseActivity implements CropImageView.OnSetImageUriCompleteListener, CropImageView.OnGetCroppedImageCompleteListener {
 
     @Bind(R.id.header)
     MyHeaderWithSure header;
@@ -49,7 +49,7 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_crop_image);
+        setContentView(R.layout.activity_show_crop_image);
         ButterKnife.bind(this);
         mCropImageView.setOnSetImageUriCompleteListener(this);
         mCropImageView.setOnGetCroppedImageCompleteListener(this);
@@ -59,6 +59,7 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
                 UIHelper.t(mContext, "初始化图片失败");
                 finish();
             }
+
             header.init("编辑", "确定", new MyHeaderWithSure.Action() {
                 @Override
                 public void leftActio() {
@@ -99,9 +100,8 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
                         public void onNext(Bitmap path) {
                             dismissLoadingDialog();
                             oricalBitMap = path;
-                            mCropImageView.setAspectRatio(1,1);
                             mCropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
-                            mCropImageView.setFixedAspectRatio(true);
+                            mCropImageView.setFixedAspectRatio(false);
                             mCropImageView.setAutoZoomEnabled(false);
                             mCropImageView.setShowProgressBar(true);
                             mCropImageView.setImageBitmap(oricalBitMap);
@@ -115,7 +115,7 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
     protected void onDestroy() {
         super.onDestroy();
         ButterKnife.unbind(this);
-        if(oricalBitMap!=null){
+        if (oricalBitMap != null) {
             oricalBitMap.recycle();
         }
         if (mCropImageView != null) {
@@ -143,7 +143,7 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
                     }
                     try {
                         FileOutputStream out = new FileOutputStream(cropFile);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG,90, out);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
                         out.flush();
                         out.close();
                     } catch (FileNotFoundException e) {

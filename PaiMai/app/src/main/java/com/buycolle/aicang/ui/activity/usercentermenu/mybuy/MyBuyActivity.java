@@ -24,7 +24,6 @@ import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.ShareDialog;
 import com.buycolle.aicang.util.FileUtil;
 import com.buycolle.aicang.util.ShareUtil;
-import com.buycolle.aicang.util.StringFormatUtil;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -262,7 +261,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
                     if (JSONUtil.isOK(resultObj)) {
                         JSONObject infosObj = resultObj.getJSONObject("infos");
                         cost = infosObj.getInt("purchase_cost");
-                        tvTotalCost.setText("总计剁手 " + StringFormatUtil.getDoubleFormatNew2(infosObj.getString("purchase_cost")) + "元");
+                        tvTotalCost.setText("总计剁手 " + infosObj.getString("purchase_cost") + "元");
                         //tvTotalCost.setText("总计消费 " + 50000 + "元");
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

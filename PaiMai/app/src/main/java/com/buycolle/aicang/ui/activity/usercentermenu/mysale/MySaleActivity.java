@@ -24,7 +24,6 @@ import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.ShareDialog;
 import com.buycolle.aicang.util.FileUtil;
 import com.buycolle.aicang.util.ShareUtil;
-import com.buycolle.aicang.util.StringFormatUtil;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.sina.weibo.sdk.api.share.BaseResponse;
@@ -219,15 +218,11 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         vpMainContainer.setAdapter(pagerAdapter);
         vpMainContainer.setOffscreenPageLimit(fragList.size() - 1);
         vpMainContainer.setCurrentItem(0);
-        //mApplication.setImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
-        //change by ：胡峰，头像的处理
         mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(),profileImage);
         tvName.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
 
         if(_Bundle!=null){
             if(_Bundle.getBoolean("isPush")){
-//                vpMainContainer.setCurrentItem(1);
-//                initStatus(1);
                 //推送界面的跳转
                 if (_Bundle.getInt("type") == 4 || _Bundle.getInt("type") == 9 || _Bundle.getInt("type") == 10){//发货、卖家东西卖出、买家付款
                     Log.i("type-----",_Bundle.getInt("type")+"");
@@ -266,8 +261,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
                     if (JSONUtil.isOK(resultObj)) {
                         JSONObject infosObj = resultObj.getJSONObject("infos");
                         cost = infosObj.getInt("business_cost");
-                        tvTotalCost.setText("总计回血 " + StringFormatUtil.getDoubleFormatNew2(infosObj.getString("business_cost")) + "元");
-                        //tvTotalCost.setText("总计回血 " + "50000" + "元");
+                        tvTotalCost.setText("总计回血 " +infosObj.getString("business_cost") + "元");
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                     }

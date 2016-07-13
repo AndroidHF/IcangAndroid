@@ -309,6 +309,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
 
                 holder.ll_status_after_fukuang = (LinearLayout) convertView.findViewById(R.id.ll_status_after_fukuang);
                 holder.tv_after_msg = (TextView) convertView.findViewById(R.id.tv_after_msg);
+                holder.tv_after_pay = (TextView) convertView.findViewById(R.id.tv_after_pay);
                 holder.tv_action_after = (TextView) convertView.findViewById(R.id.tv_action_after);
 
                 holder.tv_good_title = (TextView) convertView.findViewById(R.id.tv_good_title);
@@ -345,7 +346,6 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 } else {
                     holder.tv_good_yikoujia_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainFinishBean.getBut_it_price()));
                 }
-//            holder.tv_good_yikoujia_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainFinishBean.getBut_it_price()));
                 holder.tv_good_deal_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainFinishBean.getMax_pric()));
 
                 ////1 未付款，2 未发货 3 已发货 4 确认收货 5 失败了
@@ -374,6 +374,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                     holder.tv_action_after.setVisibility(View.VISIBLE);
                     //add by ：胡峰，包邮不包邮提示控件可见
                     holder.tv_baoyou_show.setVisibility(View.VISIBLE);
+                    holder.tv_after_pay.setVisibility(View.GONE);
                     holder.tv_after_msg.setText("买家已付款，请尽快安排发货");
                     holder.tv_action_after.setText("我要发货");
 
@@ -400,6 +401,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                     setViewVisible(holder.ll_status_after_fukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
                     holder.tv_action_after.setVisibility(View.VISIBLE);
                     holder.tv_baoyou_show.setVisibility(View.GONE);
+                    holder.tv_after_pay.setVisibility(View.GONE);
                     holder.tv_after_msg.setText("您已发货，等待买家确认收货");
                     holder.tv_action_after.setText("我已发货");
                     holder.tv_action_after.setBackgroundResource(R.drawable.shape_orange_black);
@@ -414,12 +416,19 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                     });
                 } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 2) {
                     setViewVisible(holder.ll_status_after_fukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
-                    holder.tv_after_msg.setText("买家确认收货，交易已完成");
+                    holder.tv_after_msg.setText("买家确认收货，请等待平台结算");
                     holder.tv_action_after.setVisibility(View.GONE);
                     holder.tv_baoyou_show.setVisibility(View.GONE);
-                } else if (myBuyPaiMainFinishBean.getPay_status() == 2 && myBuyPaiMainFinishBean.getOrder_status() == 0) {
+                    holder.tv_after_pay.setVisibility(View.GONE);
+                } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 3){//add by huefng:当公司打款的时候显示
+                    setViewVisible(holder.ll_status_after_fukuang, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
+                    holder.tv_after_msg.setText("交易已完成");
+                    holder.tv_after_pay.setText("※平台已向您汇出货款，请注意查收");
+                    holder.tv_after_pay.setVisibility(View.VISIBLE);
+                    holder.tv_action_after.setVisibility(View.GONE);
+                    holder.tv_baoyou_show.setVisibility(View.GONE);
+                }else if (myBuyPaiMainFinishBean.getPay_status() == 2 && myBuyPaiMainFinishBean.getOrder_status() == 0) {
                     setViewVisible(holder.tv_msg_info, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_after_fukuang);
-//                holder.tv_msg_info.setText("由于买家未按时付款，导致交易失败\n该买家可能受到惩罚请参阅《竞拍规则》");
                     String linkText = "由于买家未按时付款，导致交易失败<br/>该买家可能受到惩罚请参阅" + "<font color='red'>" + "<a href=''>" + "《竞拍规则》" + "</a>" + "</font> ";
                     Spanned contentSpan = Html.fromHtml(linkText);
                     SpannableStringBuilder style = new SpannableStringBuilder(contentSpan);
@@ -488,6 +497,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
             LinearLayout ll_status_after_fukuang;
             TextView tv_after_msg;
             TextView tv_action_after;
+            TextView tv_after_pay;
 
             //add by :胡峰，包邮不包邮提醒
             TextView tv_baoyou_show;
@@ -530,7 +540,6 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
             // 设置样式
             ds.setColor(mContext.getResources().getColor(R.color.red));
             ds.setUnderlineText(false);
-            // ds.setTextSize(50);
         }
     }
 

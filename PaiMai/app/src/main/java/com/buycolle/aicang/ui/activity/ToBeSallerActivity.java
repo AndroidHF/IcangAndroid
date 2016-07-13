@@ -17,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -30,6 +31,8 @@ import com.buycolle.aicang.api.AppUrl;
 import com.buycolle.aicang.api.callback.ResultCallback;
 import com.buycolle.aicang.api.request.OkHttpRequest;
 import com.buycolle.aicang.bean.HomeTopAddBeanNew;
+import com.buycolle.aicang.ui.activity.comment.CommentIdCardCropImageActivity;
+import com.buycolle.aicang.ui.activity.comment.CommentShowCropImageActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
@@ -85,8 +88,6 @@ public class ToBeSallerActivity extends BaseActivity {
     RelativeLayout rlAddres;
     @Bind(R.id.tv_jiaoyi_liucheng)
     TextView tvJiaoyiLiucheng;
-//    @Bind(R.id.tv_fahuo_zhidao)
-//    TextView tvFahuoZhidao;
     @Bind(R.id.tv_kuaidi_jubao)
     TextView tvKuaidiJubao;
     @Bind(R.id.btn_save)
@@ -98,6 +99,8 @@ public class ToBeSallerActivity extends BaseActivity {
     ImageView ivIdCard;
     @Bind(R.id.iv_add_id_card)
     ImageView ivAddIdCard;
+    @Bind(R.id.iv_add_item)
+    FrameLayout iv_add_item;
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
 
@@ -188,8 +191,6 @@ public class ToBeSallerActivity extends BaseActivity {
                 //三级联动效果
                 pvOptions.setPicker(options1Items, options2Items, true);
                 //设置选择的三级单位
-//        pwOptions.setLabels("省", "市", "区");
-//        pvOptions.setTitle("选择城市");
                 pvOptions.setCyclic(false, false, false);
                 //设置默认选中的三级项目
                 //监听确定选择按钮
@@ -275,19 +276,6 @@ public class ToBeSallerActivity extends BaseActivity {
                 }).show();
             }
         });
-
-        /**
-         * change by :胡峰
-         * 发货指导去掉
-         */
-        //发货知道
-//        tvFahuoZhidao.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                UIHelper.jump(mActivity,PaiMaiFaHuoZhiDaoActivity.class);
-//            }
-//        });
-
         /**
          * add by :胡峰
          * 添加下划线，和文字平滑处理
@@ -465,14 +453,27 @@ public class ToBeSallerActivity extends BaseActivity {
             if (uri != null) {
                 String pathLocal = ImageUtils.getPath(this, uri);
                 KLog.d("返回的本地图片路径", pathLocal);
-                String path = ImageUtils.getSmallBitmap(pathLocal);
-                tempPicPath = path;
-                uploadImages(path);
+//                String path = ImageUtils.getSmallBitmap(pathLocal);
+//                tempPicPath = path;
+//                uploadImages(path);
+                Bundle bundle = new Bundle();
+                bundle.putString("imagePath",pathLocal);
+                UIHelper.jumpForResult(mActivity,CommentIdCardCropImageActivity.class,bundle,CommentIdCardCropImageActivity.COROP_REQUEST);
             }
 
         }
         if (requestCode == Result_PIC_2 && resultCode == RESULT_OK) {//个人照片相机返回
-            String path = ImageUtils.getSmallBitmap(recentPicPath);
+//            String path = ImageUtils.getSmallBitmap(recentPicPath);
+//            tempPicPath = path;
+//            uploadImages(path);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath",recentPicPath);
+            UIHelper.jumpForResult(mActivity, CommentIdCardCropImageActivity.class, bundle, CommentIdCardCropImageActivity.COROP_REQUEST);
+        }
+
+        if (requestCode == CommentShowCropImageActivity.COROP_REQUEST && resultCode == CommentIdCardCropImageActivity.COROP_RESULT){
+            //String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentIdCardCropImageActivity.RERULT_PATH));
+            String path = data.getStringExtra(CommentIdCardCropImageActivity.RERULT_PATH);
             tempPicPath = path;
             uploadImages(path);
         }
@@ -512,6 +513,8 @@ public class ToBeSallerActivity extends BaseActivity {
                             if (JSONUtil.isOK(jsonObject)) {
                                 String path = jsonObject.getJSONObject("resultMap").getString("message");
                                 upPath = path;
+                                ivAddIdCard.setVisibility(View.GONE);
+                                iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
                                 mApplication.setImages(path, ivIdCard);
                             } else {
                                 UIHelper.t(mContext, JSONUtil.getServerMessage(jsonObject));

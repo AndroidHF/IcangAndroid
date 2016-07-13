@@ -272,18 +272,15 @@ public class EventPaiMaiFinishFragment extends BaseScrollListFragment {
 
             if (myBuyPaiMainIngBean.getOpen_but_it() == 1) {//一口价
                 holder.tv_yikoujia_title.setText("一口价");
-                //holder.tv_yikoujia_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
                 holder.tv_yikoujia_biaoshi.setVisibility(View.VISIBLE);
                 holder.tv_yikoujia_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
             } else {
                 holder.tv_yikoujia_title.setText("起拍价");
-                //holder.tv_yikoujia_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
                 holder.tv_yikoujia_biaoshi.setVisibility(View.VISIBLE);
                 holder.tv_yikoujia_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
             }
             holder.tv_jiage_title.setText("成交价");
             if (Double.valueOf(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric())) > Double.valueOf(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()))) {
-                //holder.tv_jiage_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric()));
                 holder.tv_qipaijia_biaoshi.setVisibility(View.VISIBLE);
                 holder.tv_jiage_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getMax_pric()));
             } else {
@@ -292,7 +289,6 @@ public class EventPaiMaiFinishFragment extends BaseScrollListFragment {
                     holder.tv_qipaijia_biaoshi.setVisibility(View.GONE);
                     holder.tv_jiage_value.setText("——");
                 }else{
-                    //holder.tv_jiage_value.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
                     holder.tv_qipaijia_biaoshi.setVisibility(View.VISIBLE);
                     holder.tv_jiage_value.setText(StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBegin_auct_price()));
                 }

@@ -346,6 +346,16 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize" />
 
+        <activity android:name=".ui.activity.comment.CommentIdCardCropImageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.comment.CommentCropImage2Activity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".ui.activity.comment.CommentShow2CropImageActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"

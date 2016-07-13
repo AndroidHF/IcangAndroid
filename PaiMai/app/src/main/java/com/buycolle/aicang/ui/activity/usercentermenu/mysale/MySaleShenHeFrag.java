@@ -270,7 +270,6 @@ public class MySaleShenHeFrag extends BaseFragment {
             } else {
                 holder.tv_good_yikoujia_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(mySaleShenHeBean.getBut_it_price()));
             }
-//            holder.tv_good_yikoujia_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(mySaleShenHeBean.getBut_it_price()));
 
             if ("0".equals(mySaleShenHeBean.getCheck_status())) {//审核中
                 holder.ll_weitongguo_lay.setVisibility(View.GONE);

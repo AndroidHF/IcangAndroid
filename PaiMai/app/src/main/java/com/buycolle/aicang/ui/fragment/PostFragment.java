@@ -42,6 +42,7 @@ import com.buycolle.aicang.api.request.OkHttpRequest;
 import com.buycolle.aicang.bean.HomeTopAddBeanNew;
 import com.buycolle.aicang.bean.PostAddressInfo;
 import com.buycolle.aicang.bean.PostImageBean;
+import com.buycolle.aicang.bean.UserBean;
 import com.buycolle.aicang.event.EditPostEvent;
 import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.event.PublicGoodEvent;
@@ -52,11 +53,13 @@ import com.buycolle.aicang.ui.activity.PaiMaiEndTimeActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiFaHuoZhiDaoActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiJiaoYiLiuChengActivity;
 import com.buycolle.aicang.ui.activity.ToBeSallerActivity;
+import com.buycolle.aicang.ui.activity.comment.CommentCropImage2Activity;
 import com.buycolle.aicang.ui.activity.comment.CommentCropImageActivity;
 import com.buycolle.aicang.ui.activity.post.YunFeiActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinStatusActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinTypesActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
+import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
 import com.buycolle.aicang.util.ACache;
@@ -170,47 +173,36 @@ public class PostFragment extends BaseFragment {
     RelativeLayout rlYikoujiaStatus;
     @Bind(R.id.ll_maijia)
     LinearLayout llMaijia;
-
     @Bind(R.id.tv_goods_type_title)
     TextView tvGoodsTypeTitle;
     @Bind(R.id.iv_goods_type_arrow)
     ImageView ivGoodsTypeArrow;
     @Bind(R.id.tv_image_count)
     TextView tv_image_count;
-
-
     //主图
     @Bind(R.id.iv_fisrt_status)
     ImageView ivFisrtStatus;
-    //    @Bind(R.id.iv_main_close)
-//    ImageView ivMainClose;
     @Bind(R.id.et_input_good_title)
     EditText etInputGoodTitle;
     @Bind(R.id.et_input_good_desc)
     EditText etInputGoodDesc;
-
     //add by hufeng:顶部的图片
     @Bind(R.id.iv_top_icon)
     ImageView iv_top_icon;
-
     //add by hufeng :出品界面增加的三个按钮：交易流程、发货指导、常见问题
     @Bind(R.id.tv_jiaoyi_liucheng)
     TextView tv_jiaoyi_liucheng;//交易流程
-
     @Bind(R.id.tv_fahuo_zhidao)
     TextView tv_fahuo_zhidao;//发货指导
-
     @Bind(R.id.tv_changjianwenti)
     TextView tv_changjianwenti;//常见问题
-
+    @Bind(R.id.iv_delete)
+    ImageView iv_delete;
+    @Bind(R.id.tv_feilv)
+    TextView tv_fee_rate;
     private GalleryAdapter mAdapter;
-
-
     private ArrayList<PostImageBean> postImageBeans;
     private PostImageBean mainImageBean = new PostImageBean();
-
-    //TimePickerView pvTime;
-
     private ArrayList<String> options1Items = new ArrayList<String>();
     private ArrayList<ArrayList<String>> options2Items = new ArrayList<ArrayList<String>>();
     OptionsPickerView pvOptions;
@@ -227,7 +219,7 @@ public class PostFragment extends BaseFragment {
     private Uri photoUri;
     private static String recentPicPath;//当前拍照的路径
 
-
+    private UserBean userBean;
     //封面图  大图
     private final int RESULT_PIC_1_GALLARY = 100;
     private final int RESULT_PIC_1_CAMERA = 200;
@@ -245,29 +237,30 @@ public class PostFragment extends BaseFragment {
 
     //登录触发
     public void onEventMainThread(LoginEvent event) {
-        if (mApplication.isSaller()) {
+        if (mApplication.isLogin()&& mApplication.isSaller()) {
             initSallerView(true);
         } else {
             initSallerView(false);
         }
         initAddressInfo();
-        //loadTopAds();
+        loadTopAds();
 
     }
+
+
 
     //发布拍品触发 更新发布的 默认地址信息
     public void onEventMainThread(PublicGoodEvent event) {
         initAddressInfo();
-        //loadTopAds();
-
+        loadTopAds();
     }
 
     //发布拍品触发 更新发布的 默认地址信息
     public void onEventMainThread(EditPostEvent event) {
         initAddressInfo();
-        //loadTopAds();
-
+        loadTopAds();
     }
+
 
     //成为卖家事件
     public void onEventMainThread(TobeSallerEvent event) {
@@ -282,7 +275,7 @@ public class PostFragment extends BaseFragment {
     private PostAddressInfo postAddressInfo;
 
     private void initAddressInfo() {
-        if (mApplication.isLogin() && mApplication.isSaller()) {
+        if (mApplication.isLogin() && LoginConfig.getUserInfo(mContext).getUser_type() == 2) {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
@@ -311,10 +304,10 @@ public class PostFragment extends BaseFragment {
                                     //运费承担方 1 买家 2 卖家
                                     if (postAddressInfo.getExpress_out_type() == 1) {
                                         good_yunfei = "1";
-                                        tv_yunfei_status_value.setText("买家");
+                                        tv_yunfei_status_value.setText("到付");
                                     } else {
                                         good_yunfei = "2";
-                                        tv_yunfei_status_value.setText("卖家");
+                                        tv_yunfei_status_value.setText("包邮");
                                     }
                                     tv_yunfei_status_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
 
@@ -392,6 +385,9 @@ public class PostFragment extends BaseFragment {
         mApplication.apiClient.appbanner_getsellerlistbyapp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
+                if (!isAdded()) {
+                    showLoadingDialog();
+                }
             }
 
             @Override
@@ -404,7 +400,7 @@ public class PostFragment extends BaseFragment {
                             aCache.put(Constans.TAG_TOBE_SALLER_TOP_ADS, resultObj);
                             ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
                             }.getType());
-                            for (Iterator iterator = homarrays.iterator(); iterator.hasNext();) {
+                            for (Iterator iterator = homarrays.iterator(); iterator.hasNext(); ) {
                                 HomeTopAddBeanNew homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
                                 //Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
                                 mApplication.setShowImages(homeTopAddBeanNew.getBanner_icon(), iv_top_icon);
@@ -417,6 +413,8 @@ public class PostFragment extends BaseFragment {
                             layoutParams.height = width / 3;//将高度设置为宽度的三分之一
                             //Log.i("height",layoutParams.height + "");
                             iv_top_icon.setLayoutParams(layoutParams);
+                            Log.i("fee_rate--", resultObj.getString("fee_rate"));
+                            tv_fee_rate.setText(resultObj.getString("fee_rate"));
                         }
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -493,17 +491,7 @@ public class PostFragment extends BaseFragment {
          * add by :胡峰
          * 对顶部图片的宽度做修改
          */
-//        WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
-//        int width = windowManager.getDefaultDisplay().getWidth();
-//        Log.i("width", width + "");
-//        ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
-//        layoutParams.height = width/3;//将高度设置为宽度的三分之一
-//        Log.i("height",layoutParams.height+"");
-//        iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
-        /**
-         * add by :胡峰
-         * 对顶部图片的宽度做修改
-         */
+        loadTopAds();
         JSONObject topaAdsObj = aCache.getAsJSONObject(Constans.TAG_TOBE_SALLER_TOP_ADS);
         if (topaAdsObj != null) {
             try {
@@ -515,24 +503,22 @@ public class PostFragment extends BaseFragment {
 
                     WindowManager windowManager = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
                     int width = windowManager.getDefaultDisplay().getWidth();
-                    //Log.i("width", width + "");
                     ViewGroup.LayoutParams layoutParams = iv_top_icon.getLayoutParams();//获取当前的控件的参数
                     layoutParams.height = width/3;//将高度设置为宽度的三分之一
-                    //Log.i("height",layoutParams.height+"");
-                    //iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
                     for (Iterator iterator = homeTopAddBeens.iterator(); iterator.hasNext();) {
                         homeTopAddBeanNew = (HomeTopAddBeanNew) iterator.next();
                         Log.i("banner_icon", homeTopAddBeanNew.getBanner_icon());
 
                     }
-                    mApplication.setImages(homeTopAddBeanNew.getBanner_icon(),iv_top_icon);
+                    mApplication.setImages(homeTopAddBeanNew.getBanner_icon(), iv_top_icon);
                     iv_top_icon.setLayoutParams(layoutParams);//使得设置好的参数应用到控件中
-
+                    Log.i("feeeeeeee", topaAdsObj.getString("fee_rate"));
+                    tv_fee_rate.setText(topaAdsObj.getString("fee_rate"));
+                    Log.i("tv_fee_rate", tv_fee_rate.toString());
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            loadTopAds();
         } else {
             loadTopAds();
         }
@@ -542,7 +528,8 @@ public class PostFragment extends BaseFragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        myHeader.init("出品");
+        //myHeader.init("出品");
+        myHeader.initPost("出品");
         mainImageBean.setServerPath("");
         mainImageBean.setLocalPath("");
         postImageBeans.clear();
@@ -554,17 +541,36 @@ public class PostFragment extends BaseFragment {
         postImageBean_2.setStatus(PostImageBean.Status.INIT);
         postImageBean_2.setEmpty(true);
         postImageBeans.add(postImageBean_2);
+        //refreshByState(2);
         initCity();
-        if (mApplication.isSaller()) {
+        loadTopAds();
+        if (mApplication.isLogin()&& mApplication.isSaller()) {
             initSallerView(true);
         } else {
             initSallerView(false);
         }
         initAddressInfo();
-        loadTopAds();
     }
 
     private void initListener() {
+
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NoticeDialog(mContext,"清除确认","确认清除当前编辑的出品\n    信息么？").setCallBack(new NoticeDialog.CallBack() {
+                    @Override
+                    public void ok() {
+                        initSuccessView();
+                    }
+
+                    @Override
+                    public void cancle() {
+
+                    }
+                }).show();
+            }
+        });
+
         ivFisrtStatus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -583,17 +589,6 @@ public class PostFragment extends BaseFragment {
         tv_fahuo_zhidao.getPaint().setAntiAlias(true);
         tv_changjianwenti.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
         tv_changjianwenti.getPaint().setAntiAlias(true);
-
-
-//        ivMainClose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mainImageBean.setServerPath("");
-//                firstimg.setImageResource(R.color.transparent);
-//                ivMainClose.setVisibility(View.GONE);
-//                ivFisrtStatus.setVisibility(View.GONE);
-//            }
-//        });
 
         //设置布局管理器
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
@@ -616,31 +611,6 @@ public class PostFragment extends BaseFragment {
                 UIHelper.jumpForResultByFragment(mFragment, ShangPinStatusActivity.class, REQUEST_GOOD_STATUS);
             }
         });
-
-//        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
-//        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
-//
-//            @Override
-//            public void onTimeSelect(Date date) {
-//                tv_end_time_value.setText(getTime(date));
-//                good_end_time = tv_end_time_value.getText().toString();
-//                tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
-//
-//            }
-//        });
-
-//        rl_end_time.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Calendar calendar = Calendar.getInstance();
-//                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
-//                pvTime.setTime(new Date());
-//                pvTime.setCyclic(false);
-//                pvTime.setCancelable(true);
-//                pvTime.show();
-//            }
-//        });
-
         //change by ：胡峰，拍卖结束时间的修改
         rl_end_time.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -816,14 +786,17 @@ public class PostFragment extends BaseFragment {
     }
 
 
-    private void initSallerView(boolean isSaller) {
-        if (isSaller) {
-            llNotMaijiaLay.setVisibility(View.GONE);
-            llMaijia.setVisibility(View.VISIBLE);
-            initListener();
+    private void initSallerView(boolean isSeller) {
+        if (mApplication.isLogin() && isSeller) {
+                llNotMaijiaLay.setVisibility(View.GONE);
+                llMaijia.setVisibility(View.VISIBLE);
+                iv_delete.setVisibility(View.VISIBLE);
+                loadTopAds();
+                initListener();
         } else {
             llNotMaijiaLay.setVisibility(View.VISIBLE);
             llMaijia.setVisibility(View.GONE);
+            iv_delete.setVisibility(View.GONE);
             tvTobeMaijia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -868,12 +841,14 @@ public class PostFragment extends BaseFragment {
             ImageView iv_menu_icon_1;
             ImageView iv_menu_icon_status;
             ImageView iv_close;
+            LinearLayout ll_add_item;
 
             public ViewHolder(View view) {
                 super(view);
                 iv_menu_icon_1 = (ImageView) view.findViewById(R.id.iv_menu_icon_1);
                 iv_menu_icon_status = (ImageView) view.findViewById(R.id.iv_menu_icon_status);
                 iv_close = (ImageView) view.findViewById(R.id.iv_close);
+                ll_add_item = (LinearLayout) view.findViewById(R.id.ll_add_item);
             }
 
         }
@@ -919,6 +894,7 @@ public class PostFragment extends BaseFragment {
                     if (emptyCount == 1) {
                         if (postImageBean.isEmpty()) {
                             viewHolder.iv_close.setVisibility(View.GONE);
+                            viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                             viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                             viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                             viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -943,10 +919,12 @@ public class PostFragment extends BaseFragment {
                         } else {
                             viewHolder.iv_close.setVisibility(View.VISIBLE);
                             viewHolder.iv_menu_icon_1.setOnClickListener(null);
+                            viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                             mApplication.setImages("file://" + postImageBean.getLocalPath(), viewHolder.iv_menu_icon_1);
                             viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                                     postImageBeans.remove(postImageBean);
                                     PostImageBean emptyImageBean = new PostImageBean();
                                     emptyImageBean.setEmpty(true);
@@ -977,6 +955,7 @@ public class PostFragment extends BaseFragment {
                     }
                     if (emptyCount == 2) {
                         viewHolder.iv_close.setVisibility(View.GONE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                         viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                         viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                         viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -1003,10 +982,12 @@ public class PostFragment extends BaseFragment {
                 } else {
                     viewHolder.iv_close.setVisibility(View.VISIBLE);
                     viewHolder.iv_menu_icon_1.setOnClickListener(null);
+                    viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                     mApplication.setImages("file://" + postImageBean.getLocalPath(), viewHolder.iv_menu_icon_1);
                     viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                             postImageBeans.remove(postImageBean);
                             PostImageBean emptyImageBean = new PostImageBean();
                             emptyImageBean.setEmpty(true);
@@ -1038,6 +1019,7 @@ public class PostFragment extends BaseFragment {
                 if (postImageBeans.size() == 9) {
                     if (postImageBean.isEmpty()) {
                         viewHolder.iv_close.setVisibility(View.GONE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                         viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                         viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                         viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -1062,10 +1044,12 @@ public class PostFragment extends BaseFragment {
                     } else {
                         viewHolder.iv_close.setVisibility(View.VISIBLE);
                         viewHolder.iv_menu_icon_1.setOnClickListener(null);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         mApplication.setImages("file://" + postImageBean.getLocalPath(), viewHolder.iv_menu_icon_1);
                         viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                                 postImageBeans.remove(postImageBean);
                                 boolean isEmptys = false;
                                 for (PostImageBean imageBean : postImageBeans) {
@@ -1100,6 +1084,7 @@ public class PostFragment extends BaseFragment {
                 } else {
                     if (postImageBean.isEmpty()) {
                         viewHolder.iv_close.setVisibility(View.GONE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                         viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                         viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                         viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -1124,10 +1109,12 @@ public class PostFragment extends BaseFragment {
                     } else {
                         viewHolder.iv_close.setVisibility(View.VISIBLE);
                         viewHolder.iv_menu_icon_1.setOnClickListener(null);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         mApplication.setImages("file://" + postImageBean.getLocalPath(), viewHolder.iv_menu_icon_1);
                         viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                                 postImageBeans.remove(postImageBean);
                                 notifyDataSetChanged();
                                 tv_image_count.setText(getImageCount() + "/10");
@@ -1159,7 +1146,7 @@ public class PostFragment extends BaseFragment {
         super.onActivityResult(requestCode, resultCode, data);
         //运费承担方 返回
         if (requestCode == REQUEST_GOOD_YUNFEI_CHENGDAN && resultCode == mActivity.RESULT_OK) {
-            if ("买方".equals(data.getStringExtra("type"))) {
+            if ("到付".equals(data.getStringExtra("type"))) {
                 good_yunfei = "1";
             } else {
                 good_yunfei = "2";
@@ -1199,9 +1186,7 @@ public class PostFragment extends BaseFragment {
         //add by :胡峰，拍品结束时间的获取逻辑
         if (requestCode == REQUEST_GOOD_PAIMAI_END_TIME && resultCode == mActivity.RESULT_OK){
             paimai_end_time = data.getStringExtra("value");
-            //Log.i("paimai_end_time--",data.getStringExtra("value"));
             tv_end_time_value.setText(data.getStringExtra("time"));
-            //Log.i("tv_end_time_value--",data.getStringExtra("time"));
             tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
         }
 
@@ -1225,46 +1210,52 @@ public class PostFragment extends BaseFragment {
             Uri uri = data.getData();
             String pathLocal = ImageUtils.getPath(mContext, uri);
             KLog.d("返回的本地图片路径", pathLocal);
-            String path = ImageUtils.getSmallBitmap(pathLocal);
-
-            int emptyCount = 0;
-            for (PostImageBean bean : postImageBeans) {
-                if (bean.isEmpty()) {
-                    emptyCount++;
-                }
-            }
-            if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
-                PostImageBean postImageBean = new PostImageBean();
-                postImageBean.setEmpty(true);
-                postImageBeans.add(postImageBean);
-            }
-            postImageBeans.get(currentIndex).setLocalPath(path);
-            postImageBeans.get(currentIndex).setEmpty(false);
-            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
-            mAdapter.notifyDataSetChanged();
-            uploadListmages(postImageBeans.get(currentIndex));
-            tv_image_count.setText(getImageCount() + "/10");
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", pathLocal);
+            UIHelper.jumpForResultByFragment(mFragment, CommentCropImage2Activity.class, bundle, CommentCropImage2Activity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentCropImage2Activity.RERULT_PATH));
+//
+//            int emptyCount = 0;
+//            for (PostImageBean bean : postImageBeans) {
+//                if (bean.isEmpty()) {
+//                    emptyCount++;
+//                }
+//            }
+//            if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
+//                PostImageBean postImageBean = new PostImageBean();
+//                postImageBean.setEmpty(true);
+//                postImageBeans.add(postImageBean);
+//            }
+//            postImageBeans.get(currentIndex).setLocalPath(path);
+//            postImageBeans.get(currentIndex).setEmpty(false);
+//            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
+//            mAdapter.notifyDataSetChanged();
+//            uploadListmages(postImageBeans.get(currentIndex));
+//            tv_image_count.setText(getImageCount() + "/10");
         }
         //列表图片返回来  相机
         if (requestCode == RESULT_PIC_2_CAMERA && resultCode == mActivity.RESULT_OK) {
-            String path = ImageUtils.getSmallBitmap(recentPicPath);
-            int emptyCount = 0;
-            for (PostImageBean bean : postImageBeans) {
-                if (bean.isEmpty()) {
-                    emptyCount++;
-                }
-            }
-            if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
-                PostImageBean postImageBean = new PostImageBean();
-                postImageBean.setEmpty(true);
-                postImageBeans.add(postImageBean);
-            }
-            postImageBeans.get(currentIndex).setLocalPath(path);
-            postImageBeans.get(currentIndex).setEmpty(false);
-            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
-            mAdapter.notifyDataSetChanged();
-            uploadListmages(postImageBeans.get(currentIndex));
-            tv_image_count.setText(getImageCount() + "/10");
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", recentPicPath);
+            UIHelper.jumpForResultByFragment(mFragment, CommentCropImage2Activity.class, bundle, CommentCropImage2Activity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentCropImage2Activity.RERULT_PATH));
+//            int emptyCount = 0;
+//            for (PostImageBean bean : postImageBeans) {
+//                if (bean.isEmpty()) {
+//                    emptyCount++;
+//                }
+//            }
+//            if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
+//                PostImageBean postImageBean = new PostImageBean();
+//                postImageBean.setEmpty(true);
+//                postImageBeans.add(postImageBean);
+//            }
+//            postImageBeans.get(currentIndex).setLocalPath(path);
+//            postImageBeans.get(currentIndex).setEmpty(false);
+//            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
+//            mAdapter.notifyDataSetChanged();
+//            uploadListmages(postImageBeans.get(currentIndex));
+//            tv_image_count.setText(getImageCount() + "/10");
         }
 
         if (requestCode == CommentCropImageActivity.COROP_REQUEST && resultCode == CommentCropImageActivity.COROP_RESULT) {
@@ -1274,6 +1265,30 @@ public class PostFragment extends BaseFragment {
                 mainImageBean.setStatus(PostImageBean.Status.INIT);
                 mApplication.setImages("file://" + mainImageBean.getLocalPath(), firstimg);
                 uploadMainImages(mainImageBean);
+                tv_image_count.setText(getImageCount() + "/10");
+            }
+        }
+
+        if (requestCode == CommentCropImage2Activity.COROP_REQUEST && resultCode == CommentCropImage2Activity.COROP_RESULT){
+            //String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentCropImage2Activity.RERULT_PATH));
+            String path = data.getStringExtra(CommentCropImage2Activity.RERULT_PATH);
+            if (path != null){
+                int emptyCount = 0;
+                for (PostImageBean bean : postImageBeans) {
+                    if (bean.isEmpty()) {
+                        emptyCount++;
+                    }
+                }
+                if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
+                    PostImageBean postImageBean = new PostImageBean();
+                    postImageBean.setEmpty(true);
+                    postImageBeans.add(postImageBean);
+                }
+                postImageBeans.get(currentIndex).setLocalPath(path);
+                postImageBeans.get(currentIndex).setEmpty(false);
+                postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
+                mAdapter.notifyDataSetChanged();
+                uploadListmages(postImageBeans.get(currentIndex));
                 tv_image_count.setText(getImageCount() + "/10");
             }
         }
@@ -1468,116 +1483,128 @@ public class PostFragment extends BaseFragment {
             }
         }
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            //起拍价格
-            jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
-            //一口价
-            if (cbYikoujiaStatus.isChecked()) {
-                jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
-            }
-
-
-            //拍品分类
-            jsonObject.put("cate_id", good_type);
-            //拍品封面
-            jsonObject.put("cover_pic", mainImageBean.getServerPath());
-
-            if (postImageBeans.size() > 0) {
-                String paths = "";
-                StringBuffer stringBuffer = new StringBuffer();
-                boolean isOK = false;
-                for (PostImageBean postImageBean : postImageBeans) {
-                    if (!postImageBean.isEmpty()) {
-                        isOK = true;
-                        stringBuffer.append(postImageBean.getServerPath() + ",");
-                    }
-                }
-                if (isOK) {
-                    paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
-                    //轮播图
-                    jsonObject.put("cycle_pic", paths);
-                }
-            }
-            //承担运费方
-            jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
-            //发货城市
-            jsonObject.put("fahou_city", fahou_city);
-            //发货地省份
-            jsonObject.put("fahou_province", fahou_province);
-            //发货时间
-            jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
-            //下次使用相同物流
-            jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
-            //是否开启一口价
-            jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
-            //结束时间
-            //jsonObject.put("pm_end_time", good_end_time);
-            //change by :胡峰，拍卖结束时间上传
-            jsonObject.put("pm_end_type",paimai_end_time);
-            //拍品介绍
-            jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
-            //标题
-            jsonObject.put("product_title", etInputGoodTitle.getText().toString());
-            //拍品商品状态ID
-            jsonObject.put("st_id", good_status);
-
-            //自身用户ID
-            jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
-            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        mApplication.apiClient.product_submitByApp(jsonObject, new ApiCallback() {
+        new NoticeDialog(mContext,"出品确认","您的拍品一旦提交审核，您将\n不能进行编辑或下架操作。除\n非该拍品没有通过审核。\n\n      是否确认提交？").setCallBack(new NoticeDialog.CallBack() {
             @Override
-            public void onApiStart() {
-                showLoadingDialog("发布中...");
-            }
-
-            @Override
-            public void onApiSuccess(String response) {
-                if (!isAdded())
-                    return;
+            public void ok() {
+                JSONObject jsonObject = new JSONObject();
                 try {
-                    JSONObject resultObj = new JSONObject(response);
-                    if (JSONUtil.isOK(resultObj)) {
-                        noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
-                            @Override
-                            public void ok() {
-
-                            }
-
-                            @Override
-                            public void cancle() {
-
-                            }
-                        });
-                        noticeSingleDialog.show();
-                        noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-
-                            }
-                        });
-                        initSuccessView();
-                        EventBus.getDefault().post(new PublicGoodEvent(0));
-                    } else {
-                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    //起拍价格
+                    jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
+                    //一口价
+                    if (cbYikoujiaStatus.isChecked()) {
+                        jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
                     }
+
+
+                    //拍品分类
+                    jsonObject.put("cate_id", good_type);
+                    //拍品封面
+                    jsonObject.put("cover_pic", mainImageBean.getServerPath());
+
+                    if (postImageBeans.size() > 0) {
+                        String paths = "";
+                        StringBuffer stringBuffer = new StringBuffer();
+                        boolean isOK = false;
+                        for (PostImageBean postImageBean : postImageBeans) {
+                            if (!postImageBean.isEmpty()) {
+                                isOK = true;
+                                stringBuffer.append(postImageBean.getServerPath() + ",");
+                            }
+                        }
+                        if (isOK) {
+                            paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
+                            //轮播图
+                            jsonObject.put("cycle_pic", paths);
+                        }
+                    }
+                    //承担运费方
+                    jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
+                    //发货城市
+                    jsonObject.put("fahou_city", fahou_city);
+                    //发货地省份
+                    jsonObject.put("fahou_province", fahou_province);
+                    //发货时间
+                    jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
+                    //下次使用相同物流
+                    jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
+                    //是否开启一口价
+                    jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
+                    //结束时间
+                    //jsonObject.put("pm_end_time", good_end_time);
+                    //change by :胡峰，拍卖结束时间上传
+                    jsonObject.put("pm_end_type",paimai_end_time);
+                    //拍品介绍
+                    jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
+                    //标题
+                    jsonObject.put("product_title", etInputGoodTitle.getText().toString());
+                    //拍品商品状态ID
+                    jsonObject.put("st_id", good_status);
+
+                    //自身用户ID
+                    jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+                    jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                dismissLoadingDialog();
+                mApplication.apiClient.product_submitByApp(jsonObject, new ApiCallback() {
+                    @Override
+                    public void onApiStart() {
+                        showLoadingDialog("发布中...");
+                    }
+
+                    @Override
+                    public void onApiSuccess(String response) {
+                        if (!isAdded())
+                            return;
+                        try {
+                            JSONObject resultObj = new JSONObject(response);
+                            if (JSONUtil.isOK(resultObj)) {
+                                noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+                                    @Override
+                                    public void ok() {
+
+                                    }
+
+                                    @Override
+                                    public void cancle() {
+
+                                    }
+                                });
+                                noticeSingleDialog.show();
+                                noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+
+                                    }
+                                });
+                                initSuccessView();
+                                EventBus.getDefault().post(new PublicGoodEvent(0));
+                            } else {
+                                UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void onApiFailure(Request request, Exception e) {
+                        if (!isAdded()) {
+                            return;
+                        }
+                        UIHelper.t(mContext, R.string.net_error);
+                    }
+                });
             }
 
             @Override
-            public void onApiFailure(Request request, Exception e) {
-                if (!isAdded()) {
-                    return;
-                }
-                UIHelper.t(mContext, R.string.net_error);
+            public void cancle() {
+
             }
-        });
+        }).show();
+
+
     }
 
     private PostImageBean getEmptyBean() {
@@ -1588,9 +1615,6 @@ public class PostFragment extends BaseFragment {
 
     private int getImageCount() {
         int count = 0;
-//        if(!TextUtils.isEmpty(mainImageBean.getLocalPath())){
-//            count=1;
-//        }
         for (PostImageBean postImageBean : postImageBeans) {
             if (!postImageBean.isEmpty()) {
                 count++;
@@ -1611,7 +1635,6 @@ public class PostFragment extends BaseFragment {
         //主图
         mainImageBean.setServerPath("");
         firstimg.setImageResource(R.color.transparent);
-//        ivMainClose.setVisibility(View.GONE);
         ivFisrtStatus.setVisibility(View.GONE);
 
         postImageBeans.clear();
@@ -1623,7 +1646,6 @@ public class PostFragment extends BaseFragment {
 
         good_type = "";
         good_status = "";
-        //good_end_time = "";
         good_yunfei = "";
         fahou_city = "";
         fahou_province = "";
@@ -1686,5 +1708,4 @@ public class PostFragment extends BaseFragment {
             }
         }).start();
     }
-
 }

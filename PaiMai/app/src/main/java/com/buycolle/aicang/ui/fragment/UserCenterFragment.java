@@ -210,20 +210,6 @@ public class UserCenterFragment extends BaseFragment {
         myAdapter = new UserCenterNoticeAdapter(mContext, datas);
         list2.addHeaderView(headerView);
         list2.setAdapter(myAdapter);
-//        list2.setXListViewListener(new XListView.IXListViewListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//            }
-//
-//            @Override
-//            public void onLastItemVisible() {
-//                if (!isRun) {
-//                    pageIndex++;
-//                    loadData(true);
-//                }
-//            }
-//        });
         viewFlipper.setDisplayedChild(0);
         loadData(false);
         loadTanNotice();
@@ -378,7 +364,6 @@ public class UserCenterFragment extends BaseFragment {
         }
         tv_user_name.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
         String path = LoginConfig.getUserInfoImage(mContext);
-        //mApplication.setImages(path, profile_image);
         //change by :胡峰，头像的处理
         mApplication.setTouImages(path,profile_image);
 

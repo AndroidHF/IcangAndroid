@@ -46,6 +46,8 @@ public class CommentsFragment extends BaseFragment {
     ImageButton ibFloatBtn;
     @Bind(R.id.ll_root)
     LinearLayout llRoot;
+    @Bind(R.id.tv_null)
+    TextView tv_null;
 
     private ArrayList<CommentBean> commentBeanArrayList;
     private MyAdapter myAdapter;
@@ -70,6 +72,7 @@ public class CommentsFragment extends BaseFragment {
 
     private void loadData(final boolean isloadMore) {
         isRun = true;
+        tv_null.setVisibility(View.GONE);
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("page", pageIndex);
@@ -97,6 +100,7 @@ public class CommentsFragment extends BaseFragment {
                             mainComentActivity.tvAllComment.setText("全部评论  " + total);
                             if (JSONUtil.isHasData(resultObj)) {
                                 if (pageIndex == 1) {
+                                    tv_null.setVisibility(View.GONE);
                                     commentBeanArrayList.clear();
                                 }
                                 JSONArray rows = resultObj.getJSONArray("rows");
@@ -109,6 +113,14 @@ public class CommentsFragment extends BaseFragment {
                                 } else {
                                     list.isShowFoot(false);
                                 }
+                            }else {
+                                if (pageIndex == 1){
+                                    commentBeanArrayList.clear();
+                                    list.isShowFoot(false);
+                                    myAdapter.notifyDataSetChanged();
+                                }
+                                tv_null.setText("暂无数据");
+                                tv_null.setVisibility(View.VISIBLE);
                             }
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -153,6 +165,7 @@ public class CommentsFragment extends BaseFragment {
                             mainComentActivity.tvGoodCommentCount.setText("" + total);
                             if (JSONUtil.isHasData(resultObj)) {
                                 if (pageIndex == 1) {
+                                    tv_null.setVisibility(View.GONE);
                                     commentBeanArrayList.clear();
                                 }
                                 JSONArray rows = resultObj.getJSONArray("rows");
@@ -165,6 +178,14 @@ public class CommentsFragment extends BaseFragment {
                                 } else {
                                     list.isShowFoot(false);
                                 }
+                            }else{
+                                if (pageIndex == 1){
+                                    commentBeanArrayList.clear();
+                                    list.isShowFoot(false);
+                                    myAdapter.notifyDataSetChanged();
+                                }
+                                tv_null.setText("暂无数据");
+                                tv_null.setVisibility(View.VISIBLE);
                             }
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -209,6 +230,7 @@ public class CommentsFragment extends BaseFragment {
                             mainComentActivity.tvBadCommentCount.setText("" + total);
                             if (JSONUtil.isHasData(resultObj)) {
                                 if (pageIndex == 1) {
+                                    tv_null.setVisibility(View.GONE);
                                     commentBeanArrayList.clear();
                                 }
                                 JSONArray rows = resultObj.getJSONArray("rows");
@@ -221,6 +243,14 @@ public class CommentsFragment extends BaseFragment {
                                 } else {
                                     list.isShowFoot(false);
                                 }
+                            }else {
+                                if (pageIndex == 1){
+                                    commentBeanArrayList.clear();
+                                    list.isShowFoot(false);
+                                    myAdapter.notifyDataSetChanged();
+                                }
+                                tv_null.setText("暂无数据");
+                                tv_null.setVisibility(View.VISIBLE);
                             }
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

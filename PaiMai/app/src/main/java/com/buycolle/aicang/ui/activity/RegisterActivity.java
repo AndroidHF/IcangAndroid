@@ -8,6 +8,7 @@ import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -31,6 +32,7 @@ import com.squareup.okhttp.Request;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
 import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
@@ -198,6 +200,15 @@ public class RegisterActivity extends BaseActivity {
             UIHelper.t(mContext, "昵称不能为空");
             btnRegister.setEnabled(true);
             return;
+        }else try {
+            if (etUsername.getText().toString().trim().getBytes("GBK").length>20){
+                Log.i("hufeng --",etUsername.getText().toString().trim().getBytes().length+"");
+                UIHelper.t(mContext, "昵称请输入20个字节内");
+                btnRegister.setEnabled(true);
+                return;
+            }
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
         }
         if (TextUtils.isEmpty(etPhone.getText().toString())) {
             UIHelper.t(mContext, "请输入手机号码");

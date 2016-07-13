@@ -79,7 +79,6 @@ public class BaseFragment extends Fragment {
     }
 
     public void refreshByState(int state) {
-
     }
     public void refreshByState(int state,boolean isAction) {
 
@@ -188,6 +187,5 @@ public class BaseFragment extends Fragment {
         }).start();
 
     }
-
 
 }

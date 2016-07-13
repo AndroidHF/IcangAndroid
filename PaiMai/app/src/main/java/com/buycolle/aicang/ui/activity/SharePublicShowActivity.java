@@ -626,10 +626,6 @@ public class SharePublicShowActivity extends BaseActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup viewGroup) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.row_public_show_item, null);
-//            ImageView iv_drag = (ImageView) view.findViewById(R.id.iv_drag);
-//            ImageView iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
-
-
             FrameLayout iv_add_item = (FrameLayout) view.findViewById(R.id.iv_add_item);
             ImageView iv_main = (ImageView) view.findViewById(R.id.iv_main);
             ImageView iv_add = (ImageView) view.findViewById(R.id.iv_add);
@@ -639,21 +635,6 @@ public class SharePublicShowActivity extends BaseActivity {
 
             EditText et_input_link = (EditText) view.findViewById(R.id.et_input_link);
             EditText et_input_content = (EditText) view.findViewById(R.id.et_input_content);
-
-//            et_input_content.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (v.getId() == R.id.et_input_link) {
-//                        v.getParent().requestDisallowInterceptTouchEvent(true);
-//                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-//                            case MotionEvent.ACTION_UP:
-//                                v.getParent().requestDisallowInterceptTouchEvent(false);
-//                                break;
-//                        }
-//                    }
-//                    return false;
-//                }
-//            });
             final PostShowBean postShowBean = postShowBeans.get(position);
             if (postShowBean.getType() == 1) {//文字
                 et_input_content.setText(postShowBean.getContent());
@@ -820,8 +801,6 @@ public class SharePublicShowActivity extends BaseActivity {
             } else {
                 tv_goods_type_value.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("p_1_cate_name")+"/"+data.getStringExtra("cate_name"));
             }
-//            cate_id = data.getStringExtra("cate_id");
-//            tv_goods_type_value.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("cate_name"));
         }
         if (requestCode == CommentShowCropImageActivity.COROP_REQUEST && resultCode == CommentShowCropImageActivity.COROP_RESULT) {
             String path = data.getStringExtra(CommentShowCropImageActivity.RERULT_PATH);

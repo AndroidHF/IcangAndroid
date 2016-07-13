@@ -340,33 +340,6 @@ public class MySaleReShanjiaActivity extends BaseActivity {
             }
         });
         tvGoodsStatusValue.setTextColor(getResources().getColor(R.color.black_tv));
-
-
-        //结束时间
-//        good_end_time = paiPinDetailBean.getPm_end_time();
-//        tvEndTimeValue.setText(paiPinDetailBean.getPm_end_time());
-//        tvEndTimeValue.setTextColor(getResources().getColor(R.color.black_tv));
-//
-//        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
-//        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
-//
-//            @Override
-//            public void onTimeSelect(Date date) {
-//                tvEndTimeValue.setText(getTime(date));
-//                good_end_time = tvEndTimeValue.getText().toString();
-//            }
-//        });
-//        rlEndTime.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Calendar calendar = Calendar.getInstance();
-//                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
-//                pvTime.setTime(new Date());
-//                pvTime.setCyclic(false);
-//                pvTime.setCancelable(true);
-//                pvTime.show();
-//            }
-//        });
         //change by :胡峰，拍品结束时间的逻辑处理
         good_end_time = "";
         tvEndTimeValue.setText("请选择");

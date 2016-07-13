@@ -216,7 +216,6 @@ public class JingPaiJiLuActivity extends BaseActivity {
 
             JingPaiJiLuBean jingPaiJiLuBean = datas.get(position);
             //change by :胡峰，头像的处理
-            //mApplication.setImages(jingPaiJiLuBean.getUser_avatar(), holder.profile_image);
             mApplication.setTouImages(jingPaiJiLuBean.getUser_avatar(), holder.profile_image);
             holder.tv_user_name.setText(jingPaiJiLuBean.getUser_nick());
             holder.tv_pai_time.setText(jingPaiJiLuBean.getCreate_date());

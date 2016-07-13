@@ -22,7 +22,7 @@ public class MyExpandTextView extends FrameLayout {
     LinearLayout openViewLay;
     ImageView openView;
     protected boolean isExpand = false; // 显示或收起标记
-    private int defaultLine = 3; // 显示的行数,超过就隐藏
+    private int defaultLine = 10; // 显示的行数,超过就隐藏
     private boolean isHasExpand = false; //是否需要判断显示更多的标示
 
     public MyExpandTextView(Context context) {
@@ -78,21 +78,6 @@ public class MyExpandTextView extends FrameLayout {
             openViewLay.setVisibility(View.GONE);
         }
     }
-//    public void setText(String str,final Context context) {
-//        Spannable span = SmileUtils.getSmiledText(context, str);
-//        contentView_tv.setText(span, TextView.BufferType.SPANNABLE);
-//        int count = contentView_tv.getLayout() == null ? getLineNumber()
-//                : contentView_tv.getLineCount();
-//        if (count > defaultLine) {
-//            isHasExpand = true;
-//            contentView_tv.setLines(defaultLine);
-//            openView.setVisibility(View.VISIBLE);
-//        } else {
-//            isHasExpand = false;
-//            contentView_tv.setLines(count);
-//            openView.setVisibility(View.GONE);
-//        }
-//    }
 
     // 文本框的占用的行数
     private int getLineNumber() {

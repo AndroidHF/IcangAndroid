@@ -84,15 +84,10 @@ public class EditPublicShowActivity extends BaseActivity {
 
 
     private MyAdapter myAdapter;
-
     private String mainLoalPath = "";
     private String mainServerPath = "";
-
     private String cate_id;
-
     private int show_id;
-//    private ImageView iv_add;
-
     private LinearLayout ll_add;
     private FrameLayout iv_add_item;
     private EditText et_input_link;
@@ -108,7 +103,6 @@ public class EditPublicShowActivity extends BaseActivity {
             @Override
             public void leftActio() {
                 finish();
-//                UIHelper.jump(mActivity,PublicShowActivity.class);
             }
         });
         show_id = _Bundle.getInt("show_id");
@@ -158,19 +152,6 @@ public class EditPublicShowActivity extends BaseActivity {
 
             }
         });
-//        promotedActionsLibrary.addItem(getResources().getDrawable(R.drawable.public_link_icon), new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (promotedActionsLibrary.isable) {
-//                    PostShowBean postShowBean = new PostShowBean();
-//                    postShowBean.setType(3);
-//                    postShowBean.setContent("http://");
-//                    postShowBeans.add(postShowBean);
-//                    myAdapter.notifyDataSetChanged();
-//                    dsList.setSelection(postShowBeans.size() - 1);
-//                }
-//            }
-//        });
         promotedActionsLibrary.addMainItem(getResources().getDrawable(R.drawable.public_show_add));
 
 
@@ -413,24 +394,6 @@ public class EditPublicShowActivity extends BaseActivity {
      * 保存草稿
      */
     private void submitDraft() {
-//        if (TextUtils.isEmpty(mainServerPath)) {
-//            UIHelper.t(mContext, "请上传一张图片做为晒物封面");
-//            return;
-//        }
-//
-//        if (TextUtils.isEmpty(cate_id)) {
-//            UIHelper.t(mContext, "请选择物品类型");
-//            return;
-//        }
-//        if (TextUtils.isEmpty(et_title_top.getText().toString())) {
-//            UIHelper.t(mContext, "请填写标题");
-//            return;
-//        }
-//        if (TextUtils.isEmpty(et_desc_top.getText().toString())) {
-//            UIHelper.t(mContext, "请填写文字描述");
-//            return;
-//        }
-
         boolean isOK = true;
         if (postShowBeans.size() > 0) {
             JSONArray jsonArray = new JSONArray();
@@ -636,34 +599,13 @@ public class EditPublicShowActivity extends BaseActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup viewGroup) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.row_public_show_item, null);
-//            ImageView iv_drag = (ImageView) view.findViewById(R.id.iv_drag);
-//            ImageView iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
-
             iv_add_item = (FrameLayout) view.findViewById(R.id.iv_add_item);
             ImageView iv_main = (ImageView) view.findViewById(R.id.iv_main);
             ImageView iv_add = (ImageView) view.findViewById(R.id.iv_add);
             LinearLayout ll_add1 = (LinearLayout) view.findViewById(R.id.ll_add1);
             ImageView iv_status = (ImageView) view.findViewById(R.id.iv_status);
-//            ImageView iv_close = (ImageView) view.findViewById(R.id.iv_close);
-
-
             et_input_link = (EditText) view.findViewById(R.id.et_input_link);
             et_input_content = (EditText) view.findViewById(R.id.et_input_content);
-
-//            et_input_content.setOnTouchListener(new View.OnTouchListener() {
-//                @Override
-//                public boolean onTouch(View v, MotionEvent event) {
-//                    if (v.getId() == R.id.et_input_link) {
-//                        v.getParent().requestDisallowInterceptTouchEvent(true);
-//                        switch (event.getAction() & MotionEvent.ACTION_MASK) {
-//                            case MotionEvent.ACTION_UP:
-//                                v.getParent().requestDisallowInterceptTouchEvent(false);
-//                                break;
-//                        }
-//                    }
-//                    return false;
-//                }
-//            });
             final PostShowBean postShowBean = postShowBeans.get(position);
             if (postShowBean.getType() == 1) {//文字
                 et_input_content.setText(postShowBean.getContent());
@@ -692,7 +634,6 @@ public class EditPublicShowActivity extends BaseActivity {
                 et_input_content.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(postShowBean.getImageLocal()) && !postShowBean.isServer()) {
                     iv_status.setVisibility(View.GONE);
-//                    iv_close.setVisibility(View.GONE);
                     ll_add1.setVisibility(View.VISIBLE);
                     iv_add.setVisibility(View.VISIBLE);
                     iv_main.setImageResource(R.color.transparent);
@@ -718,23 +659,14 @@ public class EditPublicShowActivity extends BaseActivity {
                 } else {
                     if (postShowBean.isServer()) {
                         iv_status.setVisibility(View.GONE);
-//                        iv_close.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
                         ll_add1.setVisibility(View.GONE);
                         mApplication.setImages(postShowBean.getContent(), iv_main);
                     } else {
                         if (postShowBean.getStatus() == PostShowBean.Status.FAIL) {
                             iv_status.setVisibility(View.VISIBLE);
-//                            iv_close.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
                             ll_add1.setVisibility(View.GONE);
-//                            iv_close.setOnClickListener(new View.OnClickListener() {
-//                                @Override
-//                                public void onClick(View v) {
-//                                    postShowBean.setImageLocal("");
-//                                    notifyDataSetChanged();
-//                                }
-//                            });
                             iv_status.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -743,13 +675,11 @@ public class EditPublicShowActivity extends BaseActivity {
                             });
                         } else if (postShowBean.getStatus() == PostShowBean.Status.INIT) {
                             iv_status.setVisibility(View.GONE);
-//                            iv_close.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
                             ll_add1.setVisibility(View.GONE);
                             mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                         } else {
                             iv_status.setVisibility(View.GONE);
-//                            iv_close.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
                             ll_add1.setVisibility(View.GONE);
                             mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
@@ -836,8 +766,6 @@ public class EditPublicShowActivity extends BaseActivity {
             } else {
                 tv_goods_type_value.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("p_1_cate_name")+"/"+data.getStringExtra("cate_name"));
             }
-//            cate_id = data.getStringExtra("cate_id");
-//            tv_goods_type_value.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("cate_name"));
         }
 
         if (requestCode == CommentShowCropImageActivity.COROP_REQUEST && resultCode == CommentShowCropImageActivity.COROP_RESULT) {

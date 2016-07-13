@@ -407,7 +407,6 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
 
             }
             UIHelper.jump(mActivity, SearchPaiPinActivity.class, bundle);
-//            finish();
             return;
         }
         if (index == 2) {
@@ -444,7 +443,6 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
             }
             KLog.d("-------------------------event_type-----------"+event_type);
             UIHelper.jump(mActivity, SearchEventActivity.class, bundle);
-//            finish();
             return;
         }
         if (index == 3) {
@@ -475,7 +473,6 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
                 }
             }
             UIHelper.jump(mActivity, SearchShowActivity.class, bundle);
-//            finish();
             return;
         }
     }

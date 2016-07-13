@@ -118,11 +118,6 @@ public class OkHttpClientManager
                 try
                 {
                     int code=response.code();
-//                    //授权失败
-//                    if(code==401){
-//                        sendTimeOutResultCallback(resCallBack);
-//                        return;
-//                    }
                     final String string = response.body().string();
                     if (resCallBack.mType == String.class)
                     {

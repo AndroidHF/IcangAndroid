@@ -306,7 +306,6 @@ public class MySalePaiMaiIngFrag extends BaseFragment {
             } else {
                 holder.tv_good_yikoujia_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
             }
-//            holder.tv_good_yikoujia_price.setText("￥" + StringFormatUtil.getDoubleFormatNew(myBuyPaiMainIngBean.getBut_it_price()));
             holder.tv_pai_count.setText(myBuyPaiMainIngBean.getJp_count() + "");
 
             String[] times = StringFormatUtil.getTimeFromInt(myBuyPaiMainIngBean.getTime() / 1000);

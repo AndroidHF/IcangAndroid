@@ -24,7 +24,6 @@ public class PushDemoReceiver extends BroadcastReceiver {
         switch (bundle.getInt(PushConsts.CMD_ACTION)) {
             case PushConsts.GET_MSG_DATA:
                 // 获取透传数据
-                // String appid = bundle.getString("appid");
                 byte[] payload = bundle.getByteArray("payload");
 
                 String taskid = bundle.getString("taskid");
@@ -41,10 +40,6 @@ public class PushDemoReceiver extends BroadcastReceiver {
 
                     payloadData.append(data);
                     payloadData.append("\n");
-
-//                    if (GetuiSdkDemoActivity.tLogView != null) {
-//                        GetuiSdkDemoActivity.tLogView.append(data + "\n");
-//                    }
                 }
                 break;
 
@@ -52,9 +47,6 @@ public class PushDemoReceiver extends BroadcastReceiver {
                 // 获取ClientID(CID)
                 // 第三方应用需要将CID上传到第三方服务器，并且将当前用户帐号和CID进行关联，以便日后通过用户帐号查找CID进行消息推送
                 String cid = bundle.getString("clientid");
-//                if (GetuiSdkDemoActivity.tView != null) {
-//                    GetuiSdkDemoActivity.tView.setText(cid);
-//                }
                 break;
 
             case PushConsts.THIRDPART_FEEDBACK:

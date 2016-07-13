@@ -515,10 +515,19 @@
                 android:id="@+id/tv_after_msg"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="卖家已发货"
+                android:text="交易已完成"
                 android:textColor="@color/black"
                 android:textSize="@dimen/commen_tv_size"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_after_pay"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingTop="5dip"
+                android:text="※平台已向您汇出货款，请注意查收 "
+                android:textColor="@color/red"
+                android:textSize="13dip"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

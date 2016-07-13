@@ -460,7 +460,7 @@ public class PaiMaiFinishFragment extends BaseFragment {
                     }
                 });
                 //已经付款 -- 已收货---
-            } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && myBuyPaiMainFinishBean.getOrder_status() == 2) {
+            } else if (myBuyPaiMainFinishBean.getPay_status() == 1 && (myBuyPaiMainFinishBean.getOrder_status() == 2||myBuyPaiMainFinishBean.getOrder_status() == 3)) {
                 holder.iv_status_tag.setImageResource(R.drawable.chengjiao_cion);
                 setViewVisible(holder.ll_status_queren_shouhuo, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_yifahuo, holder.ll_status_queren_shouhuo);
                 if (myBuyPaiMainFinishBean.getIs_eval() == 0) {//未评论

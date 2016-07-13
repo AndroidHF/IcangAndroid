@@ -305,7 +305,6 @@ public class SearchPaiPinActivity extends BaseActivity {
             public void onClick(View view) {
                 initStatus(4);
                 iniTitleImagesBySelect(3);
-//                iniTitleImagesAllDefaut();
             }
         });
         ivMenu.setOnClickListener(new View.OnClickListener() {

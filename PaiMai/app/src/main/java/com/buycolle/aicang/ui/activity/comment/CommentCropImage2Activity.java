@@ -32,7 +32,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by joe on 16/4/30.
  */
-public class CommentCropImageActivity extends BaseActivity implements CropImageView.OnSetImageUriCompleteListener, CropImageView.OnGetCroppedImageCompleteListener {
+public class CommentCropImage2Activity extends BaseActivity implements CropImageView.OnSetImageUriCompleteListener, CropImageView.OnGetCroppedImageCompleteListener {
 
     @Bind(R.id.header)
     MyHeaderWithSure header;
@@ -43,7 +43,7 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
     private Bitmap oricalBitMap;
 
     public static final int COROP_RESULT = 888;
-    public static final int COROP_REQUEST = 988;
+    public static final int COROP_REQUEST = 989;
     public static final String RERULT_PATH = "rerult_path";
 
     @Override
@@ -99,9 +99,8 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
                         public void onNext(Bitmap path) {
                             dismissLoadingDialog();
                             oricalBitMap = path;
-                            mCropImageView.setAspectRatio(1,1);
                             mCropImageView.setCropShape(CropImageView.CropShape.RECTANGLE);
-                            mCropImageView.setFixedAspectRatio(true);
+                            mCropImageView.setFixedAspectRatio(false);
                             mCropImageView.setAutoZoomEnabled(false);
                             mCropImageView.setShowProgressBar(true);
                             mCropImageView.setImageBitmap(oricalBitMap);
@@ -143,7 +142,7 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
                     }
                     try {
                         FileOutputStream out = new FileOutputStream(cropFile);
-                        bitmap.compress(Bitmap.CompressFormat.JPEG,90, out);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG,90,out);
                         out.flush();
                         out.close();
                     } catch (FileNotFoundException e) {

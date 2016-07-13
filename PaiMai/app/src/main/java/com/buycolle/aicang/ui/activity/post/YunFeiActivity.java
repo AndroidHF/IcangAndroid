@@ -30,13 +30,13 @@ public class YunFeiActivity extends BaseActivity {
     @Bind(R.id.rl_buyer)
     RelativeLayout rlBuyer;
 
-    private String type = "卖家";
+    private String type = "包邮";
 
     @OnClick(R.id.rl_saler)
     public void selectSaler() {
         ivSaler.setVisibility(View.VISIBLE);
         ivBuyer.setVisibility(View.GONE);
-        type = "卖家";
+        type = "包邮";
         Intent intent = new Intent();
         intent.putExtra("type", type);
         setResult(RESULT_OK, intent);
@@ -47,7 +47,7 @@ public class YunFeiActivity extends BaseActivity {
     public void selectBuyer() {
         ivSaler.setVisibility(View.GONE);
         ivBuyer.setVisibility(View.VISIBLE);
-        type = "买家";
+        type = "到付";
         Intent intent = new Intent();
         intent.putExtra("type", type);
         setResult(RESULT_OK, intent);

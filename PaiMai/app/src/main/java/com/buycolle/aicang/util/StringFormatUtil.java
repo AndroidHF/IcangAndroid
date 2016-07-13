@@ -741,29 +741,5 @@ public class StringFormatUtil {
         }
         return "";
     }
-//    public static String getHomeDaoJiShiTimeTst(long time) {
-//        long day = time / (1 * 60 * 60 * 24);
-//        long hour = time / (1 * 60 * 60) % 24;
-//        long minute = time / (1 * 60) % 60;
-//        long second = time / (1) % 60;
-//        KLog.d("时间---day--",day);
-//        KLog.d("时间---hour--",hour);
-//        KLog.d("时间---minute--",minute);
-//        KLog.d("时间---second--",second);
-//        if (day > 0) {
-//            return day + "天";
-//        }
-//        if (day == 0 && hour >= 1) {
-//            return hour + "时";
-//        }
-//        if (day == 0 && hour < 1 && minute >= 1) {
-//            return minute + "分";
-//        }
-//        if (day == 0 && hour < 1 && minute < 1) {
-//            return second + "秒";
-//        }
-//        return "";
-//    }
-
 
 }

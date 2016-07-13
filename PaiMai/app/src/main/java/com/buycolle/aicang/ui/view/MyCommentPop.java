@@ -276,7 +276,6 @@ public class MyCommentPop extends PopupWindow implements View.OnClickListener {
                 } else {
                     childList.addAll(list.subList(showNums * i, showNums * (i + 1)));
                 }
-//                childList.add("delete_expression");
                 if (childList.size() > 1) {
                     final SmileGVAdapter smileAdater = new SmileGVAdapter(_mActivity, childList);
                     gv.setAdapter(smileAdater);

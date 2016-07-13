@@ -216,18 +216,6 @@ public class EventFragment extends BaseFragment {
                 UIHelper.jump(mActivity, SearchActivity.class, bundle);
             }
         });
-
-//        ivShowSmile.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (!isShow) {
-//                    ivShowSmile.setImageResource(R.drawable.event_top_icon);
-//                } else {
-//                    ivShowSmile.setImageResource(R.drawable.smail_none);
-//                }
-//                isShow = isShow ? false : true;
-//            }
-//        });
     }
 
     private void loadTopAds() {
@@ -311,8 +299,6 @@ public class EventFragment extends BaseFragment {
         ButterKnife.unbind(this);
     }
 
-
-    //
     private void initStatus(int index) {
         event_type = index;
         for (int i = 0; i < tvArrayList.size(); i++) {

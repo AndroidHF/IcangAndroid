@@ -83,13 +83,10 @@ public class SearchEventActivity extends BaseActivity {
 
     private ArrayList<TextView> titles;
     private ArrayList<ImageView> titleImages;
-
-
     private ArrayList<HomeGoodsBean> homeGoodsBeanArrayList;
     private boolean isRun = false;
     private int pageIndex = 1;
     private int pageNum = 20;
-
 
     MyHomeAdapter myAdapter;
 

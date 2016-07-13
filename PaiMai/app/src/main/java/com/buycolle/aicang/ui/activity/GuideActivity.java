@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,9 +42,6 @@ public class GuideActivity extends Activity implements ViewPager.OnPageChangeLis
         WindowManager windowManager = (WindowManager) this.getSystemService(Context.WINDOW_SERVICE);
         width = windowManager.getDefaultDisplay().getWidth();
         height = windowManager.getDefaultDisplay().getHeight();
-        Log.i("width-----", width + "");
-        Log.i("height----", height + "");
-
         initView();
 
     }

@@ -28,6 +28,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.util.Base64;
 
+import java.io.BufferedOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -39,7 +40,7 @@ import java.io.IOException;
 public class ImageUtils {
 
     //缩略图保存路径
-    public static final String APP_TEMP_PATH = Environment.getExternalStorageDirectory() + "/quanchenghui/attTemp";
+    public static final String APP_TEMP_PATH = Environment.getExternalStorageDirectory()+ "/quanchenghui/attTemp";
 
     /**
      * 根据路径获得图片并压缩返回路劲用于显示
@@ -64,14 +65,14 @@ public class ImageUtils {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
-        options.inSampleSize = calculateInSampleSize(options, 480, 800);
+        //options.inSampleSize = calculateInSampleSize(options, 960, 1600);
+        options.inSampleSize = 1;
         options.inJustDecodeBounds = false;
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         options.inDither = true;
         Bitmap bmp = null;
         try {
             bmp = BitmapFactory.decodeFile(filePath, options);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -89,7 +90,8 @@ public class ImageUtils {
                 file = File.createTempFile("cache" + "_" + (int) (Math.random() * 100 + 1)+ System.currentTimeMillis(), ".jpg", rootFile);
             }
             fos = new FileOutputStream(file);
-            bmp.compress(Bitmap.CompressFormat.JPEG, 90, fos);//图片的压缩
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(fos);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 90, bufferedOutputStream);//图片的压缩
             fos.flush();
             fos.close();
             recycleBitmap(bmp);
@@ -104,18 +106,17 @@ public class ImageUtils {
         final BitmapFactory.Options options = new BitmapFactory.Options();
         options.inJustDecodeBounds = true;
         BitmapFactory.decodeFile(filePath, options);
-        options.inSampleSize = calculateInSampleSize(options, 480, 800);
+        //options.inSampleSize = calculateInSampleSize(options, 960, 1600);
+        options.inSampleSize = 1;
         options.inJustDecodeBounds = false;
         options.inPreferredConfig = Bitmap.Config.RGB_565;
         options.inDither = true;
         Bitmap bmp = null;
         try {
             bmp = BitmapFactory.decodeFile(filePath, options);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-//        recycleBitmap(bmp);
         return bmp;
     }
 

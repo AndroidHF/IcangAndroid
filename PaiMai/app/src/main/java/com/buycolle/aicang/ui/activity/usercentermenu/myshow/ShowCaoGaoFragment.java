@@ -66,14 +66,6 @@ public class ShowCaoGaoFragment extends BaseFragment {
         pageIndex = 1;
         loadData(false);
     }
-
-
-//    //登出触发
-//    public void onEventMainThread(LogOutEvent event) {
-//        loadData(false);
-//        myAdapter.notifyDataSetChanged();
-//    }
-
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

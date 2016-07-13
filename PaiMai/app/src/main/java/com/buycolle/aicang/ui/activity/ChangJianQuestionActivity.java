@@ -182,46 +182,4 @@ public class ChangJianQuestionActivity extends BaseActivity {
             return true;
         }
     }
-
-//    private class MyAdapter extends BaseAdapter {
-//
-//        @Override
-//        public int getCount() {
-//            return changJianQstBeens.size();
-//        }
-//
-//        @Override
-//        public Object getItem(int position) {
-//            return changJianQstBeens.get(position);
-//        }
-//
-//        @Override
-//        public long getItemId(int position) {
-//            return 0;
-//        }
-//
-//        @Override
-//        public View getView(int position, View convertView, ViewGroup parent) {
-//            Holder holder = null;
-//            if (convertView == null) {
-//                holder = new Holder();
-//                convertView = LayoutInflater.from(mContext).inflate(R.layout.expand_row, null);
-//                holder.tv_title = (TextView) convertView.findViewById(R.id.tv_title);
-//                holder.tv_content = (TextView) convertView.findViewById(R.id.tv_content);
-//                convertView.setTag(holder);
-//            } else {
-//                holder = (Holder) convertView.getTag();
-//            }
-//            ChangJianQstBean changJianQstBean = changJianQstBeens.get(position);
-//            holder.tv_title.setText(changJianQstBean.getQuest_title());
-//            holder.tv_content.setText(changJianQstBean.getAnswer_context());
-//            return convertView;
-//        }
-//
-//        public class Holder {
-//            TextView tv_title;
-//            TextView tv_content;
-//
-//        }
-//    }
 }

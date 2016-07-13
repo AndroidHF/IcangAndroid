@@ -2,6 +2,7 @@ package com.buycolle.aicang.ui.activity.comment;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -11,7 +12,6 @@ import com.buycolle.aicang.R;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.view.MyHeaderWithSure;
 import com.buycolle.aicang.util.FileUtil;
-import com.buycolle.aicang.util.ImageUtils;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.KLog;
 import com.hhw.cropper.CropImageView;
@@ -47,9 +47,6 @@ public class CommentUserCropImageActivity extends BaseActivity implements CropIm
     public static final int COROP_REQUEST = 988;
     public static final String RERULT_PATH = "rerult_path";
 
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +80,8 @@ public class CommentUserCropImageActivity extends BaseActivity implements CropIm
             Observable.just(true).map(new Func1<Boolean, Bitmap>() {
                 @Override
                 public Bitmap call(Boolean aBoolean) {
-                    Bitmap bitmap = ImageUtils.getImageBitmap(imagePath);
+                    //Bitmap bitmap = ImageUtils.getImageBitmap(imagePath);
+                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
                     return bitmap;
                 }
             }).subscribeOn(Schedulers.io())
@@ -146,7 +144,7 @@ public class CommentUserCropImageActivity extends BaseActivity implements CropIm
                     }
                     try {
                         FileOutputStream out = new FileOutputStream(cropFile);
-                        bitmap.compress(Bitmap.CompressFormat.PNG, 80, out);
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
                         out.flush();
                         out.close();
                     } catch (FileNotFoundException e) {

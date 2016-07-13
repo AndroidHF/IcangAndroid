@@ -157,10 +157,6 @@ public class YiKouJiaDialog extends Dialog {
                         if (Double.valueOf(et_input_value.getText().toString()) < Double.valueOf(currentValuee)) {
                             UIHelper.t(mContext, "出价要大于或者等于起拍价哦亲~~");
                         } else {
-//                            KLog.d("---1----",Double.valueOf(yikouJia)+"");
-//                            KLog.d("---2----",Double.valueOf(et_input_value.getText().toString())+"");
-//                            KLog.d("---3----",(Double.valueOf(yikouJia) == Double.valueOf(et_input_value.getText().toString()))+"");
-
                             if (yikouJia.endsWith(et_input_value.getText().toString())) {
                                 callBack.ok(yikouJia, 2);
                             } else {

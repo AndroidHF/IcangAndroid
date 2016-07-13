@@ -60,11 +60,11 @@ public class Constans {
 
 
     //分享我们的APP：
-    public static String shareTitle_Type_1 = "来这里买卖手办，每月盈余还有赚，老婆老妈再也不喷我买小人了!";
-    public static String shareSubTitle_Type_1 = "一块钱买手办，两块钱买模型，三块钱到手声优签名!";
+    public static String shareTitle_Type_1 = "来这里买卖手办，每月盈余还有赚，老婆老妈再也不喷我买小人了！";
+    public static String shareSubTitle_Type_1 = "一块钱买手办，两块钱买模型，三块钱到手声优签名！";
 
     //拍品及拍卖会分享：
-    public static String shareTitle_Type_2 = "手办模型一元购,会玩也会买，真品百分百！";
+    public static String shareTitle_Type_2 = "手办模型一元购，会玩也会买，真品百分百！";
     public static String shareSubTitle_Type_2 = "调用拍品标题（字数限制按各家的接口来，超出用⋯表示）";
 
     //晒单分享：

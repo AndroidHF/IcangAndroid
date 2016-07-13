@@ -20,7 +20,7 @@ public class PaiMaiFaHuoZhiDaoActivity extends CommenWebActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        myHeader.init("发货指导", new MyHeader.Action() {
+        myHeader.init("上架指引", new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();

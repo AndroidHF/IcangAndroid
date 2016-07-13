@@ -61,11 +61,6 @@ public class SmileFragment extends BaseFragment {
         initInnerSmile();
         initSmileViewPager();
     }
-
-    //初始化内置表情
-//    private void initInnerSmile() {
-//        smileList.add(getChildGridView(getSmileRes(16), 16));
-//    }
     //change by:胡峰，表情添加，长度限制
     private void initInnerSmile() {
         smileList.add(getChildGridView(getSmileRes(18), 18));
@@ -99,7 +94,6 @@ public class SmileFragment extends BaseFragment {
                 } else {
                     childList.addAll(list.subList(showNums * i, showNums * (i + 1)));
                 }
-//                childList.add("delete_expression");
                 if (childList.size() > 1) {
                     final SmileGVAdapter smileAdater = new SmileGVAdapter(mActivity, childList);
                     gv.setAdapter(smileAdater);

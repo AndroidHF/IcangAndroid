@@ -241,23 +241,15 @@ public class MyAskFragment extends BaseFragment {
                 holder = (ViewHolder) convertView.getTag();
             }
             final MyAskAnGetAskBean myAskAnGetAskBean = datas.get(position);
-
             holder.tv_good_title.setText(myAskAnGetAskBean.getProduct_title());
             holder.tv_good_status.setText(myAskAnGetAskBean.getSt_name());
-//            holder.tv_my_ask.setText(myAskAnGetAskBean.getContext());
-
             holder.tv_my_ask.setText(SmileUtils.getSmiledCommentText(mContext,myAskAnGetAskBean.getContext()));
 
             holder.tv_my_name.setText(myAskAnGetAskBean.getC_user_nick());
             holder.tv_my_ask_time.setText(myAskAnGetAskBean.getCreate_date());
             if(myAskAnGetAskBean.getSubVec().size()>0){
                 holder.ll_other_huida.setVisibility(View.VISIBLE);
-//                holder.tv_other_asw.setText(myAskAnGetAskBean.getSubVec().get(0).getContext());
-
                 holder.tv_other_asw.setText(SmileUtils.getSmiledCommentText(mContext,myAskAnGetAskBean.getSubVec().get(0).getContext()));
-
-
-                //mApplication.setImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(),holder.profile_image);
                 //change by :胡峰。头像的处理
                 mApplication.setTouImages(myAskAnGetAskBean.getSubVec().get(0).getC_user_avatar(),holder.profile_image);
                 holder.tv_other_name.setText(myAskAnGetAskBean.getSubVec().get(0).getC_user_nick());

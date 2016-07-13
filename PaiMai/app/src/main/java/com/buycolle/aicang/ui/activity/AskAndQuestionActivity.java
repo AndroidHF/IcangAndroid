@@ -370,10 +370,6 @@ public class AskAndQuestionActivity extends BaseActivity implements SmileFragmen
     }
 
     private void initTop() {
-        //add by :胡峰，拍卖会的商品问与答的图片处理
-//        if (paiPinDetailBean.getEnt_id() ==1){
-//            ivPaimai.setScaleType(ImageView.ScaleType.CENTER_CROP);
-//        }
         mApplication.setImages(paiPinDetailBean.getCover_pic(), ivPaimai);
         mApplication.setImages(paiPinDetailBean.getRaretag_icon(), ivRange);
         tvGoodTitle.setText(paiPinDetailBean.getProduct_title());
@@ -449,7 +445,6 @@ public class AskAndQuestionActivity extends BaseActivity implements SmileFragmen
     @Override
     public void onSmileClick(String filename) {
         if (etInput.getText().toString().length() >= 25) {
-            //UIHelper.t(mActivity, "输入字数超出30个限制");
             //change by ：胡峰
             UIHelper.t(mActivity,"您输入的字数过多");
             return;

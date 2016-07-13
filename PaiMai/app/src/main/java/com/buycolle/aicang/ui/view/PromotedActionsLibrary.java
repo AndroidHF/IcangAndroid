@@ -209,22 +209,10 @@ public class PromotedActionsLibrary {
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private ObjectAnimator setCloseAnimation(ImageView promotedAction, int position) {
-
         ObjectAnimator objectAnimator;
-
-//        if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//
-//            objectAnimator = ObjectAnimator.ofFloat(promotedAction, View.TRANSLATION_Y, -px * (promotedActions.size() - position), 0f);
-//            objectAnimator.setRepeatCount(0);
-//            objectAnimator.setDuration(ANIMATION_TIME * (promotedActions.size() - position));
-//
-//        } else {
-
         objectAnimator = ObjectAnimator.ofFloat(promotedAction, View.TRANSLATION_X, -px * (promotedActions.size() - position), 0f);
         objectAnimator.setRepeatCount(0);
         objectAnimator.setDuration(ANIMATION_TIME * (promotedActions.size() - position));
-//        }
-
         return objectAnimator;
     }
 
@@ -237,21 +225,10 @@ public class PromotedActionsLibrary {
      */
     @TargetApi(Build.VERSION_CODES.ICE_CREAM_SANDWICH)
     private ObjectAnimator setOpenAnimation(ImageView promotedAction, int position) {
-
         ObjectAnimator objectAnimator;
-
-//        if(context.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
-//
-//            objectAnimator = ObjectAnimator.ofFloat(promotedAction, View.TRANSLATION_Y, 0f, -px * (promotedActions.size() - position));
-//            objectAnimator.setRepeatCount(0);
-//            objectAnimator.setDuration(ANIMATION_TIME * (promotedActions.size() - position));
-//
-//        } else {
         objectAnimator = ObjectAnimator.ofFloat(promotedAction, View.TRANSLATION_X, 0f, -px * (promotedActions.size() - position));
         objectAnimator.setRepeatCount(0);
         objectAnimator.setDuration(ANIMATION_TIME * (promotedActions.size() - position));
-//        }
-
         return objectAnimator;
     }
 

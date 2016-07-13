@@ -357,23 +357,11 @@ public class ReEditPostActivity extends BaseActivity {
                 uploadMainImages(mainImageBean);
             }
         });
-//        ivMainClose.setVisibility(View.VISIBLE);
         mainImageBean.setEmpty(false);
         mainImageBean.setLocalPath("");
         mainImageBean.setServer(true);
         mainImageBean.setServerPath(paiPinDetailBean.getCover_pic());
         mApplication.setImages(mainImageBean.getServerPath(), firstimg);
-//        ivMainClose.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                mainImageBean.setServerPath("");
-//                firstimg.setImageResource(R.color.transparent);
-//                ivMainClose.setVisibility(View.GONE);
-//                ivFisrtStatus.setVisibility(View.GONE);
-//            }
-//        });
-
-
         int listImagesSize = 0;
         if (!TextUtils.isEmpty(paiPinDetailBean.getCycle_pic())) {
             if (paiPinDetailBean.getCycle_pic().indexOf(",") < 0) {//一张
@@ -477,36 +465,10 @@ public class ReEditPostActivity extends BaseActivity {
         });
 
         tvGoodsStatusValue.setTextColor(getResources().getColor(R.color.black_tv));
-
-        //结束时间
-//        good_end_time = paiPinDetailBean.getPm_end_time();
-//        tv_end_time_value.setText(paiPinDetailBean.getPm_end_time());
-//        pvTime = new TimePickerView(mActivity, TimePickerView.Type.YEAR_MONTH_HOUR);
-//        pvTime.setOnTimeSelectListener(new TimePickerView.OnTimeSelectListener() {
-//
-//            @Override
-//            public void onTimeSelect(Date date) {
-//                tv_end_time_value.setText(getTime(date));
-//                good_end_time = tv_end_time_value.getText().toString();
-//            }
-//        });
         //change by :胡峰，拍品结束时间的修改
         good_end_time = "";
         tv_end_time_value.setText("请选择");
         tv_end_time_value.setTextColor(getResources().getColor(R.color.gray_tv));
-
-
-//        rl_end_time.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Calendar calendar = Calendar.getInstance();
-//                pvTime.setRange(calendar.get(Calendar.YEAR), calendar.get(Calendar.YEAR) + 1);
-//                pvTime.setTime(new Date());
-//                pvTime.setCyclic(false);
-//                pvTime.setCancelable(true);
-//                pvTime.show();
-//            }
-//        });
         rl_end_time.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1025,9 +987,6 @@ public class ReEditPostActivity extends BaseActivity {
 
     private int getImageCount() {
         int count = 0;
-//        if(!TextUtils.isEmpty(mainImageBean.getLocalPath())){
-//            count=1;
-//        }
         for (PostImageBean postImageBean : postImageBeans) {
             if (!postImageBean.isEmpty()) {
                 count++;
@@ -1241,8 +1200,6 @@ public class ReEditPostActivity extends BaseActivity {
             } else {
                 tvGoodsTypeValue.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("p_1_cate_name")+"/"+data.getStringExtra("cate_name"));
             }
-//            good_type = data.getStringExtra("cate_id");
-//            tvGoodsTypeValue.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("cate_name"));
         }
         //物品状态返回
         if (requestCode == REQUEST_GOOD_STATUS && resultCode == mActivity.RESULT_OK) {
@@ -1337,11 +1294,9 @@ public class ReEditPostActivity extends BaseActivity {
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             if (msg.what == 0) {//失败了
-//                ivMainClose.setVisibility(View.VISIBLE);
                 ivFisrtStatus.setVisibility(View.VISIBLE);
             }
             if (msg.what == 1) {//成功
-//                ivMainClose.setVisibility(View.VISIBLE);
                 ivFisrtStatus.setVisibility(View.GONE);
             }
         }

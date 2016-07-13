@@ -107,7 +107,6 @@
                     android:gravity="center"
                     android:paddingLeft="8dip"
                     android:paddingRight="8dip"
-                    android:text="包邮"
                     android:textColor="@color/black_tv"
                     android:textSize="@dimen/commen_tv_size_smallest" />
             </RelativeLayout>
@@ -281,7 +280,6 @@
                         android:gravity="center"
                         android:paddingLeft="8dip"
                         android:paddingRight="8dip"
-                        android:text="包邮"
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size_smallest" />
                 </RelativeLayout>

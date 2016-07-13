@@ -174,17 +174,6 @@ public class UserInfoActivity extends BaseActivity {
             KLog.d("拍照返回的本地图片路径", recentPicPath);
             UIHelper.jumpForResult(mActivity, CommentUserCropImageActivity.class, bundle, CommentUserCropImageActivity.COROP_REQUEST);
         }
-//        if (requestCode == REQUEST_CROP_IMAGE && resultCode == RESULT_OK) {//个人照片相册返回
-//            Bundle bundle = data.getExtras();
-//            if (bundle != null) {
-//                Bitmap avatar = bundle.getParcelable("data");
-//                File saveAvatarLocal = FileUtil.saveAvatarLocal(mContext, avatar);
-//                if (saveAvatarLocal.exists()) {
-//                    uploadImages(saveAvatarLocal);
-//                }
-//            }
-//        }
-
         if (requestCode == CommentUserCropImageActivity.COROP_REQUEST && resultCode == CommentUserCropImageActivity.COROP_RESULT) {
             String path = data.getStringExtra(CommentUserCropImageActivity.RERULT_PATH);
             if (path != null) {

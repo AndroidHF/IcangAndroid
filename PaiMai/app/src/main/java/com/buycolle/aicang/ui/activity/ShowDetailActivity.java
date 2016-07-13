@@ -249,18 +249,6 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                     @Override
                     public void share(int position) {
                         switch (position) {
-//                            case 1:
-//                                ShareUtil.shareToWeChat(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle());
-//                                break;
-//                            case 2:
-//                                ShareUtil.shareToCicle(mActivity, shareBitmap, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle());
-//                                break;
-//                            case 3:
-//                                ShareUtil.shareToQQ(mActivity, mTencent, Constans.SHARE_URL, Constans.shareTitle_Type_2, showDetailBean.getTitle(), shareImagePath, new BaseUiListener());
-//                                break;
-//                            case 4:
-//                                ShareUtil.shareToSina(mActivity, mWeiboShareAPI, shareBitmap, Constans.SHARE_URL, showDetailBean.getTitle());
-//                                break;
                             /***
                              * cahnge by :胡峰
                              * 分享界面的跳转
@@ -617,27 +605,6 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                         iv_invisible.setVisibility(View.GONE);
                         mApplication.setImages(ziDingYi.getContent(), iv_zidingyi_image);
                         KLog.d("--加载图片--getWidth--", "---");
-//                        Glide.with(this)
-//                                .load(ziDingYi.getContent())
-//                                .asBitmap()
-//                                .dontAnimate()
-//                                .into(new BitmapImageViewTarget(iv_invisible) {
-//
-//                                    @Override
-//                                    protected void setResource(Bitmap resource) {
-//                                        super.setResource(resource);
-//                                        KLog.d("--加载图片---getHeight--", resource.getHeight() + "---");
-//                                        KLog.d("--加载图片--getWidth--", resource.getWidth() + "---");
-//                                        int wight = UIUtil.getWindowWidth(mContext)-UIUtil.dip2px(mContext,40);
-//                                        int height = (resource.getHeight()*wight)/resource.getWidth()+UIUtil.dip2px(mContext,16);
-//                                        KLog.d("--计算得到的---wight--", wight + "---");
-//                                        KLog.d("--计算得到的--height--",height + "---");
-//                                        iv_zidingyi_image.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, height));
-//                                        mApplication.setImagesByBitmap(ziDingYi.getContent(), iv_zidingyi_image, wight, height);
-//
-//                                    }
-//                                });
-
                         iv_zidingyi_image.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {

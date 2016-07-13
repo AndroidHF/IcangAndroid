@@ -83,7 +83,6 @@ public class EditAddressActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_addres);
         ButterKnife.bind(this);
-//        initProvinceDatas();
         myHeader.init("修改收货地址", new MyHeader.Action() {
             @Override
             public void leftActio() {

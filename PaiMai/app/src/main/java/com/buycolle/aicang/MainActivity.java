@@ -6,6 +6,7 @@ import android.widget.ImageView;
 
 import com.buycolle.aicang.adapter.MainPagerAdapter;
 import com.buycolle.aicang.api.ApiCallback;
+import com.buycolle.aicang.bean.UserBean;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
@@ -63,6 +64,7 @@ public class MainActivity extends BaseActivity {
     private ArrayList<ImageView> menus;
 
     private ACache aCache;
+    private UserBean userBean;
 
     //登录触发
     public void onEventMainThread(LoginEvent event) {
@@ -76,10 +78,6 @@ public class MainActivity extends BaseActivity {
     //登出触发
     public void onEventMainThread(LogOutEvent event) {
         menuHomeClick();
-        menuEventclick();
-        menuPostclick();
-        menuShowclick();
-        menuUserclick();
     }
 
 
@@ -116,11 +114,11 @@ public class MainActivity extends BaseActivity {
         if (mApplication.isLogin()) {
             mApplication.updatePushId();
         }
-
         if (!FileUtil.isLogoExist()) {
             KLog.e("创建logo报错了", "不存存在");
             PhoneUtil.copyBigDataToSD(mContext, FileUtil.APP_DOWNLOAD_LOGO_PATH + FileUtil.APP_DOWNLOAD_LOGO_NAME);
         }
+
 
         if (_Bundle != null && mApplication.isLogin()) {
             if (_Bundle.getBoolean("isPush", false)) {
@@ -186,7 +184,8 @@ public class MainActivity extends BaseActivity {
         currentIndex = 2;
         initStatus(2);
         mainViewPager.setCurrentItem(currentIndex, false);
-        postFrag.refreshByState(0);
+
+
     }
 
     @OnClick(R.id.iv_main_menu_4)
@@ -194,7 +193,6 @@ public class MainActivity extends BaseActivity {
         currentIndex = 3;
         initStatus(3);
         mainViewPager.setCurrentItem(currentIndex, false);
-        showFrag.refreshByState(0);
     }
 
     @OnClick(R.id.iv_main_menu_5)
@@ -202,7 +200,6 @@ public class MainActivity extends BaseActivity {
         currentIndex = 4;
         initStatus(4);
         mainViewPager.setCurrentItem(currentIndex, false);
-        usetFrag.refreshByState(0);
     }
 
     private void initStatus(int index) {

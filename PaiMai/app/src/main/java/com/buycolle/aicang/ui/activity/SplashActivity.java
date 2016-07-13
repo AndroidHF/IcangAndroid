@@ -56,7 +56,6 @@ public class SplashActivity extends BaseActivity {
         super.onStart();
         if(LoginConfig.isLogin(mApplication)){
             login();
-//            mApplication.updatePushId();
         }
         new Thread(new Runnable() {
             public void run() {

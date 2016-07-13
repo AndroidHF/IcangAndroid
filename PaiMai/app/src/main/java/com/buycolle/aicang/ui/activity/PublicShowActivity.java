@@ -31,9 +31,11 @@ import com.buycolle.aicang.api.callback.ResultCallback;
 import com.buycolle.aicang.api.request.OkHttpRequest;
 import com.buycolle.aicang.bean.PostShowBean;
 import com.buycolle.aicang.event.ShowProductPublicEvent;
+import com.buycolle.aicang.ui.activity.comment.CommentShow2CropImageActivity;
 import com.buycolle.aicang.ui.activity.comment.CommentShowCropImageActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinTypesActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
+import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.PromotedActionsLibrary;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
@@ -73,18 +75,13 @@ public class PublicShowActivity extends BaseActivity {
     TextView tvSaveDraft;
     @Bind(R.id.tv_publish)
     TextView tvPublish;
-
+    TextView tv_goods_type_title;
     private ArrayList<PostShowBean> postShowBeans;
-
     private MyAdapter myAdapter;
-
     private String mainLoalPath = "";
     private String mainServerPath = "";
-
     private String cate_id;
     private LinearLayout ll_add;
-//    private ImageView iv_add;
-
     private boolean isShow;
     private int relate_item_id;
 
@@ -206,92 +203,190 @@ public class PublicShowActivity extends BaseActivity {
             return;
         }
 
-        boolean isOK = true;
-        if (postShowBeans.size() > 0) {
-            JSONArray jsonArray = new JSONArray();
-            for (PostShowBean postShowBean : postShowBeans) {
-                if (postShowBean.getType() == 2 && postShowBean.getStatus() != PostShowBean.Status.DONE) {
-                    isOK = false;
-                }
-            }
-        }
-        if (!isOK) {
-            UIHelper.t(mContext, "还有图片尚未上传成功");
-            return;
-        }
-        JSONObject jsonObject = new JSONObject();
-        try {
-            if (postShowBeans.size() > 0) {
-                JSONArray jsonArray = new JSONArray();
-                for (PostShowBean postShowBean : postShowBeans) {
-                    JSONObject dingyiObj = new JSONObject();
-                    dingyiObj.put("type", postShowBean.getType());
-                    dingyiObj.put("content", postShowBean.getContent());
-                    jsonArray.put(dingyiObj);
-                }
-                jsonObject.put("context", jsonArray);
-            }
-            jsonObject.put("cate_id", cate_id);
-            if (isShow) {
-                jsonObject.put("relate_item_id", relate_item_id);
-            }
-            jsonObject.put("title", et_title_top.getText().toString());
-            jsonObject.put("cover_pic", mainServerPath);
-            jsonObject.put("intro", et_desc_top.getText().toString());
-            jsonObject.put("ower_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
-            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mApplication.apiClient.show_submitbyapp(jsonObject, new ApiCallback() {
+        new NoticeDialog(mContext,"发布确认","确认发布这篇晒物么？").setCallBack(new NoticeDialog.CallBack() {
             @Override
-            public void onApiStart() {
-                showLoadingDialog("提交数据中...");
-            }
-
-            @Override
-            public void onApiSuccess(String response) {
-                if (isFinishing())
-                    return;
-                dismissLoadingDialog();
-                try {
-                    JSONObject resultObj = new JSONObject(response);
-                    if (JSONUtil.isOK(resultObj)) {
-                        noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
-                            @Override
-                            public void ok() {
-
-                            }
-
-                            @Override
-                            public void cancle() {
-
-                            }
-                        });
-                        noticeSingleDialog.show();
-                        noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                EventBus.getDefault().post(new ShowProductPublicEvent(0));
-                                finish();
-                            }
-                        });
-                    } else {
-                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+            public void ok() {
+                boolean isOK = true;
+                if (postShowBeans.size() > 0) {
+                    JSONArray jsonArray = new JSONArray();
+                    for (PostShowBean postShowBean : postShowBeans) {
+                        if (postShowBean.getType() == 2 && postShowBean.getStatus() != PostShowBean.Status.DONE) {
+                            isOK = false;
+                        }
                     }
+                }
+                if (!isOK) {
+                    UIHelper.t(mContext, "还有图片尚未上传成功");
+                    return;
+                }
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    if (postShowBeans.size() > 0) {
+                        JSONArray jsonArray = new JSONArray();
+                        for (PostShowBean postShowBean : postShowBeans) {
+                            JSONObject dingyiObj = new JSONObject();
+                            dingyiObj.put("type", postShowBean.getType());
+                            dingyiObj.put("content", postShowBean.getContent());
+                            jsonArray.put(dingyiObj);
+                        }
+                        jsonObject.put("context", jsonArray);
+                    }
+                    jsonObject.put("cate_id", cate_id);
+                    if (isShow) {
+                        jsonObject.put("relate_item_id", relate_item_id);
+                    }
+                    jsonObject.put("title", et_title_top.getText().toString());
+                    jsonObject.put("cover_pic", mainServerPath);
+                    jsonObject.put("intro", et_desc_top.getText().toString());
+                    jsonObject.put("ower_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+                    jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                mApplication.apiClient.show_submitbyapp(jsonObject, new ApiCallback() {
+                    @Override
+                    public void onApiStart() {
+                        showLoadingDialog("提交数据中...");
+                    }
+
+                    @Override
+                    public void onApiSuccess(String response) {
+                        if (isFinishing())
+                            return;
+                        dismissLoadingDialog();
+                        try {
+                            JSONObject resultObj = new JSONObject(response);
+                            if (JSONUtil.isOK(resultObj)) {
+                                noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+                                    @Override
+                                    public void ok() {
+
+                                    }
+
+                                    @Override
+                                    public void cancle() {
+
+                                    }
+                                });
+                                noticeSingleDialog.show();
+                                noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        EventBus.getDefault().post(new ShowProductPublicEvent(0));
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onApiFailure(Request request, Exception e) {
+                        if (isFinishing())
+                            return;
+                        UIHelper.t(mContext, R.string.net_error);
+                    }
+                });
+
             }
 
             @Override
-            public void onApiFailure(Request request, Exception e) {
-                if (isFinishing())
-                    return;
-                UIHelper.t(mContext, R.string.net_error);
+            public void cancle() {
+
             }
-        });
+        }).show();
+
+//        boolean isOK = true;
+//        if (postShowBeans.size() > 0) {
+//            JSONArray jsonArray = new JSONArray();
+//            for (PostShowBean postShowBean : postShowBeans) {
+//                if (postShowBean.getType() == 2 && postShowBean.getStatus() != PostShowBean.Status.DONE) {
+//                    isOK = false;
+//                }
+//            }
+//        }
+//        if (!isOK) {
+//            UIHelper.t(mContext, "还有图片尚未上传成功");
+//            return;
+//        }
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            if (postShowBeans.size() > 0) {
+//                JSONArray jsonArray = new JSONArray();
+//                for (PostShowBean postShowBean : postShowBeans) {
+//                    JSONObject dingyiObj = new JSONObject();
+//                    dingyiObj.put("type", postShowBean.getType());
+//                    dingyiObj.put("content", postShowBean.getContent());
+//                    jsonArray.put(dingyiObj);
+//                }
+//                jsonObject.put("context", jsonArray);
+//            }
+//            jsonObject.put("cate_id", cate_id);
+//            if (isShow) {
+//                jsonObject.put("relate_item_id", relate_item_id);
+//            }
+//            jsonObject.put("title", et_title_top.getText().toString());
+//            jsonObject.put("cover_pic", mainServerPath);
+//            jsonObject.put("intro", et_desc_top.getText().toString());
+//            jsonObject.put("ower_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+//            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//
+//        mApplication.apiClient.show_submitbyapp(jsonObject, new ApiCallback() {
+//            @Override
+//            public void onApiStart() {
+//                showLoadingDialog("提交数据中...");
+//            }
+//
+//            @Override
+//            public void onApiSuccess(String response) {
+//                if (isFinishing())
+//                    return;
+//                dismissLoadingDialog();
+//                try {
+//                    JSONObject resultObj = new JSONObject(response);
+//                    if (JSONUtil.isOK(resultObj)) {
+//                        noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+//                            @Override
+//                            public void ok() {
+//
+//                            }
+//
+//                            @Override
+//                            public void cancle() {
+//
+//                            }
+//                        });
+//                        noticeSingleDialog.show();
+//                        noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+//                            @Override
+//                            public void onDismiss(DialogInterface dialog) {
+//                                EventBus.getDefault().post(new ShowProductPublicEvent(0));
+//                                finish();
+//                            }
+//                        });
+//                    } else {
+//                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//
+//            @Override
+//            public void onApiFailure(Request request, Exception e) {
+//                if (isFinishing())
+//                    return;
+//                UIHelper.t(mContext, R.string.net_error);
+//            }
+//        });
 
 
     }
@@ -309,24 +404,6 @@ public class PublicShowActivity extends BaseActivity {
      * 保存草稿
      */
     private void submitDraft() {
-//        if (TextUtils.isEmpty(mainServerPath)) {
-//            UIHelper.t(mContext, "请上传一张图片做为晒物封面");
-//            return;
-//        }
-//
-//        if (TextUtils.isEmpty(cate_id)) {
-//            UIHelper.t(mContext, "请选择物品类型");
-//            return;
-//        }
-//        if (TextUtils.isEmpty(et_title_top.getText().toString())) {
-//            UIHelper.t(mContext, "请填写标题");
-//            return;
-//        }
-//        if (TextUtils.isEmpty(et_desc_top.getText().toString())) {
-//            UIHelper.t(mContext, "请填写文字描述");
-//            return;
-//        }
-
         if (TextUtils.isEmpty(mainServerPath) && TextUtils.isEmpty(cate_id) && TextUtils.isEmpty(et_title_top.getText().toString()) && TextUtils.isEmpty(et_desc_top.getText().toString()) && postShowBeans.size() < 1) {
             UIHelper.t(mContext, "你没有输入任何内容，不能保存草稿");
             return;
@@ -437,6 +514,9 @@ public class PublicShowActivity extends BaseActivity {
         iv_main_close = (ImageView) header.findViewById(R.id.iv_main_close);
         ll_add = (LinearLayout) header.findViewById(R.id.ll_add);
 
+        tv_goods_type_title = (TextView) header.findViewById(R.id.tv_goods_type_title);
+        tv_goods_type_title.setText("晒物类型");
+
         iv_fisrt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -534,15 +614,10 @@ public class PublicShowActivity extends BaseActivity {
         @Override
         public View getView(final int position, View convertView, ViewGroup viewGroup) {
             View view = LayoutInflater.from(mContext).inflate(R.layout.row_public_show_item, null);
-//            ImageView iv_drag = (ImageView) view.findViewById(R.id.iv_drag);
-//            ImageView iv_delete = (ImageView) view.findViewById(R.id.iv_delete);
-
-
             FrameLayout iv_add_item = (FrameLayout) view.findViewById(R.id.iv_add_item);
             ImageView iv_main = (ImageView) view.findViewById(R.id.iv_main);
             ImageView iv_add = (ImageView) view.findViewById(R.id.iv_add);
             ImageView iv_status = (ImageView) view.findViewById(R.id.iv_status);
-//            ImageView iv_close = (ImageView) view.findViewById(R.id.iv_close);
 
 
             EditText et_input_link = (EditText) view.findViewById(R.id.et_input_link);
@@ -592,7 +667,6 @@ public class PublicShowActivity extends BaseActivity {
                 et_input_content.setVisibility(View.GONE);
                 if (TextUtils.isEmpty(postShowBean.getImageLocal())) {
                     iv_status.setVisibility(View.GONE);
-//                    iv_close.setVisibility(View.GONE);
                     iv_add.setVisibility(View.VISIBLE);
                     iv_main.setImageResource(R.color.transparent);
                     iv_add.setOnClickListener(new View.OnClickListener() {
@@ -617,16 +691,9 @@ public class PublicShowActivity extends BaseActivity {
                 } else {
                     if (postShowBean.getStatus() == PostShowBean.Status.FAIL) {
                         iv_status.setVisibility(View.VISIBLE);
-//                        iv_close.setVisibility(View.VISIBLE);
                         iv_add.setVisibility(View.GONE);
                         ll_add1.setVisibility(View.GONE);
-//                        iv_close.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View v) {
-//                                postShowBean.setImageLocal("");
-//                                notifyDataSetChanged();
-//                            }
-//                        });
+                        iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         iv_status.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -635,15 +702,15 @@ public class PublicShowActivity extends BaseActivity {
                         });
                     } else if (postShowBean.getStatus() == PostShowBean.Status.INIT) {
                         iv_status.setVisibility(View.GONE);
-//                        iv_close.setVisibility(View.VISIBLE);
                         ll_add1.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
+                        iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                     } else {
                         iv_status.setVisibility(View.GONE);
-//                        iv_close.setVisibility(View.VISIBLE);
                         iv_add.setVisibility(View.GONE);
                         ll_add1.setVisibility(View.GONE);
+                        iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
                     }
                 }
@@ -651,7 +718,6 @@ public class PublicShowActivity extends BaseActivity {
                 et_input_link.setText(postShowBean.getContent());
                 iv_add_item.setVisibility(View.GONE);
                 //change by :胡峰，链接去掉
-                //et_input_link.setVisibility(View.VISIBLE);
                 et_input_link.setVisibility(View.GONE);
                 et_input_content.setVisibility(View.GONE);
                 et_input_link.addTextChangedListener(new TextWatcher() {
@@ -688,10 +754,6 @@ public class PublicShowActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putString("imagePath", pathLocal);
             UIHelper.jumpForResult(mActivity, CommentShowCropImageActivity.class, bundle, CommentShowCropImageActivity.COROP_REQUEST);
-//            String path = ImageUtils.getSmallBitmap(pathLocal);
-//            mainLoalPath = path;
-//            mApplication.setImages("file://" + mainLoalPath, iv_fisrt);
-//            uploadMainImages(mainLoalPath);
         }
         //封面图片返回来  相机
         if (requestCode == RESULT_PIC_1_CAMERA && resultCode == mActivity.RESULT_OK) {
@@ -699,31 +761,33 @@ public class PublicShowActivity extends BaseActivity {
             Bundle bundle = new Bundle();
             bundle.putString("imagePath", recentPicPath);
             UIHelper.jumpForResult(mActivity, CommentShowCropImageActivity.class, bundle, CommentShowCropImageActivity.COROP_REQUEST);
-//            String path = ImageUtils.getSmallBitmap(recentPicPath);
-//            mainLoalPath = path;
-//            mApplication.setImages("file://" + path, iv_fisrt);
-//            uploadMainImages(mainLoalPath);
         }
 
         if (requestCode == RESULT_PIC_2_GALLARY && resultCode == mActivity.RESULT_OK) {
             Uri uri = data.getData();
             String pathLocal = ImageUtils.getPath(mContext, uri);
             KLog.d("返回的本地图片路径", pathLocal);
-            String path = ImageUtils.getSmallBitmap(pathLocal);
-            PostShowBean postShowBean = postShowBeans.get(currentPosition);
-            postShowBean.setImageLocal(path);
-            postShowBean.setStatus(PostShowBean.Status.INIT);
-            myAdapter.notifyDataSetChanged();
-            uploadListmages(postShowBean);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath",pathLocal);
+            UIHelper.jumpForResult(mActivity, CommentShow2CropImageActivity.class,bundle,CommentShow2CropImageActivity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(pathLocal);
+//            PostShowBean postShowBean = postShowBeans.get(currentPosition);
+//            postShowBean.setImageLocal(path);
+//            postShowBean.setStatus(PostShowBean.Status.INIT);
+//            myAdapter.notifyDataSetChanged();
+//            uploadListmages(postShowBean);
         }
 
         if (requestCode == RESULT_PIC_2_CAMERA && resultCode == mActivity.RESULT_OK) {
-            String path = ImageUtils.getSmallBitmap(recentPicPath);
-            PostShowBean postShowBean = postShowBeans.get(currentPosition);
-            postShowBean.setImageLocal(path);
-            postShowBean.setStatus(PostShowBean.Status.INIT);
-            myAdapter.notifyDataSetChanged();
-            uploadListmages(postShowBean);
+             Bundle bundle = new Bundle();
+            bundle.putString("imagePath",recentPicPath);
+            UIHelper.jumpForResult(mActivity,CommentShow2CropImageActivity.class,bundle,CommentShow2CropImageActivity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(recentPicPath);
+//            PostShowBean postShowBean = postShowBeans.get(currentPosition);
+//            postShowBean.setImageLocal(path);
+//            postShowBean.setStatus(PostShowBean.Status.INIT);
+//            myAdapter.notifyDataSetChanged();
+//            uploadListmages(postShowBean);
         }
 
         //物品类型返回
@@ -737,8 +801,6 @@ public class PublicShowActivity extends BaseActivity {
             } else {
                 tv_goods_type_value.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("p_1_cate_name") + "/" + data.getStringExtra("cate_name"));
             }
-//            cate_id = data.getStringExtra("cate_id");
-//            tv_goods_type_value.setText(data.getStringExtra("p_cate_name") + "/" + data.getStringExtra("cate_name"));
         }
 
         if (requestCode == CommentShowCropImageActivity.COROP_REQUEST && resultCode == CommentShowCropImageActivity.COROP_RESULT) {
@@ -749,6 +811,16 @@ public class PublicShowActivity extends BaseActivity {
                 ll_add.setVisibility(View.GONE);
                 uploadMainImages(mainLoalPath);
             }
+        }
+
+        if (requestCode == CommentShow2CropImageActivity.COROP_REQUEST && resultCode == CommentShow2CropImageActivity.COROP_RESULT){
+            //String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentCropImage2Activity.RERULT_PATH));
+            String path = data.getStringExtra(CommentShow2CropImageActivity.RERULT_PATH);
+            PostShowBean postShowBean = postShowBeans.get(currentPosition);
+            postShowBean.setImageLocal(path);
+            postShowBean.setStatus(PostShowBean.Status.INIT);
+            myAdapter.notifyDataSetChanged();
+            uploadListmages(postShowBean);
         }
 
 
@@ -851,6 +923,7 @@ public class PublicShowActivity extends BaseActivity {
     };
 
     private void uploadListmages(final PostShowBean bean) {
+
         File filename = new File(bean.getImageLocal());
         new OkHttpRequest.Builder()
                 .url(AppUrl.FILEUPLAOD)

@@ -40,8 +40,6 @@ public class DoubleClickExitHelper {
 			}
 			mainApp = (MainApplication) mActivity.getApplication();
 			mainApp.exitActivity();
-//			MobclickAgent.onKillProcess(HuanhuanApplication.getInstance());
-//			System.exit(0);
 			return true;
 		} else {
 			isOnKeyBacking = true;

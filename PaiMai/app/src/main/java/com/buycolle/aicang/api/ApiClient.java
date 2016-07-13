@@ -1048,12 +1048,4 @@ public class ApiClient {
         post(callback, AppUrl.LOGIN_UPDATELOGINPWD, data, "修改密码");
     }
 
-    /**
-     * 作者：胡峰
-     * 传递解锁优惠码的订单信息
-     */
-//    public void coupon_failNotifyByApp(JSONObject data,ApiCallback callback){
-//        post(callback,AppUrl.COUPON_FAILNOTIFYBYAPP,data,"解锁优惠码");
-//    }
-
 }

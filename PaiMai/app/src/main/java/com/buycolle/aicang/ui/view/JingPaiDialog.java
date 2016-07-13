@@ -179,8 +179,6 @@ public class JingPaiDialog extends Dialog {
 
 
                 if (!TextUtils.isEmpty(et_input_value.getText().toString().trim())) {
-//                    int inputValue = Integer.valueOf(et_input_value.getText().toString().trim()) + 5;
-//                    et_input_value.setText(inputValue + "");
                     et_input_value.setText(StringFormatUtil.getPlusValue(et_input_value.getText().toString().trim(), currentValuee, 5));
                 } else {
                     int inputValue = Integer.valueOf(currentValuee) + 5;
@@ -192,8 +190,6 @@ public class JingPaiDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(et_input_value.getText().toString().trim())) {
-//                    int inputValue = Integer.valueOf(et_input_value.getText().toString().trim()) + 1;
-//                    et_input_value.setText(inputValue + "");
                     et_input_value.setText(StringFormatUtil.getPlusValue(et_input_value.getText().toString().trim(), currentValuee, 1));
 
                 } else {
@@ -206,8 +202,6 @@ public class JingPaiDialog extends Dialog {
             @Override
             public void onClick(View view) {
                 if (!TextUtils.isEmpty(et_input_value.getText().toString().trim())) {
-//                    int inputValue = Integer.valueOf(et_input_value.getText().toString().trim()) + 10;
-//                    et_input_value.setText(inputValue + "");
                     et_input_value.setText(StringFormatUtil.getPlusValue(et_input_value.getText().toString().trim(), currentValuee, 10));
 
                 } else {

@@ -341,9 +341,7 @@ public class ShowOffFragment extends BaseFragment {
             holder.tv_time.setText(myShowPassBean.getLast_update_date());
             //change by ：胡峰，晒物列表的默认加载图的修改
             mApplication.setShowImages(myShowPassBean.getCover_pic(), holder.iv_show_main);
-            //mApplication.setImages(myShowPassBean.getCover_pic(), holder.iv_show_main);
             holder.tv_show_content.setText(myShowPassBean.getTitle());
-            //mApplication.setImages(myShowPassBean.getUser_avatar(), holder.iv_user_image);
             //change by :胡峰，头像的处理
             mApplication.setTouImages(myShowPassBean.getUser_avatar(),holder.iv_user_image);
             holder.tv_user_name.setText(myShowPassBean.getUser_nick());

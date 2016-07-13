@@ -3,6 +3,7 @@ package com.buycolle.aicang;
 import android.app.Activity;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
@@ -250,6 +251,7 @@ public class MainApplication extends MultiDexApplication {
     }
 
     public boolean isSaller() {
+        Log.i("啦啦啦啦啦啦啦",LoginConfig.getUserInfo(this).getUser_type()+"");
         return LoginConfig.getUserInfo(this).getUser_type() == 2 && isLogin();
     }
 
@@ -273,7 +275,6 @@ public class MainApplication extends MultiDexApplication {
 
                     @Override
                     public void setRequest(Request request) {
-//                        imageView.setTag(position);
                         imageView.setTag(R.id.glide_tag_id, request);
                     }
 

@@ -100,7 +100,7 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_yikou_price_value_1.setText("￥"+ StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBut_it_price()));
             }
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getExpress_out_type() == 1) {//买家
-                myholder.tv_baoyou_1.setText("不包邮");
+                myholder.tv_baoyou_1.setText("到付");
             } else {
                 myholder.tv_baoyou_1.setText("包邮");
             }
@@ -141,7 +141,7 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_yikou_price_value_1.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBut_it_price()));
             }
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getExpress_out_type() == 1) {//买家
-                myholder.tv_baoyou_1.setText("不包邮");
+                myholder.tv_baoyou_1.setText("到付");
             } else {
                 myholder.tv_baoyou_1.setText("包邮");
             }
@@ -174,7 +174,7 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_yikou_price_value_2.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(1).getBut_it_price()));
             }
             if (homeGoodsBean.getHomeGoodsChildBeens().get(1).getExpress_out_type() == 1) {//买家
-                myholder.tv_baoyou_2.setText("不包邮");
+                myholder.tv_baoyou_2.setText("到付");
             } else {
                 myholder.tv_baoyou_2.setText("包邮");
             }

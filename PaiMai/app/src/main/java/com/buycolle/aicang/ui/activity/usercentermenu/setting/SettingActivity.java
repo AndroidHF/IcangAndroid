@@ -176,12 +176,6 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
         }
     }
 
-//    public byte[] Bitmap2Bytes(Bitmap bm) {
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bm.compress(Bitmap.CompressFormat.PNG, 100, baos);
-//        return baos.toByteArray();
-//    }
-
     @OnClick(R.id.rl_feed_back)
     public void feedBack() {
         UIHelper.jump(mActivity, FeedBackActivity.class);

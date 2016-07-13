@@ -97,7 +97,6 @@ public abstract class OkHttpRequest {
 
         headerBuilder.add("mj-timestamp",timesTamp);
         headerBuilder.add("mj-nonestr",noneStr);
-//        headerBuilder.add("mj-secretkey",secretkey);
         headerBuilder.add("mj-sign",checkSign);
         headerBuilder.add("mj-v",version);
         if (headers == null || headers.isEmpty()) {
