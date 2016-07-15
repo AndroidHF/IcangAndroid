@@ -32,9 +32,11 @@ import com.buycolle.aicang.api.request.OkHttpRequest;
 import com.buycolle.aicang.bean.PostShowBean;
 import com.buycolle.aicang.bean.ShowDetailBean;
 import com.buycolle.aicang.event.EditShowEvent;
+import com.buycolle.aicang.ui.activity.comment.CommentShow2CropImageActivity;
 import com.buycolle.aicang.ui.activity.comment.CommentShowCropImageActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinTypesActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
+import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.PromotedActionsLibrary;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
@@ -77,6 +79,8 @@ public class EditPublicShowActivity extends BaseActivity {
     TextView tvSaveDraft;
     @Bind(R.id.tv_publish)
     TextView tvPublish;
+    @Bind(R.id.fl_back)
+    FrameLayout fl_back;
 
     private ArrayList<PostShowBean> postShowBeans;
     private PostShowBean mainImgBean = new PostShowBean();
@@ -99,12 +103,13 @@ public class EditPublicShowActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_show);
         ButterKnife.bind(this);
         postShowBeans = new ArrayList<>();
-        myHeader.init("我要晒物", new MyHeader.Action() {
-            @Override
-            public void leftActio() {
-                finish();
-            }
-        });
+//        myHeader.init("我要晒物", new MyHeader.Action() {
+//            @Override
+//            public void leftActio() {
+//                finish();
+//            }
+//        });
+        myHeader.initShow("我要晒物");
         show_id = _Bundle.getInt("show_id");
         initHeader();
         DragSortController controller = new DragSortController(dsList);
@@ -169,6 +174,23 @@ public class EditPublicShowActivity extends BaseActivity {
         });
 
         loadData();
+
+        fl_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NoticeDialog(mContext,"返回确认","确认放弃当前编辑晒物信息\n并返回么？").setCallBack(new NoticeDialog.CallBack() {
+                    @Override
+                    public void ok() {
+                        finish();
+                    }
+
+                    @Override
+                    public void cancle() {
+
+                    }
+                }).show();
+            }
+        });
     }
 
     ShowDetailBean showDetailBean;
@@ -225,11 +247,21 @@ public class EditPublicShowActivity extends BaseActivity {
 
         //主图
         mainLoalPath = "";
-        iv_main_close.setVisibility(View.VISIBLE);
-        iv_fisrt_status.setVisibility(View.GONE);
-        ll_add.setVisibility(View.GONE);
         mainServerPath = showDetailBean.getCover_pic();
-        mApplication.setImages(mainServerPath, iv_fisrt);
+        if (!TextUtils.isEmpty(mainServerPath)){
+            iv_main_close.setVisibility(View.VISIBLE);
+            iv_fisrt_status.setVisibility(View.GONE);
+            ll_add.setVisibility(View.GONE);
+            mApplication.setShowImages(mainServerPath, iv_fisrt);
+        }else {
+            iv_main_close.setVisibility(View.GONE);
+            iv_fisrt_status.setVisibility(View.GONE);
+            ll_add.setVisibility(View.VISIBLE);
+        }
+
+        //mApplication.setImages(mainServerPath, iv_fisrt);
+        //change by :胡峰
+        //mApplication.setShowImages(mainServerPath, iv_fisrt);
 
         iv_main_close.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -292,92 +324,102 @@ public class EditPublicShowActivity extends BaseActivity {
             return;
         }
 
-        boolean isOK = true;
-        if (postShowBeans.size() > 0) {
-            JSONArray jsonArray = new JSONArray();
-            for (PostShowBean postShowBean : postShowBeans) {
-                if (postShowBean.getType() == 2 && postShowBean.getStatus() != PostShowBean.Status.DONE) {
-                    isOK = false;
-                }
-            }
-        }
-        if (!isOK) {
-            UIHelper.t(mContext, "还有图片尚未上传成功");
-            return;
-        }
-        JSONObject jsonObject = new JSONObject();
-        try {
-            if (postShowBeans.size() > 0) {
-                JSONArray jsonArray = new JSONArray();
-                for (PostShowBean postShowBean : postShowBeans) {
-                    JSONObject dingyiObj = new JSONObject();
-                    dingyiObj.put("type", postShowBean.getType());
-                    dingyiObj.put("content", postShowBean.getContent());
-                    jsonArray.put(dingyiObj);
-                }
-                jsonObject.put("context", jsonArray);
-            }
-            jsonObject.put("cate_id", cate_id);
-            jsonObject.put("title", et_title_top.getText().toString());
-            jsonObject.put("cover_pic", mainServerPath);
-            jsonObject.put("show_id", show_id);
-            jsonObject.put("intro", et_desc_top.getText().toString());
-            jsonObject.put("ower_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
-            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        mApplication.apiClient.show_resubmitbyapp(jsonObject, new ApiCallback() {
+        new NoticeDialog(mContext,"发布确认","确认发布这篇晒物么？").setCallBack(new NoticeDialog.CallBack() {
             @Override
-            public void onApiStart() {
-                showLoadingDialog("提交数据中...");
-            }
-
-            @Override
-            public void onApiSuccess(String response) {
-                if (isFinishing())
-                    return;
-                dismissLoadingDialog();
-                try {
-                    JSONObject resultObj = new JSONObject(response);
-                    if (JSONUtil.isOK(resultObj)) {
-                        EventBus.getDefault().post(new EditShowEvent(1));
-                        noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
-                            @Override
-                            public void ok() {
-
-                            }
-
-                            @Override
-                            public void cancle() {
-
-                            }
-                        });
-                        noticeSingleDialog.show();
-                        noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                            @Override
-                            public void onDismiss(DialogInterface dialog) {
-                                //EventBus.getDefault().post(new EditShowEvent(2));
-                                finish();
-                            }
-                        });
-                    } else {
-                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+            public void ok() {
+                boolean isOK = true;
+                if (postShowBeans.size() > 0) {
+                    JSONArray jsonArray = new JSONArray();
+                    for (PostShowBean postShowBean : postShowBeans) {
+                        if (postShowBean.getType() == 2 && postShowBean.getStatus() != PostShowBean.Status.DONE) {
+                            isOK = false;
+                        }
                     }
+                }
+                if (!isOK) {
+                    UIHelper.t(mContext, "还有图片尚未上传成功");
+                    return;
+                }
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    if (postShowBeans.size() > 0) {
+                        JSONArray jsonArray = new JSONArray();
+                        for (PostShowBean postShowBean : postShowBeans) {
+                            JSONObject dingyiObj = new JSONObject();
+                            dingyiObj.put("type", postShowBean.getType());
+                            dingyiObj.put("content", postShowBean.getContent());
+                            jsonArray.put(dingyiObj);
+                        }
+                        jsonObject.put("context", jsonArray);
+                    }
+                    jsonObject.put("cate_id", cate_id);
+                    jsonObject.put("title", et_title_top.getText().toString());
+                    jsonObject.put("cover_pic", mainServerPath);
+                    jsonObject.put("show_id", show_id);
+                    jsonObject.put("intro", et_desc_top.getText().toString());
+                    jsonObject.put("ower_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+                    jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
+                mApplication.apiClient.show_resubmitbyapp(jsonObject, new ApiCallback() {
+                    @Override
+                    public void onApiStart() {
+                        showLoadingDialog("提交数据中...");
+                    }
+
+                    @Override
+                    public void onApiSuccess(String response) {
+                        if (isFinishing())
+                            return;
+                        dismissLoadingDialog();
+                        try {
+                            JSONObject resultObj = new JSONObject(response);
+                            if (JSONUtil.isOK(resultObj)) {
+                                EventBus.getDefault().post(new EditShowEvent(1));
+                                noticeSingleDialog = new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+                                    @Override
+                                    public void ok() {
+
+                                    }
+
+                                    @Override
+                                    public void cancle() {
+
+                                    }
+                                });
+                                noticeSingleDialog.show();
+                                noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+                                    @Override
+                                    public void onDismiss(DialogInterface dialog) {
+                                        //EventBus.getDefault().post(new EditShowEvent(2));
+                                        finish();
+                                    }
+                                });
+                            } else {
+                                UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void onApiFailure(Request request, Exception e) {
+                        if (isFinishing())
+                            return;
+                        UIHelper.t(mContext, R.string.net_error);
+                    }
+                });
             }
 
             @Override
-            public void onApiFailure(Request request, Exception e) {
-                if (isFinishing())
-                    return;
-                UIHelper.t(mContext, R.string.net_error);
-            }
-        });
+            public void cancle() {
 
+            }
+        }).show();
 
     }
 
@@ -661,12 +703,16 @@ public class EditPublicShowActivity extends BaseActivity {
                         iv_status.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
                         ll_add1.setVisibility(View.GONE);
-                        mApplication.setImages(postShowBean.getContent(), iv_main);
+                        iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
+                        //mApplication.setImages(postShowBean.getContent(), iv_main);
+                        //change by hufeng:
+                        mApplication.setShowImages(postShowBean.getContent(), iv_main);
                     } else {
                         if (postShowBean.getStatus() == PostShowBean.Status.FAIL) {
                             iv_status.setVisibility(View.VISIBLE);
                             iv_add.setVisibility(View.GONE);
                             ll_add1.setVisibility(View.GONE);
+                            iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
                             iv_status.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
@@ -677,12 +723,17 @@ public class EditPublicShowActivity extends BaseActivity {
                             iv_status.setVisibility(View.GONE);
                             iv_add.setVisibility(View.GONE);
                             ll_add1.setVisibility(View.GONE);
-                            mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                            iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
+                            //change by hufeng
+                            mApplication.setShowImages("file://" + postShowBean.getImageLocal(), iv_main);
                         } else {
                             iv_status.setVisibility(View.GONE);
                             iv_add.setVisibility(View.GONE);
                             ll_add1.setVisibility(View.GONE);
-                            mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                            iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
+                            //mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                            //change by hufeng:
+                            mApplication.setShowImages("file://" + postShowBean.getImageLocal(), iv_main);
                         }
                     }
 
@@ -738,21 +789,27 @@ public class EditPublicShowActivity extends BaseActivity {
             Uri uri = data.getData();
             String pathLocal = ImageUtils.getPath(mContext, uri);
             KLog.d("返回的本地图片路径", pathLocal);
-            String path = ImageUtils.getSmallBitmap(pathLocal);
-            PostShowBean postShowBean = postShowBeans.get(currentPosition);
-            postShowBean.setImageLocal(path);
-            postShowBean.setStatus(PostShowBean.Status.INIT);
-            myAdapter.notifyDataSetChanged();
-            uploadListmages(postShowBean);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath",pathLocal);
+            UIHelper.jumpForResult(mActivity, CommentShow2CropImageActivity.class, bundle, CommentShow2CropImageActivity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(pathLocal);
+//            PostShowBean postShowBean = postShowBeans.get(currentPosition);
+//            postShowBean.setImageLocal(path);
+//            postShowBean.setStatus(PostShowBean.Status.INIT);
+//            myAdapter.notifyDataSetChanged();
+//            uploadListmages(postShowBean);
         }
 
         if (requestCode == RESULT_PIC_2_CAMERA && resultCode == mActivity.RESULT_OK) {
-            String path = ImageUtils.getSmallBitmap(recentPicPath);
-            PostShowBean postShowBean = postShowBeans.get(currentPosition);
-            postShowBean.setImageLocal(path);
-            postShowBean.setStatus(PostShowBean.Status.INIT);
-            myAdapter.notifyDataSetChanged();
-            uploadListmages(postShowBean);
+//            String path = ImageUtils.getSmallBitmap(recentPicPath);
+//            PostShowBean postShowBean = postShowBeans.get(currentPosition);
+//            postShowBean.setImageLocal(path);
+//            postShowBean.setStatus(PostShowBean.Status.INIT);
+//            myAdapter.notifyDataSetChanged();
+//            uploadListmages(postShowBean);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath",recentPicPath);
+            UIHelper.jumpForResult(mActivity,CommentShow2CropImageActivity.class,bundle,CommentShow2CropImageActivity.COROP_REQUEST);
         }
 
         //物品类型返回
@@ -772,10 +829,22 @@ public class EditPublicShowActivity extends BaseActivity {
             String path = data.getStringExtra(CommentShowCropImageActivity.RERULT_PATH);
             if (path != null) {
                 mainLoalPath = path;
-                mApplication.setImages("file://" + path, iv_fisrt);
+                //mApplication.setImages("file://" + path, iv_fisrt);
+                //change by hufeng
+                mApplication.setShowImages("file://" + path, iv_fisrt);
                 ll_add.setVisibility(View.GONE);
                 uploadMainImages(mainLoalPath);
             }
+        }
+
+        if (requestCode == CommentShow2CropImageActivity.COROP_REQUEST && resultCode == CommentShow2CropImageActivity.COROP_RESULT){
+            //String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentCropImage2Activity.RERULT_PATH));
+            String path = data.getStringExtra(CommentShow2CropImageActivity.RERULT_PATH);
+            PostShowBean postShowBean = postShowBeans.get(currentPosition);
+            postShowBean.setImageLocal(path);
+            postShowBean.setStatus(PostShowBean.Status.INIT);
+            myAdapter.notifyDataSetChanged();
+            uploadListmages(postShowBean);
         }
 
 
@@ -793,6 +862,7 @@ public class EditPublicShowActivity extends BaseActivity {
                 iv_fisrt_status.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        ll_add.setVisibility(View.VISIBLE);
                         iv_fisrt_status.setVisibility(View.GONE);
                         uploadMainImages(mainLoalPath);
                     }

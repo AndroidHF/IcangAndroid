@@ -309,6 +309,16 @@ public class MainApplication extends MultiDexApplication {
                 .into(imageView);
     }
 
+    public void setShowImages2(String url, final ImageView imageView) {
+        Glide.with(this)
+                .load(url)
+                .fitCenter()
+                .dontAnimate()
+                .into(imageView);
+    }
+
+
+
     /**
      * add by :胡峰
      * 头像的处理

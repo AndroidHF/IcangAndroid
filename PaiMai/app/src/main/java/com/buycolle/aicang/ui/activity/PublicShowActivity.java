@@ -76,6 +76,8 @@ public class PublicShowActivity extends BaseActivity {
     @Bind(R.id.tv_publish)
     TextView tvPublish;
     TextView tv_goods_type_title;
+    @Bind(R.id.fl_back)
+    FrameLayout fl_back;
     private ArrayList<PostShowBean> postShowBeans;
     private MyAdapter myAdapter;
     private String mainLoalPath = "";
@@ -91,12 +93,13 @@ public class PublicShowActivity extends BaseActivity {
         setContentView(R.layout.activity_publicshow);
         ButterKnife.bind(this);
         postShowBeans = new ArrayList<>();
-        myHeader.init("我要晒物", new MyHeader.Action() {
-            @Override
-            public void leftActio() {
-                finish();
-            }
-        });
+//        myHeader.init("我要晒物", new MyHeader.Action() {
+//            @Override
+//            public void leftActio() {
+//                finish();
+//            }
+//        });
+        myHeader.initShow("我要晒物");
         initHeader();
         DragSortController controller = new DragSortController(dsList);
         controller.setDragHandleId(R.id.iv_drag);
@@ -175,6 +178,23 @@ public class PublicShowActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 submitPublish();
+            }
+        });
+
+        fl_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NoticeDialog(mContext,"返回确认","确认放弃当前编辑晒物信息\n并返回么？").setCallBack(new NoticeDialog.CallBack() {
+                    @Override
+                    public void ok() {
+                        finish();
+                    }
+
+                    @Override
+                    public void cancle() {
+
+                    }
+                }).show();
             }
         });
     }
@@ -705,13 +725,17 @@ public class PublicShowActivity extends BaseActivity {
                         ll_add1.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
                         iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
-                        mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                        //mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                        //change by hufeng:
+                        mApplication.setShowImages("file://" + postShowBean.getImageLocal(), iv_main);
                     } else {
                         iv_status.setVisibility(View.GONE);
                         iv_add.setVisibility(View.GONE);
                         ll_add1.setVisibility(View.GONE);
                         iv_add_item.setBackgroundResource(R.drawable.shape_white_black);
-                        mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                        //mApplication.setImages("file://" + postShowBean.getImageLocal(), iv_main);
+                        //change by hufeng:
+                        mApplication.setShowImages("file://" + postShowBean.getImageLocal(), iv_main);
                     }
                 }
             } else {//链接
@@ -807,7 +831,9 @@ public class PublicShowActivity extends BaseActivity {
             String path = data.getStringExtra(CommentShowCropImageActivity.RERULT_PATH);
             if (path != null) {
                 mainLoalPath = path;
-                mApplication.setImages("file://" + path, iv_fisrt);
+                //mApplication.setImages("file://" + path, iv_fisrt);
+                //change by hufeng:
+                mApplication.setShowImages("file://" + path, iv_fisrt);
                 ll_add.setVisibility(View.GONE);
                 uploadMainImages(mainLoalPath);
             }
@@ -839,6 +865,7 @@ public class PublicShowActivity extends BaseActivity {
                     @Override
                     public void onClick(View v) {
                         iv_fisrt_status.setVisibility(View.GONE);
+                        ll_add.setVisibility(View.VISIBLE);
                         uploadMainImages(mainLoalPath);
                     }
                 });

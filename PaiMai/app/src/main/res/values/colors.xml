@@ -23,4 +23,5 @@
     <color name="tv_blue">#0088CC</color>
     <color name="price_red">#ff0000</color>
     <color name="title_backgroud">#efd12f</color>
+    <color name="tv_show">#404040</color>
 </resources>

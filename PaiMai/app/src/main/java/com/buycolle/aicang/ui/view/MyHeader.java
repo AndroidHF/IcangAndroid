@@ -34,6 +34,21 @@ public class MyHeader extends RelativeLayout {
         tv_common_topbar_title = (TextView) findViewById(R.id.tv_common_topbar_title);
         icon = (ImageView) findViewById(R.id.iv_menu_icon);
         iv_delete = (ImageView) findViewById(R.id.iv_delete);
+//        fl_back.setOnClickListener(new OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if (mAction != null) {
+//                    mAction.leftActio();
+//                }
+//            }
+//        });
+    }
+
+
+    public void init(String title, Action action) {
+        fl_back.setVisibility(View.VISIBLE);
+        this.mAction = action;
+        tv_common_topbar_title.setText(title);
         fl_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,16 +59,14 @@ public class MyHeader extends RelativeLayout {
         });
     }
 
-
-    public void init(String title, Action action) {
-        fl_back.setVisibility(View.VISIBLE);
-        this.mAction = action;
-        tv_common_topbar_title.setText(title);
-    }
-
     public void initPost(String title){
         fl_back.setVisibility(View.GONE);
         iv_delete.setVisibility(View.VISIBLE);
+        tv_common_topbar_title.setText(title);
+    }
+
+    public void  initShow(String title){
+        fl_back.setVisibility(VISIBLE);
         tv_common_topbar_title.setText(title);
     }
 
@@ -68,6 +81,14 @@ public class MyHeader extends RelativeLayout {
         icon.setVisibility(View.VISIBLE);
         icon.setImageResource(titilIcon);
         tv_common_topbar_title.setText(title);
+        fl_back.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAction != null) {
+                    mAction.leftActio();
+                }
+            }
+        });
     }
 
 

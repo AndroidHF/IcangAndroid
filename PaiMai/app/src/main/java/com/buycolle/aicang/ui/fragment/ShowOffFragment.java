@@ -18,8 +18,8 @@ import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.MyShowPassBean;
-import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.event.LikeShowEvent;
+import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.ui.activity.LoginActivity;
 import com.buycolle.aicang.ui.activity.PublicShowActivity;
 import com.buycolle.aicang.ui.activity.SearchActivity;
@@ -150,6 +150,7 @@ public class ShowOffFragment extends BaseFragment {
                 UIHelper.jump(mActivity, SearchActivity.class, bundle);
             }
         });
+
 
         list.setXListViewListener(new XListView.IXListViewListener() {
             @Override
