@@ -12,6 +12,7 @@ import com.buycolle.aicang.R;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.view.MyHeaderWithSure;
 import com.buycolle.aicang.util.FileUtil;
+import com.buycolle.aicang.util.ImageUtils;
 import com.buycolle.aicang.util.UIHelper;
 import com.hhw.cropper.CropImageView;
 
@@ -80,7 +81,12 @@ public class CommentShow2CropImageActivity extends BaseActivity implements CropI
                 public Bitmap call(Boolean aBoolean) {
                     //Bitmap bitmap = ImageUtils.getImageBitmap(imagePath);
                     Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
-                    return bitmap;
+                    if (ImageUtils.getBitmapDegree(imagePath)>0){
+                        bitmap = ImageUtils.rotateBitmapByDegree(bitmap,ImageUtils.getBitmapDegree(imagePath));
+                        return bitmap;
+                    }else {
+                        return bitmap;
+                    }
                 }
             }).subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())

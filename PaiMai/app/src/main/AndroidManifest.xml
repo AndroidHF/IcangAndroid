@@ -2,55 +2,122 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.buycolle.aicang"
     android:versionCode="1"
-    android:versionName="1.0.0"
+    android:versionName="1.0.2"
     >
 
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
+    <!--允许程序更新手机电池统计信息-->
+    <!--
     <uses-permission android:name="android.permission.BATTERY_STATS"/>
+    -->
 
     <!-- Required  一些系统要求的权限，如访问网络等-->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
+    <!--
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    -->
+    <!--允许程序打开网络套接字-->
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <!--允许程序从非系统拨号器里输入电话号码-->
+    <!--
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    -->
+    <!--允许使用PowerManager的 WakeLocks保持进程在休眠时从屏幕消失-->
+    <!--
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    -->
+    <!--允许程序读取底层系统日志文件-->
+    <!--
     <uses-permission android:name="android.permission.READ_LOGS" />
+    -->
+    <!--
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--允许程序读取或写入系统设置-->
+    <!--
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+    -->
+    <!--允许访问振动设备-->
     <uses-permission android:name="android.permission.VIBRATE" />
+    <!--允许访问闪光灯-->
+    <!--
     <uses-permission android:name="android.permission.FLASHLIGHT"/>
+    -->
+    <!--允许程序获取当前或最近运行的应用-->
+    <!--
     <uses-permission android:name="android.permission.GET_TASKS" />
+    -->
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <!--配置一个程序用于调试-->
+    <!--
     <uses-permission android:name="android.permission.SET_DEBUG_APP" />
+    -->
+    <!--访问一个帐户列表在Accounts Service中-->
+    <!--
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    -->
+    <!--
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
+    -->
     <!--允许程序获取账户验证信息，主要为GMail账户信息，只有系统级进程才能访问的权限-->
+    <!--
     <uses-permission android:name="android.permission.MANAGE_ACCOUNTS" />
-
+    -->
+    <!--允许挂载和反挂载文件系统可移动存储-->
+    <!--
     <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    -->
+    <!--获取网络信息状态，如当前的网络连接是否有效 -->
+    <!--
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    -->
+    <!--获取当前WiFi接入的状态以及WLAN热点的信息-->
+    <!--
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    -->
+    <!--允许一个程序打开窗口使用-->
+    <!--
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    -->
 
 
     <!-- Optional for location -->
+    <!--允许一个程序访问CellID或WiFi热点来获取粗略的位置-->
+    <!--
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    -->
+    <!--允许程序改变Wi-Fi连接状态-->
+    <!--
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    -->
+    <!--通过GPS芯片接收卫星的定位信息，定位精度达10米以内-->
+    <!--
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    -->
+    <!--允许程序访问额外的定位提供者指令-->
+    <!--
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
+    -->
+    <!--允许程序改变网络连接状态-->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
 
     <!--add by :胡峰，个推的权限设置-->
     <!-- iBeancon功能所需权限 -->;
+    <!--允许程序连接配对过的蓝牙设备 -->
+    <!--
     <uses-permission android:name="android.permission.BLUETOOTH"/>
+    -->
+    <!--允许程序进行发现和配对新的蓝牙设备  -->
+    <!--
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    <!-- 个推3.0电子围栏功能所需权限 -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <supports-screens
         android:anyDensity="true"

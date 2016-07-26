@@ -2,6 +2,7 @@ package com.buycolle.aicang.ui.activity.usercentermenu.mysale;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -23,24 +24,33 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
+import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.EditPaiPinDetailBean;
+import com.buycolle.aicang.bean.HomeTopAddBeanNew;
 import com.buycolle.aicang.bean.PostImageBean;
 import com.buycolle.aicang.event.EditPostEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
+import com.buycolle.aicang.ui.activity.ChangJianQuestionActivity;
 import com.buycolle.aicang.ui.activity.FaHuoTimeActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiEndTimeActivity;
+import com.buycolle.aicang.ui.activity.PaiMaiFaHuoZhiDaoActivity;
+import com.buycolle.aicang.ui.activity.PaiMaiJiaoYiLiuChengActivity;
 import com.buycolle.aicang.ui.activity.post.YunFeiActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinStatusActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
+import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
+import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -48,6 +58,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -152,6 +163,15 @@ public class MySaleReShanjiaActivity extends BaseActivity {
     @Bind(R.id.ll_maijia)
     LinearLayout llMaijia;
 
+    @Bind(R.id.tv_jiaoyi_liucheng)
+    TextView tv_jiaoyi_liucheng;//交易流程
+    @Bind(R.id.tv_fahuo_zhidao)
+    TextView tv_fahuo_zhidao;//发货指导
+    @Bind(R.id.tv_changjianwenti)
+    TextView tv_changjianwenti;//常见问题
+    @Bind(R.id.tv_feilv)
+    TextView tv_fee_rate;
+
     private ArrayList<PostImageBean> postImageBeans;
     private PostImageBean mainImageBean = new PostImageBean();
 
@@ -192,12 +212,15 @@ public class MySaleReShanjiaActivity extends BaseActivity {
                 finish();
             }
         });
+        aCache = ACache.get(mContext);
         postImageBeans = new ArrayList<>();
         productId = _Bundle.getInt("productId");
         //初始化城市信息
         initCity();
         //加载详情数据
         loadData();
+        //加载倍率
+        loadTopAds();
     }
 
     private void initCity() {
@@ -267,6 +290,13 @@ public class MySaleReShanjiaActivity extends BaseActivity {
      */
     private void initData() {
 
+        //add by hufeng:三个按钮的下滑线
+        tv_jiaoyi_liucheng.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_jiaoyi_liucheng.getPaint().setAntiAlias(true);//抗锯齿处理
+        tv_fahuo_zhidao.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_fahuo_zhidao.getPaint().setAntiAlias(true);
+        tv_changjianwenti.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_changjianwenti.getPaint().setAntiAlias(true);
 
         // 图片处理
         //主图
@@ -308,6 +338,7 @@ public class MySaleReShanjiaActivity extends BaseActivity {
                     postImageBeans.add(postImageBean_1);
                 }
             }
+
             //设置布局管理器
             LinearLayoutManager linearLayoutManager = new LinearLayoutManager(mContext);
             linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -355,10 +386,10 @@ public class MySaleReShanjiaActivity extends BaseActivity {
         //运费承担方
         if (paiPinDetailBean.getExpress_out_type() == 1) {
             good_yunfei = "1";//买方
-            tvYunfeiStatusValue.setText("买方");
+            tvYunfeiStatusValue.setText("到付");
         } else {
             good_yunfei = "2";//卖方
-            tvYunfeiStatusValue.setText("卖方");
+            tvYunfeiStatusValue.setText("包邮");
         }
         tvYunfeiStatusValue.setTextColor(getResources().getColor(R.color.black_tv));
 
@@ -398,6 +429,8 @@ public class MySaleReShanjiaActivity extends BaseActivity {
                 pvOptions.show();
             }
         });
+
+
 
         //发货时间
         good_fahuo_time = paiPinDetailBean.getExpress_out_type() + "";
@@ -534,6 +567,33 @@ public class MySaleReShanjiaActivity extends BaseActivity {
                 }
             }
         });
+
+        /**
+         * add by hufeng :设置三个按钮的设置监听
+         * 交易流程监听
+         */
+        tv_jiaoyi_liucheng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, PaiMaiJiaoYiLiuChengActivity.class);
+            }
+        });
+
+        //发货指导监听
+        tv_fahuo_zhidao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, PaiMaiFaHuoZhiDaoActivity.class);
+            }
+        });
+
+        //常见问题监听
+        tv_changjianwenti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, ChangJianQuestionActivity.class);
+            }
+        });
     }
 
     /**
@@ -606,108 +666,221 @@ public class MySaleReShanjiaActivity extends BaseActivity {
             }
         }
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            //起拍价格
-            jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
-            //一口价
-            if (cbYikoujiaStatus.isChecked()) {
-                jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
-            }
-
-
-            //拍品分类
-            jsonObject.put("cate_id", good_type);
-            //拍品封面
-            jsonObject.put("cover_pic", mainImageBean.getServerPath());
-
-            if (postImageBeans.size() > 0) {
-                String paths = "";
-                StringBuffer stringBuffer = new StringBuffer();
-                boolean isOK = false;
-                for (PostImageBean postImageBean : postImageBeans) {
-                    if (!postImageBean.isEmpty()) {
-                        isOK = true;
-                        stringBuffer.append(postImageBean.getServerPath() + ",");
-                    }
-                }
-                if (isOK) {
-                    paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
-                    //轮播图
-                    jsonObject.put("cycle_pic", paths);
-                }
-            }
-
-            jsonObject.put("product_id", productId);
-            //承担运费方
-            jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
-            //发货城市
-            jsonObject.put("fahou_city", fahou_city);
-            //发货地省份
-            jsonObject.put("fahou_province", fahou_province);
-            //发货时间
-            jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
-            //下次使用相同物流
-            jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
-            //是否开启一口价
-            jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
-            //结束时间
-            jsonObject.put("pm_end_type", good_end_time);
-            //拍品介绍
-            jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
-            //标题
-            jsonObject.put("product_title", etInputGoodTitle.getText().toString());
-            //拍品商品状态ID
-            jsonObject.put("st_id", good_status);
-
-            //自身用户ID
-            jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
-            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        mApplication.apiClient.product_reupstorebyapp(jsonObject, new ApiCallback() {
+        new NoticeDialog(mContext,"出品确认","您的拍品一旦提交审核，您将\n不能进行编辑或下架操作。除\n非该拍品没有通过审核。\n\n      是否确认提交？").setCallBack(new NoticeDialog.CallBack() {
             @Override
-            public void onApiStart() {
-                showLoadingDialog("发布中...");
-            }
-
-            @Override
-            public void onApiSuccess(String response) {
-                if (isFinishing())
-                    return;
+            public void ok() {
+                JSONObject jsonObject = new JSONObject();
                 try {
-                    JSONObject resultObj = new JSONObject(response);
-                    if (JSONUtil.isOK(resultObj)) {
-                        new NoticeSingleDialog(mContext, "温馨提示", "您的商品已上架", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
-                            @Override
-                            public void ok() {
-                                finish();
-                                EventBus.getDefault().post(new EditPostEvent(0));
-                            }
-
-                            @Override
-                            public void cancle() {
-
-                            }
-                        }).show();
-                    } else {
-                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    //起拍价格
+                    jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
+                    //一口价
+                    if (cbYikoujiaStatus.isChecked()) {
+                        jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
                     }
+
+
+                    //拍品分类
+                    jsonObject.put("cate_id", good_type);
+                    //拍品封面
+                    jsonObject.put("cover_pic", mainImageBean.getServerPath());
+
+                    if (postImageBeans.size() > 0) {
+                        String paths = "";
+                        StringBuffer stringBuffer = new StringBuffer();
+                        boolean isOK = false;
+                        for (PostImageBean postImageBean : postImageBeans) {
+                            if (!postImageBean.isEmpty()) {
+                                isOK = true;
+                                stringBuffer.append(postImageBean.getServerPath() + ",");
+                            }
+                        }
+                        if (isOK) {
+                            paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
+                            //轮播图
+                            jsonObject.put("cycle_pic", paths);
+                        }
+                    }
+
+                    jsonObject.put("product_id", productId);
+                    //承担运费方
+                    jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
+                    //发货城市
+                    jsonObject.put("fahou_city", fahou_city);
+                    //发货地省份
+                    jsonObject.put("fahou_province", fahou_province);
+                    //发货时间
+                    jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
+                    //下次使用相同物流
+                    jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
+                    //是否开启一口价
+                    jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
+                    //结束时间
+                    jsonObject.put("pm_end_type", good_end_time);
+                    //拍品介绍
+                    jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
+                    //标题
+                    jsonObject.put("product_title", etInputGoodTitle.getText().toString());
+                    //拍品商品状态ID
+                    jsonObject.put("st_id", good_status);
+
+                    //自身用户ID
+                    jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+                    jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                dismissLoadingDialog();
+                mApplication.apiClient.product_reupstorebyapp(jsonObject, new ApiCallback() {
+                    @Override
+                    public void onApiStart() {
+                        showLoadingDialog("发布中...");
+                    }
+
+                    @Override
+                    public void onApiSuccess(String response) {
+                        if (isFinishing())
+                            return;
+                        try {
+                            JSONObject resultObj = new JSONObject(response);
+                            if (JSONUtil.isOK(resultObj)) {
+                                new NoticeSingleDialog(mContext, "温馨提示", "您的商品已上架", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+                                    @Override
+                                    public void ok() {
+                                        finish();
+                                        EventBus.getDefault().post(new EditPostEvent(0));
+                                    }
+
+                                    @Override
+                                    public void cancle() {
+
+                                    }
+                                }).show();
+                            } else {
+                                UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void onApiFailure(Request request, Exception e) {
+                        if (isFinishing()) {
+                            return;
+                        }
+                        UIHelper.t(mContext, R.string.net_error);
+                    }
+                });
             }
 
             @Override
-            public void onApiFailure(Request request, Exception e) {
-                if (isFinishing()) {
-                    return;
-                }
-                UIHelper.t(mContext, R.string.net_error);
+            public void cancle() {
+
             }
-        });
+        }).show();
+
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            //起拍价格
+//            jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
+//            //一口价
+//            if (cbYikoujiaStatus.isChecked()) {
+//                jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
+//            }
+//
+//
+//            //拍品分类
+//            jsonObject.put("cate_id", good_type);
+//            //拍品封面
+//            jsonObject.put("cover_pic", mainImageBean.getServerPath());
+//
+//            if (postImageBeans.size() > 0) {
+//                String paths = "";
+//                StringBuffer stringBuffer = new StringBuffer();
+//                boolean isOK = false;
+//                for (PostImageBean postImageBean : postImageBeans) {
+//                    if (!postImageBean.isEmpty()) {
+//                        isOK = true;
+//                        stringBuffer.append(postImageBean.getServerPath() + ",");
+//                    }
+//                }
+//                if (isOK) {
+//                    paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
+//                    //轮播图
+//                    jsonObject.put("cycle_pic", paths);
+//                }
+//            }
+//
+//            jsonObject.put("product_id", productId);
+//            //承担运费方
+//            jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
+//            //发货城市
+//            jsonObject.put("fahou_city", fahou_city);
+//            //发货地省份
+//            jsonObject.put("fahou_province", fahou_province);
+//            //发货时间
+//            jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
+//            //下次使用相同物流
+//            jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
+//            //是否开启一口价
+//            jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
+//            //结束时间
+//            jsonObject.put("pm_end_type", good_end_time);
+//            //拍品介绍
+//            jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
+//            //标题
+//            jsonObject.put("product_title", etInputGoodTitle.getText().toString());
+//            //拍品商品状态ID
+//            jsonObject.put("st_id", good_status);
+//
+//            //自身用户ID
+//            jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+//            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        mApplication.apiClient.product_reupstorebyapp(jsonObject, new ApiCallback() {
+//            @Override
+//            public void onApiStart() {
+//                showLoadingDialog("发布中...");
+//            }
+//
+//            @Override
+//            public void onApiSuccess(String response) {
+//                if (isFinishing())
+//                    return;
+//                try {
+//                    JSONObject resultObj = new JSONObject(response);
+//                    if (JSONUtil.isOK(resultObj)) {
+//                        new NoticeSingleDialog(mContext, "温馨提示", "您的商品已上架", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+//                            @Override
+//                            public void ok() {
+//                                finish();
+//                                EventBus.getDefault().post(new EditPostEvent(0));
+//                            }
+//
+//                            @Override
+//                            public void cancle() {
+//
+//                            }
+//                        }).show();
+//                    } else {
+//                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                dismissLoadingDialog();
+//            }
+//
+//            @Override
+//            public void onApiFailure(Request request, Exception e) {
+//                if (isFinishing()) {
+//                    return;
+//                }
+//                UIHelper.t(mContext, R.string.net_error);
+//            }
+//        });
     }
 
 
@@ -726,12 +899,14 @@ public class MySaleReShanjiaActivity extends BaseActivity {
             ImageView iv_menu_icon_1;
             ImageView iv_menu_icon_status;
             ImageView iv_close;
+            LinearLayout ll_add_item;
 
             public ViewHolder(View view) {
                 super(view);
                 iv_menu_icon_1 = (ImageView) view.findViewById(R.id.iv_menu_icon_1);
                 iv_menu_icon_status = (ImageView) view.findViewById(R.id.iv_menu_icon_status);
                 iv_close = (ImageView) view.findViewById(R.id.iv_close);
+                ll_add_item = (LinearLayout) view.findViewById(R.id.ll_add_item);
             }
 
         }
@@ -766,6 +941,7 @@ public class MySaleReShanjiaActivity extends BaseActivity {
             final PostImageBean postImageBean = postImageBeans.get(position);
             viewHolder.iv_close.setVisibility(View.GONE);
             viewHolder.iv_menu_icon_1.setOnClickListener(null);
+            viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
             mApplication.setImages(postImageBean.getServerPath(), viewHolder.iv_menu_icon_1);
         }
 
@@ -781,7 +957,7 @@ public class MySaleReShanjiaActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //运费承担方 返回
         if (requestCode == REQUEST_GOOD_YUNFEI_CHENGDAN && resultCode == mActivity.RESULT_OK) {
-            if ("买方".equals(data.getStringExtra("type"))) {
+            if ("到付".equals(data.getStringExtra("type"))) {
                 good_yunfei = "1";
             } else {
                 good_yunfei = "2";
@@ -807,6 +983,67 @@ public class MySaleReShanjiaActivity extends BaseActivity {
             Log.i("tv_end_time_value--",data.getStringExtra("time"));
             tvEndTimeValue.setTextColor(mActivity.getResources().getColor(R.color.black_tv));
         }
+
+    }
+
+    /**
+     * add by 胡峰
+     * banner图的获取
+     * @param savedInstanceState
+     *
+     *
+     */
+
+    private ACache aCache;
+    private ArrayList<HomeTopAddBeanNew> homeTopAddBeens;
+    private HomeTopAddBeanNew homeTopAddBeanNew;
+    private void loadTopAds() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (mApplication.isLogin()) {
+                jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+                //Log.i("sessionid_banner_icon",LoginConfig.getUserInfo(mContext).getSessionid());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.appbanner_getsellerlistbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+                if (isFinishing()) {
+                    return;
+                }else {
+                    showLoadingDialog();
+                }
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        JSONArray jsonArray = resultObj.getJSONArray("rows");
+                        if (jsonArray.length() > 0) {
+                            aCache.put(Constans.TAG_TOBE_SALLER_TOP_ADS, resultObj);
+                            ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
+                            }.getType());
+
+                            Log.i("fee_rate--", resultObj.getString("fee_rate"));
+                            tv_fee_rate.setText(resultObj.getString("fee_rate"));
+                        }
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                UIHelper.t(mContext, R.string.net_error);
+            }
+        });
 
     }
 }

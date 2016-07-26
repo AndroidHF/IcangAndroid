@@ -514,7 +514,7 @@
                             android:layout_height="wrap_content"
                             android:layout_alignParentLeft="true"
                             android:layout_centerVertical="true"
-                            android:text="运费承担方"
+                            android:text="运费"
                             android:textColor="@color/black_tv"
                             android:textSize="@dimen/commen_tv_size" />
 
@@ -523,7 +523,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_centerVertical="true"
-                            android:layout_marginLeft="25dip"
+                            android:layout_marginLeft="74dip"
                             android:layout_toLeftOf="@+id/iv_yunfei_status_arrow"
                             android:layout_toRightOf="@id/tv_yunfei_status_title"
                             android:ellipsize="end"

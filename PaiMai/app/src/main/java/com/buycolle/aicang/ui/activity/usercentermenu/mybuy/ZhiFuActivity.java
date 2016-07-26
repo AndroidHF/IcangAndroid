@@ -662,9 +662,9 @@ public class ZhiFuActivity extends BaseActivity {
         mApplication.setImages(paiPinDetailBean.getCover_pic(), ivPaimai);
         //发货信息
         if (paiPinDetailBean.getExpress_out_type() == 1) {
-            tvSendMsgStatus.setText("运费承担方            买家");
+            tvSendMsgStatus.setText("运费                        到付");
         } else {
-            tvSendMsgStatus.setText("运费承担方            卖家");
+            tvSendMsgStatus.setText("运费                        包邮");
         }
         tvSendMsgAddress.setText("发货地区                " + paiPinDetailBean.getFahou_city());
         if (paiPinDetailBean.getFahuo_time_type()==1) {

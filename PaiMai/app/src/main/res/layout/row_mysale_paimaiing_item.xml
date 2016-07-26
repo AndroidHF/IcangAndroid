@@ -14,8 +14,8 @@
         android:background="@drawable/shape_white_black"
         android:gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="10dip">
-
+        android:padding="10dip"
+        >
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="120dip"
@@ -23,14 +23,15 @@
 
             <FrameLayout
                 android:layout_width="110dip"
-                android:layout_height="match_parent">
+                android:layout_height="120dip">
 
                 <ImageView
                     android:id="@+id/iv_paimai"
                     android:layout_width="110dip"
-                    android:layout_height="match_parent"
+                    android:layout_height="110dip"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/default_image" />
+                    android:src="@drawable/default_image"
+                    />
 
                 <ImageView
                     android:id="@+id/iv_rate"
@@ -47,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="120dip"
                 android:layout_marginLeft="8dip"
-                android:gravity="center"
+                android:paddingTop="3dip"
                 android:orientation="vertical">
 
                 <TextView
@@ -63,7 +64,7 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dip"
+                    android:layout_marginTop="4dip"
                     android:gravity="center_vertical">
 
                     <TextView
@@ -108,7 +109,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dip"
+                    android:layout_marginTop="4dip"
                     android:orientation="horizontal">
 
                     <RelativeLayout
@@ -184,7 +185,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dip"
+                    android:layout_marginTop="4dip"
                     android:orientation="horizontal">
 
                     <RelativeLayout

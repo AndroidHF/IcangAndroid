@@ -65,6 +65,12 @@ public class MyHeader extends RelativeLayout {
         tv_common_topbar_title.setText(title);
     }
 
+    public void initRePost(String title){
+        fl_back.setVisibility(View.VISIBLE);
+        iv_delete.setVisibility(View.VISIBLE);
+        tv_common_topbar_title.setText(title);
+    }
+
     public void  initShow(String title){
         fl_back.setVisibility(VISIBLE);
         tv_common_topbar_title.setText(title);

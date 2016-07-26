@@ -28,7 +28,7 @@
                 <ImageView
                     android:id="@+id/iv_paimai"
                     android:layout_width="110dip"
-                    android:layout_height="match_parent"
+                    android:layout_height="110dip"
                     android:scaleType="centerCrop"
                     android:src="@drawable/default_image" />
 
@@ -79,7 +79,23 @@
                         android:text="全 新"
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size_smallest" />
-
+<!--
+                    <TextView
+                        android:id="@+id/tv_good_status"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:gravity="center"
+                        android:paddingRight="10dip"
+                        android:paddingLeft="10dip"
+                        android:paddingBottom="3dip"
+                        android:paddingTop="3dip"
+                        android:textColor="@color/black_tv"
+                        android:text="全 新"
+                        android:background="@drawable/shape_black_shangpin_state"
+                        android:textSize="@dimen/commen_tv_size_smallest" />
+-->
                     <LinearLayout
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

@@ -184,7 +184,7 @@ public class PublicShowActivity extends BaseActivity {
         fl_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new NoticeDialog(mContext,"返回确认","确认放弃当前编辑晒物信息\n并返回么？").setCallBack(new NoticeDialog.CallBack() {
+                new NoticeDialog(mContext,"返回确认","确认放弃当前编辑的晒物信息\n并返回么？").setCallBack(new NoticeDialog.CallBack() {
                     @Override
                     public void ok() {
                         finish();

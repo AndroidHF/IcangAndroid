@@ -173,7 +173,7 @@
                     android:textSize="@dimen/commen_tv_size_smaller" />
 
             </LinearLayout>
-
+<!--
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -211,7 +211,7 @@
 
             </LinearLayout>
 
-
+-->
         </LinearLayout>
     </FrameLayout>
 

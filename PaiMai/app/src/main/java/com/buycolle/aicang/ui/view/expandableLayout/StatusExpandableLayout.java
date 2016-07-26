@@ -35,10 +35,26 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.buycolle.aicang.Constans;
+import com.buycolle.aicang.LoginConfig;
+import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
+import com.buycolle.aicang.api.ApiCallback;
+import com.buycolle.aicang.bean.ShangPinStatusBean;
+import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.AnimationHelper;
+import com.buycolle.aicang.util.UIHelper;
+import com.buycolle.aicang.util.superlog.JSONUtil;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.squareup.okhttp.Request;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 分类展开自定义
@@ -51,6 +67,9 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
     private FrameLayout headerLayout;
     private Animation animation;
     private Activity mContext;
+    private ACache aCache;
+    private MainApplication mApplication;
+    private ArrayList<ShangPinStatusBean> shangPinStatusBeens;
 
     private ImageView iv_expand_icon_status;
 
@@ -60,8 +79,8 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
     private TextView tv_status_4;
     private TextView tv_status_5;
     private TextView tv_status_6;
-    private TextView tv_status_7;
-    private TextView tv_status_8;
+    //private TextView tv_status_7;
+    //private TextView tv_status_8;
 
     private ArrayList<TextView> textViews;
 
@@ -86,6 +105,10 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
         final View rootView = View.inflate(context, R.layout.view_expandable_status, this);
         headerLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_headerlayout_status);
         contentLayout = (FrameLayout) rootView.findViewById(R.id.view_expandable_contentLayout_status);
+        aCache = ACache.get(mContext);
+        mApplication = (MainApplication) mContext.getApplication();
+        shangPinStatusBeens = new ArrayList<>();
+        loadData();
 
 
         tv_status_1 = (TextView) rootView.findViewById(R.id.tv_status_1);
@@ -94,8 +117,8 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
         tv_status_4 = (TextView) rootView.findViewById(R.id.tv_status_4);
         tv_status_5 = (TextView) rootView.findViewById(R.id.tv_status_5);
         tv_status_6 = (TextView) rootView.findViewById(R.id.tv_status_6);
-        tv_status_7 = (TextView) rootView.findViewById(R.id.tv_status_7);
-        tv_status_8 = (TextView) rootView.findViewById(R.id.tv_status_8);
+        //tv_status_7 = (TextView) rootView.findViewById(R.id.tv_status_7);
+        //tv_status_8 = (TextView) rootView.findViewById(R.id.tv_status_8);
 
         tv_status_1.setOnClickListener(this);
         tv_status_2.setOnClickListener(this);
@@ -103,8 +126,8 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
         tv_status_4.setOnClickListener(this);
         tv_status_5.setOnClickListener(this);
         tv_status_6.setOnClickListener(this);
-        tv_status_7.setOnClickListener(this);
-        tv_status_8.setOnClickListener(this);
+        //tv_status_7.setOnClickListener(this);
+        //tv_status_8.setOnClickListener(this);
 
         textViews = new ArrayList<>();
         textViews.add(tv_status_1);
@@ -113,8 +136,8 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
         textViews.add(tv_status_4);
         textViews.add(tv_status_5);
         textViews.add(tv_status_6);
-        textViews.add(tv_status_7);
-        textViews.add(tv_status_8);
+        //textViews.add(tv_status_7);
+        //textViews.add(tv_status_8);
 
         duration = 200;
         iv_expand_icon_status = (ImageView) rootView.findViewById(R.id.iv_expand_icon_status);
@@ -328,13 +351,60 @@ public class StatusExpandableLayout extends RelativeLayout implements View.OnCli
             case R.id.tv_status_6:
                 selectIndex(5);
                 break;
-            case R.id.tv_status_7:
-                selectIndex(6);
-                break;
-            case R.id.tv_status_8:
-                selectIndex(7);
-                break;
+//            case R.id.tv_status_7:
+//                selectIndex(6);
+//                break;
+//            case R.id.tv_status_8:
+//                selectIndex(7);
+//                break;
 
         }
+    }
+
+    private void loadData() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (mApplication.isLogin()) {
+                jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.dirtionary_getproductstatuslistbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        aCache.put(Constans.TAG_GOOD_STATUS, resultObj);
+                        JSONArray rows = resultObj.getJSONArray("rows");
+                        ArrayList<ShangPinStatusBean> allDataArrayList = new Gson().fromJson(rows.toString(), new TypeToken<List<ShangPinStatusBean>>() {
+                        }.getType());
+                        shangPinStatusBeens.addAll(allDataArrayList);
+                        tv_status_1.setText(shangPinStatusBeens.get(0).getItem_name());
+                        tv_status_2.setText(shangPinStatusBeens.get(1).getItem_name());
+                        tv_status_3.setText(shangPinStatusBeens.get(2).getItem_name());
+                        tv_status_4.setText(shangPinStatusBeens.get(3).getItem_name());
+                        tv_status_5.setText(shangPinStatusBeens.get(4).getItem_name());
+                        tv_status_6.setText(shangPinStatusBeens.get(5).getItem_name());
+                        //tv_status_7.setText(shangPinStatusBeens.get(6).getItem_name());
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                UIHelper.t(mContext, R.string.net_error);
+            }
+        });
     }
 }

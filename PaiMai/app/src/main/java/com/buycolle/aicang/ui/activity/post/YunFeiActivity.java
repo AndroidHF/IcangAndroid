@@ -60,7 +60,7 @@ public class YunFeiActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_yunfei);
         ButterKnife.bind(this);
-        myHeader.init("运费承担方", new MyHeader.Action() {
+        myHeader.init("运费", new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();

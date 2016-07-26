@@ -87,9 +87,9 @@ public class ShowMainActionPop {
 
     public ShowMainActionPop setType(boolean edit) {
         if (edit) {
-            tv_content.setText("修改拍品的标题、\n照片和描述需要经过\n重新审核");
+            tv_content.setText("修改拍品的标题、\n照片和描述，\n需要重新经过审核");
         } else {
-            tv_content.setText("修改物流信息\n和价格的拍品");
+            tv_content.setText("只修改拍品的物流信息\n和价格，无需重新审核");
         }
         return this;
     }

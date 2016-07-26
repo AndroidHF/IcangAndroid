@@ -417,7 +417,7 @@
                 android:gravity="center_vertical|left"
                 android:background="@color/title_backgroud"
                 android:paddingLeft="15dip"
-                android:text="包邮么亲"
+                android:text="运费"
                 android:textColor="@color/black"
                 android:textSize="16dip"
                 android:textStyle="bold"/>

@@ -2,6 +2,7 @@ package com.buycolle.aicang.ui.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,6 +23,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -29,6 +31,7 @@ import android.widget.TextView;
 
 import com.bigkoo.pickerview.OptionsPickerView;
 import com.bigkoo.pickerview.TimePickerView;
+import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
@@ -36,21 +39,28 @@ import com.buycolle.aicang.api.AppUrl;
 import com.buycolle.aicang.api.callback.ResultCallback;
 import com.buycolle.aicang.api.request.OkHttpRequest;
 import com.buycolle.aicang.bean.EditPaiPinDetailBean;
+import com.buycolle.aicang.bean.HomeTopAddBeanNew;
 import com.buycolle.aicang.bean.PostImageBean;
 import com.buycolle.aicang.event.EditPostEvent;
+import com.buycolle.aicang.ui.activity.comment.CommentCropImage2Activity;
+import com.buycolle.aicang.ui.activity.comment.CommentCropImageActivity;
 import com.buycolle.aicang.ui.activity.post.YunFeiActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinStatusActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinTypesActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
+import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
+import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.ImageUtils;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.buycolle.aicang.util.superlog.KLog;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Request;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -59,6 +69,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
@@ -158,6 +169,14 @@ public class ReEditPostActivity extends BaseActivity {
     ImageView ivGoodsTypeArrow;
     @Bind(R.id.tv_image_count)
     TextView tv_image_count;
+    @Bind(R.id.tv_feilv)
+    TextView tv_fee_rate;
+
+    @Bind(R.id.iv_delete)
+    ImageView iv_delete;
+
+    @Bind(R.id.fl_back)
+    FrameLayout fl_back;
 
 
     //主图
@@ -211,6 +230,12 @@ public class ReEditPostActivity extends BaseActivity {
 
     private int productId;
     EditPaiPinDetailBean paiPinDetailBean;
+    @Bind(R.id.tv_jiaoyi_liucheng)
+    TextView tv_jiaoyi_liucheng;//交易流程
+    @Bind(R.id.tv_fahuo_zhidao)
+    TextView tv_fahuo_zhidao;//发货指导
+    @Bind(R.id.tv_changjianwenti)
+    TextView tv_changjianwenti;//常见问题
 
 
     @OnClick(R.id.iv_fisrt)
@@ -261,10 +286,28 @@ public class ReEditPostActivity extends BaseActivity {
         setContentView(R.layout.frag_post);
         ButterKnife.bind(this);
         postImageBeans = new ArrayList<>();
-        myHeader.init("重新编辑", new MyHeader.Action() {
+        aCache = ACache.get(mContext);
+//        myHeader.init("重新编辑", new MyHeader.Action() {
+//            @Override
+//            public void leftActio() {
+//                finish();
+//            }
+//        });
+        myHeader.initRePost("重新编辑");
+        fl_back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void leftActio() {
-                finish();
+            public void onClick(View v) {
+                new NoticeDialog(mContext,"返回确认","确认放弃当前编辑的出品信息\n并返回么？").setCallBack(new NoticeDialog.CallBack() {
+                    @Override
+                    public void ok() {
+                        finish();
+                    }
+
+                    @Override
+                    public void cancle() {
+
+                    }
+                }).show();
             }
         });
         productId = _Bundle.getInt("productId");
@@ -272,6 +315,24 @@ public class ReEditPostActivity extends BaseActivity {
         initCity();
         //加载详情数据
         loadData();
+        loadTopAds();
+
+        iv_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new NoticeDialog(mContext, "清除确认", "确认清除当前编辑的出品\n    信息么？").setCallBack(new NoticeDialog.CallBack() {
+                    @Override
+                    public void ok() {
+                        initSuccessView();
+                    }
+
+                    @Override
+                    public void cancle() {
+
+                    }
+                }).show();
+            }
+        });
     }
 
     private void initCity() {
@@ -344,10 +405,77 @@ public class ReEditPostActivity extends BaseActivity {
     }
 
     /**
+     * add by 胡峰
+     * banner图的获取
+     * @param savedInstanceState
+     *
+     *
+     */
+
+    private ACache aCache;
+    private ArrayList<HomeTopAddBeanNew> homeTopAddBeens;
+    private HomeTopAddBeanNew homeTopAddBeanNew;
+    private void loadTopAds() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (mApplication.isLogin()) {
+                jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+                //Log.i("sessionid_banner_icon",LoginConfig.getUserInfo(mContext).getSessionid());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.appbanner_getsellerlistbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+                if (isFinishing()) {
+                    return;
+                }else {
+                    showLoadingDialog();
+                }
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        JSONArray jsonArray = resultObj.getJSONArray("rows");
+                        if (jsonArray.length() > 0) {
+                            aCache.put(Constans.TAG_TOBE_SALLER_TOP_ADS, resultObj);
+                            ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
+                            }.getType());
+                            Log.i("fee_rate--", resultObj.getString("fee_rate"));
+                            tv_fee_rate.setText(resultObj.getString("fee_rate"));
+                        }
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                UIHelper.t(mContext, R.string.net_error);
+            }
+        });
+
+    }
+
+    /**
      * 初始化布局界面
      */
     private void initData() {
 
+        //add by hufeng:三个按钮的下滑线
+        tv_jiaoyi_liucheng.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_jiaoyi_liucheng.getPaint().setAntiAlias(true);//抗锯齿处理
+        tv_fahuo_zhidao.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_fahuo_zhidao.getPaint().setAntiAlias(true);
+        tv_changjianwenti.getPaint().setFlags(Paint.UNDERLINE_TEXT_FLAG);//下划线
+        tv_changjianwenti.getPaint().setAntiAlias(true);
 
         // 图片处理
         //主图
@@ -372,7 +500,7 @@ public class ReEditPostActivity extends BaseActivity {
                 listImagesSize = paiPinDetailBean.getCycle_pic().split(",").length;
             }
         }
-        tv_image_count.setText((listImagesSize+1) + "/10");
+        tv_image_count.setText((listImagesSize + 1) + "/10");
 
         if (listImagesSize == 0) {//没有描述图片
             PostImageBean postImageBean_1 = new PostImageBean();
@@ -478,14 +606,41 @@ public class ReEditPostActivity extends BaseActivity {
 
 
 
+        /**
+         * add by hufeng :设置三个按钮的设置监听
+         * 交易流程监听
+         */
+        tv_jiaoyi_liucheng.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, PaiMaiJiaoYiLiuChengActivity.class);
+            }
+        });
+
+        //发货指导监听
+        tv_fahuo_zhidao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, PaiMaiFaHuoZhiDaoActivity.class);
+            }
+        });
+
+        //常见问题监听
+        tv_changjianwenti.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, ChangJianQuestionActivity.class);
+            }
+        });
+
 
         //运费承担方
         if (paiPinDetailBean.getExpress_out_type() == 1) {
             good_yunfei = "1";//买方
-            tv_yunfei_status_value.setText("买方");
+            tv_yunfei_status_value.setText("到付");
         } else {
             good_yunfei = "2";//卖方
-            tv_yunfei_status_value.setText("卖方");
+            tv_yunfei_status_value.setText("包邮");
         }
 
         tv_yunfei_status_value.setTextColor(getResources().getColor(R.color.black_tv));
@@ -684,12 +839,14 @@ public class ReEditPostActivity extends BaseActivity {
             ImageView iv_menu_icon_1;
             ImageView iv_menu_icon_status;
             ImageView iv_close;
+            LinearLayout ll_add_item;
 
             public ViewHolder(View view) {
                 super(view);
                 iv_menu_icon_1 = (ImageView) view.findViewById(R.id.iv_menu_icon_1);
                 iv_menu_icon_status = (ImageView) view.findViewById(R.id.iv_menu_icon_status);
                 iv_close = (ImageView) view.findViewById(R.id.iv_close);
+                ll_add_item = (LinearLayout) view.findViewById(R.id.ll_add_item);
             }
 
         }
@@ -735,6 +892,7 @@ public class ReEditPostActivity extends BaseActivity {
                     if (emptyCount == 1) {
                         if (postImageBean.isEmpty()) {
                             viewHolder.iv_close.setVisibility(View.GONE);
+                            viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                             viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                             viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                             viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -758,6 +916,7 @@ public class ReEditPostActivity extends BaseActivity {
                             });
                         } else {
                             viewHolder.iv_close.setVisibility(View.VISIBLE);
+                            viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                             viewHolder.iv_menu_icon_1.setOnClickListener(null);
                             if (postImageBean.isServer()) {
                                 mApplication.setImages(postImageBean.getServerPath(), viewHolder.iv_menu_icon_1);
@@ -767,6 +926,7 @@ public class ReEditPostActivity extends BaseActivity {
                             viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View v) {
+                                    viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                                     postImageBeans.remove(postImageBean);
                                     PostImageBean emptyImageBean = new PostImageBean();
                                     emptyImageBean.setEmpty(true);
@@ -798,6 +958,7 @@ public class ReEditPostActivity extends BaseActivity {
                     if (emptyCount == 2) {
                         viewHolder.iv_close.setVisibility(View.GONE);
                         viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                         viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                         viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
                             @Override
@@ -822,6 +983,7 @@ public class ReEditPostActivity extends BaseActivity {
 
                 } else {
                     viewHolder.iv_close.setVisibility(View.VISIBLE);
+                    viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                     viewHolder.iv_menu_icon_1.setOnClickListener(null);
                     if (postImageBean.isServer()) {
                         mApplication.setImages(postImageBean.getServerPath(), viewHolder.iv_menu_icon_1);
@@ -831,6 +993,7 @@ public class ReEditPostActivity extends BaseActivity {
                     viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                             postImageBeans.remove(postImageBean);
                             PostImageBean emptyImageBean = new PostImageBean();
                             emptyImageBean.setEmpty(true);
@@ -862,6 +1025,7 @@ public class ReEditPostActivity extends BaseActivity {
                 if (postImageBeans.size() == 9) {
                     if (postImageBean.isEmpty()) {
                         viewHolder.iv_close.setVisibility(View.GONE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                         viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                         viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                         viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -885,6 +1049,7 @@ public class ReEditPostActivity extends BaseActivity {
                         });
                     } else {
                         viewHolder.iv_close.setVisibility(View.VISIBLE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         viewHolder.iv_menu_icon_1.setOnClickListener(null);
                         if (postImageBean.isServer()) {
                             mApplication.setImages(postImageBean.getServerPath(), viewHolder.iv_menu_icon_1);
@@ -894,6 +1059,7 @@ public class ReEditPostActivity extends BaseActivity {
                         viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                                 postImageBeans.remove(postImageBean);
                                 boolean isEmptys = false;
                                 for (PostImageBean imageBean : postImageBeans) {
@@ -928,6 +1094,7 @@ public class ReEditPostActivity extends BaseActivity {
                 } else {
                     if (postImageBean.isEmpty()) {
                         viewHolder.iv_close.setVisibility(View.GONE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                         viewHolder.iv_menu_icon_status.setVisibility(View.GONE);
                         viewHolder.iv_menu_icon_1.setImageResource(R.color.transparent);
                         viewHolder.iv_menu_icon_1.setOnClickListener(new View.OnClickListener() {
@@ -951,6 +1118,7 @@ public class ReEditPostActivity extends BaseActivity {
                         });
                     } else {
                         viewHolder.iv_close.setVisibility(View.VISIBLE);
+                        viewHolder.ll_add_item.setBackgroundResource(R.drawable.shape_white_black);
                         viewHolder.iv_menu_icon_1.setOnClickListener(null);
                         if (postImageBean.isServer()) {
                             mApplication.setImages(postImageBean.getServerPath(), viewHolder.iv_menu_icon_1);
@@ -960,6 +1128,7 @@ public class ReEditPostActivity extends BaseActivity {
                         viewHolder.iv_close.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
+                                viewHolder.ll_add_item.setBackgroundResource(R.drawable.post_addpic_small_bg);
                                 postImageBeans.remove(postImageBean);
                                 notifyDataSetChanged();
                                 tv_image_count.setText(getImageCount() + "/10");
@@ -1073,108 +1242,221 @@ public class ReEditPostActivity extends BaseActivity {
             }
         }
 
-        JSONObject jsonObject = new JSONObject();
-        try {
-            //起拍价格
-            jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
-            //一口价
-            if (cbYikoujiaStatus.isChecked()) {
-                jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
-            }
-
-
-            //拍品分类
-            jsonObject.put("cate_id", good_type);
-            //拍品封面
-            jsonObject.put("cover_pic", mainImageBean.getServerPath());
-
-            if (postImageBeans.size() > 0) {
-                String paths = "";
-                StringBuffer stringBuffer = new StringBuffer();
-                boolean isOK = false;
-                for (PostImageBean postImageBean : postImageBeans) {
-                    if (!postImageBean.isEmpty()) {
-                        isOK = true;
-                        stringBuffer.append(postImageBean.getServerPath() + ",");
-                    }
-                }
-                if (isOK) {
-                    paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
-                    //轮播图
-                    jsonObject.put("cycle_pic", paths);
-                }
-            }
-
-            jsonObject.put("product_id", productId);
-            //承担运费方
-            jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
-            //发货城市
-            jsonObject.put("fahou_city", fahou_city);
-            //发货地省份
-            jsonObject.put("fahou_province", fahou_province);
-            //发货时间
-            jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
-            //下次使用相同物流
-            jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
-            //是否开启一口价
-            jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
-            //结束时间
-            jsonObject.put("pm_end_type", good_end_time);
-            //拍品介绍
-            jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
-            //标题
-            jsonObject.put("product_title", etInputGoodTitle.getText().toString());
-            //拍品商品状态ID
-            jsonObject.put("st_id", good_status);
-
-            //自身用户ID
-            jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
-            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        mApplication.apiClient.product_submitByApp(jsonObject, new ApiCallback() {
+        new NoticeDialog(mContext,"出品确认","您的拍品一旦提交审核，您将\n不能进行编辑或下架操作。除\n非该拍品没有通过审核。\n\n      是否确认提交？").setCallBack(new NoticeDialog.CallBack() {
             @Override
-            public void onApiStart() {
-                showLoadingDialog("发布中...");
-            }
-
-            @Override
-            public void onApiSuccess(String response) {
-                if (isFinishing())
-                    return;
+            public void ok() {
+                JSONObject jsonObject = new JSONObject();
                 try {
-                    JSONObject resultObj = new JSONObject(response);
-                    if (JSONUtil.isOK(resultObj)) {
-                        new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
-                            @Override
-                            public void ok() {
-                                finish();
-                                EventBus.getDefault().post(new EditPostEvent(0));
-                            }
-
-                            @Override
-                            public void cancle() {
-
-                            }
-                        }).show();
-                    } else {
-                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    //起拍价格
+                    jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
+                    //一口价
+                    if (cbYikoujiaStatus.isChecked()) {
+                        jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
                     }
+
+
+                    //拍品分类
+                    jsonObject.put("cate_id", good_type);
+                    //拍品封面
+                    jsonObject.put("cover_pic", mainImageBean.getServerPath());
+
+                    if (postImageBeans.size() > 0) {
+                        String paths = "";
+                        StringBuffer stringBuffer = new StringBuffer();
+                        boolean isOK = false;
+                        for (PostImageBean postImageBean : postImageBeans) {
+                            if (!postImageBean.isEmpty()) {
+                                isOK = true;
+                                stringBuffer.append(postImageBean.getServerPath() + ",");
+                            }
+                        }
+                        if (isOK) {
+                            paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
+                            //轮播图
+                            jsonObject.put("cycle_pic", paths);
+                        }
+                    }
+
+                    jsonObject.put("product_id", productId);
+                    //承担运费方
+                    jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
+                    //发货城市
+                    jsonObject.put("fahou_city", fahou_city);
+                    //发货地省份
+                    jsonObject.put("fahou_province", fahou_province);
+                    //发货时间
+                    jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
+                    //下次使用相同物流
+                    jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
+                    //是否开启一口价
+                    jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
+                    //结束时间
+                    jsonObject.put("pm_end_type", good_end_time);
+                    //拍品介绍
+                    jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
+                    //标题
+                    jsonObject.put("product_title", etInputGoodTitle.getText().toString());
+                    //拍品商品状态ID
+                    jsonObject.put("st_id", good_status);
+
+                    //自身用户ID
+                    jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+                    jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                dismissLoadingDialog();
+                mApplication.apiClient.product_submitByApp(jsonObject, new ApiCallback() {
+                    @Override
+                    public void onApiStart() {
+                        showLoadingDialog("发布中...");
+                    }
+
+                    @Override
+                    public void onApiSuccess(String response) {
+                        if (isFinishing())
+                            return;
+                        try {
+                            JSONObject resultObj = new JSONObject(response);
+                            if (JSONUtil.isOK(resultObj)) {
+                                new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+                                    @Override
+                                    public void ok() {
+                                        finish();
+                                        EventBus.getDefault().post(new EditPostEvent(0));
+                                    }
+
+                                    @Override
+                                    public void cancle() {
+
+                                    }
+                                }).show();
+                            } else {
+                                UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        dismissLoadingDialog();
+                    }
+
+                    @Override
+                    public void onApiFailure(Request request, Exception e) {
+                        if (isFinishing()) {
+                            return;
+                        }
+                        UIHelper.t(mContext, R.string.net_error);
+                    }
+                });
             }
 
             @Override
-            public void onApiFailure(Request request, Exception e) {
-                if (isFinishing()) {
-                    return;
-                }
-                UIHelper.t(mContext, R.string.net_error);
+            public void cancle() {
+
             }
-        });
+        }).show();
+
+//        JSONObject jsonObject = new JSONObject();
+//        try {
+//            //起拍价格
+//            jsonObject.put("begin_auct_price", tvStartPriceValue.getText().toString().trim());
+//            //一口价
+//            if (cbYikoujiaStatus.isChecked()) {
+//                jsonObject.put("but_it_price", tvYikouPriceValue.getText().toString().trim());
+//            }
+//
+//
+//            //拍品分类
+//            jsonObject.put("cate_id", good_type);
+//            //拍品封面
+//            jsonObject.put("cover_pic", mainImageBean.getServerPath());
+//
+//            if (postImageBeans.size() > 0) {
+//                String paths = "";
+//                StringBuffer stringBuffer = new StringBuffer();
+//                boolean isOK = false;
+//                for (PostImageBean postImageBean : postImageBeans) {
+//                    if (!postImageBean.isEmpty()) {
+//                        isOK = true;
+//                        stringBuffer.append(postImageBean.getServerPath() + ",");
+//                    }
+//                }
+//                if (isOK) {
+//                    paths = stringBuffer.toString().substring(0, stringBuffer.length() - 1);
+//                    //轮播图
+//                    jsonObject.put("cycle_pic", paths);
+//                }
+//            }
+//
+//            jsonObject.put("product_id", productId);
+//            //承担运费方
+//            jsonObject.put("express_out_type", good_yunfei);//必填 1 买家 2 卖家
+//            //发货城市
+//            jsonObject.put("fahou_city", fahou_city);
+//            //发货地省份
+//            jsonObject.put("fahou_province", fahou_province);
+//            //发货时间
+//            jsonObject.put("fahuo_time_type", good_fahuo_time);//必填 1：当天发货 2：1-3天 3 ：1周内 4:2-3周内）
+//            //下次使用相同物流
+//            jsonObject.put("is_same_express", cbWuliu.isChecked() ? 1 : 0);//0 否 1 是
+//            //是否开启一口价
+//            jsonObject.put("open_but_it", cbYikoujiaStatus.isChecked() ? 1 : 0);//0：否 1：是
+//            //结束时间
+//            jsonObject.put("pm_end_type", good_end_time);
+//            //拍品介绍
+//            jsonObject.put("product_desc", etInputGoodDesc.getText().toString());
+//            //标题
+//            jsonObject.put("product_title", etInputGoodTitle.getText().toString());
+//            //拍品商品状态ID
+//            jsonObject.put("st_id", good_status);
+//
+//            //自身用户ID
+//            jsonObject.put("seller_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+//            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        mApplication.apiClient.product_submitByApp(jsonObject, new ApiCallback() {
+//            @Override
+//            public void onApiStart() {
+//                showLoadingDialog("发布中...");
+//            }
+//
+//            @Override
+//            public void onApiSuccess(String response) {
+//                if (isFinishing())
+//                    return;
+//                try {
+//                    JSONObject resultObj = new JSONObject(response);
+//                    if (JSONUtil.isOK(resultObj)) {
+//                        new NoticeSingleDialog(mContext, "温馨提示", "您已成功发布\n请耐心等待平台审核", "我知道了").setCallBack(new NoticeSingleDialog.CallBack() {
+//                            @Override
+//                            public void ok() {
+//                                finish();
+//                                EventBus.getDefault().post(new EditPostEvent(0));
+//                            }
+//
+//                            @Override
+//                            public void cancle() {
+//
+//                            }
+//                        }).show();
+//                    } else {
+//                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+//                    }
+//                } catch (JSONException e) {
+//                    e.printStackTrace();
+//                }
+//                dismissLoadingDialog();
+//            }
+//
+//            @Override
+//            public void onApiFailure(Request request, Exception e) {
+//                if (isFinishing()) {
+//                    return;
+//                }
+//                UIHelper.t(mContext, R.string.net_error);
+//            }
+//        });
     }
 
     @Override
@@ -1182,7 +1464,7 @@ public class ReEditPostActivity extends BaseActivity {
         super.onActivityResult(requestCode, resultCode, data);
         //运费承担方 返回
         if (requestCode == REQUEST_GOOD_YUNFEI_CHENGDAN && resultCode == mActivity.RESULT_OK) {
-            if ("买方".equals(data.getStringExtra("type"))) {
+            if ("到付".equals(data.getStringExtra("type"))) {
                 good_yunfei = "1";
             } else {
                 good_yunfei = "2";
@@ -1217,19 +1499,36 @@ public class ReEditPostActivity extends BaseActivity {
             Uri uri = data.getData();
             String pathLocal = ImageUtils.getPath(mContext, uri);
             KLog.d("返回的本地图片路径", pathLocal);
-            String path = ImageUtils.getSmallBitmap(pathLocal);
-            mainImageBean.setLocalPath(path);
-            mainImageBean.setStatus(PostImageBean.Status.INIT);
-            mApplication.setImages("file://" + mainImageBean.getLocalPath(), firstimg);
-            uploadMainImages(mainImageBean);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", pathLocal);
+//            String path = ImageUtils.getSmallBitmap(pathLocal);
+//            mainImageBean.setLocalPath(path);
+//            mainImageBean.setStatus(PostImageBean.Status.INIT);
+//            mApplication.setImages("file://" + mainImageBean.getLocalPath(), firstimg);
+//            uploadMainImages(mainImageBean);
+            UIHelper.jumpForResult(mActivity, CommentCropImageActivity.class,bundle,CommentCropImageActivity.COROP_REQUEST);
         }
         //封面图片返回来  相机
         if (requestCode == RESULT_PIC_1_CAMERA && resultCode == mActivity.RESULT_OK) {
-            String path = ImageUtils.getSmallBitmap(recentPicPath);
-            mApplication.setImages("file://" + path, firstimg);
-            mainImageBean.setLocalPath(path);
-            mainImageBean.setStatus(PostImageBean.Status.INIT);
-            uploadMainImages(mainImageBean);
+//            String path = ImageUtils.getSmallBitmap(recentPicPath);
+//            mApplication.setImages("file://" + path, firstimg);
+//            mainImageBean.setLocalPath(path);
+//            mainImageBean.setStatus(PostImageBean.Status.INIT);
+//            uploadMainImages(mainImageBean);
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", recentPicPath);
+            UIHelper.jumpForResult(mActivity,CommentCropImageActivity.class,bundle,CommentCropImageActivity.COROP_REQUEST);
+        }
+
+        if (requestCode == CommentCropImageActivity.COROP_REQUEST && resultCode == CommentCropImageActivity.COROP_RESULT) {
+            String path = data.getStringExtra(CommentCropImageActivity.RERULT_PATH);
+            if (path != null) {
+                mainImageBean.setLocalPath(path);
+                mainImageBean.setStatus(PostImageBean.Status.INIT);
+                mApplication.setImages("file://" + mainImageBean.getLocalPath(), firstimg);
+                uploadMainImages(mainImageBean);
+                tv_image_count.setText(getImageCount() + "/10");
+            }
         }
 
         //add by :胡峰，拍品结束时间的获取逻辑
@@ -1245,46 +1544,76 @@ public class ReEditPostActivity extends BaseActivity {
             Uri uri = data.getData();
             String pathLocal = ImageUtils.getPath(mContext, uri);
             KLog.d("返回的本地图片路径", pathLocal);
-            String path = ImageUtils.getSmallBitmap(pathLocal);
-
-            int emptyCount = 0;
-            for (PostImageBean bean : postImageBeans) {
-                if (bean.isEmpty()) {
-                    emptyCount++;
-                }
-            }
-            if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
-                PostImageBean postImageBean = new PostImageBean();
-                postImageBean.setEmpty(true);
-                postImageBeans.add(postImageBean);
-            }
-            postImageBeans.get(currentIndex).setLocalPath(path);
-            postImageBeans.get(currentIndex).setEmpty(false);
-            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
-            mAdapter.notifyDataSetChanged();
-            uploadListmages(postImageBeans.get(currentIndex));
-            tv_image_count.setText(getImageCount() + "/10");
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", pathLocal);
+            UIHelper.jumpForResult(mActivity, CommentCropImage2Activity.class, bundle, CommentCropImage2Activity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(pathLocal);
+//
+//            int emptyCount = 0;
+//            for (PostImageBean bean : postImageBeans) {
+//                if (bean.isEmpty()) {
+//                    emptyCount++;
+//                }
+//            }
+//            if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
+//                PostImageBean postImageBean = new PostImageBean();
+//                postImageBean.setEmpty(true);
+//                postImageBeans.add(postImageBean);
+//            }
+//            postImageBeans.get(currentIndex).setLocalPath(path);
+//            postImageBeans.get(currentIndex).setEmpty(false);
+//            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
+//            mAdapter.notifyDataSetChanged();
+//            uploadListmages(postImageBeans.get(currentIndex));
+//            tv_image_count.setText(getImageCount() + "/10");
         }
         //列表图片返回来  相机
         if (requestCode == RESULT_PIC_2_CAMERA && resultCode == mActivity.RESULT_OK) {
-            String path = ImageUtils.getSmallBitmap(recentPicPath);
-            int emptyCount = 0;
-            for (PostImageBean bean : postImageBeans) {
-                if (bean.isEmpty()) {
-                    emptyCount++;
+            Bundle bundle = new Bundle();
+            bundle.putString("imagePath", recentPicPath);
+            UIHelper.jumpForResult(mActivity,CommentCropImage2Activity.class,bundle,CommentCropImage2Activity.COROP_REQUEST);
+//            String path = ImageUtils.getSmallBitmap(recentPicPath);
+//            int emptyCount = 0;
+//            for (PostImageBean bean : postImageBeans) {
+//                if (bean.isEmpty()) {
+//                    emptyCount++;
+//                }
+//            }
+//            if (postImageBeans.size() >= 2 && postImageBeans.size() < 10 && emptyCount < 2) {
+//                PostImageBean postImageBean = new PostImageBean();
+//                postImageBean.setEmpty(true);
+//                postImageBeans.add(postImageBean);
+//            }
+//            postImageBeans.get(currentIndex).setLocalPath(path);
+//            postImageBeans.get(currentIndex).setEmpty(false);
+//            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
+//            mAdapter.notifyDataSetChanged();
+//            uploadListmages(postImageBeans.get(currentIndex));
+//            tv_image_count.setText(getImageCount() + "/10");
+        }
+
+        if (requestCode == CommentCropImage2Activity.COROP_REQUEST && resultCode == CommentCropImage2Activity.COROP_RESULT){
+            //String path = ImageUtils.getSmallBitmap(data.getStringExtra(CommentCropImage2Activity.RERULT_PATH));
+            String path = data.getStringExtra(CommentCropImage2Activity.RERULT_PATH);
+            if (path != null){
+                int emptyCount = 0;
+                for (PostImageBean bean : postImageBeans) {
+                    if (bean.isEmpty()) {
+                        emptyCount++;
+                    }
                 }
+                if (postImageBeans.size() >= 2 && postImageBeans.size() < 9 && emptyCount < 2) {
+                    PostImageBean postImageBean = new PostImageBean();
+                    postImageBean.setEmpty(true);
+                    postImageBeans.add(postImageBean);
+                }
+                postImageBeans.get(currentIndex).setLocalPath(path);
+                postImageBeans.get(currentIndex).setEmpty(false);
+                postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
+                mAdapter.notifyDataSetChanged();
+                uploadListmages(postImageBeans.get(currentIndex));
+                tv_image_count.setText(getImageCount() + "/10");
             }
-            if (postImageBeans.size() >= 2 && postImageBeans.size() < 10 && emptyCount < 2) {
-                PostImageBean postImageBean = new PostImageBean();
-                postImageBean.setEmpty(true);
-                postImageBeans.add(postImageBean);
-            }
-            postImageBeans.get(currentIndex).setLocalPath(path);
-            postImageBeans.get(currentIndex).setEmpty(false);
-            postImageBeans.get(currentIndex).setStatus(PostImageBean.Status.INIT);
-            mAdapter.notifyDataSetChanged();
-            uploadListmages(postImageBeans.get(currentIndex));
-            tv_image_count.setText(getImageCount() + "/10");
         }
     }
 
@@ -1393,6 +1722,63 @@ public class ReEditPostActivity extends BaseActivity {
 
                     }
                 });
+    }
+
+    private void initSuccessView() {
+        //主图
+        mainImageBean.setServerPath("");
+        firstimg.setImageResource(R.color.transparent);
+        ivFisrtStatus.setVisibility(View.GONE);
+
+        postImageBeans.clear();
+        postImageBeans.add(getEmptyBean());
+        postImageBeans.add(getEmptyBean());
+        mAdapter.notifyDataSetChanged();
+        mainImageBean.setLocalPath("");
+        tv_image_count.setText(getImageCount() + "/10");
+
+        good_type = "";
+        good_status = "";
+        good_yunfei = "";
+        fahou_city = "";
+        fahou_province = "";
+        good_fahuo_time = "";
+
+        etInputGoodTitle.setText("");
+        etInputGoodDesc.setText("");
+        tvGoodsTypeValue.setText("请选择");
+        tvGoodsStatusValue.setText("请选择");
+        tv_end_time_value.setText("请选择");
+        tv_yunfei_status_value.setText("请选择");
+        tv_addres_value.setText("请选择");
+        tvFahuoTimeValue.setText("请选择");
+
+        tvGoodsTypeValue.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+        tvGoodsStatusValue.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+        tv_end_time_value.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+        tv_yunfei_status_value.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+        tv_addres_value.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+        tvFahuoTimeValue.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+
+
+        cbWuliu.setChecked(true);
+        cbYikoujiaStatus.setChecked(true);
+        rlYikouPrice.setVisibility(View.VISIBLE);
+
+        cbYikoujiaStatus.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    rlYikouPrice.setVisibility(View.VISIBLE);
+                } else {
+                    rlYikouPrice.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        tvStartPriceValue.setText("");
+        tvYikouPriceValue.setText("");
+
     }
 
 }
