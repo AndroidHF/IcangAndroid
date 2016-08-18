@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/rl_dialog_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:paddingTop="76dip"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/rl_cancle_lay"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toLeftOf="@+id/rl_main_action"
+        android:orientation="vertical"/>
+
+    <RelativeLayout
+        android:id="@+id/rl_main_action"
+        android:layout_width="260dip"
+        android:layout_height="310dip"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="2dip"
+        android:background="@drawable/main_filter_bg"
+        android:orientation="vertical">
+        <LinearLayout
+            android:id="@+id/rl_bottome"
+            android:layout_width="match_parent"
+            android:layout_height="70dip"
+            android:gravity="center_vertical"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:background="#e6e6e6"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginBottom="5dip"
+            android:paddingLeft="@dimen/commen_padding"
+            android:paddingRight="@dimen/commen_padding">
+
+            <TextView
+                android:id="@+id/tv_reset"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/bg_cancle"
+                android:gravity="center"
+                android:text="重置"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_finish"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/bg_sure"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_above="@id/rl_bottome"
+            android:scrollbars="none">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="筛选:"
+                    android:textColor="#323232"
+                    android:textSize="12dip"
+                    android:layout_marginTop="30dip"
+                    android:layout_marginLeft="20dip"/>
+
+                <com.buycolle.aicang.ui.view.expandableLayout.FilterExpandableLayout
+                    android:id="@+id/expand_filter"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#e6e6e6"
+                    android:gravity="center"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginLeft="15dip"
+                    android:layout_marginRight="15dip"/>
+
+                <LinearLayout
+                    android:layout_width="200dip"
+                    android:layout_height="1dip"
+                    android:background="#808080"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="5dip"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="排序:"
+                    android:textColor="#323232"
+                    android:textSize="12dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginLeft="20dip"/>
+
+                <com.buycolle.aicang.ui.view.expandableLayout.SortExpandableLayout
+                    android:id="@+id/expand_sort"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#e6e6e6"
+                    android:layout_marginTop="15dip"
+                    android:layout_marginLeft="20dip"
+                    android:layout_marginRight="20dip"/>
+
+            </LinearLayout>
+        </ScrollView>
+    </RelativeLayout>
+
+</RelativeLayout>

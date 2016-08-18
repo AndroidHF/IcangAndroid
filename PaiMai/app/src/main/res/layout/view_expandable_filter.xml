@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="260dip"
+    android:layout_height="wrap_content"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="#e6e6e6">
+
+    <FrameLayout
+        android:id="@+id/view_expandable_headerlayout_status"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_divider_1"
+        android:clipToPadding="true"
+        android:paddingBottom="@dimen/types_lay_padding_half">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dip"
+                android:layout_marginRight="5dip"
+                android:orientation="horizontal"
+                >
+                <TextView
+                    android:id="@+id/tv_filter_1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/shape_black_shangpin_state"
+                    android:paddingBottom="@dimen/status_top_bottom_padding"
+                    android:paddingTop="@dimen/status_top_bottom_padding"
+                    android:paddingRight="10dip"
+                    android:paddingLeft="10dip"
+                    android:textColor="@color/black_tv"
+                    android:textSize="12dip" />
+                <TextView
+                    android:id="@+id/tv_filter_2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/shape_black_shangpin_state"
+                    android:paddingBottom="@dimen/status_top_bottom_padding"
+                    android:paddingTop="@dimen/status_top_bottom_padding"
+                    android:paddingRight="10dip"
+                    android:paddingLeft="10dip"
+                    android:textColor="@color/black_tv"
+                    android:textSize="12dip" />
+
+                <TextView
+                    android:id="@+id/tv_filter_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dip"
+                    android:background="@drawable/shape_black_shangpin_state"
+                    android:paddingBottom="@dimen/status_top_bottom_padding"
+                    android:paddingTop="@dimen/status_top_bottom_padding"
+                    android:paddingRight="10dip"
+                    android:paddingLeft="10dip"
+                    android:textColor="@color/black_tv"
+                    android:textSize="12dip" />
+
+            </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dip"
+            android:layout_marginRight="5dip"
+            android:layout_marginTop="8dip"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_filter_4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/shape_black_shangpin_state"
+                android:paddingBottom="@dimen/status_top_bottom_padding"
+                android:paddingTop="@dimen/status_top_bottom_padding"
+                android:paddingRight="10dip"
+                android:paddingLeft="10dip"
+                android:textColor="@color/black_tv"
+                android:textSize="12dip" />
+            <TextView
+                android:id="@+id/tv_filter_5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:background="@drawable/shape_black_shangpin_state"
+                android:paddingBottom="@dimen/status_top_bottom_padding"
+                android:paddingTop="@dimen/status_top_bottom_padding"
+                android:paddingRight="10dip"
+                android:paddingLeft="10dip"
+                android:text="有一口价"
+                android:visibility="gone"
+                android:textColor="@color/black_tv"
+                android:textSize="12dip" />
+            <TextView
+                android:id="@+id/tv_filter_6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="5dip"
+                android:text="有一口价"
+                android:background="@drawable/shape_black_shangpin_state"
+                android:paddingBottom="@dimen/status_top_bottom_padding"
+                android:paddingTop="@dimen/status_top_bottom_padding"
+                android:paddingRight="10dip"
+                android:paddingLeft="10dip"
+                android:textColor="@color/black_tv"
+                android:textSize="12dip"
+                android:visibility="gone"/>
+            </LinearLayout>
+        </LinearLayout>
+    </FrameLayout>
+
+
+</RelativeLayout>

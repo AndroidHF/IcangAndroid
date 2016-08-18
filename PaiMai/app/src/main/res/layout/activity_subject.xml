@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"/>
+
+    <com.buycolle.aicang.ui.view.mainScrole.ScrollableLayout
+        android:id="@+id/scrollableLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rl_head"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+<!--
+            <LinearLayout
+                android:id="@+id/lltop"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <com.buycolle.aicang.ui.view.MyHeader
+                    android:id="@+id/my_header"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"/>
+
+                <ImageView
+                    android:id="@+id/convenientBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_below="@+id/lltop"
+                    android:src="@drawable/banner"
+                    android:scaleType="centerCrop"
+                    />
+
+            </LinearLayout>
+-->
+            <ImageView
+                android:id="@+id/convenientBanner"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/lltop"
+                android:src="@drawable/banner"
+                android:scaleType="centerCrop"
+                />
+        </RelativeLayout>
+
+
+           <LinearLayout
+               android:id="@+id/ll_bg"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               >
+               <com.buycolle.aicang.ui.view.FixedViewPager
+                   android:id="@+id/vp_main_container"
+                   android:layout_width="match_parent"
+                   android:layout_height="match_parent"
+                   />
+           </LinearLayout>
+
+
+    </com.buycolle.aicang.ui.view.mainScrole.ScrollableLayout>
+
+</LinearLayout>
