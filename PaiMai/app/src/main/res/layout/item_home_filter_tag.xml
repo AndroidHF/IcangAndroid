@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox
+    android:id="@+id/cbox_item_filter_tag"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="8dp"
+    android:layout_marginRight="8dp"
+    android:background="@drawable/sel_home_filter_tag_bg"
+    android:button="@null"
+    android:gravity="center"
+    android:paddingBottom="4dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingTop="4dp"
+    android:textColor="@color/black_tv"
+    android:textSize="13sp"
+    tools:text="asd"/>

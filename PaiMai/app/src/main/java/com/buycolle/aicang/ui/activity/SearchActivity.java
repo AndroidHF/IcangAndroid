@@ -96,7 +96,7 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
             searchEntities = searchKeyDao.getAllByType("event");
         }
         if (index == 3) {
-            searchEntities = searchKeyDao.getAllByType("show");
+            searchEntities = searchKeyDao.getAllByType("initDialog");
         }
 
         getHotTag(index);
@@ -153,7 +153,7 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
 
                 }
                 if (index == 3) {
-                    searchKeyDao.deleteAllByType("show");
+                    searchKeyDao.deleteAllByType("initDialog");
 
                 }
                 history.clear();
@@ -187,7 +187,7 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
             searchEntities = searchKeyDao.getAllByType("event");
         }
         if (index == 3) {
-            searchEntities = searchKeyDao.getAllByType("show");
+            searchEntities = searchKeyDao.getAllByType("initDialog");
         }
 
         getHotTag(index);
@@ -244,7 +244,7 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
 
                 }
                 if (index == 3) {
-                    searchKeyDao.deleteAllByType("show");
+                    searchKeyDao.deleteAllByType("initDialog");
 
                 }
                 history.clear();
@@ -259,44 +259,54 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
         tags.clear();
         if (index == 1) {
             JSONObject goodObj = aCache.getAsJSONObject(Constans.TAG_HOT_SEARCH_GOOD);
-            try {
-                JSONArray jsonArray = goodObj.getJSONArray("rows");
-                hotTagBeens = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HotTagBean>>() {
-                }.getType());
-                for (HotTagBean hotTagBeen : hotTagBeens) {
-                    tags.add(hotTagBeen.getItem_name());
-                }
+            if (goodObj != null){
+                try {
+                    JSONArray jsonArray = goodObj.getJSONArray("rows");
 
-            } catch (JSONException e) {
-                e.printStackTrace();
+                    hotTagBeens = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HotTagBean>>() {
+                    }.getType());
+                    for (HotTagBean hotTagBeen : hotTagBeens) {
+                        tags.add(hotTagBeen.getItem_name());
+                    }
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
             }
         }
         if (index == 2) {
             JSONObject goodObj = aCache.getAsJSONObject(Constans.TAG_HOT_SEARCH_EVENT);
-            try {
-                JSONArray jsonArray = goodObj.getJSONArray("rows");
-                hotTagBeens = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HotTagBean>>() {
-                }.getType());
-                for (HotTagBean hotTagBeen : hotTagBeens) {
-                    tags.add(hotTagBeen.getItem_name());
-                }
+           if (goodObj != null){
+               try {
 
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+                   JSONArray jsonArray = goodObj.getJSONArray("rows");
+                   if (jsonArray != null){
+                       hotTagBeens = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HotTagBean>>() {
+                       }.getType());
+                       for (HotTagBean hotTagBeen : hotTagBeens) {
+                           tags.add(hotTagBeen.getItem_name());
+                       }
+                   }
+               } catch (JSONException e) {
+                   e.printStackTrace();
+               }
+           }
         }
         if (index == 3) {
             JSONObject goodObj = aCache.getAsJSONObject(Constans.TAG_HOT_SEARCH_SHOW);
-            try {
-                JSONArray jsonArray = goodObj.getJSONArray("rows");
-                hotTagBeens = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HotTagBean>>() {
-                }.getType());
-                for (HotTagBean hotTagBeen : hotTagBeens) {
-                    tags.add(hotTagBeen.getItem_name());
+            if (goodObj != null){
+                try {
+                    JSONArray jsonArray = goodObj.getJSONArray("rows");
+                    if (jsonArray != null){
+                        hotTagBeens = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HotTagBean>>() {
+                        }.getType());
+                        for (HotTagBean hotTagBeen : hotTagBeens) {
+                            tags.add(hotTagBeen.getItem_name());
+                        }
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
         }
         KLog.d("----hotTagBeens.size()--",hotTagBeens.size()+"");
@@ -453,22 +463,22 @@ public class SearchActivity extends BaseActivity implements TagCloudView.OnTagCl
                 bundle.putString("key_word", keyWord);
 
                 SearchEntity searchEntity = new SearchEntity();
-                searchEntity.setType("show");
+                searchEntity.setType("initDialog");
                 searchEntity.setKeyword(keyWord);
-                searchKeyDao.add(searchEntity, "show");
+                searchKeyDao.add(searchEntity, "initDialog");
 
             } else {
                 if (ishistory) {
                     bundle.putString("key_word", keyWord);
                     SearchEntity searchEntity = new SearchEntity();
-                    searchEntity.setType("show");
+                    searchEntity.setType("initDialog");
                     searchEntity.setKeyword(keyWord);
-                    searchKeyDao.add(searchEntity, "show");
+                    searchKeyDao.add(searchEntity, "initDialog");
                 } else {
                     SearchEntity searchEntity = new SearchEntity();
-                    searchEntity.setType("show");
+                    searchEntity.setType("initDialog");
                     searchEntity.setKeyword(etInput.getText().toString().trim());
-                    searchKeyDao.add(searchEntity, "show");
+                    searchKeyDao.add(searchEntity, "initDialog");
                     bundle.putString("key_word", keyWord);
                 }
             }

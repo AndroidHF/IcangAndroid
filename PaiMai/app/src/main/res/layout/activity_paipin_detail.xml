@@ -94,6 +94,7 @@
                     android:textColor="@color/gray_tv"
                     android:textSize="@dimen/commen_tv_size_smaller" />
 -->
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -114,72 +115,238 @@
                         android:background="@drawable/shape_black_shangpin_state"
                         android:textSize="@dimen/commen_tv_size_smaller" />
                 </LinearLayout>
+                <!--
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@color/white"
+                                    android:gravity="center_vertical"
+                                    android:orientation="horizontal"
+                                    android:paddingBottom="3dip"
+                                    android:paddingLeft="10dip"
+                                    android:paddingTop="10dip">
 
+                                    <LinearLayout
+                                        android:id="@+id/ll_clock"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginRight="20dip"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal"
+                                        android:visibility="visible">
+
+                                        <ImageView
+                                            android:layout_width="13dip"
+                                            android:layout_height="13dip"
+                                            android:src="@drawable/clock_icon" />
+
+                                        <TextView
+                                            android:id="@+id/tv_paipin_time"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="6dip"
+                                            android:textColor="@color/black_tv"
+                                            android:textSize="@dimen/commen_tv_size_smallest" />
+                                    </LinearLayout>
+
+                                    <LinearLayout
+                                        android:id="@+id/ll_jingpai_user"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:gravity="center_vertical"
+                                        android:orientation="horizontal"
+                                        android:paddingLeft="5dip">
+
+                                        <ImageView
+                                            android:layout_width="13dip"
+                                            android:layout_height="13dip"
+                                            android:src="@drawable/chuizi_icon_1" />
+
+                                        <TextView
+                                            android:id="@+id/tv_paipin_pai_count"
+                                            android:layout_width="wrap_content"
+                                            android:layout_height="wrap_content"
+                                            android:layout_marginLeft="6dip"
+                                            android:textColor="@color/black_tv"
+                                            android:textSize="@dimen/commen_tv_size_smallest" />
+
+                                    </LinearLayout>
+
+                                </LinearLayout>
+
+                -->
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:paddingBottom="3dip"
+                android:paddingLeft="10dip"
+                android:paddingRight="10dip"
+                android:paddingTop="10dip"
+                android:orientation="horizontal">
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@color/white"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="3dip"
-                    android:paddingLeft="10dip"
-                    android:paddingTop="5dip">
-
-                    <LinearLayout
-                        android:id="@+id/ll_clock"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="20dip"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:visibility="visible">
+                        android:background="@drawable/time01"
+                        android:gravity="center"
+                        android:textSize="21dip"
+                        android:text="拍"
+                        android:textColor="#000000"/>
 
-                        <ImageView
-                            android:layout_width="13dip"
-                            android:layout_height="13dip"
-                            android:src="@drawable/clock_icon" />
-
-                        <TextView
-                            android:id="@+id/tv_paipin_time"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dip"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size_smallest" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dip"
+                        android:textSize="13dip"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:text="天"/>
                     </LinearLayout>
 
                     <LinearLayout
-                        android:id="@+id/ll_jingpai_user"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center_vertical"
-                        android:orientation="horizontal"
-                        android:paddingLeft="5dip">
-
-                        <ImageView
-                            android:layout_width="13dip"
-                            android:layout_height="13dip"
-                            android:src="@drawable/chuizi_icon_1" />
-
+                        android:layout_height="match_parent"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="4dip"
+                        android:orientation="vertical">
                         <TextView
-                            android:id="@+id/tv_paipin_pai_count"
+                            android:id="@+id/tv_hour"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginLeft="6dip"
-                            android:textColor="@color/black_tv"
-                            android:textSize="@dimen/commen_tv_size_smallest" />
+                            android:background="@drawable/time02"
+                            android:gravity="center"
+                            android:textSize="21dip"
+                            android:text="卖"
+                            android:textColor="#000000"/>
 
-                    </LinearLayout>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:layout_gravity="center"
+                            android:layout_marginTop="5dip"
+                            android:textSize="13dip"
+                            android:textColor="#000000"
+                            android:textStyle="bold"
+                            android:text="时"/>
 
                 </LinearLayout>
 
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dip"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_mintue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/time02"
+                        android:gravity="center"
+                        android:textSize="21dip"
+                        android:text="结"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dip"
+                        android:textSize="13dip"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:text="分"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="4dip"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tv_sec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/time03"
+                        android:gravity="center"
+                        android:textSize="21dip"
+                        android:text="束"
+                        android:textColor="#000000"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="5dip"
+                        android:textSize="13dip"
+                        android:textColor="#000000"
+                        android:textStyle="bold"
+                        android:text="秒"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/ll_jingpai_user"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_gravity="center"
+                    android:layout_marginLeft="78dip">
+
+                    <ImageView
+                        android:id="@+id/iv_hammer"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:background="@drawable/hammer01"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginTop="1dip"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tv_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="99"
+                            android:textStyle="bold"
+                            android:textColor="#0085ec"
+                            android:textSize="13dip"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="次"
+                            android:textStyle="bold"
+                            android:textColor="#000000"
+                            android:textSize="13dip"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/white"
                     android:paddingBottom="15dip"
                     android:paddingLeft="10dip"
-                    android:paddingTop="8dip">
+                    android:paddingTop="4dip">
 
                     <LinearLayout
                         android:id="@+id/ll_xianjia"
@@ -187,8 +354,7 @@
                         android:layout_height="30dip"
                         android:layout_alignParentLeft="true"
                         android:layout_centerHorizontal="true"
-                        android:layout_toLeftOf="@+id/ll_fenxiang"
-                        android:layout_marginRight="5dip"
+                        android:layout_marginRight="60dip"
                         android:orientation="horizontal"
                         android:weightSum="2">
 
@@ -280,7 +446,7 @@
                                 android:textStyle="bold"/>
                         </RelativeLayout>
                     </LinearLayout>
-
+<!--
                     <LinearLayout
                         android:id="@+id/ll_fenxiang"
                         android:layout_width="wrap_content"
@@ -306,6 +472,7 @@
                             android:src="@drawable/paipin_detail_share" />
 
                     </LinearLayout>
+      -->
                 </RelativeLayout>
 
 

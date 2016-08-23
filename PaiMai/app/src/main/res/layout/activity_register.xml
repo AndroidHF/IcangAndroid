@@ -230,7 +230,7 @@
                     android:layout_toRightOf="@id/tv_miaosu"
                     android:ellipsize="end"
                     android:singleLine="true"
-                    android:text="《会玩APP用户协议》"
+                    android:text="《荟玩APP用户协议》"
                     android:textColor="@color/tv_blue"
                     android:textSize="16dp"
                     android:textStyle="bold"/>

@@ -24,4 +24,6 @@
     <color name="price_red">#ff0000</color>
     <color name="title_backgroud">#efd12f</color>
     <color name="tv_show">#404040</color>
+    <color name="tv_textview_select">#000000</color>
+    <color name="tv_textview_noselect">#808080</color>
 </resources>

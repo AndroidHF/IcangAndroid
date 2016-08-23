@@ -75,7 +75,7 @@ public class XListViewFooter extends LinearLayout {
 	}
 
 	/**
-	 * show footer
+	 * initDialog footer
 	 */
 	public void show() {
 		LayoutParams lp = (LayoutParams) mContentView

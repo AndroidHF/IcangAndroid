@@ -18,8 +18,11 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
+import com.buycolle.aicang.bean.UserBean;
+import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.service.RegisterCodeTimerService;
 import com.buycolle.aicang.ui.activity.usercentermenu.setting.UserDealActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
@@ -27,6 +30,7 @@ import com.buycolle.aicang.util.Md5Util;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.Validator;
 import com.buycolle.aicang.util.superlog.JSONUtil;
+import com.google.gson.Gson;
 import com.squareup.okhttp.Request;
 
 import org.json.JSONException;
@@ -37,6 +41,7 @@ import java.lang.ref.WeakReference;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by joe on 16/3/3.
@@ -264,6 +269,7 @@ public class RegisterActivity extends BaseActivity {
                         UIHelper.t(mContext, "注册成功");
                         if (!isFromLogin) {
                             UIHelper.jump(mActivity, LoginActivity.class);
+                            //login();
                         }
                         finish();
                     } else {
@@ -349,5 +355,53 @@ public class RegisterActivity extends BaseActivity {
             tvGetCode.setEnabled(true);
             setBtnRegisterCaptchaClick(true);
         }
+    }
+
+    public void login(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("user_login_pwd", Md5Util.getEncodeByMD5(etPsw.getText().toString().trim()));
+            jsonObject.put("user_login_name", etPhone.getText().toString().trim());
+            jsonObject.put("platfrom", "android");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.login_byappordinaryuser(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+                showLoadingDialog("登录中...");
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                if (isFinishing())
+                    return;
+                dismissLoadingDialog();
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        JSONObject userInfoObj = resultObj.getJSONObject("resultInfos");
+                        UserBean userBean = new Gson().fromJson(userInfoObj.toString(), UserBean.class);
+                        LoginConfig.updateUserInfoPassWord(mContext, Md5Util.getEncodeByMD5(etPsw.getText().toString().trim()));
+                        LoginConfig.setUserInfo(mContext, userBean);
+                        EventBus.getDefault().post(new LoginEvent());
+                        setResult(RESULT_OK);
+                        finish();
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                if (isFinishing())
+                    return;
+                dismissLoadingDialog();
+                UIHelper.t(mContext, R.string.net_error);
+            }
+        });
     }
 }

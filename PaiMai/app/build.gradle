@@ -5,20 +5,20 @@ def releaseTime() {
 }
 
 android {
-    compileSdkVersion 22
-    buildToolsVersion "22.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
 
     signingConfigs {
         debug {
             keyAlias 'jiwa'
             keyPassword '123456'
-            storeFile file('D:/android/PaiMai/app/JW_key_Store')
+            storeFile file('D:/aicang/PaiMai/app/JW_key_Store')
             storePassword '123456'
         }
         release {
             keyAlias 'jiwa'
             keyPassword '123456'
-            storeFile file('D:/android/PaiMai/app/JW_key_Store')
+            storeFile file('D:/aicang/PaiMai/app/JW_key_Store')
             storePassword '123456'
         }
     }
@@ -27,9 +27,9 @@ android {
         multiDexEnabled = true
         applicationId "com.buycolle.aicang"
         minSdkVersion 11
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
-        versionName "1.0.2"
+        versionName "1.0.3"
         ndk {
             //设置支持的SO库架构
             abiFilters 'armeabi', 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
@@ -65,17 +65,17 @@ android {
         }
 
         release {
-            minifyEnabled true
+            minifyEnabled false
             zipAlignEnabled true
             shrinkResources true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             signingConfig signingConfigs.release
             applicationVariants.all { variant ->
                 variant.outputs.each { output ->
                     def outputFile = output.outputFile
                     if (outputFile != null && outputFile.name.endsWith('.apk')) {
                         //类似名为：quanchenghui_1.0_20151203_jiwa.apk
-                        def fileName = "paimai" + "_${defaultConfig.versionName}" + "_${variant.productFlavors[0].name}.apk"
+                        //def fileName = "paimai" + "_${defaultConfig.versionName}" + "_${variant.productFlavors[0].name}.apk"
+                        def fileName = "huiwan_buycolle" + "_${defaultConfig.versionName}" + ".apk"
                         output.outputFile = new File("${outputFile.parent}/release/", fileName)
                     }
                 }
@@ -92,13 +92,13 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:22.1.1'
-    compile 'com.android.support:support-v4:22.1.0'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:support-v4:23.4.0'
     compile 'de.hdodenhof:circleimageview:2.0.0'
     compile 'de.greenrobot:eventbus:2.4.0'
     compile 'com.android.support:multidex:1.0.0'
     compile 'com.github.bumptech.glide:glide:3.6.1'
-    compile 'com.android.support:recyclerview-v7:22.2.1'
+    compile 'com.android.support:recyclerview-v7:23.4.0'
     compile 'com.commit451:PhotoView:1.2.4'
     compile 'com.bigkoo:convenientbanner:2.0.2'
     compile 'com.github.kingideayou:tagcloudview:1.0.2'
@@ -110,6 +110,8 @@ dependencies {
     compile 'io.reactivex:rxandroid:1.0.1'
     compile 'io.reactivex:rxjava:1.0.14'
     compile project(':cropper')
+    compile project(':reyclertablayout')
+    compile project(':qAMasterSDK')
 }
 /***
  * add by :胡峰，个推的相关配置

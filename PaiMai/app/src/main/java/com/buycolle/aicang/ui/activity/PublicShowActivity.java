@@ -384,7 +384,7 @@ public class PublicShowActivity extends BaseActivity {
 //
 //                            }
 //                        });
-//                        noticeSingleDialog.show();
+//                        noticeSingleDialog.initDialog();
 //                        noticeSingleDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
 //                            @Override
 //                            public void onDismiss(DialogInterface dialog) {

@@ -258,13 +258,13 @@
                     <ImageView
                         android:layout_width="@dimen/show_menu_width"
                         android:layout_height="@dimen/show_menu_width"
-                        android:src="@drawable/show_menu_9" />
+                        android:src="@drawable/another_icon" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="18dip"
-                        android:text="定制"
+                        android:text="其他"
                         android:textColor="@color/white"
                         android:textSize="@dimen/commen_tv_size" />
                 </LinearLayout>

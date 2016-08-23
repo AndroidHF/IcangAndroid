@@ -86,7 +86,7 @@ public class BaseFragment extends Fragment {
 
     public boolean showLoadingDialog(String str) {
         if (!PhoneUtil.isNetworkAvailable(mActivity)) {
-//            Toast.makeText(mActivity, "网络异常，请检查网络!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mActivity, "网络异常，请检查网络!", Toast.LENGTH_SHORT).initDialog();
             return false;
         }
         if (mProgressDialog == null) {
@@ -99,7 +99,7 @@ public class BaseFragment extends Fragment {
 
     public boolean showLoadingDialog() {
         if (!PhoneUtil.isNetworkAvailable(mActivity)) {
-//            Toast.makeText(mActivity, "网络异常，请检查网络!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mActivity, "网络异常，请检查网络!", Toast.LENGTH_SHORT).initDialog();
             return false;
         }
         if (mProgressDialog == null) {

@@ -66,8 +66,10 @@ public class PushNotificationHelper {
         broadcastIntent.setAction("com.aicang.huiwan");
         broadcastIntent.putExtra("type", message.getType());
         broadcastIntent.putExtra("id", message.getKey_id());
+        //add by hufeng
+        //broadcastIntent.putExtra("ent_id",message.getEnt_id());
         PendingIntent pendingIntent = PendingIntent.getBroadcast(appContext, UUID.randomUUID().hashCode(), broadcastIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        //1：出价被超，2：中拍提醒 ，3：付款提醒，4：发货提醒 5:订阅即将开始的竞拍推送提醒 6:冻结用户提醒 7:解锁 8:离付款超时还差3小时提醒 9：卖家拍品被中拍提醒 10买家付款了，给卖家提醒 11:卖家身份审核成功
+        //1：出价被超，2：中拍提醒 ，3：付款提醒，4：发货提醒 5:订阅即将开始的竞拍推送提醒 6:冻结用户提醒 7:解锁 8:离付款超时还差3小时提醒 9：卖家拍品被中拍提醒 10买家付款了，给卖家提醒 11:卖家身份审核成功,13:关注的拍品还有30分钟结束
         mBuilder.setContentIntent(pendingIntent);
         notificationManager.notify(msgId, mBuilder.build());
         if (message.getType() == 11) {

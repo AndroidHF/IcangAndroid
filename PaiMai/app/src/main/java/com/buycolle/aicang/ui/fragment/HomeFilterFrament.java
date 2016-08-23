@@ -42,9 +42,9 @@ public class HomeFilterFrament extends BaseFragment {
     }
 
     private int getTitleBeanRes(String title) {
-        if ("个性化".equals(title)) {
+        if ("个性化".equals(title)){
             return R.drawable.main_menu_gexinghua;
-        } else if ("全部".equals(title)) {
+        }else if ("全部".equals(title)) {
             return R.drawable.main_menu_all;
         } else if ("漫画".equals(title)) {
             return R.drawable.show_menu_1_sel;
@@ -62,8 +62,8 @@ public class HomeFilterFrament extends BaseFragment {
             return R.drawable.show_menu_7_sel;
         } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8_sel;
-        } else if ("定制".equals(title)) {
-            return R.drawable.show_menu_9_sel;
+        } else if ("其他".equals(title)) {
+            return R.drawable.another_icon_sel;
         }
         return 0;
     }

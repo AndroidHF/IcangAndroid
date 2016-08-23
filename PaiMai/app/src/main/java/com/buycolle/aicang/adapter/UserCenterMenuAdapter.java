@@ -1,6 +1,7 @@
 package com.buycolle.aicang.adapter;
 
 import android.app.Activity;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,15 +30,33 @@ public class UserCenterMenuAdapter extends BaseAdapter {
     private boolean showMyBuyIcon = false;
     private boolean showMySaleIcon = false;
     private boolean showMyFocusIcon = false;
+    private boolean showMyFAQIcon = false;
+    private int my_buy_ing;
+    private int my_buy_end;
+    private int my_seller_ing;
+    private int my_seller_selt;
+    private int my_qa_q;
+    private int my_qa_a;
 
     public UserCenterMenuAdapter(Activity activity) {
         this.activity = activity;
     }
 
-    public void setStatus(int my_buy, int my_seller, int my_show) {
+    public void setStatus(int my_buy, int my_seller, int my_show,int my_qa) {
         showMyBuyIcon = my_buy == 1 ? true : false;
         showMySaleIcon = my_seller == 1 ? true : false;
         showMyFocusIcon = my_show == 1 ? true : false;
+        showMyFAQIcon = my_qa == 1 ? true : false;
+        notifyDataSetChanged();
+    }
+
+    public void  getStatus(int buy_ing,int buy_end,int seller_ing,int seller_selt,int qa_q,int qa_a){
+        my_buy_ing = buy_ing;
+        my_buy_end = buy_end;
+        my_seller_ing = seller_ing;
+        my_seller_selt = seller_selt;
+        my_qa_q = qa_q;
+        my_qa_a = qa_a;
         notifyDataSetChanged();
     }
 
@@ -71,18 +90,23 @@ public class UserCenterMenuAdapter extends BaseAdapter {
         ImageView iv_mybuy_notice_icon = (ImageView) contentView.findViewById(R.id.iv_mybuy_notice_icon);
         ImageView iv_sale_notice_icon = (ImageView) contentView.findViewById(R.id.iv_sale_notice_icon);
         ImageView iv_show_notice_icon = (ImageView) contentView.findViewById(R.id.iv_show_notice_icon);
+        ImageView iv_qa_notice_icon = (ImageView) contentView.findViewById(R.id.iv_myFQ_notice_icon);
 
 
         iv_mybuy_notice_icon.setVisibility(showMyBuyIcon ? View.VISIBLE : View.GONE);
         iv_sale_notice_icon.setVisibility(showMySaleIcon ? View.VISIBLE : View.GONE);
         iv_show_notice_icon.setVisibility(showMyFocusIcon ? View.VISIBLE : View.GONE);
+        iv_qa_notice_icon.setVisibility(showMyFAQIcon ? View.VISIBLE : View.GONE);
 
 
         menu1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (MainApplication.getInstance().isLogin()) {
-                    UIHelper.jump(activity, MyBuyActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("my_buy_ing",my_buy_ing);
+                    bundle.putInt("my_buy_end",my_buy_end);
+                    UIHelper.jump(activity, MyBuyActivity.class,bundle);
                 } else {
                     gotoLogin();
                 }
@@ -92,7 +116,10 @@ public class UserCenterMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (MainApplication.getInstance().isLogin()) {
-                    UIHelper.jump(activity, MySaleActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("my_seller_ing",my_seller_ing);
+                    bundle.putInt("my_seller_selt",my_seller_selt);
+                    UIHelper.jump(activity, MySaleActivity.class,bundle);
                 } else {
                     gotoLogin();
                 }
@@ -122,7 +149,10 @@ public class UserCenterMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
                 if (MainApplication.getInstance().isLogin()) {
-                    UIHelper.jump(activity, MyFAQActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("my_qa_q",my_qa_q);
+                    bundle.putInt("my_qa_a",my_qa_a);
+                    UIHelper.jump(activity, MyFAQActivity.class,bundle);
                 } else {
                     gotoLogin();
                 }

@@ -225,6 +225,10 @@ public class AppUrl {
         public static final String JPUSHRECORD_GETTIPBYAPP = BASE_URL + "jPushRecord_getTipByApp.action";
     //          更新叹号信息（设置已读）
         public static final String JPUSHRECORD_UPDATETIPBYAPP = BASE_URL + "jPushRecord_updateTipByApp.action";
+    //          个人中心更新感叹号（设置已读）
+        public static final String JPUSHRECORD_DELETEREDTIPBYAPP = BASE_URL+"jPushRecord_deleteRedTipByApp.action";
+    //          推送更新小红点
+        public static final String JPUSHRECORD_UPDATEREDTIPBYAPP  =BASE_URL+"jPushRecord_updateRedTipByApp.action";
     //           获取设置了下次同样物流的物流
         public static final String SELLERFAHUO_GETSAMEFAHUO = BASE_URL + "sellerFahuo_getSameFaHuo.action";
     //            重新上架
@@ -237,5 +241,19 @@ public class AppUrl {
     //add by hufeng :解锁优惠码传递数据
     //public static final String COUPON_FAILNOTIFYBYAPP = BASE_URL + "coupon_failNotifyByApp.action";
 
+    //首页筛选排序具体筛选和排序的接口
+    public static final  String DIRTIONARY_GETFILTERANDSORTLISTBYAPP = BASE_URL+"dirtionary_getFilterAndSortListByApp.action";
 
+    public static final  String SPLASH_SHOUFA_IMAGE = "http://download.buycolle.com/android_icon/shoufa.png";
+    public static final String SPLASH_360_IAMGE = "http://download.buycolle.com/android_icon/360.png";
+
+    //获取活动界面的bannner图和底纹的图片
+    public static final String APPEVENT_GETEVENTBANNERBYAPP = BASE_URL+"appEvent_getEventBannerByApp.action";
+
+    //获取专题活动界面的商品列表
+
+    public static final String APPEVENT_GETEVENTPRODUCTLISTBYAPP = BASE_URL+"appEvent_getEventProductListByApp.action";
+
+    // 首页商品筛选
+    public static final String GET_FILTER_AND_SORT_LIST_BY_APP = BASE_URL + "product_getMainPageListByAPP.action";
 }

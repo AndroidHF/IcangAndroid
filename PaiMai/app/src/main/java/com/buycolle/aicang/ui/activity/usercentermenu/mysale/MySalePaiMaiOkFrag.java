@@ -28,6 +28,7 @@ import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.MySalePaiMainOkBean;
+import com.buycolle.aicang.ui.activity.ConnectionActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiDealActivity;
 import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
 import com.buycolle.aicang.ui.activity.WuLiuMsgAcitivty;
@@ -291,7 +292,8 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
             ViewHolder holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.row_mysale_paimaiok_item, null);
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.row_mysale_paimaiok_item_new, null);
+
 
                 holder.iv_paimai = (ImageView) convertView.findViewById(R.id.iv_paimai);
                 holder.iv_rate = (ImageView) convertView.findViewById(R.id.iv_rate);
@@ -319,6 +321,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 holder.tv_good_yikoujia_price = (TextView) convertView.findViewById(R.id.tv_good_yikoujia_price);
                 holder.tv_good_deal_price = (TextView) convertView.findViewById(R.id.tv_good_deal_price);
                 holder.tv_order_no = (TextView) convertView.findViewById(R.id.tv_order_no);
+                holder.tv_callMaijia = (TextView) convertView.findViewById(R.id.tv_call_maijia);
 
                 //add by :胡峰，包邮不包邮的提醒控件
                 holder.tv_baoyou_show = (TextView) convertView.findViewById(R.id.tv_baoyou_show);
@@ -457,6 +460,13 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 }
             });
 
+            holder.tv_callMaijia.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UIHelper.jump(mActivity, ConnectionActivity.class);
+                }
+            });
+
             return convertView;
         }
 
@@ -501,6 +511,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
 
             //add by :胡峰，包邮不包邮提醒
             TextView tv_baoyou_show;
+            TextView tv_callMaijia;
 
         }
 

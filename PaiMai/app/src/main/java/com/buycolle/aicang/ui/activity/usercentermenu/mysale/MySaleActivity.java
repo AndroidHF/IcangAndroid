@@ -78,7 +78,14 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
     TextView tvShenheStatus;
     @Bind(R.id.vp_main_container)
     FixedViewPager vpMainContainer;
+    @Bind(R.id.iv_paimaiing_notice_icon)
+    ImageView point_myselling;
+    @Bind(R.id.iv_paimai_finish_notice_icon)
+    ImageView point_maysell_finish;
     private ArrayList<TextView> tvArrayList;
+
+    private int my_seller_ing;
+    private int my_seller_selt;
 
     int cost;
 
@@ -201,6 +208,8 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         paiMainFinishFrag = new MySalePaiMaiOkFrag();
         liuPaiFrag = new MySaleLiuPaiFrag();
         shenheStatusFrag = new MySaleShenHeFrag();
+        my_seller_ing = _Bundle.getInt("my_seller_ing");
+        my_seller_selt = _Bundle.getInt("my_seller_selt");
         fragList.add(paiMainIngFrag);
         fragList.add(paiMainFinishFrag);
         fragList.add(liuPaiFrag);
@@ -218,13 +227,14 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         vpMainContainer.setAdapter(pagerAdapter);
         vpMainContainer.setOffscreenPageLimit(fragList.size() - 1);
         vpMainContainer.setCurrentItem(0);
-        mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(),profileImage);
+        initStatus(0);
+        mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
         tvName.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
 
         if(_Bundle!=null){
             if(_Bundle.getBoolean("isPush")){
                 //推送界面的跳转
-                if (_Bundle.getInt("type") == 4 || _Bundle.getInt("type") == 9 || _Bundle.getInt("type") == 10){//发货、卖家东西卖出、买家付款
+                if (_Bundle.getInt("type") == 9 || _Bundle.getInt("type") == 10){//发货、卖家东西卖出、买家付款
                     Log.i("type-----",_Bundle.getInt("type")+"");
                     vpMainContainer.setCurrentItem(1);
                     initStatus(1);
@@ -232,7 +242,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
             }
         }
         loadCostData();
-        setTanNotice();
+        //setTanNotice();
     }
 
 
@@ -280,6 +290,37 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         for (int i = 0; i < tvArrayList.size(); i++) {
             if (index == i) {
                 tvArrayList.get(i).setBackgroundResource(R.drawable.shape_orange_black);
+                if (i == 0){//表示拍卖中的被选中
+                    point_myselling.setVisibility(View.GONE);
+                    my_seller_ing = 0;
+                    if (my_seller_selt > 0){
+                        point_maysell_finish.setVisibility(View.VISIBLE);
+                    }else {
+                        point_maysell_finish.setVisibility(View.GONE);
+                    }
+                    UpdateRedTipNotice("my_seller_ing");
+                }else if (i == 1){
+                    point_maysell_finish.setVisibility(View.GONE);
+                    my_seller_selt = 0;
+                    if (my_seller_ing > 0){
+                        point_myselling.setVisibility(View.VISIBLE);
+                    }else {
+                        point_myselling.setVisibility(View.GONE);
+                    }
+                    UpdateRedTipNotice("my_seller_selt");
+                }else {
+                    if (my_seller_selt > 0){
+                        point_maysell_finish.setVisibility(View.VISIBLE);
+                    }else {
+                        point_maysell_finish.setVisibility(View.GONE);
+                    }
+
+                    if (my_seller_ing > 0){
+                        point_myselling.setVisibility(View.VISIBLE);
+                    }else {
+                        point_myselling.setVisibility(View.GONE);
+                    }
+                }
             } else {
                 tvArrayList.get(i).setBackgroundResource(R.drawable.shape_white_black);
             }
@@ -307,7 +348,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
-                        EventBus.getDefault().post(new UpdateTanNoticeEvent(0));
+                        EventBus.getDefault().post(new UpdateTanNoticeEvent(1));
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                     }
@@ -364,5 +405,46 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         if (null != mTencent) {
             mTencent.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void UpdateRedTipNotice(String clean_tip){
+        if(!LoginConfig.isLogin(mContext)){
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("clean_tip",clean_tip);
+            jsonObject.put("self_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.jpushrecord_deleteredtipbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        EventBus.getDefault().post(new UpdateTanNoticeEvent(0));
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+
+            }
+        });
+
     }
 }

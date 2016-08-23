@@ -15,13 +15,25 @@
         android:visibility="gone">
 
         <ImageView
-            android:layout_width="15dip"
-            android:layout_height="15dip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:src="@drawable/commen_back_white" />
     </FrameLayout>
 
+    <TextView
+        android:id="@+id/left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="100dip"
+        android:text="左旋转"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
+
     <LinearLayout
+        android:id="@+id/ll_pic"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
@@ -32,7 +44,7 @@
             android:layout_width="25dip"
             android:layout_height="25dip"
             android:src="@drawable/usercenter_menu_1"
-            android:visibility="gone" />
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/tv_common_topbar_title"
@@ -46,6 +58,18 @@
             android:textColor="@color/white"
             android:textSize="18dip" />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="50dip"
+        android:layout_toRightOf="@+id/ll_pic"
+        android:text="右旋转"
+        android:textColor="@color/white"
+        android:visibility="gone"/>
 
     <FrameLayout
         android:layout_width="50dip"
@@ -72,6 +96,37 @@
             android:background="@drawable/delete"
             />
 
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/paipai_detai"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginRight="15dip"
+        android:visibility="gone">
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/iv_store"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/collection_01"/>
+
+            <ImageView
+                android:id="@+id/iv_share"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dip"
+                android:layout_gravity="center"
+                android:background="@drawable/iv_share_new"/>
+        </LinearLayout>
     </FrameLayout>
 
 

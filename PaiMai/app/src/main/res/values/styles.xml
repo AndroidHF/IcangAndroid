@@ -4,6 +4,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
     </style>
+
     <style name="AppLaucherTheme" parent="AppTheme">
         <item name="android:windowNoTitle">true</item>
         <item name="android:windowFullscreen">true</item>
@@ -35,6 +36,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
     <style name="animation_bottom_dialog" parent="android:Animation">
         <item name="@android:windowEnterAnimation">@anim/dp_bottom_dialog_enter</item>
         <item name="@android:windowExitAnimation">@anim/dp_bottom_dialog_exit</item>
@@ -44,6 +46,7 @@
         <item name="@android:windowEnterAnimation">@anim/grow_from_top</item>
         <item name="@android:windowExitAnimation">@anim/shrink_from_bottom</item>
     </style>
+
     <style name="Animations_PopUpMenu_Center">
         <item name="@android:windowEnterAnimation">@anim/grow_from_bottom</item>
         <item name="@android:windowExitAnimation">@anim/shrink_from_top</item>
@@ -53,6 +56,7 @@
         <item name="@android:windowEnterAnimation">@anim/dp_left_dialog_enter</item>
         <item name="@android:windowExitAnimation">@anim/dp_left_dialog_exit</item>
     </style>
+
     <style name="show_menu_dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -62,6 +66,7 @@
         <item name="android:colorBackgroundCacheHint">@null</item>
         <item name="android:windowFullscreen">true</item>
     </style>
+
     <style name="search_menu_dialog">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:windowContentOverlay">@null</item>
@@ -77,6 +82,14 @@
         <item name="android:layout_height">@dimen/panel_height</item>
         <item name="android:background">#fffefefe</item>
         <item name="android:orientation">vertical</item>
+    </style>
+
+    <style name="OptDialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/transparent</item>
     </style>
 
 </resources>

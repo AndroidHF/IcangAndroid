@@ -19,6 +19,7 @@ import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.bean.HomeTopAddBeanNew;
 import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
+import com.buycolle.aicang.ui.activity.SubjectActivity;
 import com.buycolle.aicang.util.UIHelper;
 
 import java.util.ArrayList;
@@ -76,7 +77,7 @@ public class HomeAddImagePagerAdapter extends RecyclingPagerAdapter {
         holder.iv_item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //动作类型 1：url链接 2：拍品广告 3:纯图片
+                //动作类型 1：url链接 2：拍品广告 3:纯图片 4:活动界面
                 if (adds.get(getPosition(position)).getAction_type() == 1) {
                     Uri uri = Uri.parse(adds.get(getPosition(position)).getBanner_link());
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
@@ -86,6 +87,12 @@ public class HomeAddImagePagerAdapter extends RecyclingPagerAdapter {
                     Bundle bundle = new Bundle();
                     bundle.putInt("product_id", adds.get(getPosition(position)).getTarget_id());
                     UIHelper.jump(activity, PaiPinDetailActivity.class, bundle);
+                }
+
+                if (adds.get(getPosition(position)).getAction_type() == 4){
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("event_id",adds.get(getPosition(position)).getTarget_id());
+                    UIHelper.jump(activity, SubjectActivity.class,bundle);
                 }
             }
         });

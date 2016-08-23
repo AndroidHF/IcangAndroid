@@ -101,42 +101,92 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_paimai_ing"
+
+        <RelativeLayout
             android:layout_width="105dip"
             android:layout_height="25dip"
             android:layout_marginRight="-1dip"
-            android:background="@drawable/shape_orange_black"
-            android:gravity="center"
-            android:text="拍卖中"
-            android:textColor="@color/black"
-            android:textSize="@dimen/commen_tv_size_smaller"
-            android:textStyle="bold" />
+            >
+            <TextView
+                android:id="@+id/tv_paimai_ing"
+                android:layout_width="105dip"
+                android:layout_height="25dip"
+                android:background="@drawable/shape_orange_black"
+                android:gravity="center"
+                android:text="拍卖中"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size_smaller"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_paimai_finish"
+            <ImageView
+                android:id="@+id/iv_paimaiing_notice_icon"
+                android:layout_width="6dip"
+                android:layout_height="6dip"
+                android:visibility="gone"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="22dip"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dip"
+                android:src="@drawable/point" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="105dip"
             android:layout_height="25dip"
             android:layout_marginLeft="-2dip"
             android:layout_marginRight="-2dip"
-            android:background="@drawable/shape_white_black"
-            android:gravity="center"
-            android:text="已落拍"
-            android:textColor="@color/black"
-            android:textSize="@dimen/commen_tv_size_smaller"
-            android:textStyle="bold" />
+            >
+            <TextView
+                android:id="@+id/tv_paimai_finish"
+                android:layout_width="105dip"
+                android:layout_height="25dip"
+                android:background="@drawable/shape_white_black"
+                android:gravity="center"
+                android:text="已落拍"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size_smaller"
+                android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_paimai_not_get"
+            <ImageView
+                android:id="@+id/iv_paimai_finish_notice_icon"
+                android:layout_width="6dip"
+                android:layout_height="6dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="22dip"
+                android:visibility="gone"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dip"
+                android:src="@drawable/point" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
             android:layout_width="105dip"
             android:layout_height="25dip"
             android:layout_marginLeft="-1dip"
-            android:background="@drawable/shape_white_black"
-            android:gravity="center"
-            android:text="未拍到"
-            android:textColor="@color/black"
-            android:textSize="@dimen/commen_tv_size_smaller"
-            android:textStyle="bold" />
+            >
+            <TextView
+                android:id="@+id/tv_paimai_not_get"
+                android:layout_width="105dip"
+                android:layout_height="25dip"
+                android:background="@drawable/shape_white_black"
+                android:gravity="center"
+                android:text="未拍到"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size_smaller"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/iv_paimai_noget_notice_icon"
+                android:layout_width="6dip"
+                android:layout_height="6dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="22dip"
+                android:visibility="gone"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dip"
+                android:src="@drawable/point" />
+        </RelativeLayout>
     </LinearLayout>
 
     <com.buycolle.aicang.ui.view.FixedViewPager

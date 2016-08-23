@@ -14,11 +14,11 @@ import java.net.URL;
  * Created by hufeng on 2016/7/26.
  */
 public class DownLoadManager {
-    public static File getFileFromServer(String path, ProgressDialog pd) throws Exception{
+    public static File getFileFromServer(String path, ProgressDialog pd) throws Exception {
         //如果相等的话表示当前的sdcard挂载在手机上并且是可用的
-        if(Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             URL url = new URL(path);
-            HttpURLConnection conn =  (HttpURLConnection) url.openConnection();
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setConnectTimeout(5000);
             //获取到文件的大小
             pd.setMax(conn.getContentLength());
@@ -26,12 +26,12 @@ public class DownLoadManager {
             File file = new File(Environment.getExternalStorageDirectory(), "updata.apk");
             FileOutputStream fos = new FileOutputStream(file);
             BufferedInputStream bis = new BufferedInputStream(is);
-            byte[] buffer = new byte[1024*8];
-            int len ;
-            int total=0;
-            while((len =bis.read(buffer))!=-1){
+            byte[] buffer = new byte[1024 * 8];
+            int len;
+            int total = 0;
+            while ((len = bis.read(buffer)) != -1) {
                 fos.write(buffer, 0, len);
-                total+= len;
+                total += len;
                 //获取当前下载量
                 pd.setProgress(total);
             }
@@ -39,9 +39,9 @@ public class DownLoadManager {
             bis.close();
             is.close();
             return file;
-        }
-        else{
+        } else {
             return null;
         }
     }
+
 }

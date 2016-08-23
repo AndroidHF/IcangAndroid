@@ -1,0 +1,138 @@
+[
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_report_success.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_report_success.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_dialog_footer.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_dialog_footer.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem_header.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem_header.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_title.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_title.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_header.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_header.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_page_credentials.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_page_credentials.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_header_beta.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_header_beta.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_header_quick.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_header_quick.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_user.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_user.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_description.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_description.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles_header.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles_header.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_bugtag_hint.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_bugtag_hint.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_dialog_generic.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_dialog_generic.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_editor.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_editor.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_quick.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_quick.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_header_normal.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_header_normal.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_beta_login_page.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_beta_login_page.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_screenshot_loader.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_screenshot_loader.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_report.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_report.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_editor.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_editor.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_forgot_passcode.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_forgot_passcode.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback_options.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback_options.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_feedback.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_feedback.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_screenshot_element.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_screenshot_element.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_error_box.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_error_box.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles_input.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles_input.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycle.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycle.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_testcycles_list.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_testcycles_list.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_login_normal.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_login_normal.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem_sub_header.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem_sub_header.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_problem_description.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_problem_description.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout\\qamaster_welcome_screen.xml",
+        "source": "D:\\PaiMai\\qAMasterSDK\\build\\intermediates\\bundles\\debug\\res\\layout\\qamaster_welcome_screen.xml"
+    }
+]

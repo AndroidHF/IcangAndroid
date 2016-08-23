@@ -7,7 +7,6 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.PointF;
 import android.util.DisplayMetrics;
-import android.util.FloatMath;
 import android.view.MotionEvent;
 import android.widget.ImageView;
 
@@ -41,7 +40,6 @@ public class TouchImageView extends ImageView {
 
     public TouchImageView(Activity activity,Bitmap bitmap) {
         super(activity);
-        //gintama = BitmapFactory.decodeResource(getResources(), gintama);
         gintama = bitmap;
         DisplayMetrics dm = new DisplayMetrics();
         activity.getWindowManager().getDefaultDisplay().getMetrics(dm);
@@ -141,7 +139,7 @@ public class TouchImageView extends ImageView {
     private float spacing(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
-        return FloatMath.sqrt(x * x + y * y);
+        return (float) Math.sqrt(x * x + y * y);
     }
 
     // 取手势中心点

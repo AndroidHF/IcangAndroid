@@ -222,6 +222,7 @@ public class TabScrollView extends ViewGroup {
             LinearLayout tabView = (LinearLayout) LayoutInflater.from(getContext()).inflate(R.layout.tab_item, null);
             ImageView ivIcon = (ImageView) tabView.findViewById(R.id.iv_icon);
             TextView mTvItem = (TextView) tabView.findViewById(R.id.tv_item);
+            LinearLayout ll_line = (LinearLayout) tabView.findViewById(R.id.ll_line);
             mTvItem.setTextColor(ContextCompat.getColor(getContext(), tabTextColor));
             mTvItem.setTextSize(tabTextSize);
             if (!mInfo.isHideText()) {

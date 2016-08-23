@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,16 +19,21 @@ import android.view.WindowManager;
 
 import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
+import com.buycolle.aicang.adapter.SubjectPagerAdapter;
 import com.buycolle.aicang.bean.CityModel;
 import com.buycolle.aicang.bean.DistrictModel;
 import com.buycolle.aicang.bean.ProvinceModel;
+import com.buycolle.aicang.ui.fragment.SubjectFragment;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
+import com.buycolle.aicang.ui.view.mainScrole.ScrollAbleFragment;
+import com.buycolle.aicang.ui.view.mainScrole.ScrollableLayout;
 import com.buycolle.aicang.util.PhoneUtil;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.XmlParserHandler;
 
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +54,7 @@ public class BaseActivity extends AppCompatActivity {
     protected View statusView = null;
     public FragmentManager mFragmentManager;
     protected Bundle _Bundle;
+    protected Bundle _Bundle2;
 
     /**
      * 所有省
@@ -87,6 +94,7 @@ public class BaseActivity extends AppCompatActivity {
         mApplication.addActivity(this);
         mFragmentManager = getSupportFragmentManager();
         _Bundle = getIntent().getExtras();
+        _Bundle2 = getIntent().getExtras();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
             Window window = getWindow();
@@ -132,7 +140,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean showLoadingDialog(String str) {
         if (!PhoneUtil.isNetworkAvailable(this)) {
-//            Toast.makeText(this, "网络异常，请检查网络!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "网络异常，请检查网络!", Toast.LENGTH_SHORT).initDialog();
             return false;
         }
 
@@ -146,7 +154,7 @@ public class BaseActivity extends AppCompatActivity {
 
     protected boolean showLoadingDialog() {
         if (!PhoneUtil.isNetworkAvailable(this)) {
-//            Toast.makeText(this, "网络异常，请检查网络!", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(this, "网络异常，请检查网络!", Toast.LENGTH_SHORT).initDialog();
             return false;
         }
 
@@ -275,6 +283,16 @@ public class BaseActivity extends AppCompatActivity {
     }
     protected void gotoLogin() {
         UIHelper.jump(this, LoginActivity.class);
+    }
+
+    final ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
+    protected ScrollAbleFragment subjectFragment;
+    public void initSubFragmentPager( ViewPager viewPager,ScrollableLayout mScrollLayout,int index) {
+        subjectFragment = SubjectFragment.newInstance(index);
+        fragmentList.add(subjectFragment);
+        viewPager.setAdapter(new SubjectPagerAdapter(getSupportFragmentManager(), fragmentList));
+        mScrollLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(0));
+        viewPager.setCurrentItem(0);
     }
 
 }

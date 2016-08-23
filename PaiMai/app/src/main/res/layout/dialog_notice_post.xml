@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="30dip"
+    android:paddingRight="30dip">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_black"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title"
+            android:layout_width="match_parent"
+            android:layout_height="50dip"
+            android:gravity="center"
+            android:singleLine="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/commen_tv_size"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="35dip"
+            android:background="@color/orange"
+            android:paddingLeft="30dip"
+            android:paddingTop="10dip"
+            android:textColor="@color/black_tv"
+            android:text="您当前设定的出品价格如下："
+            android:textSize="@dimen/commen_tv_size"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:orientation="horizontal"
+            android:background="@color/orange"
+            android:paddingLeft="60dip"
+            >
+            <TextView
+                android:id="@+id/tv_start_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black_tv"
+                android:gravity="center"
+                android:text="起拍价："
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_start_price"
+                android:layout_width="60dip"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:text="99999"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/tv_start_title"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black_tv"
+                android:text="元"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/tv_start_price"
+                />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="20dip"
+            android:orientation="horizontal"
+            android:background="@color/orange"
+            android:paddingLeft="60dip"
+            >
+            <TextView
+                android:id="@+id/tv_end_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="@color/black_tv"
+                android:gravity="center"
+                android:text="一口价："
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/tv_end_price"
+                android:layout_width="60dip"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/red"
+                android:text="9"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/tv_end_title"
+                />
+            <TextView
+                android:id="@+id/tv_end_yuan"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textColor="@color/black_tv"
+                android:visibility="gone"
+                android:text="元"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold"
+                android:layout_toRightOf="@id/tv_end_price"
+                />
+        </RelativeLayout>
+
+
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="115dip"
+            android:background="@color/orange"
+            android:textColor="@color/black_tv"
+            android:paddingTop="5dip"
+            android:paddingLeft="30dip"
+            android:paddingRight="30dip"
+            android:text="请再次核对您的出品设定，拍品一旦提交审核，您将不能进行编辑或下架操作。\n若拍品成功出售，您必须按照成交价格进行发货处理。"
+            android:textSize="@dimen/commen_tv_size" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dip"
+            android:background="@color/orange"
+            android:paddingBottom="10dip"
+            android:gravity="center"
+            android:textColor="@color/black_tv"
+            android:text="是否确认提交？"
+            android:textSize="@dimen/commen_tv_size"/>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="70dip"
+            android:background="@drawable/shape_white_round_bottom"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/commen_padding"
+            android:paddingRight="@dimen/commen_padding">
+
+
+            <TextView
+                android:id="@+id/tv_cancle"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginRight="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/bg_cancle"
+                android:gravity="center"
+                android:text="取消"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tv_sure"
+                android:layout_width="match_parent"
+                android:layout_height="40dip"
+                android:layout_marginLeft="8dip"
+                android:layout_weight="1"
+                android:background="@drawable/bg_sure"
+                android:gravity="center"
+                android:text="确定"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

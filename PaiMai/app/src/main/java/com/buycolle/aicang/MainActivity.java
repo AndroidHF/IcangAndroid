@@ -1,8 +1,6 @@
 package com.buycolle.aicang;
 
-import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -26,12 +24,13 @@ import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.mybuy.MyBuyActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.mysale.MySaleActivity;
 import com.buycolle.aicang.ui.fragment.BaseFragment;
-import com.buycolle.aicang.ui.fragment.MainFragment;
+import com.buycolle.aicang.ui.fragment.MainNewFragment;
 import com.buycolle.aicang.ui.fragment.PostFragment;
 import com.buycolle.aicang.ui.fragment.ShowOffFragment;
 import com.buycolle.aicang.ui.fragment.UserCenterFragment;
 import com.buycolle.aicang.ui.fragment.event.EventFragment;
 import com.buycolle.aicang.ui.view.FixedViewPager;
+import com.buycolle.aicang.ui.view.UpdateDialog;
 import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.DoubleClickExitHelper;
 import com.buycolle.aicang.util.DownLoadManager;
@@ -42,6 +41,8 @@ import com.buycolle.aicang.util.UpdataInfoParser;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.buycolle.aicang.util.superlog.KLog;
 import com.squareup.okhttp.Request;
+import com.testin.agent.TestinAgent;
+import com.testin.agent.TestinAgentConfig;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -125,6 +126,18 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        TestinAgent.init(this,"1e0bc70c1b8bbccb62730c990d39b817","荟玩崩溃测试");
+        TestinAgentConfig config = new TestinAgentConfig.Builder(mContext)
+                .withAppKey("1e0bc70c1b8bbccb62730c990d39b817")            // Appkey of your appliation, required
+                .withDebugModel(true)       // Output the crash log in local if you open debug mode
+                .withErrorActivity(true)    // Output the activity info in crash or error log
+                .withCollectNDKCrash(true)  // Collect NDK crash or not if you use our NDK
+                .withOpenCrash(true)        // Monitor crash if true
+                .withReportOnlyWifi(true)   // Report data only on wifi mode
+                .withReportOnBack(true)     // allow to report data when application in background
+                .build();
+        TestinAgent.init(config);
+        TestinAgent.setLocalDebug(true);//设置为true，则在log中打印崩溃堆栈
         try {
             localVersion = getVersionName();
             Log.i("versionname",localVersion);
@@ -175,14 +188,29 @@ public class MainActivity extends BaseActivity {
                     initStatus(1);
                     mainViewPager.setCurrentItem(currentIndex, false);
                 }
-                if (_Bundle.getInt("type") == 5) {
-                    UIHelper.t(mContext, "还有20分钟拍卖会就开始");
-                }
+//                if (_Bundle.getInt("type") == 5) {
+//                    //UIHelper.t(mContext, "还有20分钟拍卖会就开始");
+//                    currentIndex = 1;
+//                    initStatus(1);
+//                    mainViewPager.setCurrentItem(currentIndex, false);
+//                }
                 if (_Bundle.getInt("type") == 9 || _Bundle.getInt("type") == 10) {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("isPush", true);
                     bundle.putInt("type", _Bundle.getInt("type"));
                     UIHelper.jump(mActivity, MySaleActivity.class, bundle);
+                }
+
+                if (_Bundle.getInt("type") == 11){
+                    currentIndex = 2;
+                    initStatus(2);
+                    mainViewPager.setCurrentItem(currentIndex, false);
+                }
+
+                if (_Bundle.getInt("type") == 12){
+                    currentIndex = 0;
+                    initStatus(0);
+                    mainViewPager.setCurrentItem(currentIndex, false);
                 }
 
             }
@@ -219,8 +247,6 @@ public class MainActivity extends BaseActivity {
         currentIndex = 2;
         initStatus(2);
         mainViewPager.setCurrentItem(currentIndex, false);
-
-
     }
 
     @OnClick(R.id.iv_main_menu_4)
@@ -235,6 +261,7 @@ public class MainActivity extends BaseActivity {
         currentIndex = 4;
         initStatus(4);
         mainViewPager.setCurrentItem(currentIndex, false);
+        usetFrag.refreshByState(0);
     }
 
     private void initStatus(int index) {
@@ -252,7 +279,9 @@ public class MainActivity extends BaseActivity {
 
     private void initViewPager() {
         fragList = new ArrayList<BaseFragment>();
-        homeFrag = new MainFragment();
+        //homeFrag = new MainFragment();
+        //homeFrag = new MainFragmentNew();
+        homeFrag = new MainNewFragment();
         eventFrag = new EventFragment();
         postFrag = new PostFragment();
         showFrag = new ShowOffFragment();
@@ -263,9 +292,26 @@ public class MainActivity extends BaseActivity {
         fragList.add(showFrag);
         fragList.add(usetFrag);
         pagerAdapter = new MainPagerAdapter(getSupportFragmentManager(), fragList);
+        //mainViewPager.setIsScrollabe(true);
         mainViewPager.setAdapter(pagerAdapter);
         mainViewPager.setOffscreenPageLimit(fragList.size() - 1);
         mainViewPager.setCurrentItem(currentIndex);
+//        mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+//            @Override
+//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+//
+//            }
+//
+//            @Override
+//            public void onPageSelected(int position) {
+//                initStatus(position);
+//            }
+//
+//            @Override
+//            public void onPageScrollStateChanged(int state) {
+//
+//            }
+//        });
     }
 
 
@@ -372,8 +418,8 @@ public class MainActivity extends BaseActivity {
             super.handleMessage(msg);
             switch (msg.what) {
                 case UPDATA_NONEED:
-                    Toast.makeText(getApplicationContext(), "当前已经是最新版本，不需要更新",
-                            Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(getApplicationContext(), "当前已经是最新版本，不需要更新",
+//                            Toast.LENGTH_SHORT).initDialog();
                     break;
                 case UPDATA_CLIENT:
                     //对话框通知用户升级程序
@@ -402,24 +448,35 @@ public class MainActivity extends BaseActivity {
 	 *  4.对话框show()出来
 	 */
     protected void showUpdataDialog() {
-        AlertDialog.Builder builer = new AlertDialog.Builder(this);
-        builer.setTitle("版本升级");
-        builer.setMessage(info.getContext());
-        //当点确定按钮时从服务器上下载 新的apk 然后安装   װ
-        builer.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                Log.i(TAG, "下载apk,更新");
+//        AlertDialog.Builder builer = new AlertDialog.Builder(this);
+//        builer.setTitle("版本升级");
+//        builer.setMessage(info.getContext());
+//        //当点确定按钮时从服务器上下载 新的apk 然后安装   װ
+//        builer.setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                Log.i(TAG, "下载apk,更新");
+//                downLoadApk();
+//            }
+//        });
+//        builer.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//                // TODO Auto-generated method stub
+//                //do sth
+//            }
+//        });
+//        AlertDialog dialog = builer.create();
+//        dialog.initDialog();
+        new UpdateDialog(mContext,"版本升级",info.getContext(),info.getVersion()).setCallBack(new UpdateDialog.CallBack() {
+            @Override
+            public void ok() {
                 downLoadApk();
             }
-        });
-        builer.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                //do sth
+
+            @Override
+            public void cancle() {
+
             }
-        });
-        AlertDialog dialog = builer.create();
-        dialog.show();
+        }).show();
     }
 
 

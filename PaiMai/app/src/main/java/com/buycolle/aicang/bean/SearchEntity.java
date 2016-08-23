@@ -12,7 +12,7 @@ public class SearchEntity {
     private int id;
     @DatabaseField(columnName = "keyword")
     private String keyword;
-    @DatabaseField(columnName = "type")//"good" even show
+    @DatabaseField(columnName = "type")//"good" even initDialog
     private String type;
 
     public int getId() {

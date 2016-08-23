@@ -5,6 +5,16 @@ package com.buycolle.aicang.bean;
  */
 public class UpdateInfo {
     private String version;
+
+    @Override
+    public String toString() {
+        return "UpdateInfo{" +
+                "version='" + version + '\'' +
+                ", url='" + url + '\'' +
+                ", context='" + context +
+                '}';
+    }
+
     private String url;
     private String context;
 

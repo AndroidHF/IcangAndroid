@@ -76,12 +76,22 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
     TextView tvPaimaiNotGet;
     @Bind(R.id.vp_main_container)
     FixedViewPager vpMainContainer;
+    @Bind(R.id.iv_paimaiing_notice_icon)
+    ImageView point_paimaiing;
+    @Bind(R.id.iv_paimai_finish_notice_icon)
+    ImageView point_paimai_finish;
+    @Bind(R.id.iv_paimai_noget_notice_icon)
+    ImageView point_paimai_noget;
 
     private ArrayList<TextView> tvArrayList;
+    private ArrayList<ImageView> imageViewArrayList;
 
     private BaseFragment paiMainIngFrag, paiMainFinishFrag, paiNoFrag;
     private List<BaseFragment> fragList;
     private MainPagerAdapter pagerAdapter;
+
+    private int my_buy_ing;
+    private int my_buy_end;
 
     private boolean isShowTotal = false;
 
@@ -90,11 +100,13 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
     @OnClick(R.id.tv_paimai_ing)
     public void paiMainIng() {
         initStatus(0);
+
     }
 
     @OnClick(R.id.tv_paimai_finish)
     public void paiMainFinish() {
         initStatus(1);
+
     }
 
     @OnClick(R.id.tv_paimai_not_get)
@@ -133,23 +145,23 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
 
     private void shareToSina() {
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        ShareUtil.shareToSina(this, mWeiboShareAPI, bitmap, Constans.SHARE_URL, "我在会玩总共剁了" + cost + "元");
+        ShareUtil.shareToSina(this, mWeiboShareAPI, bitmap, Constans.SHARE_URL, "我在荟玩总共剁了" + cost + "元");
 
     }
 
     private void shareToWechat() {
 
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        ShareUtil.shareToWeChat(this, thumb, Constans.SHARE_URL, "我在会玩总共剁了" + cost + "元", "下载会玩，一言不合就剁手");
+        ShareUtil.shareToWeChat(this, thumb, Constans.SHARE_URL, "我在荟玩总共剁了" + cost + "元", "下载荟玩，一言不合就剁手");
     }
 
     private void shareToCicle() {
         Bitmap thumb = BitmapFactory.decodeResource(getResources(), R.drawable.ic_launcher);
-        ShareUtil.shareToCicle(this, thumb, Constans.SHARE_URL, "我在会玩总共剁了" + cost + "元", "下载会玩，一言不合就剁手");
+        ShareUtil.shareToCicle(this, thumb, Constans.SHARE_URL, "我在荟玩总共剁了" + cost + "元", "下载荟玩，一言不合就剁手");
     }
 
     private void shareToQQ() {
-        ShareUtil.shareToQQ(this, mTencent, Constans.SHARE_URL, "我在会玩总共剁了" + cost + "元", "下载会玩，一言不合就剁手", FileUtil.APP_DOWNLOAD_LOGO_PATH + FileUtil.APP_DOWNLOAD_LOGO_NAME, new BaseUiListener());
+        ShareUtil.shareToQQ(this, mTencent, Constans.SHARE_URL, "我在荟玩总共剁了" + cost + "元", "下载荟玩，一言不合就剁手", FileUtil.APP_DOWNLOAD_LOGO_PATH + FileUtil.APP_DOWNLOAD_LOGO_NAME, new BaseUiListener());
     }
 
 
@@ -179,6 +191,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         setContentView(R.layout.activity_mybuy);
         ButterKnife.bind(this);
         tvArrayList = new ArrayList<>();
+        imageViewArrayList = new ArrayList<>();
         myHeader.init("我买到的", R.drawable.usercenter_menu_1, new MyHeader.Action() {
             @Override
             public void leftActio() {
@@ -189,12 +202,21 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         tvArrayList.add(tvPaimaiIng);
         tvArrayList.add(tvPaimaiFinish);
         tvArrayList.add(tvPaimaiNotGet);
+        imageViewArrayList.add(point_paimaiing);
+        imageViewArrayList.add(point_paimai_finish);
+        imageViewArrayList.add(point_paimai_noget);
         paiMainIngFrag = new PaiMaiIngFragment();
         paiMainFinishFrag = new PaiMaiFinishFragment();
         paiNoFrag = new PaiMaiNoGetFragment();
         fragList.add(paiMainIngFrag);
         fragList.add(paiMainFinishFrag);
         fragList.add(paiNoFrag);
+
+        my_buy_ing = _Bundle.getInt("my_buy_ing");
+        Log.i("my_buy_ing",my_buy_ing+"");
+        my_buy_end = _Bundle.getInt("my_buy_end");
+        Log.i("my_buy_ing",my_buy_end+"");
+
 
         mTencent = Tencent.createInstance(Constans.APP_TX_KEY, this.getApplicationContext());
 
@@ -210,9 +232,10 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         vpMainContainer.setAdapter(pagerAdapter);
         vpMainContainer.setOffscreenPageLimit(fragList.size() - 1);
         vpMainContainer.setCurrentItem(0);
+        initStatus(0);
         //mApplication.setImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
         //change by :胡峰，头像的处理
-        mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(),profileImage);
+        mApplication.setTouImages(LoginConfig.getUserInfo(mContext).getUser_avatar(), profileImage);
         tvName.setText(LoginConfig.getUserInfo(mContext).getUser_nick());
 
 
@@ -223,17 +246,20 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
 //                vpMainContainer.setCurrentItem(0);
 //                initStatus(0);
                 //推送点击跳转界面的处理
-                if (_Bundle.getInt("type") == 1){//出价被超，跳转到我买到的，正在拍卖的列表
-                    vpMainContainer.setCurrentItem(0);
-                    initStatus(0);
-                }else if (_Bundle.getInt("type") == 2 || _Bundle.getInt("type") == 3 ||_Bundle.getInt("type") == 4|| _Bundle.getInt("type") == 8){//中拍提醒、付款提醒、卖家已经发货，付款还剩3小时提醒，跳转到我买到的已落拍的列表界面
+//                if (_Bundle.getInt("type") == 1){//出价被超，跳转到我买到的，正在拍卖的列表
+//                    vpMainContainer.setCurrentItem(0);
+//                    initStatus(0);
+//                }else
+                if (_Bundle.getInt("type") == 2 || _Bundle.getInt("type") == 3 ||_Bundle.getInt("type") == 4|| _Bundle.getInt("type") == 8){//中拍提醒、付款提醒、卖家已经发货，付款还剩3小时提醒，跳转到我买到的已落拍的列表界面
                     vpMainContainer.setCurrentItem(1);
                     initStatus(1);
                 }
             }
         }
         loadCostData();
-        setTanNotice();
+        //setTanNotice();
+
+
     }
 
     /**
@@ -282,6 +308,37 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         for (int i = 0; i < tvArrayList.size(); i++) {
             if (index == i) {
                 tvArrayList.get(i).setBackgroundResource(R.drawable.shape_orange_black);
+                if (i == 0){//表示拍卖中的被选中
+                        point_paimaiing.setVisibility(View.GONE);
+                        my_buy_ing = 0;
+                        if (my_buy_end > 0){
+                            point_paimai_finish.setVisibility(View.VISIBLE);
+                        }else {
+                            point_paimai_finish.setVisibility(View.GONE);
+                        }
+                        UpdateRedTipNotice("my_buy_ing");
+                }else if (i == 1){
+                    point_paimai_finish.setVisibility(View.GONE);
+                    my_buy_end = 0;
+                    if (my_buy_ing > 0){
+                        point_paimaiing.setVisibility(View.VISIBLE);
+                    }else {
+                        point_paimaiing.setVisibility(View.GONE);
+                    }
+                    UpdateRedTipNotice("my_buy_end");
+                }else {
+                    if (my_buy_end > 0){
+                        point_paimai_finish.setVisibility(View.VISIBLE);
+                    }else {
+                        point_paimai_finish.setVisibility(View.GONE);
+                    }
+
+                    if (my_buy_ing > 0){
+                        point_paimaiing.setVisibility(View.VISIBLE);
+                    }else {
+                        point_paimaiing.setVisibility(View.GONE);
+                    }
+                }
             } else {
                 tvArrayList.get(i).setBackgroundResource(R.drawable.shape_white_black);
             }
@@ -292,7 +349,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
     private void setTanNotice() {
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("my_buy", 1);
+            jsonObject.put("my_seller", 1);
             jsonObject.put("self_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
             jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
         } catch (JSONException e) {
@@ -367,5 +424,47 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         if (null != mTencent) {
             mTencent.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+
+    private void UpdateRedTipNotice(String clean_tip){
+        if(!LoginConfig.isLogin(mContext)){
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("clean_tip",clean_tip);
+            jsonObject.put("self_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.jpushrecord_deleteredtipbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        EventBus.getDefault().post(new UpdateTanNoticeEvent(0));
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+
+            }
+        });
+
     }
 }

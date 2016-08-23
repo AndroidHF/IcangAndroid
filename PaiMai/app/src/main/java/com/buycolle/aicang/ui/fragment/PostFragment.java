@@ -60,6 +60,7 @@ import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinStatusActivity;
 import com.buycolle.aicang.ui.activity.shangpintypes.ShangPinTypesActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.NoticeDialog;
+import com.buycolle.aicang.ui.view.NoticeDialogPost;
 import com.buycolle.aicang.ui.view.NoticeSingleDialog;
 import com.buycolle.aicang.ui.view.SelectPicDialog;
 import com.buycolle.aicang.util.ACache;
@@ -1403,6 +1404,7 @@ public class PostFragment extends BaseFragment {
 
 
     NoticeSingleDialog noticeSingleDialog;
+    private String end_price = "";
 
     /**
      * 提交数据
@@ -1483,7 +1485,13 @@ public class PostFragment extends BaseFragment {
             }
         }
 
-        new NoticeDialog(mContext,"出品确认","您的拍品一旦提交审核，您将\n不能进行编辑或下架操作。除\n非该拍品没有通过审核。\n\n      是否确认提交？").setCallBack(new NoticeDialog.CallBack() {
+        if (cbYikoujiaStatus.isChecked()){
+            end_price = tvYikouPriceValue.getText().toString().trim();
+        }else {
+            end_price = "无";
+        }
+
+        new NoticeDialogPost(mContext,"出品确认",tvStartPriceValue.getText().toString().trim(),end_price).setCallBack(new NoticeDialogPost.CallBack() {
             @Override
             public void ok() {
                 JSONObject jsonObject = new JSONObject();

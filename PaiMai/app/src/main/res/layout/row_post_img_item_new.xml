@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/ll_parent"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="horizontal">
+<LinearLayout android:id="@+id/ll_parent"
+              xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+              android:orientation="horizontal">
 
     <FrameLayout
         android:id="@+id/ll_lay_1"
@@ -31,9 +31,9 @@
                     android:id="@+id/iv_menu_icon_1"
                     android:layout_width="90dip"
                     android:layout_height="115dip"
-                    android:scaleType="centerInside" />
+                    android:padding="2dip"
+                    android:scaleType="centerInside"/>
             </LinearLayout>
-
 
             <ImageView
                 android:id="@+id/iv_menu_icon_status"
@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:src="@drawable/up_refresh_icon"
-                android:visibility="gone" />
+                android:visibility="gone"/>
 
             <ImageView
                 android:id="@+id/iv_close"
@@ -53,8 +53,6 @@
                 android:visibility="gone"/>
         </FrameLayout>
 
-
     </FrameLayout>
-
 
 </LinearLayout>

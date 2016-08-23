@@ -158,7 +158,7 @@ public class SubjectFragment extends ScrollAbleFragment implements ScrollableHel
     }
 
     private int pageIndex = 1;
-    private int pageNum = 20;
+    private int pageNum = 10;
 
     private void loadData(int event_id, final boolean isLoadMore, final boolean isAction) {
         tv_null.setVisibility(View.GONE);

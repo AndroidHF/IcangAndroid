@@ -61,8 +61,10 @@ public class EventFragment extends BaseFragment {
     ImageView ivShowSmile;
     @Bind(R.id.ll_event_menu)
     LinearLayout llEventMenu;
-    @Bind(R.id.rl_search)
-    RelativeLayout rlSearch;
+//    @Bind(R.id.rl_search)
+//    RelativeLayout rlSearch;
+    @Bind(R.id.ll_search)
+    LinearLayout ll_search;
     @Bind(R.id.rl_event_top)
     RelativeLayout rlEventTop;
     @Bind(R.id.lltop)
@@ -205,14 +207,14 @@ public class EventFragment extends BaseFragment {
         convenientBanner.setInterval(5000);
         convenientBanner.startAutoScroll();
 
-        rlSearch.setOnClickListener(new View.OnClickListener() {
+        ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("index", 2);
                 //拍卖会的类型
                 bundle.putInt("event_type", event_type);
-                KLog.d("类型---",event_type+"---");
+                KLog.d("类型---", event_type + "---");
                 UIHelper.jump(mActivity, SearchActivity.class, bundle);
             }
         });

@@ -101,7 +101,7 @@ public class HomeMenuDialog extends Dialog {
         orinalBeans.add(new MainMenuBean("手办、模型", R.drawable.show_menu_6));
         orinalBeans.add(new MainMenuBean("音乐、演出", R.drawable.show_menu_7));
         orinalBeans.add(new MainMenuBean("服装、COS", R.drawable.show_menu_8));
-        orinalBeans.add(new MainMenuBean("定制", R.drawable.show_menu_9));
+        orinalBeans.add(new MainMenuBean("其他", R.drawable.another_icon));
 
         for (MainMenuBean selectBean : selectBeans) {
             for (MainMenuBean orinalBean : orinalBeans) {
@@ -215,8 +215,8 @@ public class HomeMenuDialog extends Dialog {
             return R.drawable.show_menu_7_sel;
         } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8_sel;
-        } else if ("定制".equals(title)) {
-            return R.drawable.show_menu_9_sel;
+        } else if ("其他".equals(title)) {
+            return R.drawable.another_icon_sel;
         }
         return 0;
     }
@@ -238,8 +238,8 @@ public class HomeMenuDialog extends Dialog {
             return R.drawable.show_menu_7;
         } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8;
-        } else if ("定制".equals(title)) {
-            return R.drawable.show_menu_9;
+        } else if ("其他".equals(title)) {
+            return R.drawable.another_icon;
         }
         return 0;
     }

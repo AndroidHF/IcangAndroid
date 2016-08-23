@@ -31,6 +31,7 @@ import com.buycolle.aicang.bean.MyBuyPaiMainFinishBean;
 import com.buycolle.aicang.event.MyBuyCommentEvent;
 import com.buycolle.aicang.event.ShowProductPublicEvent;
 import com.buycolle.aicang.event.ZhifueEvent;
+import com.buycolle.aicang.ui.activity.ConnectionActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiDealActivity;
 import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
 import com.buycolle.aicang.ui.activity.PublicShowActivity;
@@ -314,7 +315,7 @@ public class PaiMaiFinishFragment extends BaseFragment {
             ViewHolder holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
-                convertView = LayoutInflater.from(mContext).inflate(R.layout.row_mybuy_paimaifinish_item, null);
+                convertView = LayoutInflater.from(mContext).inflate(R.layout.row_mybuy_paimaifinish_item_new, null);
 
                 holder.parent = (LinearLayout) convertView.findViewById(R.id.parent);
                 holder.iv_paimai = (ImageView) convertView.findViewById(R.id.iv_paimai);
@@ -348,6 +349,7 @@ public class PaiMaiFinishFragment extends BaseFragment {
                 holder.tv_order_no = (TextView) convertView.findViewById(R.id.tv_order_no);
                 holder.iv_rate = (ImageView) convertView.findViewById(R.id.iv_rate);
                 holder.iv_status_tag = (ImageView) convertView.findViewById(R.id.iv_status_tag);
+                holder.tv_callmaijia = (TextView) convertView.findViewById(R.id.tv_call_maijia);
 
 
                 convertView.setTag(holder);
@@ -523,6 +525,13 @@ public class PaiMaiFinishFragment extends BaseFragment {
                     UIHelper.jump(mActivity, PaiPinDetailActivity.class, bundle);
                 }
             });
+
+            holder.tv_callmaijia.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    UIHelper.jump(mActivity, ConnectionActivity.class);
+                }
+            });
             return convertView;
         }
 
@@ -572,6 +581,7 @@ public class PaiMaiFinishFragment extends BaseFragment {
             TextView tv_pingjia;
             TextView tv_show_dan;
             TextView pai_status;
+            TextView tv_callmaijia;
         }
 
     }

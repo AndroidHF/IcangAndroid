@@ -9,4 +9,3 @@
 		android:layout_height="wrap_content"
 		style="?android:attr/progressBarStyleHorizontal" />
 </LinearLayout>
-<!-- From: file:/D:/android/PaiMai/updateSoftDemo/src/main/res/layout/softupdate_progress.xml -->

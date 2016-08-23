@@ -17,6 +17,7 @@ import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.CommentBean;
+import com.buycolle.aicang.ui.activity.SubjectActivity;
 import com.buycolle.aicang.ui.fragment.BaseFragment;
 import com.buycolle.aicang.ui.view.xlistview.XListView;
 import com.buycolle.aicang.util.UIHelper;
@@ -56,6 +57,7 @@ public class CommentsFragment extends BaseFragment {
     private int userid;
 
     MainComentActivity mainComentActivity;
+    SubjectActivity subjectActivity;
 
     public static CommentsFragment newInstance(int position, int userid) {
         CommentsFragment orderFragment = new CommentsFragment();

@@ -52,6 +52,7 @@ public class FixedViewPager extends ViewPager {
 		}
 
 	}
-	
+
+
 
 }

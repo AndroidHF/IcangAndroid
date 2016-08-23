@@ -54,8 +54,10 @@ public class ShowOffFragment extends BaseFragment {
     LinearLayout llShowMenu;
     @Bind(R.id.ll_post_show)
     LinearLayout llPostShow;
-    @Bind(R.id.rl_search)
-    RelativeLayout rlSearch;
+//    @Bind(R.id.rl_search)
+//    RelativeLayout rlSearch;
+    @Bind(R.id.ll_search)
+    LinearLayout ll_search;
     @Bind(R.id.rl_show_top)
     RelativeLayout rlShowTop;
     @Bind(R.id.list)
@@ -142,7 +144,7 @@ public class ShowOffFragment extends BaseFragment {
                 }
             }
         });
-        rlSearch.setOnClickListener(new View.OnClickListener() {
+        ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();

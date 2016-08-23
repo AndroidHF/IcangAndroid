@@ -32,7 +32,7 @@
                 android:layout_height="28dip"
                 android:layout_marginLeft="-25dip"
                 android:layout_toRightOf="@id/iv_menu_1"
-                android:src="@drawable/usercenter_menu_notice" />
+                android:src="@drawable/usercenter_menu_notice_new" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -65,7 +65,7 @@
                 android:layout_height="28dip"
                 android:layout_marginLeft="-25dip"
                 android:layout_toRightOf="@id/iv_menu_2"
-                android:src="@drawable/usercenter_menu_notice" />
+                android:src="@drawable/usercenter_menu_notice_new" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -98,7 +98,7 @@
                 android:layout_height="28dip"
                 android:layout_marginLeft="-25dip"
                 android:layout_toRightOf="@id/iv_menu_3"
-                android:src="@drawable/usercenter_menu_notice" />
+                android:src="@drawable/usercenter_menu_notice_new" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -159,6 +159,14 @@
                 android:layout_marginTop="2dip"
                 android:src="@drawable/usercenter_menu_5" />
 
+            <ImageView
+                android:id="@+id/iv_myFQ_notice_icon"
+                android:visibility="gone"
+                android:layout_width="28dip"
+                android:layout_height="28dip"
+                android:layout_marginLeft="-25dip"
+                android:layout_toRightOf="@id/iv_menu_5"
+                android:src="@drawable/usercenter_menu_notice_new" />
 
             <TextView
                 android:layout_width="wrap_content"

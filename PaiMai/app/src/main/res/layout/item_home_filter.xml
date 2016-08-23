@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<CheckBox
+    android:id="@+id/tv_filter_4"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    android:layout_marginRight="5dip"
+    android:background="@drawable/sel_home_filter"
+    android:button="@null"
+    android:checked="true"
+    android:paddingBottom="@dimen/status_top_bottom_padding"
+    android:paddingLeft="10dip"
+    android:paddingRight="10dip"
+    android:paddingTop="@dimen/status_top_bottom_padding"
+    android:textColor="@color/black_tv"
+    android:textSize="15sp"
+    tools:text="asd"/>

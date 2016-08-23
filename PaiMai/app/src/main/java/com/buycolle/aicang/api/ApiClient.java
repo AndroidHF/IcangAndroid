@@ -370,6 +370,15 @@ public class ApiClient {
     }
 
     /**
+     * 首页商品筛选
+     * @param data
+     * @param callback
+     */
+    public void product_filter_list_by_app(JSONObject data, ApiCallback callback) {
+        post(callback, AppUrl.GET_FILTER_AND_SORT_LIST_BY_APP, data, "首页商品筛选");
+    }
+
+    /**
      * 拍品详情
      *
      * @param data
@@ -1006,7 +1015,21 @@ public class ApiClient {
      * @param callback
      */
     public void jpushrecord_updatetipbyapp(JSONObject data, ApiCallback callback) {
-        post(callback, AppUrl.JPUSHRECORD_UPDATETIPBYAPP, data, " 更新叹号信息（设置已读）");
+        post(callback, AppUrl.JPUSHRECORD_UPDATETIPBYAPP,data, " 更新叹号信息（设置已读）");
+    }
+
+    /**
+     * 个人中心更新小红点
+     */
+    public void jpushrecord_deleteredtipbyapp(JSONObject data, ApiCallback callback){
+        post(callback, AppUrl.JPUSHRECORD_DELETEREDTIPBYAPP, data," 更小红点信息（设置已读）");
+    }
+
+    /**
+     * 推送小红点的更新
+     */
+    public void jpushrecord_updateredtipbyapp(JSONObject data, ApiCallback callback){
+        post(callback, AppUrl.JPUSHRECORD_UPDATEREDTIPBYAPP, data," 推送更小红点信息（设置已读）");
     }
 
     /**
@@ -1046,6 +1069,29 @@ public class ApiClient {
      */
     public void login_updateloginpwd(JSONObject data, ApiCallback callback) {
         post(callback, AppUrl.LOGIN_UPDATELOGINPWD, data, "修改密码");
+    }
+
+    /**
+     * 获取首页筛选和排序内容
+     */
+    public void dirtionary_getFilterAndSortListByApp(JSONObject data, ApiCallback callback){
+        post(callback, AppUrl.DIRTIONARY_GETFILTERANDSORTLISTBYAPP, data, "获取首页筛选框内容");
+    }
+
+
+    /**
+     * 专题活动界面的bannner图片和底纹
+     */
+    public void appEvent_getEventBannerByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.APPEVENT_GETEVENTBANNERBYAPP,data,"专题活动的banner图和底纹");
+    }
+
+    /**
+     * 专题活动界面的商品列表
+     */
+
+    public void appEvent_getEventProductListByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.APPEVENT_GETEVENTPRODUCTLISTBYAPP,data,"专题活动商品列表");
     }
 
 }

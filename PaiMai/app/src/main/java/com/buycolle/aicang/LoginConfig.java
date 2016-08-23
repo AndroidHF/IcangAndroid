@@ -102,6 +102,7 @@ public class LoginConfig {
 
     public static String getHomeMenu(Context context) {
         SharedPreferences userSp = context.getSharedPreferences(APP_MAIN_CONFIG, Context.MODE_PRIVATE);
+        //return userSp.getString(KEY_APP_MODLE, "手办、模型,全部,周边,漫画,书籍,BD、DVD,游戏,音乐、演出,服装、COS,其他");
         return userSp.getString(KEY_APP_MODLE, "个性化,全部");
     }
 

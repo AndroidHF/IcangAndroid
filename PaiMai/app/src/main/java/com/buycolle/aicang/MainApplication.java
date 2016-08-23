@@ -1,15 +1,21 @@
 package com.buycolle.aicang;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.GlideDrawable;
 import com.bumptech.glide.request.Request;
+import com.bumptech.glide.request.animation.GlideAnimation;
 import com.bumptech.glide.request.target.ImageViewTarget;
+import com.bumptech.glide.request.target.SimpleTarget;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.api.ApiClient;
 import com.buycolle.aicang.api.OkHttpClientManager;
@@ -205,7 +211,7 @@ public class MainApplication extends MultiDexApplication {
             public void onApiFailure(com.squareup.okhttp.Request request, Exception e) {
 
             }
-        }, "show");
+        }, "initDialog");
 
 
     }
@@ -294,6 +300,8 @@ public class MainApplication extends MultiDexApplication {
                 .into(imageView);
     }
 
+
+
     /**
      * add by :胡峰
      * 晒物和竞拍会的默认首图加载时候的图片加载方法
@@ -317,6 +325,19 @@ public class MainApplication extends MultiDexApplication {
                 .into(imageView);
     }
 
+    public void setBackGround(String url, final LinearLayout linearLayout){
+        Glide.with(this)
+                .load(url)
+                .asBitmap()
+                .into(new SimpleTarget<Bitmap>() {
+                    @Override
+                    public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                        Drawable db = new BitmapDrawable(resource);
+                        linearLayout.setBackgroundDrawable(db);
+                    }
+                });
+    }
+
 
 
     /**
@@ -329,6 +350,16 @@ public class MainApplication extends MultiDexApplication {
                 .fitCenter()
                 .dontAnimate()
                 .placeholder(R.drawable.default_image_tou)
+                .into(imageView);
+    }
+
+    public void setShoufaImages(String url,final ImageView imageView){
+        Glide.with(this)
+                .load(url)
+                .fitCenter()
+                .dontAnimate()
+                .error(R.drawable.shoufa_360_bg)
+                .placeholder(R.drawable.shoufa_360_bg)
                 .into(imageView);
     }
 

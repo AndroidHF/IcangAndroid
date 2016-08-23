@@ -39,6 +39,10 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
     MyHeaderWithSure header;
     @Bind(R.id.cropImageView)
     CropImageView mCropImageView;
+//    @Bind(R.id.left)
+//    TextView left;
+//    @Bind(R.id.right)
+//    TextView right;
 
     private String imagePath;
     private Bitmap oricalBitMap;
@@ -82,12 +86,8 @@ public class CommentCropImageActivity extends BaseActivity implements CropImageV
                     Bitmap bitmap = BitmapFactory.decodeFile(imagePath);
                     if (ImageUtils.getBitmapDegree(imagePath)>0){
                         bitmap = ImageUtils.rotateBitmapByDegree(bitmap,ImageUtils.getBitmapDegree(imagePath));
-//                        TouchImageView img = new TouchImageView(mActivity,bitmap);
-//                        setContentView(img);
                         return bitmap;
                     }else {
-//                        TouchImageView img = new TouchImageView(mActivity,bitmap);
-//                        setContentView(img);
                         return bitmap;
                     }
                 }

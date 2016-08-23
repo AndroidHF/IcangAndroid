@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.bean.PushMessageEntity;
+import com.buycolle.aicang.ui.activity.SubjectActivity;
 import com.buycolle.aicang.util.ForegroundUtil;
 import com.google.gson.Gson;
 
@@ -24,6 +25,8 @@ import cn.jpush.android.api.JPushInterface;
 public class MyPushReceiver extends BroadcastReceiver {
 
     private static final String TAG = "极光推送";
+    private String taskId = "";
+    private String type = "";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -46,9 +49,31 @@ public class MyPushReceiver extends BroadcastReceiver {
             Log.d(TAG, "[MyReceiver] 接收到推送下来的通知的ID: " + notifactionId);
         } else if (JPushInterface.ACTION_NOTIFICATION_OPENED.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户点击打开了通知");
+            Bundle _bundle = intent.getExtras();
+            String s = _bundle.getString(JPushInterface.EXTRA_EXTRA);
+            try {
+                JSONObject obj = new JSONObject(s);
+                taskId = obj.getString("key_id");
+                Log.i("推送taskID",taskId);
+                type = obj.getString("type");
+                Log.i("推送type ---",type);
+            }catch(JSONException e){
+
+            }
+            // 在这里可以自己写代码去定义用户点击后的行为
+            Bundle bundle2 = new Bundle();
+            bundle2.putString("taskId", taskId);
+            bundle2.putString("type",type);
+            if("1".equals(type)){
+                Intent i = new Intent(context, SubjectActivity.class);  //自定义打开的界面
+                i.putExtras(bundle2);
+                i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+            }
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));
             //在这里根据 JPushInterface.EXTRA_EXTRA 的内容处理代码，比如打开新的Activity， 打开一个网页等..
+            Log.i("推送type--------",bundle.getInt("type")+"");
         } else if (JPushInterface.ACTION_CONNECTION_CHANGE.equals(intent.getAction())) {
             boolean connected = intent.getBooleanExtra(JPushInterface.EXTRA_CONNECTION_CHANGE, false);
             Log.w(TAG, "[MyReceiver]" + intent.getAction() + " connected state change to " + connected);

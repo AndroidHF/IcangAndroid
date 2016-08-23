@@ -4,10 +4,8 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,32 +15,34 @@ import android.widget.TextView;
 
 import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
+import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
-import com.buycolle.aicang.adapter.MainPagerAdapter;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.HomeFilterMenuBean;
 import com.buycolle.aicang.bean.HomeTopAddBeanNew;
-import com.buycolle.aicang.bean.MainMenuBean;
-import com.buycolle.aicang.bean.MainMenuPage;
+import com.buycolle.aicang.bean.ShangPinFilterBean;
 import com.buycolle.aicang.event.HomeBackEvent;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.ui.activity.SearchActivity;
 import com.buycolle.aicang.ui.view.CircleIndicator;
 import com.buycolle.aicang.ui.view.FixedViewPager;
-import com.buycolle.aicang.ui.view.HomeMenuDialog;
-import com.buycolle.aicang.ui.view.MainFilterDialog;
 import com.buycolle.aicang.ui.view.autoscrollviewpager.AutoScrollViewPager;
 import com.buycolle.aicang.ui.view.autoscrollviewpager.HomeAddImagePagerAdapter;
+import com.buycolle.aicang.ui.view.filterdialog.FilterDialog;
 import com.buycolle.aicang.ui.view.mainScrole.BasePagerFragment;
+import com.buycolle.aicang.ui.view.mainScrole.ListFragment;
 import com.buycolle.aicang.ui.view.mainScrole.ScrollableLayout;
+import com.buycolle.aicang.ui.view.recyclertablayout.RecyclerPagerAdapter;
+import com.buycolle.aicang.ui.view.recyclertablayout.RecyclerTabAdapter;
+import com.buycolle.aicang.ui.view.recyclertablayout.RecyclerTabEntity;
 import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.UIUtil;
 import com.buycolle.aicang.util.superlog.JSONUtil;
-import com.buycolle.aicang.util.superlog.KLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.hunter.reyclertablayout.RecyclerTabLayout;
 import com.squareup.okhttp.Request;
 
 import org.json.JSONArray;
@@ -50,6 +50,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import butterknife.Bind;
@@ -59,43 +60,62 @@ import de.greenrobot.event.EventBus;
 /**
  * Created by joe on 16/3/2.
  */
-public class MainNewFragment extends BasePagerFragment {
+public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPageChangeListener {
 
+    private static final int[]    TAB_ICON_RES = {
+            R.drawable.show_menu_6_sel,
+            R.drawable.main_menu_all,
+            R.drawable.show_menu_5_sel,
+            R.drawable.show_menu_1_sel,
+            R.drawable.show_menu_4_sel,
+            R.drawable.show_menu_2_sel,
+            R.drawable.show_menu_3_sel,
+            R.drawable.show_menu_7_sel,
+            R.drawable.show_menu_8_sel,
+            R.drawable.another_icon_sel,
+            };
+    private static final String[] TAB_TITLE    = {
+            "手办、模型", "全部", "周边", "漫画", "书籍", "BD、DVD", "游戏", "音乐、演出", "服装、COS", "其他"
+    };
 
     @Bind(R.id.convenientBanner)
-    AutoScrollViewPager viewPager;
-    @Bind(R.id.pagerStrip)
-    FixedViewPager pagerStrip;
+    AutoScrollViewPager mPagerBanner;
+
+    @Bind(R.id.recycler_tab_home)
+    RecyclerTabLayout mTabLayout;
+
     @Bind(R.id.viewpager)
-    FixedViewPager viewpager;
+    FixedViewPager   viewpager;
     @Bind(R.id.scrollableLayout)
     ScrollableLayout scrollableLayout;
-//    @Bind(R.id.rl_search)
-//    RelativeLayout rl_search;
+    //    @Bind(R.id.rl_search)
+    //    RelativeLayout rl_search;
     @Bind(R.id.ll_search)
-    LinearLayout ll_search;
+    LinearLayout     ll_search;
     @Bind(R.id.ll_event_menu)
-    LinearLayout ll_event_menu;
+    LinearLayout     ll_event_menu;
     @Bind(R.id.iv_show_smile)
-    ImageView iv_show_smile;
+    ImageView        iv_show_smile;
     @Bind(R.id.circle_indicator)
-    CircleIndicator circleIndicator;
+    CircleIndicator  circleIndicator;
     @Bind(R.id.ll_filter)
-    LinearLayout ll_filter;
-    private ACache aCache;
-    private ArrayList<HomeTopAddBeanNew> homeTopAddBeens;
+    LinearLayout     ll_filter;
+    private ACache                        aCache;
+    private ArrayList<HomeTopAddBeanNew>  homeTopAddBeens;
     private ArrayList<HomeFilterMenuBean> menuFilters;
-    HomeFilterFrament homeFilterFrament;
-    private int userTotalDelta;
-    private ArrayList<BaseFragment> fragList;
+    private int                           userTotalDelta;
+    private ArrayList<BaseFragment>       fragList;
 
     private boolean isSelectCate_Id = false;
     private int cate_id;//分类
 
-    private String st_id = "";//状态ID集
+    private String st_id      = "";//状态ID集
+    private int    sort_item  = 0;// 0,无 1，价格排序 2,竞拍人数排序 3,剩余时间排序 4,卖家好评排序
+    private String sort_value = "";// A:升序 B：降序,默认排序的sor_id
 
+    private RecyclerPagerAdapter mPagerAdapter;
 
-
+    private FilterDialog mFilterDialog;
 
     //登录触发
     public void onEventMainThread(LoginEvent event) {
@@ -129,39 +149,35 @@ public class MainNewFragment extends BasePagerFragment {
         return view;
     }
 
-
     @SuppressLint("NewApi")
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        String index = "0";
-        initFragmentPager(viewpager, scrollableLayout, index,pagerStrip);
+        // TODO
+        for (int i = 0; i < 10; i++) {
+            fragmentList.add(ListFragment.newInstance(getMenuType(TAB_TITLE[i]) + ""));
+            scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(i));
+        }
+
         fragList = new ArrayList<>();
-        homeFilterFrament = new HomeFilterFrament();
-        fragList.add(homeFilterFrament);
-        MainPagerAdapter pagerAdapter = new MainPagerAdapter(getChildFragmentManager(), fragList);
-        pagerStrip.setAdapter(pagerAdapter);
-        pagerStrip.setOffscreenPageLimit(fragList.size() - 1);
-        pagerStrip.setCurrentItem(0);
+        // TODO
 
-        pagerStrip.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+        // TODO TAB INIT
+        List<RecyclerTabEntity> tabData = new ArrayList<>();
+        for (int i = 0; i < TAB_ICON_RES.length; i++) {
+            tabData.add(new RecyclerTabEntity(TAB_TITLE[i], TAB_ICON_RES[i]));
+        }
+        mPagerAdapter = new RecyclerPagerAdapter(getChildFragmentManager(), fragmentList, Arrays.asList(TAB_TITLE));
+        viewpager.setAdapter(mPagerAdapter);
 
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                initFragmentPager(viewPager,scrollableLayout,position+"",pagerStrip);
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
-
+        RecyclerTabAdapter adapter = new RecyclerTabAdapter(getContext(), tabData, viewpager);
+        mTabLayout.setUpWithAdapter(adapter);
+        mTabLayout.setAutoSelectionMode(true);
+        viewpager.setCurrentItem(mPagerAdapter.getCenterPosition(1));
+        viewpager.addOnPageChangeListener(this);
+        viewpager.setIsScrollabe(true);
+        // TODO
 
         initHomeMenu();
 
@@ -175,50 +191,70 @@ public class MainNewFragment extends BasePagerFragment {
         });
 
         //筛选图标设置监听
+        mFilterDialog = FilterDialog.getInstance();
         ll_filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                new MainFilterDialog(mContext,isSelectCate_Id, cate_id, st_id).setCallBack(new MainFilterDialog.CallBack() {
+                mFilterDialog.show(getContext(), v, new FilterDialog.DialogConfirmListener() {
                     @Override
-                    public void action(boolean ISSELECTCATE_ID, int CATE_ID,String ST_ID) {
-                        KLog.d("返回来的数据---", "isSelectCate_Id==" + isSelectCate_Id + ",  " +
-                                        "cate_id==" + cate_id + ",  " +//
-                                        "st_id==" + st_id + ",  "
-                        );
-                        isSelectCate_Id = ISSELECTCATE_ID;
-                        cate_id = CATE_ID;
-                        st_id = ST_ID;
+                    public void onConfirm(String filter_id, String sort_id) {
+                        int pos = viewpager.getCurrentItem() % 10;
+                        ListFragment fragment = (ListFragment) fragmentList.get(pos);
+                        fragment.filterData(fragment.index, filter_id, sort_id, false, false);
                     }
-                }).show();
+                });
+
+                ACache aCache = ACache.get(mContext);
+                JSONObject resultObj = aCache.getAsJSONObject(Constans.TAG_GOOD_FILTER);
+                ArrayList<ShangPinFilterBean> shangPinTypeBeens = new ArrayList<>();
+                if (resultObj != null) {
+                    try {
+                        JSONArray rows = resultObj.getJSONArray("rows");
+                        ArrayList<ShangPinFilterBean> allDataArrayList = new Gson().fromJson(rows.toString(),
+                                                                                             new TypeToken<List<ShangPinFilterBean>>() {
+                                                                                             }.getType());
+                        if (allDataArrayList.size() != 0) {
+                            shangPinTypeBeens.addAll(allDataArrayList);
+                            mFilterDialog.setData(shangPinTypeBeens);
+                        } else {
+                            loadData();
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+                    loadData();
+                }
 
             }
         });
 
-//        ll_event_menu.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if (!isShow) {
-//                    iv_show_smile.setImageResource(R.drawable.event_top_icon);
-//                } else {
-//                    iv_show_smile.setImageResource(R.drawable.smail_none);
-//                }
-//                isShow = isShow ? false : true;
-//            }
-//        });
+        //        ll_event_menu.setOnClickListener(new View.OnClickListener() {
+        //            @Override
+        //            public void onClick(View view) {
+        //                if (!isShow) {
+        //                    iv_show_smile.setImageResource(R.drawable.event_top_icon);
+        //                } else {
+        //                    iv_show_smile.setImageResource(R.drawable.smail_none);
+        //                }
+        //                isShow = isShow ? false : true;
+        //            }
+        //        });
 
         JSONObject topaAdsObj = aCache.getAsJSONObject(Constans.TAG_HOME_TOP_ADS);
         if (topaAdsObj != null) {
             try {
                 JSONArray adsArray = topaAdsObj.getJSONArray("rows");
                 if (adsArray.length() > 0) {
-                    homeTopAddBeens = new Gson().fromJson(adsArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
-                    }.getType());
-                    viewPager.setAdapter(new HomeAddImagePagerAdapter(mActivity, homeTopAddBeens).setInfiniteLoop(false));
+                    homeTopAddBeens = new Gson().fromJson(adsArray.toString(),
+                                                          new TypeToken<List<HomeTopAddBeanNew>>() {
+                                                          }.getType());
+                    mPagerBanner.setAdapter(new HomeAddImagePagerAdapter(mActivity, homeTopAddBeens).setInfiniteLoop(
+                            false));
                     circleIndicator.setVisibility(View.VISIBLE);
-                    circleIndicator.setViewPager(viewPager);
-                    viewPager.setInterval(5000);
-                    viewPager.startAutoScroll();
+                    circleIndicator.setViewPager(mPagerBanner);
+                    mPagerBanner.setInterval(5000);
+                    mPagerBanner.startAutoScroll();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -228,16 +264,10 @@ public class MainNewFragment extends BasePagerFragment {
             loadTopAds();
         }
 
-        homeFilterFrament.setCallBack(new HomeFilterFrament.ActionCallBack() {
-            @Override
-            public void callBack(String name) {
-                int type = getMenuType(name);
-                listFragment.refreshByState(type, true);
-            }
-        });
+        // TODO 设置滑动监听
+        //        int type = getMenuType(name);
+        //                listFragment.refreshByState(type, true);
     }
-
-
 
     private int currentIndex = 1;
 
@@ -253,18 +283,40 @@ public class MainNewFragment extends BasePagerFragment {
         menuFilters.add(new HomeFilterMenuBean("", 0, true));
     }
 
-
     private GalleryRecyclerAdapter galleryRecyclerAdapter;
 
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+        boolean nearLeftEdge = (position <= TAB_TITLE.length);
+        boolean nearRightEdge = (position >= mPagerAdapter.getCount() - TAB_TITLE.length);
+        if (nearLeftEdge || nearRightEdge) {
+            viewpager.setCurrentItem(mPagerAdapter.getCenterPosition(0), false);
+        }
+        int pos = position % 10;
+        ListFragment fragment = (ListFragment) fragmentList.get(pos);
+        if (!fragment.isFirst()) {
+            fragmentList.get(pos).refreshByState(getMenuType(TAB_TITLE[pos]));
+        }
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
+    }
 
     public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecyclerAdapter.ViewHolder> {
 
-        private LayoutInflater mInflater;
+        private LayoutInflater                  mInflater;
         private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
 
         private ArrayList<HomeFilterMenuBean> homeFilterMenuBeens;
 
-        public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener onRecyclerViewItemClickListener) {
+        public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener
+                                                               onRecyclerViewItemClickListener) {
             this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
         }
 
@@ -284,7 +336,8 @@ public class MainNewFragment extends BasePagerFragment {
         @Override
         public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
             final View view = mInflater.inflate(R.layout.aaaaa_demo, parent, false);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(UIUtil.getWindowWidth(mContext) / 3, ViewGroup.LayoutParams.MATCH_PARENT);
+            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(UIUtil.getWindowWidth(mContext) / 3,
+                                                                       ViewGroup.LayoutParams.MATCH_PARENT);
             view.setLayoutParams(params);
             ViewHolder viewHolder = new ViewHolder(view);
             view.setOnClickListener(new View.OnClickListener() {
@@ -334,13 +387,12 @@ public class MainNewFragment extends BasePagerFragment {
             return homeFilterMenuBeens.size();
         }
 
-
         //自定义的ViewHolder，持有每个Item的的所有界面元素
         public class ViewHolder extends RecyclerView.ViewHolder {
 
             LinearLayout parent;
-            TextView tv_name;
-            ImageView iv_menu;
+            TextView     tv_name;
+            ImageView    iv_menu;
 
             public ViewHolder(View view) {
                 super(view);
@@ -353,9 +405,9 @@ public class MainNewFragment extends BasePagerFragment {
     }
 
     public interface OnRecyclerViewItemClickListener {
+
         void onItemClick(View view, int position);
     }
-
 
     private void loadTopAds() {
         JSONObject jsonObject = new JSONObject();
@@ -373,21 +425,22 @@ public class MainNewFragment extends BasePagerFragment {
 
             @Override
             public void onApiSuccess(String response) {
-                if (!isAdded())
-                    return;
+                if (!isAdded()) return;
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
                         JSONArray jsonArray = resultObj.getJSONArray("rows");
                         if (jsonArray.length() > 0) {
                             aCache.put(Constans.TAG_HOME_TOP_ADS, resultObj);
-                            ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeTopAddBeanNew>>() {
-                            }.getType());
-                            viewPager.setAdapter(new HomeAddImagePagerAdapter(mActivity, homarrays).setInfiniteLoop(false));
-                            viewPager.setInterval(5000);
+                            ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(),
+                                                                                         new TypeToken<List<HomeTopAddBeanNew>>() {
+                                                                                         }.getType());
+                            mPagerBanner.setAdapter(new HomeAddImagePagerAdapter(mActivity, homarrays).setInfiniteLoop(
+                                    false));
+                            mPagerBanner.setInterval(5000);
                             circleIndicator.setVisibility(View.VISIBLE);
-                            circleIndicator.setViewPager(viewPager);
-                            viewPager.startAutoScroll();
+                            circleIndicator.setViewPager(mPagerBanner);
+                            mPagerBanner.startAutoScroll();
                             homeTopAddBeens.clear();
                             homeTopAddBeens.addAll(homarrays);
                         }
@@ -401,35 +454,33 @@ public class MainNewFragment extends BasePagerFragment {
 
             @Override
             public void onApiFailure(Request request, Exception e) {
-                if (!isAdded())
-                    return;
+                if (!isAdded()) return;
                 UIHelper.t(mContext, R.string.net_error);
             }
         });
 
     }
 
-
     // 开始自动翻页
     @Override
     public void onResume() {
         super.onResume();
-        viewPager.startAutoScroll();
+        mPagerBanner.startAutoScroll();
     }
 
     // 停止自动翻页
     @Override
     public void onPause() {
         super.onPause();
-        viewPager.stopAutoScroll();
+        mPagerBanner.stopAutoScroll();
     }
 
     private boolean isShow = true;
 
     private int getTitleBeanRes(String title) {
-        if ("个性化".equals(title)){
+        if ("个性化".equals(title)) {
             return R.drawable.main_menu_gexinghua;
-        }else if ("全部".equals(title)) {
+        } else if ("全部".equals(title)) {
             return R.drawable.main_menu_all;
         } else if ("漫画".equals(title)) {
             return R.drawable.show_menu_1_sel;
@@ -447,8 +498,8 @@ public class MainNewFragment extends BasePagerFragment {
             return R.drawable.show_menu_7_sel;
         } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8_sel;
-        } else if ("定制".equals(title)) {
-            return R.drawable.show_menu_9_sel;
+        } else if ("其他".equals(title)) {
+            return R.drawable.another_icon_sel;
         }
         return 0;
     }
@@ -466,179 +517,13 @@ public class MainNewFragment extends BasePagerFragment {
         ButterKnife.unbind(this);
     }
 
-
-    /**
-     * 顶部标题的
-     */
-    public class MyViewPagerAdapter extends PagerAdapter {
-        private ArrayList<MainMenuPage> mDatas;
-        private ArrayList<View> mListViews;
-
-        public MyViewPagerAdapter(ArrayList<MainMenuPage> mDatas, ArrayList<View> mListViews) {
-            this.mListViews = mListViews;//构造方法，参数是我们的页卡，这样比较方便。
-            this.mDatas = mDatas;//构造方法，参数是我们的页卡，这样比较方便。
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView(mListViews.get(position));//删除页卡
-        }
-
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {    //这个方法用来实例化页卡
-            View view = mListViews.get(position);
-
-            LinearLayout ll_lay_1 = (LinearLayout) view.findViewById(R.id.ll_lay_1);
-            LinearLayout ll_lay_2 = (LinearLayout) view.findViewById(R.id.ll_lay_2);
-            LinearLayout ll_lay_3 = (LinearLayout) view.findViewById(R.id.ll_lay_3);
-
-            ImageView iv_menu_icon_1 = (ImageView) view.findViewById(R.id.iv_menu_icon_1);
-            ImageView iv_menu_all_icon_1 = (ImageView) view.findViewById(R.id.iv_menu_all_icon_1);
-            final TextView tv_menu_title_1 = (TextView) view.findViewById(R.id.tv_menu_title_1);
-
-            ImageView iv_menu_icon_2 = (ImageView) view.findViewById(R.id.iv_menu_icon_2);
-            ImageView iv_menu_all_icon_2 = (ImageView) view.findViewById(R.id.iv_menu_all_icon_2);
-            final TextView tv_menu_title_2 = (TextView) view.findViewById(R.id.tv_menu_title_2);
-
-            ImageView iv_menu_icon_3 = (ImageView) view.findViewById(R.id.iv_menu_icon_3);
-            ImageView iv_menu_all_icon_3 = (ImageView) view.findViewById(R.id.iv_menu_all_icon_3);
-            final TextView tv_menu_title_3 = (TextView) view.findViewById(R.id.tv_menu_title_3);
-
-            if (position == 0) {
-                if (mDatas.get(0).getMainMenuBeans().size() == 2) {
-                    setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
-                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_all_icon_2);
-                    iv_menu_icon_1.setImageResource(R.drawable.main_menu_gexinghua);
-                    tv_menu_title_1.setText("个性化");
-                } else {
-                    setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
-                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_all_icon_2, iv_menu_icon_3, tv_menu_title_3);
-                    iv_menu_icon_1.setImageResource(mDatas.get(0).getMainMenuBeans().get(0).getRes());
-                    tv_menu_title_1.setText(mDatas.get(0).getMainMenuBeans().get(0).getTitle());
-                    iv_menu_all_icon_2.setImageResource(mDatas.get(0).getMainMenuBeans().get(1).getRes());
-                    tv_menu_title_2.setText(mDatas.get(0).getMainMenuBeans().get(1).getTitle());
-                    iv_menu_icon_3.setImageResource(mDatas.get(0).getMainMenuBeans().get(2).getRes());
-                    tv_menu_title_3.setText(mDatas.get(0).getMainMenuBeans().get(2).getTitle());
-                }
-            } else {
-                setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
-                if (mDatas.get(position).getMainMenuBeans().size() == 1) {
-                    setVisible(iv_menu_icon_1, tv_menu_title_1);
-                    iv_menu_icon_1.setImageResource(mDatas.get(position).getMainMenuBeans().get(0).getRes());
-                    tv_menu_title_1.setText(mDatas.get(position).getMainMenuBeans().get(0).getTitle());
-                } else if (mDatas.get(position).getMainMenuBeans().size() == 2) {
-                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_icon_2, tv_menu_title_2);
-                    iv_menu_icon_1.setImageResource(mDatas.get(position).getMainMenuBeans().get(0).getRes());
-                    tv_menu_title_1.setText(mDatas.get(position).getMainMenuBeans().get(0).getTitle());
-                    iv_menu_icon_2.setImageResource(mDatas.get(position).getMainMenuBeans().get(1).getRes());
-                    tv_menu_title_2.setText(mDatas.get(position).getMainMenuBeans().get(1).getTitle());
-                } else {
-                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_icon_2, tv_menu_title_2, iv_menu_icon_3, tv_menu_title_3);
-                    iv_menu_icon_1.setImageResource(mDatas.get(position).getMainMenuBeans().get(0).getRes());
-                    tv_menu_title_1.setText(mDatas.get(position).getMainMenuBeans().get(0).getTitle());
-                    iv_menu_icon_2.setImageResource(mDatas.get(position).getMainMenuBeans().get(1).getRes());
-                    tv_menu_title_2.setText(mDatas.get(position).getMainMenuBeans().get(1).getTitle());
-                    iv_menu_icon_3.setImageResource(mDatas.get(position).getMainMenuBeans().get(2).getRes());
-                    tv_menu_title_3.setText(mDatas.get(position).getMainMenuBeans().get(2).getTitle());
-                }
-            }
-            ll_lay_1.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!TextUtils.isEmpty(tv_menu_title_1.getText().toString().trim())) {
-                        if ("个性化".equals(tv_menu_title_1.getText().toString())) {
-                            ArrayList<MainMenuBean> mainMenuBeans = new ArrayList<MainMenuBean>();
-                            String initMenusStr = LoginConfig.getHomeMenu(mContext);
-                            String[] strings = initMenusStr.split(",");
-                            if (strings.length > 2) {//有选择
-                                for (int i = 2; i < strings.length; i++) {
-                                    mainMenuBeans.add(new MainMenuBean(strings[i], getTitleBeanRes(strings[i])));
-                                }
-                            }
-                            new HomeMenuDialog(mContext, mainMenuBeans).setCallBack(new HomeMenuDialog.CallBack() {
-                                @Override
-                                public void ok(boolean isChange) {
-                                    if (isChange) {
-                                        initHomeMenu();
-                                        listFragment.refreshByState(0);
-                                    } else {//没选中
-                                        initHomeMenu();
-                                        listFragment.refreshByState(0);
-                                    }
-                                }
-
-                                @Override
-                                public void cancle() {
-
-                                }
-                            }).show();
-                        } else {
-                            int type = getMenuType(tv_menu_title_1.getText().toString().trim());
-                            listFragment.refreshByState(type);
-                        }
-
-                    }
-                }
-            });
-            ll_lay_2.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!TextUtils.isEmpty(tv_menu_title_2.getText().toString().trim())) {
-                        int type = getMenuType(tv_menu_title_2.getText().toString().trim());
-                        listFragment.refreshByState(type);
-                    } else {
-                        if (position == 0) {
-                            listFragment.refreshByState(0);
-                        } else {
-                            int type = getMenuType(tv_menu_title_2.getText().toString().trim());
-                            listFragment.refreshByState(type);
-                        }
-                    }
-                }
-            });
-            ll_lay_3.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    if (!TextUtils.isEmpty(tv_menu_title_3.getText().toString().trim())) {
-                        int type = getMenuType(tv_menu_title_3.getText().toString().trim());
-                        listFragment.refreshByState(type);
-                    }
-                }
-            });
-            container.addView(view, 0);//添加页卡
-            return view;
-        }
-
-        @Override
-        public int getCount() {
-            return mListViews.size();//返回页卡的数量
-        }
-
-        @Override
-        public boolean isViewFromObject(View arg0, Object arg1) {
-            return arg0 == arg1;//官方提示这样写
-        }
-
-        private void setInVisible(View... views) {
-            for (View view1 : views) {
-                view1.setVisibility(View.GONE);
-            }
-        }
-
-        private void setVisible(View... views) {
-            for (View view1 : views) {
-                view1.setVisibility(View.VISIBLE);
-            }
-        }
-
-    }
-
     @Override
     public void refreshByState(int state) {
         super.refreshByState(state);
         if (state == 0) {//首页的点击事件
-            listFragment.refresh(0);
+            viewpager.setCurrentItem(mPagerAdapter.getCenterPosition(1));
+            ListFragment fragment = (ListFragment) fragmentList.get(1);
+            fragment.refresh(0);
             loadTopAds();
         }
     }
@@ -666,10 +551,56 @@ public class MainNewFragment extends BasePagerFragment {
             return 7;
         } else if ("服装、COS".equals(name)) {
             return 8;
-        } else if ("定制".equals(name)) {
+        } else if ("其他".equals(name)) {
             return 9;
+        } else if ("全部".equals(name)) {
+            return 0;
         }
         return 0;
+    }
+
+    private void loadData() {
+        JSONObject jsonObject = new JSONObject();
+        MainApplication mApplication = MainApplication.getInstance();
+        try {
+            if (mApplication.isLogin()) {
+                jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.dirtionary_getFilterAndSortListByApp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        ACache aCache = ACache.get(mContext);
+                        aCache.put(Constans.TAG_GOOD_FILTER, resultObj);
+                        JSONArray rows = resultObj.getJSONArray("rows");
+                        ArrayList<ShangPinFilterBean> allDataArrayList = new Gson().fromJson(rows.toString(),
+                                                                                             new TypeToken<List<ShangPinFilterBean>>() {
+                                                                                             }.getType());
+                        mFilterDialog.setData(allDataArrayList);
+
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                UIHelper.t(mContext, R.string.net_error);
+            }
+        });
     }
 
 }

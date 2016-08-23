@@ -209,8 +209,12 @@ public class ACache {
     public JSONObject getAsJSONObject(String key) {
         try {
             String JSONString = getAsString(key);
-            JSONObject obj = new JSONObject(JSONString);
-            return obj;
+            if (JSONString != null){
+                JSONObject obj = new JSONObject(JSONString);
+                return obj;
+            }else {
+                return null;
+            }
         } catch (Exception e) {
             e.printStackTrace();
             return null;

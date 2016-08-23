@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "D:\\PaiMai\\updateSoftDemo\\build\\intermediates\\res\\merged\\debug\\layout\\main.xml",
+        "source": "D:\\PaiMai\\updateSoftDemo\\src\\main\\res\\layout\\main.xml"
+    },
+    {
+        "merged": "D:\\PaiMai\\updateSoftDemo\\build\\intermediates\\res\\merged\\debug\\layout\\softupdate_progress.xml",
+        "source": "D:\\PaiMai\\updateSoftDemo\\src\\main\\res\\layout\\softupdate_progress.xml"
+    }
+]

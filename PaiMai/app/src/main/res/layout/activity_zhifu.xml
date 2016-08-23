@@ -438,7 +438,7 @@
                         android:background="@null"
                         android:ellipsize="end"
                         android:hint="请填写"
-                        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSTUVWXYZ"
+                        android:digits="0123456789abcdefghijgklmnopqrstuvwxyzABCDEFGHIGKLMNOPQRSJTUVWXYZ"
                         android:singleLine="true"
                         android:textColor="@color/black_tv"
                         android:textSize="@dimen/commen_tv_size_smaller"

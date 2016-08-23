@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="rtl_RecyclerTabLayout">
+        <attr name="rtl_tabIndicatorColor" format="color"/>
+        <attr name="rtl_tabIndicatorHeight" format="dimension"/>
+
+        <attr name="rtl_scrollEnabled" format="boolean"/>
+
+    </declare-styleable>
+</resources>

@@ -140,7 +140,7 @@ public class UserCenterFragment extends BaseFragment {
 
     //更新了 叹号的显示事件
     public void onEventMainThread(UpdateTanNoticeEvent event) {
-        if (event.getStatus() == 0) {
+        if (event.getStatus() == 0||event.getStatus() == 1||event.getStatus() == 2) {
             loadTanNotice();
         }
     }
@@ -152,7 +152,7 @@ public class UserCenterFragment extends BaseFragment {
         } else {
             initNoLoginView();
         }
-        usercentermenuadapter.setStatus(0, 0, 0);
+        //usercentermenuadapter.setStatus(0, 0, 0, 0);
     }
 
 
@@ -270,7 +270,15 @@ public class UserCenterFragment extends BaseFragment {
                         int my_buy = resultObj.getJSONObject("infos").getInt("my_buy");
                         int my_seller = resultObj.getJSONObject("infos").getInt("my_seller");
                         int my_show = resultObj.getJSONObject("infos").getInt("my_show");
-                        usercentermenuadapter.setStatus(my_buy, my_seller, my_show);
+                        int my_qa = resultObj.getJSONObject("infos").getInt("my_qa");
+                        int my_buy_ing = resultObj.getJSONObject("infos").getInt("my_buy_ing");
+                        int my_buy_end = resultObj.getJSONObject("infos").getInt("my_buy_end");
+                        int my_seller_ing = resultObj.getJSONObject("infos").getInt("my_seller_ing");
+                        int my_seller_selt = resultObj.getJSONObject("infos").getInt("my_seller_selt");
+                        int my_qa_q = resultObj.getJSONObject("infos").getInt("my_qa_q");
+                        int my_qa_a = resultObj.getJSONObject("infos").getInt("my_qa_a");
+                        usercentermenuadapter.setStatus(my_buy, my_seller, my_show,my_qa);
+                        usercentermenuadapter.getStatus(my_buy_ing,my_buy_end,my_seller_ing,my_seller_selt,my_qa_q,my_qa_a);
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
                     }

@@ -82,12 +82,12 @@ public class XHeaderView extends LinearLayout {
         }
 
         if (state == STATE_REFRESHING) {
-            // show progress
+            // initDialog progress
             mArrowImageView.clearAnimation();
             mArrowImageView.setVisibility(View.INVISIBLE);
             mProgressBar.setVisibility(View.VISIBLE);
         } else {
-            // show arrow image
+            // initDialog arrow image
             mArrowImageView.setVisibility(View.VISIBLE);
             mProgressBar.setVisibility(View.INVISIBLE);
         }

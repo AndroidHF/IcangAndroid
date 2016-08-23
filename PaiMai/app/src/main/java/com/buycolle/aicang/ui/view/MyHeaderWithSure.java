@@ -20,6 +20,8 @@ public class MyHeaderWithSure extends RelativeLayout {
     private FrameLayout fl_back;
     private TextView tv_common_topbar_title, tv_right_sure;
     private ImageView icon;
+//    private TextView left;
+//    private TextView right;
 
     public MyHeaderWithSure(Context context) {
         super(context);
@@ -33,6 +35,8 @@ public class MyHeaderWithSure extends RelativeLayout {
         tv_common_topbar_title = (TextView) findViewById(R.id.tv_common_topbar_title);
         tv_right_sure = (TextView) findViewById(R.id.tv_right_sure);
         icon = (ImageView) findViewById(R.id.iv_menu_icon);
+//        left = (TextView) findViewById(R.id.left);
+//        right = (TextView) findViewById(R.id.right);
         fl_back.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -60,11 +64,15 @@ public class MyHeaderWithSure extends RelativeLayout {
         fl_back.setVisibility(VISIBLE);
         this.mAction = action;
         tv_common_topbar_title.setText(title);
+//        left.setVisibility(VISIBLE);
+//        right.setVisibility(VISIBLE);
     }
 
     public void init(String title, String sureStr, Action action) {
         fl_back.setVisibility(VISIBLE);
         tv_right_sure.setVisibility(VISIBLE);
+//        left.setVisibility(VISIBLE);
+//        right.setVisibility(VISIBLE);
         this.mAction = action;
         tv_common_topbar_title.setText(title);
         tv_right_sure.setText(sureStr);
@@ -79,6 +87,8 @@ public class MyHeaderWithSure extends RelativeLayout {
         fl_back.setVisibility(VISIBLE);
         this.mAction = action;
         icon.setVisibility(VISIBLE);
+//        left.setVisibility(VISIBLE);
+//        right.setVisibility(VISIBLE);
         icon.setImageResource(titilIcon);
         tv_common_topbar_title.setText(title);
     }

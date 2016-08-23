@@ -112,7 +112,7 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 R.drawable.show_menu_5,//
                 R.drawable.show_menu_7,//
                 R.drawable.show_menu_8,//
-                R.drawable.show_menu_9,//
+                R.drawable.another_icon,//
         };
         for (int i = 0; i < defout.length; i++) {
             typesImages.get(i).setImageResource(defout[i]);
@@ -133,7 +133,7 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 R.drawable.show_menu_5,//
                 R.drawable.show_menu_7,//
                 R.drawable.show_menu_8,//
-                R.drawable.show_menu_9,//
+                R.drawable.another_icon,//
         };
         int[] select = new int[]{R.drawable.show_menu_1_sel,//
                 R.drawable.show_menu_2_sel,//
@@ -143,7 +143,7 @@ public class TypesExpandableLayout extends RelativeLayout implements View.OnClic
                 R.drawable.show_menu_5_sel,//
                 R.drawable.show_menu_7_sel,//
                 R.drawable.show_menu_8_sel,//
-                R.drawable.show_menu_9_sel,//
+                R.drawable.another_icon_sel,//
         };
 
         if (currentSelectIndex == index) {

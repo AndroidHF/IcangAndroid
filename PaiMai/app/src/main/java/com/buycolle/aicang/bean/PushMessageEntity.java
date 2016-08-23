@@ -10,6 +10,7 @@ public class PushMessageEntity {
     private int id;
     private String title;
     private String content;
+//    private int ent_id;
 
     public int getKey_id() {
         return key_id;
@@ -50,6 +51,13 @@ public class PushMessageEntity {
     public void setContent(String content) {
         this.content = content;
     }
+//    public int getEnt_id() {
+//        return ent_id;
+//    }
+//
+//    public void setEnt_id(int ent_id) {
+//        this.ent_id = ent_id;
+//    }
 
     @Override
     public String toString() {
@@ -59,6 +67,7 @@ public class PushMessageEntity {
                 ", id=" + id +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+//                ", ent_id=" + ent_id +
                 '}';
     }
 }

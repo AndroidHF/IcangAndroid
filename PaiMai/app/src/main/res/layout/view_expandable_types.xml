@@ -187,7 +187,7 @@
                 </LinearLayout>
 
             </LinearLayout>
--->
+
         </LinearLayout>
     </FrameLayout>
 
@@ -259,13 +259,13 @@
                     android:id="@+id/iv_type_9"
                     android:layout_width="@dimen/types_icon_width"
                     android:layout_height="@dimen/types_icon_width"
-                    android:src="@drawable/show_menu_9" />
+                    android:src="@drawable/another_icon" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/types_icon_tv_padding"
-                    android:text="定制"
+                    android:text="其他"
                     android:textColor="@color/black_tv"
                     android:textSize="@dimen/commen_tv_size_smaller" />
             </LinearLayout>

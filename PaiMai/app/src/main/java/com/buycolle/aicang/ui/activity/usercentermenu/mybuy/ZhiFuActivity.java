@@ -140,7 +140,7 @@ public class ZhiFuActivity extends BaseActivity {
 //             * add by :胡峰
 //             * 微信支付失败解锁优惠码
 //             */
-//            Toast.makeText(mActivity, "支付失败", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(mActivity, "支付失败", Toast.LENGTH_SHORT).initDialog();
 //            if (cb_youhuima_status.isChecked()){
 //                JSONObject jsonObject = new JSONObject();
 //                try {

@@ -6,6 +6,7 @@ import android.support.v4.view.ViewPager;
 
 import com.buycolle.aicang.adapter.MyFragmentPagerAdapter;
 import com.buycolle.aicang.ui.fragment.BaseFragment;
+import com.buycolle.aicang.ui.fragment.SubjectFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,8 +19,9 @@ import java.util.List;
  */
 public abstract class BasePagerFragment extends BaseFragment {
 
-    final ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
+    protected ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
     protected ListFragment listFragment;
+    protected SubjectFragment subjectFragment;
     public void initFragmentPager( ViewPager viewPager, final ScrollableLayout mScrollLayout,String index) {
         listFragment =ListFragment.newInstance(index);
         fragmentList.add(listFragment);
@@ -46,6 +48,9 @@ public abstract class BasePagerFragment extends BaseFragment {
 //
 //            }
 //        });
+
         viewPager.setCurrentItem(0);
     }
+
+
 }

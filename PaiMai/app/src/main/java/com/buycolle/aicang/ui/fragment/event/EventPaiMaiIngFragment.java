@@ -273,9 +273,8 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
             ViewHolder holder = null;
             if (convertView == null) {
                 holder = new ViewHolder();
+
                 convertView = LayoutInflater.from(mContext).inflate(R.layout.row_event_main_list, null);
-
-
                 holder.iv_cover = (ImageView) convertView.findViewById(R.id.iv_cover);
                 holder.iv_notice = (ImageView) convertView.findViewById(R.id.iv_notice);
                 holder.iv_rate = (ImageView) convertView.findViewById(R.id.iv_rate);
@@ -371,7 +370,7 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
             return convertView;
         }
 
-        public class ViewHolder {
+      public class ViewHolder {
 
             ImageView iv_notice;
             ImageView iv_cover;
@@ -379,21 +378,17 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
             LinearLayout ll_time_count;
             LinearLayout ll_finish_time;
             LinearLayout ll_main;
-
             TextView tv_title;
             TextView tv_pai_count;
             TextView tv_yikoujia_title;
             TextView tv_yikoujia_value;
             TextView tv_jiage_title;
             TextView tv_jiage_value;
-
-
             TextView tv_daojishi_title;
             TextView tv_day;
             TextView tv_hour;
             TextView tv_min;
             TextView tv_secs;
-
             TextView tv_yikoujia_biaoshi;
             TextView tv_qipaijia_biaoshi;
 

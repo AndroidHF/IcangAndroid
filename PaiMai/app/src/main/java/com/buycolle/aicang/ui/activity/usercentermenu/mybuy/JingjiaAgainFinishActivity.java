@@ -76,6 +76,8 @@ public class JingjiaAgainFinishActivity extends BaseActivity {
     TextView tvYikouPriceValue;
     @Bind(R.id.tv_good_time_title)
     TextView tvGoodTimeTitle;
+    @Bind(R.id.tv_tixing)
+    TextView tvTiXing;
 
     //    private int type = 1;
     private String value;
@@ -93,7 +95,7 @@ public class JingjiaAgainFinishActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_jingjiaagainfinish);
+        setContentView(R.layout.activity_jingjiaagainfinish_new);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         myHeader.init("出价订单", new MyHeader.Action() {
@@ -261,6 +263,7 @@ public class JingjiaAgainFinishActivity extends BaseActivity {
 
 
         if (detailBean.getPm_status() == 1) {//1：正在进行 2：已结束
+            tvTiXing.setVisibility(View.VISIBLE);
             tvContent.setText("您已成功出价\n请耐心等待拍卖结束！");
             tvGoodTimeTitle.setText("拍卖剩余时间");
             if (detailBean.getCol_id() > 0) {
@@ -281,6 +284,7 @@ public class JingjiaAgainFinishActivity extends BaseActivity {
             handler.sendEmptyMessage(1);
         } else {
             paiStatus.setVisibility(View.GONE);
+            tvTiXing.setVisibility(View.GONE);
             tvContent.setText("您已成功拍得该商品\n请在72小时内付款！");
             btnPaiAgain.setText("付款");
             tvGoodTimeTitle.setText("付款剩余时间");

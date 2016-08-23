@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.buycolle.aicang.Constans;
@@ -22,7 +21,6 @@ import com.buycolle.aicang.adapter.MainPagerAdapter;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.HomeFilterMenuBean;
 import com.buycolle.aicang.bean.HomeTopAddBeanNew;
-import com.buycolle.aicang.bean.MainMenuBean;
 import com.buycolle.aicang.bean.MainMenuPage;
 import com.buycolle.aicang.event.HomeBackEvent;
 import com.buycolle.aicang.event.LogOutEvent;
@@ -30,7 +28,7 @@ import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.ui.activity.SearchActivity;
 import com.buycolle.aicang.ui.view.CircleIndicator;
 import com.buycolle.aicang.ui.view.FixedViewPager;
-import com.buycolle.aicang.ui.view.HomeMenuDialog;
+import com.buycolle.aicang.ui.view.MainFilterDialog;
 import com.buycolle.aicang.ui.view.autoscrollviewpager.AutoScrollViewPager;
 import com.buycolle.aicang.ui.view.autoscrollviewpager.HomeAddImagePagerAdapter;
 import com.buycolle.aicang.ui.view.mainScrole.BasePagerFragment;
@@ -39,6 +37,7 @@ import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.UIUtil;
 import com.buycolle.aicang.util.superlog.JSONUtil;
+import com.buycolle.aicang.util.superlog.KLog;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.squareup.okhttp.Request;
@@ -68,8 +67,10 @@ public class MainFragment extends BasePagerFragment {
     FixedViewPager viewpager;
     @Bind(R.id.scrollableLayout)
     ScrollableLayout scrollableLayout;
-    @Bind(R.id.rl_search)
-    RelativeLayout rl_search;
+//    @Bind(R.id.rl_search)
+//    RelativeLayout rl_search;
+    @Bind(R.id.ll_search)
+    LinearLayout ll_search;
     @Bind(R.id.ll_event_menu)
     LinearLayout ll_event_menu;
     @Bind(R.id.iv_show_smile)
@@ -82,6 +83,15 @@ public class MainFragment extends BasePagerFragment {
     HomeFilterFrament homeFilterFrament;
     private int userTotalDelta;
     private ArrayList<BaseFragment> fragList;
+    @Bind(R.id.ll_filter)
+    LinearLayout ll_filter;
+    private boolean isSelectCate_Id = false;
+    private int cate_id;//分类
+
+    private String st_id = "";//状态ID集
+    private int sort_item = 0;// 0,无 1，价格排序 2,竞拍人数排序 3,剩余时间排序 4,卖家好评排序
+    private String sort_value = "";// A:升序 B：降序,默认排序的sor_id
+
 
 
     //登录触发
@@ -130,17 +140,40 @@ public class MainFragment extends BasePagerFragment {
         MainPagerAdapter pagerAdapter = new MainPagerAdapter(getChildFragmentManager(), fragList);
         pagerStrip.setAdapter(pagerAdapter);
         pagerStrip.setOffscreenPageLimit(fragList.size() - 1);
-        pagerStrip.setCurrentItem(0);
+        int currentIndex = Integer.MAX_VALUE/2;
+        pagerStrip.setCurrentItem(currentIndex);
 
 
         initHomeMenu();
 
-        rl_search.setOnClickListener(new View.OnClickListener() {
+        ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putInt("index", 1);
                 UIHelper.jump(mActivity, SearchActivity.class, bundle);
+            }
+        });
+
+        ll_filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               new MainFilterDialog(mContext,isSelectCate_Id, cate_id, st_id,sort_item,sort_value).setCallBack(new MainFilterDialog.CallBack() {
+                   @Override
+                   public void action(boolean ISSELECTCATE_ID, int CATE_ID,String ST_ID,int SORT_ITEM,String SORT_VALUE) {
+                       KLog.d("返回来的数据---", "isSelectCate_Id==" + isSelectCate_Id+ ",  " +
+                                       "cate_id==" + cate_id + ",  " +//
+                                       "st_id==" + st_id + ",  "+
+                                       "sort_item=="+sort_item+","+
+                                       "sort_value == "+sort_value
+                       );
+                       isSelectCate_Id = ISSELECTCATE_ID;
+                       cate_id = CATE_ID;
+                       st_id = ST_ID;
+                       sort_item = SORT_ITEM;
+                       sort_value = SORT_VALUE;
+                   }
+               }).show();
             }
         });
 
@@ -376,9 +409,7 @@ public class MainFragment extends BasePagerFragment {
     private boolean isShow = true;
 
     private int getTitleBeanRes(String title) {
-        if ("个性化".equals(title)) {
-            return R.drawable.main_menu_gexinghua;
-        } else if ("全部".equals(title)) {
+        if ("全部".equals(title)) {
             return R.drawable.main_menu_all;
         } else if ("漫画".equals(title)) {
             return R.drawable.show_menu_1_sel;
@@ -396,7 +427,7 @@ public class MainFragment extends BasePagerFragment {
             return R.drawable.show_menu_7_sel;
         } else if ("服装、COS".equals(title)) {
             return R.drawable.show_menu_8_sel;
-        } else if ("定制".equals(title)) {
+        } else if ("其他".equals(title)) {
             return R.drawable.show_menu_9_sel;
         }
         return 0;
@@ -454,23 +485,23 @@ public class MainFragment extends BasePagerFragment {
             ImageView iv_menu_all_icon_3 = (ImageView) view.findViewById(R.id.iv_menu_all_icon_3);
             final TextView tv_menu_title_3 = (TextView) view.findViewById(R.id.tv_menu_title_3);
 
-            if (position == 0) {
-                if (mDatas.get(0).getMainMenuBeans().size() == 2) {
-                    setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
-                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_all_icon_2);
-                    iv_menu_icon_1.setImageResource(R.drawable.main_menu_gexinghua);
-                    tv_menu_title_1.setText("个性化");
-                } else {
-                    setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
-                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_all_icon_2, iv_menu_icon_3, tv_menu_title_3);
-                    iv_menu_icon_1.setImageResource(mDatas.get(0).getMainMenuBeans().get(0).getRes());
-                    tv_menu_title_1.setText(mDatas.get(0).getMainMenuBeans().get(0).getTitle());
-                    iv_menu_all_icon_2.setImageResource(mDatas.get(0).getMainMenuBeans().get(1).getRes());
-                    tv_menu_title_2.setText(mDatas.get(0).getMainMenuBeans().get(1).getTitle());
-                    iv_menu_icon_3.setImageResource(mDatas.get(0).getMainMenuBeans().get(2).getRes());
-                    tv_menu_title_3.setText(mDatas.get(0).getMainMenuBeans().get(2).getTitle());
-                }
-            } else {
+//            if (position == 0) {
+//                if (mDatas.get(0).getMainMenuBeans().size() == 2) {
+//                    setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
+//                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_all_icon_2);
+//                    iv_menu_icon_1.setImageResource(R.drawable.main_menu_gexinghua);
+//                    tv_menu_title_1.setText("个性化");
+//                } else {
+//                    setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
+//                    setVisible(iv_menu_icon_1, tv_menu_title_1, iv_menu_all_icon_2, iv_menu_icon_3, tv_menu_title_3);
+//                    iv_menu_icon_1.setImageResource(mDatas.get(0).getMainMenuBeans().get(0).getRes());
+//                    tv_menu_title_1.setText(mDatas.get(0).getMainMenuBeans().get(0).getTitle());
+//                    iv_menu_all_icon_2.setImageResource(mDatas.get(0).getMainMenuBeans().get(1).getRes());
+//                    tv_menu_title_2.setText(mDatas.get(0).getMainMenuBeans().get(1).getTitle());
+//                    iv_menu_icon_3.setImageResource(mDatas.get(0).getMainMenuBeans().get(2).getRes());
+//                    tv_menu_title_3.setText(mDatas.get(0).getMainMenuBeans().get(2).getTitle());
+//                }
+//            } else {
                 setInVisible(iv_menu_icon_1, iv_menu_icon_2, iv_menu_icon_3, iv_menu_all_icon_1, iv_menu_all_icon_2, iv_menu_all_icon_3, tv_menu_title_1, tv_menu_title_2, tv_menu_title_3);
                 if (mDatas.get(position).getMainMenuBeans().size() == 1) {
                     setVisible(iv_menu_icon_1, tv_menu_title_1);
@@ -491,41 +522,43 @@ public class MainFragment extends BasePagerFragment {
                     iv_menu_icon_3.setImageResource(mDatas.get(position).getMainMenuBeans().get(2).getRes());
                     tv_menu_title_3.setText(mDatas.get(position).getMainMenuBeans().get(2).getTitle());
                 }
-            }
+            //}
             ll_lay_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if (!TextUtils.isEmpty(tv_menu_title_1.getText().toString().trim())) {
-                        if ("个性化".equals(tv_menu_title_1.getText().toString())) {
-                            ArrayList<MainMenuBean> mainMenuBeans = new ArrayList<MainMenuBean>();
-                            String initMenusStr = LoginConfig.getHomeMenu(mContext);
-                            String[] strings = initMenusStr.split(",");
-                            if (strings.length > 2) {//有选择
-                                for (int i = 2; i < strings.length; i++) {
-                                    mainMenuBeans.add(new MainMenuBean(strings[i], getTitleBeanRes(strings[i])));
-                                }
-                            }
-                            new HomeMenuDialog(mContext, mainMenuBeans).setCallBack(new HomeMenuDialog.CallBack() {
-                                @Override
-                                public void ok(boolean isChange) {
-                                    if (isChange) {
-                                        initHomeMenu();
-                                        listFragment.refreshByState(0);
-                                    } else {//没选中
-                                        initHomeMenu();
-                                        listFragment.refreshByState(0);
-                                    }
-                                }
-
-                                @Override
-                                public void cancle() {
-
-                                }
-                            }).show();
-                        } else {
-                            int type = getMenuType(tv_menu_title_1.getText().toString().trim());
-                            listFragment.refreshByState(type);
-                        }
+//                        if ("个性化".equals(tv_menu_title_1.getText().toString())) {
+//                            ArrayList<MainMenuBean> mainMenuBeans = new ArrayList<MainMenuBean>();
+//                            String initMenusStr = LoginConfig.getHomeMenu(mContext);
+//                            String[] strings = initMenusStr.split(",");
+//                            if (strings.length > 2) {//有选择
+//                                for (int i = 2; i < strings.length; i++) {
+//                                    mainMenuBeans.add(new MainMenuBean(strings[i], getTitleBeanRes(strings[i])));
+//                                }
+//                            }
+//                            new HomeMenuDialog(mContext, mainMenuBeans).setCallBack(new HomeMenuDialog.CallBack() {
+//                                @Override
+//                                public void ok(boolean isChange) {
+//                                    if (isChange) {
+//                                        initHomeMenu();
+//                                        listFragment.refreshByState(0);
+//                                    } else {//没选中
+//                                        initHomeMenu();
+//                                        listFragment.refreshByState(0);
+//                                    }
+//                                }
+//
+//                                @Override
+//                                public void cancle() {
+//
+//                                }
+//                            }).initDialog();
+//                        } else {
+//                            int type = getMenuType(tv_menu_title_1.getText().toString().trim());
+//                            listFragment.refreshByState(type);
+//                        }
+                        initHomeMenu();
+                        listFragment.refreshByState(0);
                     }
                 }
             });
@@ -614,7 +647,7 @@ public class MainFragment extends BasePagerFragment {
             return 7;
         } else if ("服装、COS".equals(name)) {
             return 8;
-        } else if ("定制".equals(name)) {
+        } else if ("其他".equals(name)) {
             return 9;
         }
         return 0;

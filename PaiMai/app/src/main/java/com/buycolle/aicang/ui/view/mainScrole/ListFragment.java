@@ -42,15 +42,18 @@ import de.greenrobot.event.EventBus;
 public class ListFragment extends ScrollAbleFragment implements ScrollableHelper.ScrollableContainer {
 
     private XListView mListview;
-    List<String> strlist;
+    List<String>  strlist;
     MyHomeAdapter myAdapter;
-    ImageButton ib_float_btn;
-    TextView tv_null;
-    private String index = "0";//全部
+    ImageButton   ib_float_btn;
+    TextView      tv_null;
+    public String index = "0";//全部
+
+    private boolean mIsFilter;
 
     private ArrayList<HomeGoodsBean> homeGoodsBeanArrayList;
     private boolean isRun = false;
 
+    private boolean mIsFirst = false;
 
     public static ListFragment newInstance(String index) {
         ListFragment listFragment = new ListFragment();
@@ -68,7 +71,9 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater,
+                             @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_list, container, false);
         mListview = (XListView) view.findViewById(R.id.listview);
         ib_float_btn = (ImageButton) view.findViewById(R.id.ib_float_btn);
@@ -117,7 +122,6 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                     ib_float_btn.setVisibility(View.GONE);
                 }
 
-
             }
         });
         ib_float_btn.setOnClickListener(new View.OnClickListener() {
@@ -128,6 +132,14 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
             }
         });
         loadData(index, false, false);
+    }
+
+    public boolean isFirst() {
+        if (!mIsFirst) {
+            mIsFirst = true;
+            return mIsFirst;
+        }
+        return false;
     }
 
     public void onEventMainThread(ChuJiaEvent event) {
@@ -146,7 +158,6 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
         }
     }
 
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -154,7 +165,106 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
     }
 
     private int pageIndex = 1;
-    private int pageNum = 20;
+    private int pageNum   = 20;
+
+    public void filterData(String cate_id,
+                            String filter_id,
+                            String sort_id,
+                            final boolean isLoadMore,
+                            final boolean isAction) {
+        tv_null.setVisibility(View.GONE);
+        isRun = true;
+        JSONObject jsonObject = new JSONObject();
+        try {
+            if (!"0".equals(cate_id)) {
+                jsonObject.put("cate_id", cate_id);// 1 - 9 写死
+            }
+            jsonObject.put("filter_id", filter_id);
+            jsonObject.put("sort_id", sort_id);
+            jsonObject.put("page", 1);
+            jsonObject.put("rows", 50);
+            if (mApplication.isLogin()) {
+                jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.product_filter_list_by_app(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+                if (!isLoadMore && !isAction) {
+                    tv_null.setVisibility(View.GONE);
+                    showLoadingDialog();
+                } else {
+                    showLoadingDialog();
+                }
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                if (!isAdded()) return;
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        JSONArray jsonArray = resultObj.getJSONArray("rows");
+                        ArrayList<HomeGoodsChildBean> resultArray = new Gson().fromJson(jsonArray.toString(),
+                                                                                        new TypeToken<List<HomeGoodsChildBean>>() {
+                                                                                        }.getType());
+                        if (pageIndex == 1) {
+                            homeGoodsBeanArrayList.clear();
+                        }
+                        ArrayList<HomeGoodsBean> resultFormatS = formatData(resultArray);
+                        homeGoodsBeanArrayList.addAll(resultFormatS);
+                        if (pageIndex == 1 && resultArray.size() > 0 && isHandRun == false) {
+                            handler.sendEmptyMessage(1);
+                        }
+                        myAdapter.notifyDataSetChanged();
+                        if (JSONUtil.isCanLoadMore(resultObj)) {
+                            mListview.isShowFoot(true);
+                        } else {
+                            mListview.isShowFoot(false);
+                        }
+
+                        if (pageIndex == 1 && resultArray.size() == 0) {
+                            tv_null.setVisibility(View.VISIBLE);
+                        } else {
+                            tv_null.setVisibility(View.GONE);
+                        }
+
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                isRun = false;
+                if (!isLoadMore && !isAction) {
+                    dismissLoadingDialog();
+                } else {
+                    dismissLoadingDialog();
+                }
+                if (!isLoadMore) {
+                    mListview.onRefreshComplete();
+                }
+
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+                if (!isAdded()) return;
+                dismissLoadingDialog();
+                UIHelper.t(mContext, R.string.net_error);
+                if (isLoadMore) {
+                    pageIndex--;
+                }
+                if (!isLoadMore) {
+                    mListview.onRefreshComplete();
+                }
+                isRun = false;
+            }
+        });
+
+    }
 
     private void loadData(String cate_id, final boolean isLoadMore, final boolean isAction) {
         tv_null.setVisibility(View.GONE);
@@ -179,21 +289,21 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                 if (!isLoadMore && !isAction) {
                     tv_null.setVisibility(View.GONE);
                     showLoadingDialog();
-                }else {
+                } else {
                     showLoadingDialog();
                 }
             }
 
             @Override
             public void onApiSuccess(String response) {
-                if (!isAdded())
-                    return;
+                if (!isAdded()) return;
                 try {
                     JSONObject resultObj = new JSONObject(response);
                     if (JSONUtil.isOK(resultObj)) {
                         JSONArray jsonArray = resultObj.getJSONArray("rows");
-                        ArrayList<HomeGoodsChildBean> resultArray = new Gson().fromJson(jsonArray.toString(), new TypeToken<List<HomeGoodsChildBean>>() {
-                        }.getType());
+                        ArrayList<HomeGoodsChildBean> resultArray = new Gson().fromJson(jsonArray.toString(),
+                                                                                        new TypeToken<List<HomeGoodsChildBean>>() {
+                                                                                        }.getType());
                         if (pageIndex == 1) {
                             homeGoodsBeanArrayList.clear();
                         }
@@ -210,8 +320,8 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                         }
 
                         if (pageIndex == 1 && resultArray.size() == 0) {
-                           tv_null.setVisibility(View.VISIBLE);
-                        }else {
+                            tv_null.setVisibility(View.VISIBLE);
+                        } else {
                             tv_null.setVisibility(View.GONE);
                         }
 
@@ -224,7 +334,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
                 isRun = false;
                 if (!isLoadMore && !isAction) {
                     dismissLoadingDialog();
-                }else {
+                } else {
                     dismissLoadingDialog();
                 }
                 if (!isLoadMore) {
@@ -235,8 +345,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
 
             @Override
             public void onApiFailure(Request request, Exception e) {
-                if (!isAdded())
-                    return;
+                if (!isAdded()) return;
                 dismissLoadingDialog();
                 UIHelper.t(mContext, R.string.net_error);
                 if (isLoadMore) {
@@ -252,7 +361,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
     }
 
     boolean isNeedCountTime = false;
-    boolean isHandRun = false;
+    boolean isHandRun       = false;
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             switch (msg.what) {
@@ -329,7 +438,8 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
             } else {
                 ArrayList<HomeGoodsChildBean> homeGoodsChildBeen = new ArrayList<>();
                 for (int i = 0; i < resultArray.size(); i++) {
-//                    resultArray.get(i).setTime(StringFormatUtil.getDaoJiShiTime(resultArray.get(i).getPm_end_time()));
+                    //                    resultArray.get(i).setTime(StringFormatUtil.getDaoJiShiTime(resultArray.get
+                    // (i).getPm_end_time()));
                     resultArray.get(i).setTime(resultArray.get(i).getPm_end_remain_second() * 1000);
                     KLog.d("自己设置的时间", "----" + resultArray.get(i).getTime());
 
@@ -361,7 +471,6 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
     public View getScrollableView() {
         return mListview;
     }
-
 
     @Override
     public void refresh(int status) {

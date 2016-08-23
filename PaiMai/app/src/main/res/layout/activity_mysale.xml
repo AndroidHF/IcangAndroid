@@ -100,24 +100,43 @@
         android:gravity="center"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/tv_paimai_ing"
+        <RelativeLayout
             android:layout_width="80dip"
             android:layout_height="25dip"
-            android:layout_marginRight="-1dip"
-            android:background="@drawable/shape_orange_black"
-            android:gravity="center"
-            android:text="拍卖中"
-            android:textColor="@color/black"
-            android:textSize="@dimen/commen_tv_size_smaller"
-            android:textStyle="bold" />
+            android:layout_marginRight="-1dip">
+            <TextView
+                android:id="@+id/tv_paimai_ing"
+                android:layout_width="80dip"
+                android:layout_height="25dip"
+                android:background="@drawable/shape_orange_black"
+                android:gravity="center"
+                android:text="拍卖中"
+                android:textColor="@color/black"
+                android:textSize="@dimen/commen_tv_size_smaller"
+                android:textStyle="bold" />
 
+            <ImageView
+                android:id="@+id/iv_paimaiing_notice_icon"
+                android:layout_width="6dip"
+                android:layout_height="6dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip"
+                android:layout_alignParentTop="true"
+                android:layout_marginTop="4dip"
+                android:visibility="gone"
+                android:src="@drawable/point" />
+
+        </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="80dip"
+        android:layout_height="25dip"
+        android:layout_marginLeft="-2dip"
+        android:layout_marginRight="-2dip">
         <TextView
             android:id="@+id/tv_paimai_finish"
             android:layout_width="80dip"
             android:layout_height="25dip"
-            android:layout_marginLeft="-2dip"
-            android:layout_marginRight="-2dip"
             android:background="@drawable/shape_white_black"
             android:gravity="center"
             android:text="已卖出"
@@ -125,30 +144,71 @@
             android:textSize="@dimen/commen_tv_size_smaller"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/iv_paimai_finish_notice_icon"
+            android:layout_width="6dip"
+            android:layout_height="6dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dip"
+            android:visibility="gone"
+            android:src="@drawable/point" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="80dip"
+        android:layout_height="25dip"
+        android:layout_marginLeft="-2dip"
+        android:layout_marginRight="-2dip">
         <TextView
             android:id="@+id/tv_liupai"
             android:layout_width="80dip"
             android:layout_height="25dip"
-            android:layout_marginLeft="-2dip"
-            android:layout_marginRight="-2dip"
             android:background="@drawable/shape_white_black"
             android:gravity="center"
             android:text="流拍"
             android:textColor="@color/black"
             android:textSize="@dimen/commen_tv_size_smaller"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iv_liupai_notice_icon"
+            android:layout_width="6dip"
+            android:layout_height="6dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="16dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dip"
+            android:visibility="gone"
+            android:src="@drawable/point" />
+    </RelativeLayout>
 
+    <RelativeLayout
+        android:layout_width="80dip"
+        android:layout_height="25dip"
+        android:layout_marginLeft="-1dip">
         <TextView
             android:id="@+id/tv_shenhe_status"
             android:layout_width="80dip"
             android:layout_height="25dip"
-            android:layout_marginLeft="-1dip"
             android:background="@drawable/shape_white_black"
             android:gravity="center"
             android:text="审核状态"
             android:textColor="@color/black"
             android:textSize="@dimen/commen_tv_size_smaller"
             android:textStyle="bold" />
+        <ImageView
+            android:id="@+id/iv_shenhe_notice_icon"
+            android:layout_width="6dip"
+            android:layout_height="6dip"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="3dip"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="4dip"
+            android:visibility="gone"
+            android:src="@drawable/point" />
+    </RelativeLayout>
+
     </LinearLayout>
 
     <com.buycolle.aicang.ui.view.FixedViewPager

@@ -9,6 +9,7 @@ import android.os.Message;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,6 +30,7 @@ import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.PaiPinDetailBean;
 import com.buycolle.aicang.event.ChuJiaEvent;
 import com.buycolle.aicang.event.LoginEvent;
+import com.buycolle.aicang.event.UpdateTanNoticeEvent;
 import com.buycolle.aicang.ui.activity.comment.MainComentActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.mybuy.JingjiaAgainFinishActivity;
 import com.buycolle.aicang.ui.view.HackyViewPager;
@@ -88,13 +90,13 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
     TextView ivPageCount;
     TextView tvPaipinName;
     TextView tvPaipinDesc;
-    TextView tvPaipinTime;
-    TextView tvPaipinPaiCount;
+    //TextView tvPaipinTime;
+    //TextView tvPaipinPaiCount;
     TextView tvPaipinValueNow;
     TextView tvPaipinValueYikoujia;
     LinearLayout llXianjia;
-    ImageView ivStore;
-    ImageView ivShare;
+//    ImageView ivStore;
+//    ImageView ivShare;
     TextView tvShangpinValue;
     MyExpandTextView tvPaipinDescDetail;
     TextView tvPaipinZhuangtai;
@@ -122,12 +124,24 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
     RelativeLayout rl_top_images;
     LinearLayout ll_jubao;
     RelativeLayout rl_yikoujia;
-    LinearLayout ll_clock;
+    //LinearLayout ll_clock;
     @Bind(R.id.tv_maimaimai)
     TextView tvMaimaimai;
     @Bind(R.id.mScrollView)
     XScrollView mScrollView;
     TextView tv_jiage_change;
+
+    TextView tvDay;//天
+    TextView tvHour;//时
+    TextView tvMintue;//分
+    TextView tvSec;//秒
+
+    ImageView ivHammer;//锤子
+    TextView tvCount;//竞拍人数
+    @Bind(R.id.iv_store)
+    ImageView ivStore;
+    @Bind(R.id.iv_share)
+    ImageView ivShare;
 
 
     private boolean isEvent = false;//是否是拍卖会
@@ -154,13 +168,13 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         ivPageCount = (TextView) mainContent.findViewById(R.id.iv_page_count);
         tvPaipinName = (TextView) mainContent.findViewById(R.id.tv_paipin_name);
         tvPaipinDesc = (TextView) mainContent.findViewById(R.id.tv_paipin_desc);
-        tvPaipinTime = (TextView) mainContent.findViewById(R.id.tv_paipin_time);
-        tvPaipinPaiCount = (TextView) mainContent.findViewById(R.id.tv_paipin_pai_count);
+        //tvPaipinTime = (TextView) mainContent.findViewById(R.id.tv_paipin_time);
+        //tvPaipinPaiCount = (TextView) mainContent.findViewById(R.id.tv_paipin_pai_count);
         tvPaipinValueNow = (TextView) mainContent.findViewById(R.id.tv_paipin_value_now);
         tvPaipinValueYikoujia = (TextView) mainContent.findViewById(R.id.tv_paipin_value_yikoujia);
         llXianjia = (LinearLayout) mainContent.findViewById(R.id.ll_xianjia);
-        ivStore = (ImageView) mainContent.findViewById(R.id.iv_store);
-        ivShare = (ImageView) mainContent.findViewById(R.id.iv_share);
+//        ivStore = (ImageView) mainContent.findViewById(R.id.iv_store);
+//        ivShare = (ImageView) mainContent.findViewById(R.id.iv_share);
         tvShangpinValue = (TextView) mainContent.findViewById(R.id.tv_shangpin_value);
         tvPaipinDescDetail = (MyExpandTextView) mainContent.findViewById(R.id.tv_paipin_desc_detail);
         tvPaipinZhuangtai = (TextView) mainContent.findViewById(R.id.tv_paipin_zhuangtai);
@@ -186,13 +200,19 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         rl_top_images = (RelativeLayout) mainContent.findViewById(R.id.rl_top_images);
         ll_jubao = (LinearLayout) mainContent.findViewById(R.id.ll_jubao);
         rl_yikoujia = (RelativeLayout) mainContent.findViewById(R.id.rl_yikoujia);
-        ll_clock = (LinearLayout) mainContent.findViewById(R.id.ll_clock);
+        //ll_clock = (LinearLayout) mainContent.findViewById(R.id.ll_clock);
         tv_jiage_change = (TextView) mainContent.findViewById(R.id.tv_jiage_change);
         tvYikoujiaTitle = (TextView) mainContent.findViewById(R.id.tv_yikoujia_title);
         ll_ask_quesrtion = (LinearLayout) mainContent.findViewById(R.id.ll_ask_quesrtion);
         llAllCommentLay = (LinearLayout) mainContent.findViewById(R.id.ll_all_comment_lay);
         llGoodCommentLay = (LinearLayout) mainContent.findViewById(R.id.ll_good_comment_lay);
         llBadCommentLay = (LinearLayout) mainContent.findViewById(R.id.ll_bad_comment_lay);
+        tvDay = (TextView) mainContent.findViewById(R.id.tv_day);
+        tvHour = (TextView) mainContent.findViewById(R.id.tv_hour);
+        tvMintue = (TextView) mainContent.findViewById(R.id.tv_mintue);
+        tvSec = (TextView) mainContent.findViewById(R.id.tv_sec);
+        ivHammer = (ImageView) mainContent.findViewById(R.id.iv_hammer);
+        tvCount = (TextView) mainContent.findViewById(R.id.tv_count);
 
         mScrollView.setView(mainContent);
 
@@ -313,7 +333,13 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);
         aCache = ACache.get(this);
-        myHeader.init("拍品详情", new MyHeader.Action() {
+//        myHeader.init("拍品详情", new MyHeader.Action() {
+//            @Override
+//            public void leftActio() {
+//                finish();
+//            }
+//        });
+        myHeader.initPaiPinDetai("拍品详情", new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();
@@ -323,6 +349,25 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
             isFinish = _Bundle.getBoolean("isFinish", false);
             isEvent = _Bundle.getBoolean("isEvent", false);
             product_id = _Bundle.getInt("product_id");
+        }
+
+        if (_Bundle2 != null){
+            if(_Bundle2.getBoolean("isPush")){
+                //关注拍品剩余30分钟的推送界面的跳转
+                if (_Bundle2.getInt("type") == 13 ||_Bundle2.getInt("type") == 5){
+                    Log.i("type-----", _Bundle.getInt("type") + "");
+                    isFinish = _Bundle.getBoolean("isFinish", false);
+                    isEvent = _Bundle.getBoolean("isEvent", false);
+                    product_id = _Bundle2.getInt("id");
+                }
+                if(_Bundle2.getInt("type") == 1){
+                    Log.i("type-----", _Bundle.getInt("type") + "");
+                    isFinish = _Bundle.getBoolean("isFinish", false);
+                    isEvent = _Bundle.getBoolean("isEvent", false);
+                    product_id = _Bundle2.getInt("id");
+                    UpdateRedTipByTuiSong();
+                }
+            }
         }
 
         mTencent = Tencent.createInstance(Constans.APP_TX_KEY, this.getApplicationContext());
@@ -719,12 +764,20 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
 
     private void setTime() {
         if (paiPinDetailBean.isFinish()) {
-            tvPaipinTime.setText("已结束");
+            //tvPaipinTime.setText("已结束");
+            tvDay.setText("拍");
+            tvHour.setText("卖");
+            tvMintue.setText("结");
+            tvSec.setText("束");
             tvMaimaimai.setVisibility(View.GONE);
         } else {
             tvMaimaimai.setVisibility(View.VISIBLE);
             String[] timess = StringFormatUtil.getTimeFromIntNew(paiPinDetailBean.getTime() / 1000);
-            tvPaipinTime.setText(timess[0] + "天" + timess[1] + "时" + timess[2] + "分" + timess[3] + "秒");
+            //tvPaipinTime.setText(timess[0] + "天" + timess[1] + "时" + timess[2] + "分" + timess[3] + "秒");
+            tvDay.setText(timess[0]);
+            tvHour.setText(timess[1]);
+            tvMintue.setText(timess[2]);
+            tvSec.setText(timess[3]);
         }
     }
 
@@ -745,9 +798,9 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         }
 
         if (paiPinDetailBean.getCol_id() > 0) {
-            ivStore.setImageResource(R.drawable.commen_store_red);
+            ivStore.setImageResource(R.drawable.collection_02);
         } else {
-            ivStore.setImageResource(R.drawable.commen_store_black);
+            ivStore.setImageResource(R.drawable.collection_01);
         }
 
 
@@ -832,7 +885,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         tvPaipinName.setText(paiPinDetailBean.getProduct_title());
         tvPaipinDesc.setText(paiPinDetailBean.getSt_name());
         tvShangpinValue.setText(paiPinDetailBean.getAll_cate_name());
-        tvPaipinPaiCount.setText("" + paiPinDetailBean.getJp_count());
+        //tvPaipinPaiCount.setText("" + paiPinDetailBean.getJp_count());
+        tvCount.setText("" + paiPinDetailBean.getJp_count());
+        if (paiPinDetailBean.getJp_count()>=0 && paiPinDetailBean.getJp_count()<20){
+            ivHammer.setImageResource(R.drawable.hammer01);
+        }else if (paiPinDetailBean.getJp_count() >= 20 && paiPinDetailBean.getJp_count()<50){
+            ivHammer.setImageResource(R.drawable.hammer02);
+        }else {
+            ivHammer.setImageResource(R.drawable.hammer03);
+        }
+
+
 
         if (Double.valueOf(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getMax_pric())) > Double.valueOf(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getBegin_auct_price()))) {
             tvPaipinValueNow.setText(StringFormatUtil.getDoubleFormatNew(paiPinDetailBean.getMax_pric()));
@@ -1019,9 +1082,9 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                                 UIHelper.t(mContext, "关注成功");
                             }
                             if (paiPinDetailBean.getCol_id() > 0) {
-                                ivStore.setImageResource(R.drawable.commen_store_red);
+                                ivStore.setImageResource(R.drawable.collection_02);
                             } else {
-                                ivStore.setImageResource(R.drawable.commen_store_black);
+                                ivStore.setImageResource(R.drawable.collection_01);
                             }
                         } else {
                             UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
@@ -1216,5 +1279,46 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
         if (null != mTencent) {
             mTencent.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    private void UpdateRedTipByTuiSong(){
+        if(!LoginConfig.isLogin(mContext)){
+            return;
+        }
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("type",1);
+            jsonObject.put("self_user_id", LoginConfig.getUserInfo(mContext).getUser_id());
+            jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        mApplication.apiClient.jpushrecord_updateredtipbyapp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        EventBus.getDefault().post(new UpdateTanNoticeEvent(0));
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+
+            }
+        });
+
     }
 }

@@ -315,7 +315,7 @@ public class XScrollView extends ScrollView implements OnScrollListener {
 
 		// default: scroll back to dismiss header.
 		int finalHeight = 0;
-		// is refreshing, just scroll back to show all the header.
+		// is refreshing, just scroll back to initDialog all the header.
 		if (mPullRefreshing && height > mHeaderHeight) {
 			finalHeight = mHeaderHeight;
 		}

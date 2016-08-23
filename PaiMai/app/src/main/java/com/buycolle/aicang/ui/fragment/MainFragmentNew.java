@@ -83,6 +83,8 @@ public class MainFragmentNew extends BasePagerFragment {
     private String st_id = "";//状态ID集
     private String sort_id;//排序id：47A表示剩余时间的升序排列，47B表示剩余时间的降序排列
     private String filter_id;//状态id
+    private int sort_item = 0;// 0,无 1，价格排序 2,竞拍人数排序 3,剩余时间排序 4,卖家好评排序
+    private String sort_value = "";// A:升序 B：降序,默认排序的sor_id
 
 
     @Override
@@ -135,16 +137,20 @@ public class MainFragmentNew extends BasePagerFragment {
             @Override
             public void onClick(View v) {
 
-                new MainFilterDialog(mContext,isSelectCate_Id, cate_id, st_id).setCallBack(new MainFilterDialog.CallBack() {
+                new MainFilterDialog(mContext,isSelectCate_Id, cate_id, st_id,sort_item,sort_value).setCallBack(new MainFilterDialog.CallBack() {
                     @Override
-                    public void action(boolean ISSELECTCATE_ID, int CATE_ID,String ST_ID) {
+                    public void action(boolean ISSELECTCATE_ID, int CATE_ID,String ST_ID,int SORT_ITEM,String SORT_VALUE) {
                         KLog.d("返回来的数据---", "isSelectCate_Id==" + isSelectCate_Id + ",  " +
                                         "cate_id==" + cate_id + ",  " +//
-                                        "st_id==" + st_id + ",  "
+                                        "st_id==" + st_id + ",  "+
+                                        "sort_item=="+sort_item+","+
+                                        "sort_value == "+sort_value
                         );
                         isSelectCate_Id = ISSELECTCATE_ID;
                         cate_id = CATE_ID;
                         st_id = ST_ID;
+                        sort_item = SORT_ITEM;
+                        sort_value = SORT_VALUE;
                     }
                 }).show();
 
