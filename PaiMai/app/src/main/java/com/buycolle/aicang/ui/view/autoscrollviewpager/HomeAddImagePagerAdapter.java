@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -80,7 +81,9 @@ public class HomeAddImagePagerAdapter extends RecyclingPagerAdapter {
                 //动作类型 1：url链接 2：拍品广告 3:纯图片 4:活动界面
                 if (adds.get(getPosition(position)).getAction_type() == 1) {
                     Uri uri = Uri.parse(adds.get(getPosition(position)).getBanner_link());
+                    Log.i("banner_link",adds.get(getPosition(position)).getBanner_link());
                     Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    Log.i("link_url", String.valueOf(uri));
                     context.startActivity(intent);
                 }
                 if (adds.get(getPosition(position)).getAction_type() == 2) {

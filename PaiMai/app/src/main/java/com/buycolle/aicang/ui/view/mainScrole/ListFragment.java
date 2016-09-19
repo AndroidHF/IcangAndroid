@@ -283,7 +283,7 @@ public class ListFragment extends ScrollAbleFragment implements ScrollableHelper
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        mApplication.apiClient.product_getnormallistbyapp(jsonObject, new ApiCallback() {
+        mApplication.apiClient.product_filter_list_by_app(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
                 if (!isLoadMore && !isAction) {

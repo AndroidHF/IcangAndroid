@@ -78,19 +78,19 @@ public class ApiClient {
                         KLog.json(tag + "--onResponse--", resultObj);
                         try {
                             JSONObject finalResult = new JSONObject(resultObj);
-                           if (finalResult != null){
-                               if (40401 == finalResult.getInt("status")) {
-                                   UIHelper.t(MainApplication.getInstance(), "登录超时，请重新登录");
-                                   Intent intent = new Intent(MainApplication.getInstance(), LoginActivity.class);
-                                   intent.putExtra("isDoubleLogin",true);
-                                   intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                   MainApplication.getInstance().startActivity(intent);
-                               } else if (-1 == finalResult.getInt("status")) {
-                                   callback.onApiSuccess(resultObj);
-                               } else {
-                                   callback.onApiSuccess(resultObj);
-                               }
-                           }
+                            if (finalResult != null) {
+                                if (40401 == finalResult.getInt("status")) {
+                                    UIHelper.t(MainApplication.getInstance(), "登录超时，请重新登录");
+                                    Intent intent = new Intent(MainApplication.getInstance(), LoginActivity.class);
+                                    intent.putExtra("isDoubleLogin", true);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    MainApplication.getInstance().startActivity(intent);
+                                } else if (-1 == finalResult.getInt("status")) {
+                                    callback.onApiSuccess(resultObj);
+                                } else {
+                                    callback.onApiSuccess(resultObj);
+                                }
+                            }
                         } catch (JSONException e) {
                             UIHelper.t(MainApplication.getInstance(), "服务器返回解析错误");
                             e.printStackTrace();
@@ -1092,6 +1092,21 @@ public class ApiClient {
 
     public void appEvent_getEventProductListByApp(JSONObject data,ApiCallback callback){
         post(callback,AppUrl.APPEVENT_GETEVENTPRODUCTLISTBYAPP,data,"专题活动商品列表");
+    }
+
+    /**
+     * 进入买卖家交互界面调用的问答列表
+     */
+    public void commonAftersales_getListByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.COMMONAFTERSALES_GETLISTBYAPP,data,"买卖家交流列表");
+    }
+
+    /**
+     * 添加买卖家交流的信息
+     */
+
+    public void commonAftersales_submitCommonByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.COMMONAFTERSALES_SUBMITCOMMONBYAPP,data,"买卖家交流列表");
     }
 
 }

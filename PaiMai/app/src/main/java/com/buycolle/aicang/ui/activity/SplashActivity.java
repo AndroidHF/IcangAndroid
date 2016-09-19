@@ -10,7 +10,6 @@ import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.MainActivity;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
-import com.buycolle.aicang.api.AppUrl;
 import com.buycolle.aicang.bean.UserBean;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
@@ -43,12 +42,6 @@ public class SplashActivity extends BaseActivity {
     @Bind(R.id.iv_shoufa)
     ImageView iv_shoufa;
 
-//    private final int JUMPTOMAINACTIVITY = 0;
-//    private final int JUMPTOGUIDEACTIVITY = 1;
-//    private final int JUMPPAIPINDETAI = 2;
-//    private final int JUMPSHOWDTAI = 3;
-//    private final int JUMPSINGLEMAIN = 4;
-
 
 
     @Override
@@ -56,14 +49,16 @@ public class SplashActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
-        isPush = getIntent().getBooleanExtra("isPush",false);
-        //小米login
-        mApplication.setShoufaImages(AppUrl.SPLASH_SHOUFA_IMAGE, iv_shoufa);
-
         /***
          * add by :胡峰，个推引入
          */
         PushManager.getInstance().initialize(this.getApplicationContext());
+        isPush = getIntent().getBooleanExtra("isPush",false);
+
+//        小米login
+//        mApplication.setShoufaImages(AppUrl.SPLASH_SHOUFA_IMAGE, iv_shoufa);
+
+
     }
 
     @Override
@@ -121,79 +116,7 @@ public class SplashActivity extends BaseActivity {
         }).start();
     }
 
-//    public class actionMove implements Runnable {
-//        @Override
-//        public void run() {
-//            if(isPush){
-//                Message message = new Message();
-//                message.what = JUMPTOMAINACTIVITY;
-//                handler.sendMessage(message);
-//            }else {
-//                sharedPreferences = getSharedPreferences("Y_Setting", Context.MODE_PRIVATE);
-//                if (sharedPreferences.getInt("VERSION", 0) != VERSION){
-//                    Message message = new Message();
-//                    message.what = JUMPTOGUIDEACTIVITY;
-//                    handler.sendMessage(message);
-//                }else {
-//                    String action = getIntent().getAction();
-//                    if (Intent.ACTION_VIEW.equals(action)){
-//                        Uri uri = getIntent().getData();
-//                        if (uri != null){
-//                            if (uri.getPath().equals("/item")||uri.getPath().equals("/event")){
-//                                Message message = new Message();
-//                                message.what = JUMPPAIPINDETAI;
-//                            }else {
-//                                Message message = new Message();
-//                                message.what = JUMPSHOWDTAI;
-//                                handler.sendMessage(message);
-//                            }
-//                        }
-//                    }else {
-//                        Message message = new Message();
-//                        message.what = JUMPSINGLEMAIN;
-//                        handler.sendMessage(message);
-//                    }
-//                }
-//            }
-//        }
-//    }
 
-
-//    Handler handler = new Handler(){
-//        @Override
-//        public void handleMessage(Message msg) {
-//            super.handleMessage(msg);
-//            switch (msg.what){
-//                case JUMPTOMAINACTIVITY:
-//                    Bundle bundle = new Bundle();
-//                    bundle.putBoolean("isPush", true);
-//                    bundle.putInt("type",type);
-//                    bundle.putInt("id", id);
-//                    UIHelper.jump(mActivity,MainActivity.class,bundle);
-//                    break;
-//
-//                case JUMPTOGUIDEACTIVITY:
-//                    UIHelper.jump(mActivity,GuideActivity.class);
-//                    break;
-//
-//                case JUMPPAIPINDETAI:
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("product_id", Integer.valueOf(uri.getQuery()));//将pruduct_id传递给要跳的界面
-//                    UIHelper.jump(SplashActivity.this,PaiPinDetailActivity.class,bundle);
-//                    break;
-//
-//                case JUMPSHOWDTAI:
-//                    Bundle bundle = new Bundle();
-//                    bundle.putInt("show_id", Integer.valueOf(uri.getQuery()));//将表示晒物的唯一标识show_id传递给跳转的界面
-//                    UIHelper.jump(SplashActivity.this,ShowDetailActivity.class,bundle);
-//                    break;
-//
-//                case JUMPSINGLEMAIN:
-//                    UIHelper.jump(mActivity,MainActivity.class);
-//                    break;
-//            }
-//        }
-//    };
 
     public void login() {
         JSONObject jsonObject = new JSONObject();

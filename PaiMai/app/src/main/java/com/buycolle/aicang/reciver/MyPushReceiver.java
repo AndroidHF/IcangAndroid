@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.bean.PushMessageEntity;
+import com.buycolle.aicang.ui.activity.SplashActivity;
 import com.buycolle.aicang.ui.activity.SubjectActivity;
 import com.buycolle.aicang.util.ForegroundUtil;
 import com.google.gson.Gson;
@@ -69,6 +70,12 @@ public class MyPushReceiver extends BroadcastReceiver {
                 i.putExtras(bundle2);
                 i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 context.startActivity(i);
+            }else {
+                Intent intent1 = new Intent(context, SplashActivity.class);  //自定义打开的界面
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                intent1.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent1);
             }
         } else if (JPushInterface.ACTION_RICHPUSH_CALLBACK.equals(intent.getAction())) {
             Log.d(TAG, "[MyReceiver] 用户收到到RICH PUSH CALLBACK: " + bundle.getString(JPushInterface.EXTRA_EXTRA));

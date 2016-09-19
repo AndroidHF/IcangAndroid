@@ -31,13 +31,14 @@ import com.buycolle.aicang.bean.MyBuyPaiMainFinishBean;
 import com.buycolle.aicang.event.MyBuyCommentEvent;
 import com.buycolle.aicang.event.ShowProductPublicEvent;
 import com.buycolle.aicang.event.ZhifueEvent;
-import com.buycolle.aicang.ui.activity.ConnectionActivity;
+import com.buycolle.aicang.ui.activity.ConectionActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiDealActivity;
 import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
 import com.buycolle.aicang.ui.activity.PublicShowActivity;
 import com.buycolle.aicang.ui.activity.WuLiuMsgAcitivty;
 import com.buycolle.aicang.ui.fragment.BaseFragment;
 import com.buycolle.aicang.ui.view.MyLinkTextView;
+import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.xlistview.XListView;
 import com.buycolle.aicang.util.StringFormatUtil;
 import com.buycolle.aicang.util.UIHelper;
@@ -444,9 +445,19 @@ public class PaiMaiFinishFragment extends BaseFragment {
                 setViewVisible(holder.ll_status_yifahuo, holder.ll_status_weifukuang, holder.tv_msg_info, holder.ll_status_yifahuo, holder.ll_status_queren_shouhuo);
                 holder.tv_queren_shouhuo.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        // TODO: 16/4/8 确认收货
-                        sureShouHuo(myBuyPaiMainFinishBean, view);
+                    public void onClick(final View view) {
+                        new NoticeDialog(mContext,"收货确认","注意！\n\n一旦您确认收货，\n平台会将货款汇给卖方。\n\n是否确认收货？").setCallBack(new NoticeDialog.CallBack() {
+                            @Override
+                            public void ok() {
+                                // TODO: 16/4/8 确认收货
+                                sureShouHuo(myBuyPaiMainFinishBean, view);
+                            }
+
+                            @Override
+                            public void cancle() {
+
+                            }
+                        }).show();
                     }
                 });
                 holder.tv_wuliu.setOnClickListener(new View.OnClickListener() {
@@ -526,10 +537,15 @@ public class PaiMaiFinishFragment extends BaseFragment {
                 }
             });
 
+            /**
+             * 联系买卖家的按钮监听
+             */
             holder.tv_callmaijia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UIHelper.jump(mActivity, ConnectionActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("product_id", myBuyPaiMainFinishBean.getProduct_id());
+                    UIHelper.jump(mActivity, ConectionActivity.class,bundle);
                 }
             });
             return convertView;

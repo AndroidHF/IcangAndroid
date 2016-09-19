@@ -56,20 +56,7 @@
         android:paddingTop="10dip"
         android:textColor="@color/black_tv"
         android:textSize="18dip" />
-<!--
-    <TextView
-        android:id="@+id/tv_paipin_desc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/shape_black_shangpin_state"
-        android:paddingLeft="10dip"
-        android:paddingRight="10dip"
-        android:paddingTop="10dip"
-        android:paddingBottom="10dip"
-        android:textColor="@color/gray_tv"
-        android:textSize="@dimen/commen_tv_size_smaller" />
 
--->
     <!--change by :胡峰，商品状态加边框-->
     <LinearLayout
         android:layout_width="match_parent"
@@ -91,65 +78,6 @@
             android:background="@drawable/shape_black_shangpin_state"
             android:textSize="@dimen/commen_tv_size_smaller" />
     </LinearLayout>
-<!--
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingBottom="3dip"
-        android:paddingLeft="10dip"
-        android:paddingTop="5dip">
-
-        <LinearLayout
-            android:id="@+id/ll_clock"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="20dip"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:visibility="visible">
-
-            <ImageView
-                android:layout_width="13dip"
-                android:layout_height="13dip"
-                android:src="@drawable/clock_icon" />
-
-            <TextView
-                android:id="@+id/tv_paipin_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dip"
-                android:textColor="@color/black_tv"
-                android:textSize="@dimen/commen_tv_size_smallest" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_jingpai_user"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingLeft="5dip">
-
-            <ImageView
-                android:layout_width="13dip"
-                android:layout_height="13dip"
-                android:src="@drawable/chuizi_icon_1" />
-
-            <TextView
-                android:id="@+id/tv_paipin_pai_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="6dip"
-                android:textColor="@color/black_tv"
-                android:textSize="@dimen/commen_tv_size_smallest" />
-
-        </LinearLayout>
-
-    </LinearLayout>
--->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -429,33 +357,6 @@
                     android:textStyle="bold"/>
             </RelativeLayout>
         </LinearLayout>
-<!--
-        <LinearLayout
-            android:id="@+id/ll_fenxiang"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="10dip"
-            android:gravity="right"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/iv_store"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:layout_marginRight="10dip"
-                android:padding="3dip"
-                android:src="@drawable/paipin_detail_store" />
-
-            <ImageView
-                android:id="@+id/iv_share"
-                android:layout_width="25dip"
-                android:layout_height="25dip"
-                android:padding="3dip"
-                android:src="@drawable/paipin_detail_share" />
-
-        </LinearLayout>
-        -->
     </RelativeLayout>
 
 
@@ -839,7 +740,7 @@
                 android:layout_width="70dip"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
-                android:src="@drawable/default_image_tou" />
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"

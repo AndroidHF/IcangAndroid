@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
@@ -17,6 +18,7 @@ import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.activity.LoginActivity;
+import com.buycolle.aicang.ui.activity.TextVersionActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.ShareDialog;
@@ -66,6 +68,8 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
     RelativeLayout rlFeedBack;
     @Bind(R.id.btn_logout)
     Button btnLogout;
+    @Bind(R.id.rl_text_version)
+    RelativeLayout rlTextVersion;//检测新版本
 
 
     @OnClick(R.id.rl_about_us)
@@ -275,7 +279,7 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_setting);
+        setContentView(R.layout.activity_setting_new);
         ButterKnife.bind(this);
         myHeader.init("设置", new MyHeader.Action() {
             @Override
@@ -292,6 +296,16 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
         if (savedInstanceState != null) {
             mWeiboShareAPI.handleWeiboResponse(getIntent(), this);
         }
+
+        /**
+         * 检测新版本的按钮监听
+         */
+        rlTextVersion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mActivity, TextVersionActivity.class);
+            }
+        });
     }
 
     @Override

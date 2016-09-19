@@ -7,6 +7,7 @@ import android.content.Intent;
 import com.buycolle.aicang.MainActivity;
 import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.event.TobeSallerEvent;
+import com.buycolle.aicang.ui.activity.ConectionActivity;
 import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
 import com.buycolle.aicang.ui.activity.SplashActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.faq.MyFAQActivity;
@@ -48,6 +49,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             // 14:售后交流
             // 15：拍品QA有买家留言，跳转到我收到的问询
             // 16：拍品QA有卖家回复，跳转到我的问询
+            // 17：售后交流界面，跳转到售后交流界面
             if (type == 1){
                 if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
                     Intent update = new Intent(context, PaiPinDetailActivity.class);
@@ -212,6 +214,26 @@ public class NotificationReceiver extends BroadcastReceiver {
             if (type == 15 || type == 16){
                 if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
                     Intent update = new Intent(context, MyFAQActivity.class);
+                    update.putExtra("isPush", true);
+                    update.putExtra("type", type);
+                    update.putExtra("id",id);
+                    update.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(update);
+                } else {
+                    Intent intent1 = new Intent(context, SplashActivity.class);
+                    intent1.putExtra("isPush", true);
+                    intent1.putExtra("type", type);
+                    intent1.putExtra("id", id);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent1);
+                }
+            }
+
+            if (type == 17){
+                if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
+                    Intent update = new Intent(context, ConectionActivity.class);
                     update.putExtra("isPush", true);
                     update.putExtra("type", type);
                     update.putExtra("id",id);

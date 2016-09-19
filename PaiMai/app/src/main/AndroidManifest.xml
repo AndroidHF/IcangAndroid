@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.buycolle.aicang"
     android:versionCode="1"
-    android:versionName="1.0.3"
+    android:versionName="1.0.4"
     >
 
     <permission
@@ -392,12 +392,19 @@
         <activity android:name=".ui.activity.comment.CommentShow2CropImageActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".ui.activity.ConectionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
             android:exported="false"
             android:windowSoftInputMode="adjustResize"></activity>
+
+        <activity android:name=".ui.activity.TextVersionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
 
 

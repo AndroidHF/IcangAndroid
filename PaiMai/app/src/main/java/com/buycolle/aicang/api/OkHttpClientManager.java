@@ -132,14 +132,12 @@ public class OkHttpClientManager
                         Object o = mGson.fromJson(string, resCallBack.mType);
                         sendSuccessResultCallback(o, resCallBack);
                     }
-                } catch (IOException e)
-                {
+                } catch (IOException e) {
                     sendFailResultCallback(response.request(), e, resCallBack);
                 } catch (com.google.gson.JsonParseException e)//Json解析的错误
                 {
                     sendFailResultCallback(response.request(), e, resCallBack);
-                }
-                catch (JSONException e) {
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 

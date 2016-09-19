@@ -1,12 +1,302 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <TextView
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rl_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/my_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true" />
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="问与答交互界面"/>
+        android:layout_below="@id/my_header">
 
-</LinearLayout>
+        <RelativeLayout
+            android:id="@+id/rl_top_maincontent"
+            android:layout_above="@+id/sendMsgLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:id="@+id/ll_top_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/white"
+                android:orientation="vertical"
+                android:padding="10dip">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/shape_orange_black"
+                    android:gravity="center_horizontal"
+                    android:orientation="vertical"
+                    android:padding="5dip">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="110dip"
+                        android:orientation="horizontal"
+                        >
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="110dip"
+                            android:orientation="vertical">
+
+                         <RelativeLayout
+                             android:id="@+id/ll_to_paipin_detai"
+                             android:layout_width="match_parent"
+                             android:layout_height="wrap_content"
+                             android:layout_gravity="center"
+                             android:gravity="center"
+                             android:orientation="horizontal">
+                             <TextView
+                                 android:id="@+id/tv_good_title"
+                                 android:layout_width="match_parent"
+                                 android:layout_height="wrap_content"
+                                 android:layout_centerVertical="true"
+                                 android:gravity="center"
+                                 android:ellipsize="end"
+                                 android:singleLine="true"
+                                 android:layout_marginTop="5dip"
+                                 android:layout_marginBottom="5dip"
+                                 android:layout_marginLeft="25dip"
+                                 android:layout_marginRight="25dip"
+                                 android:textColor="@color/black"
+                                 android:textStyle="bold"
+                                 android:textSize="18dip" />
+
+                             <ImageView
+                                 android:layout_width="18dip"
+                                 android:layout_height="wrap_content"
+                                 android:layout_alignParentRight="true"
+                                 android:layout_marginTop="8dip"
+                                 android:layout_marginBottom="5dip"
+                                 android:layout_marginRight="5dip"
+                                 android:src="@drawable/commen_right_arrow_white"/>
+                         </RelativeLayout>
+
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="12dip"
+                                >
+
+                                <ImageView
+                                    android:id="@+id/iv_pay_status"
+                                    android:layout_width="25dip"
+                                    android:layout_height="25dip"
+                                    android:layout_marginLeft="10dip"
+                                    android:src="@drawable/connection_pay_icon"/>
+                                <TextView
+                                    android:id="@+id/tv_good_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@+id/iv_pay_status"
+
+
+                                    android:paddingTop="3dip"
+                                    android:textColor="@color/black_tv"
+                                    android:singleLine="true"
+                                    android:text=" 支付状态："
+                                    android:textSize="14dip" />
+
+                                <TextView
+                                    android:id="@+id/tv_pay_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="已支付"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black_tv"
+                                    android:paddingBottom="3dip"
+                                    android:paddingTop="3dip"
+                                    android:layout_toRightOf="@+id/tv_good_status"
+                                    android:textSize="14dip"/>
+
+                                <ImageView
+                                    android:id="@+id/iv_wuliu_status"
+                                    android:layout_width="25dip"
+                                    android:layout_height="25dip"
+                                    android:layout_marginLeft="20dip"
+                                    android:layout_toRightOf="@+id/tv_pay_status"
+                                    android:src="@drawable/connection_wuliu_icon"/>
+
+                                <TextView
+                                    android:id="@+id/tv_wuliu_status"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:paddingBottom="3dip"
+                                    android:paddingTop="3dip"
+                                    android:textColor="@color/black_tv"
+                                    android:singleLine="true"
+                                    android:layout_toRightOf="@+id/iv_wuliu_status"
+                                    android:text=" 物流状态："
+                                    android:textSize="14dip" />
+
+                                <TextView
+                                    android:id="@+id/tv_wuliu_st"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="未发货"
+                                    android:textStyle="bold"
+                                    android:textColor="@color/black_tv"
+                                    android:paddingBottom="3dip"
+                                    android:paddingTop="3dip"
+                                    android:layout_toRightOf="@+id/tv_wuliu_status"
+                                    android:textSize="14dip"/>
+
+
+                            </RelativeLayout>
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal"
+                                android:paddingTop="5dip"
+                                android:paddingBottom="6dip"
+                                android:layout_gravity="center">
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="剩余交流信息"
+                                    android:singleLine="true"
+                                    android:textColor="@color/qamaster_blue"
+                                    android:textSize="18dip"/>
+                                <TextView
+                                    android:id="@+id/tv_count_left"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="20"
+                                    android:paddingLeft="2dip"
+                                    android:textColor="@color/red"
+                                    android:textSize="18dip"/>
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="条"
+                                    android:singleLine="true"
+                                    android:textColor="@color/qamaster_blue"
+                                    android:textSize="18dip"/>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/ll_top_detail">
+
+                <com.buycolle.aicang.ui.view.xlistview.XListView
+                    android:id="@+id/list"
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:cacheColorHint="#00000000"
+                    android:divider="@null"
+                    android:fadingEdge="none"
+                    android:footerDividersEnabled="false"
+                    android:headerDividersEnabled="false"
+                    android:scrollbars="none" />
+
+                <ImageButton
+                    android:id="@+id/ib_float_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom|right"
+                    android:layout_marginBottom="20dip"
+                    android:layout_marginRight="20dip"
+                    android:background="@drawable/commen_back_top"
+                    android:visibility="gone" />
+
+            </FrameLayout>
+
+        </RelativeLayout>
+
+
+        <LinearLayout
+            android:id="@+id/sendMsgLayout"
+            android:visibility="visible"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:background="@drawable/shape_white_black"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+
+                <FrameLayout
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:background="@color/black">
+
+                    <ImageView
+                        android:id="@+id/iv_edit_input"
+                        android:layout_width="40dip"
+                        android:layout_height="40dip"
+                        android:layout_alignParentLeft="true"
+                        android:layout_gravity="center"
+                        android:padding="5dip"
+                        android:src="@drawable/smile_icon" />
+                </FrameLayout>
+
+                <EditText
+                    android:id="@+id/et_input"
+                    tools:ignore="TextFields"
+                    android:maxLength="101"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_toLeftOf="@+id/tv_send"
+                    android:layout_toRightOf="@id/iv_edit_input"
+                    android:layout_weight="1.0"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:hint="请输入您对拍品的疑问"
+                    android:paddingLeft="10dip"
+                    android:textColor="@color/black"
+                    android:textCursorDrawable="@null"
+                    android:textSize="@dimen/commen_tv_size_smaller" />
+
+                <TextView
+                    android:id="@+id/tv_send"
+                    android:layout_width="60dip"
+                    android:layout_height="match_parent"
+                    android:background="@color/black"
+                    android:gravity="center"
+                    android:text="发送"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/commen_tv_size_smaller" />
+
+            </LinearLayout>
+
+            <FrameLayout
+                android:id="@+id/fl_chat_activity_container"
+                android:layout_width="match_parent"
+                android:layout_height="220dip"
+                android:background="@color/white"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

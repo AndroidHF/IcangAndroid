@@ -1,17 +1,14 @@
 package com.buycolle.aicang.ui.fragment;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
@@ -38,7 +35,6 @@ import com.buycolle.aicang.ui.view.recyclertablayout.RecyclerTabAdapter;
 import com.buycolle.aicang.ui.view.recyclertablayout.RecyclerTabEntity;
 import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.UIHelper;
-import com.buycolle.aicang.util.UIUtil;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -157,7 +153,7 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         // TODO
         for (int i = 0; i < 10; i++) {
             fragmentList.add(ListFragment.newInstance(getMenuType(TAB_TITLE[i]) + ""));
-            scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(i));
+//            scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(i));
         }
 
         fragList = new ArrayList<>();
@@ -169,8 +165,8 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
             tabData.add(new RecyclerTabEntity(TAB_TITLE[i], TAB_ICON_RES[i]));
         }
         mPagerAdapter = new RecyclerPagerAdapter(getChildFragmentManager(), fragmentList, Arrays.asList(TAB_TITLE));
+        scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(1));
         viewpager.setAdapter(mPagerAdapter);
-
         RecyclerTabAdapter adapter = new RecyclerTabAdapter(getContext(), tabData, viewpager);
         mTabLayout.setUpWithAdapter(adapter);
         mTabLayout.setAutoSelectionMode(true);
@@ -179,7 +175,7 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         viewpager.setIsScrollabe(true);
         // TODO
 
-        initHomeMenu();
+//        initHomeMenu();
 
         ll_search.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -269,21 +265,21 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         //                listFragment.refreshByState(type, true);
     }
 
-    private int currentIndex = 1;
+//    private int currentIndex = 1;
 
-    private void initHomeMenu() {
+//    private void initHomeMenu() {
+//
+//        String initMenusStr = LoginConfig.getHomeMenu(mContext);
+//        String[] strings = initMenusStr.split(",");
+//        menuFilters.clear();
+//        for (int i = 0; i < strings.length; i++) {
+//            menuFilters.add(new HomeFilterMenuBean(strings[i], getTitleBeanRes(strings[i]), false));
+//        }
+//        //添加一个空数据
+//        menuFilters.add(new HomeFilterMenuBean("", 0, true));
+//    }
 
-        String initMenusStr = LoginConfig.getHomeMenu(mContext);
-        String[] strings = initMenusStr.split(",");
-        menuFilters.clear();
-        for (int i = 0; i < strings.length; i++) {
-            menuFilters.add(new HomeFilterMenuBean(strings[i], getTitleBeanRes(strings[i]), false));
-        }
-        //添加一个空数据
-        menuFilters.add(new HomeFilterMenuBean("", 0, true));
-    }
-
-    private GalleryRecyclerAdapter galleryRecyclerAdapter;
+//    private GalleryRecyclerAdapter galleryRecyclerAdapter;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -299,6 +295,7 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         }
         int pos = position % 10;
         ListFragment fragment = (ListFragment) fragmentList.get(pos);
+        scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(pos));
         if (!fragment.isFirst()) {
             fragmentList.get(pos).refreshByState(getMenuType(TAB_TITLE[pos]));
         }
@@ -308,106 +305,106 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
     public void onPageScrollStateChanged(int state) {
     }
 
-    public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecyclerAdapter.ViewHolder> {
+//    public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecyclerAdapter.ViewHolder> {
+//
+//        private LayoutInflater                  mInflater;
+//        private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
+//
+//        private ArrayList<HomeFilterMenuBean> homeFilterMenuBeens;
+//
+//        public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener
+//                                                               onRecyclerViewItemClickListener) {
+//            this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
+//        }
+//
+//        public GalleryRecyclerAdapter(Context context, ArrayList<HomeFilterMenuBean> datas) {
+//            mInflater = LayoutInflater.from(context);
+//            homeFilterMenuBeens = new ArrayList<>();
+//            this.homeFilterMenuBeens = datas;
+//        }
+//
+//        /**
+//         * 创建Item View  然后使用ViewHolder来进行承载
+//         *
+//         * @param parent
+//         * @param viewType
+//         * @return
+//         */
+//        @Override
+//        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+//            final View view = mInflater.inflate(R.layout.aaaaa_demo, parent, false);
+//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(UIUtil.getWindowWidth(mContext) / 3,
+//                                                                       ViewGroup.LayoutParams.MATCH_PARENT);
+//            view.setLayoutParams(params);
+//            ViewHolder viewHolder = new ViewHolder(view);
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    onRecyclerViewItemClickListener.onItemClick(view, (int) view.getTag());
+//                }
+//            });
+//            return viewHolder;
+//        }
+//
+//        /**
+//         * 进行绑定数据
+//         *
+//         * @param holder
+//         * @param position
+//         */
+//        @Override
+//        public void onBindViewHolder(final ViewHolder holder, int position) {
+//            HomeFilterMenuBean homeFilterMenuBean = homeFilterMenuBeens.get(position);
+//            holder.itemView.setTag(position);
+//            if (position == 0) {
+//                holder.tv_name.setVisibility(View.GONE);
+//                holder.iv_menu.setVisibility(View.VISIBLE);
+//                holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
+//
+//            } else if (position == 1) {
+//                holder.tv_name.setVisibility(View.VISIBLE);
+//                holder.iv_menu.setVisibility(View.VISIBLE);
+//                holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
+//                holder.tv_name.setText(homeFilterMenuBean.getName());
+//            } else {
+//                if (homeFilterMenuBean.isEmpty()) {//最后一个
+//                    holder.tv_name.setVisibility(View.GONE);
+//                    holder.iv_menu.setVisibility(View.GONE);
+//                } else {
+//                    holder.tv_name.setVisibility(View.VISIBLE);
+//                    holder.iv_menu.setVisibility(View.VISIBLE);
+//                    holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
+//                    holder.tv_name.setText(homeFilterMenuBean.getName());
+//                }
+//            }
+//        }
+//
+//        @Override
+//        public int getItemCount() {
+//            return homeFilterMenuBeens.size();
+//        }
+//
+//        //自定义的ViewHolder，持有每个Item的的所有界面元素
+//        public class ViewHolder extends RecyclerView.ViewHolder {
+//
+//            LinearLayout parent;
+//            TextView     tv_name;
+//            ImageView    iv_menu;
+//
+//            public ViewHolder(View view) {
+//                super(view);
+//                parent = (LinearLayout) view.findViewById(R.id.ll_parent);
+//                tv_name = (TextView) view.findViewById(R.id.tv_name);
+//                iv_menu = (ImageView) view.findViewById(R.id.iv_menu);
+//            }
+//        }
+//
+//    }
 
-        private LayoutInflater                  mInflater;
-        private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
-
-        private ArrayList<HomeFilterMenuBean> homeFilterMenuBeens;
-
-        public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener
-                                                               onRecyclerViewItemClickListener) {
-            this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
-        }
-
-        public GalleryRecyclerAdapter(Context context, ArrayList<HomeFilterMenuBean> datas) {
-            mInflater = LayoutInflater.from(context);
-            homeFilterMenuBeens = new ArrayList<>();
-            this.homeFilterMenuBeens = datas;
-        }
-
-        /**
-         * 创建Item View  然后使用ViewHolder来进行承载
-         *
-         * @param parent
-         * @param viewType
-         * @return
-         */
-        @Override
-        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-            final View view = mInflater.inflate(R.layout.aaaaa_demo, parent, false);
-            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(UIUtil.getWindowWidth(mContext) / 3,
-                                                                       ViewGroup.LayoutParams.MATCH_PARENT);
-            view.setLayoutParams(params);
-            ViewHolder viewHolder = new ViewHolder(view);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    onRecyclerViewItemClickListener.onItemClick(view, (int) view.getTag());
-                }
-            });
-            return viewHolder;
-        }
-
-        /**
-         * 进行绑定数据
-         *
-         * @param holder
-         * @param position
-         */
-        @Override
-        public void onBindViewHolder(final ViewHolder holder, int position) {
-            HomeFilterMenuBean homeFilterMenuBean = homeFilterMenuBeens.get(position);
-            holder.itemView.setTag(position);
-            if (position == 0) {
-                holder.tv_name.setVisibility(View.GONE);
-                holder.iv_menu.setVisibility(View.VISIBLE);
-                holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
-
-            } else if (position == 1) {
-                holder.tv_name.setVisibility(View.VISIBLE);
-                holder.iv_menu.setVisibility(View.VISIBLE);
-                holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
-                holder.tv_name.setText(homeFilterMenuBean.getName());
-            } else {
-                if (homeFilterMenuBean.isEmpty()) {//最后一个
-                    holder.tv_name.setVisibility(View.GONE);
-                    holder.iv_menu.setVisibility(View.GONE);
-                } else {
-                    holder.tv_name.setVisibility(View.VISIBLE);
-                    holder.iv_menu.setVisibility(View.VISIBLE);
-                    holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
-                    holder.tv_name.setText(homeFilterMenuBean.getName());
-                }
-            }
-        }
-
-        @Override
-        public int getItemCount() {
-            return homeFilterMenuBeens.size();
-        }
-
-        //自定义的ViewHolder，持有每个Item的的所有界面元素
-        public class ViewHolder extends RecyclerView.ViewHolder {
-
-            LinearLayout parent;
-            TextView     tv_name;
-            ImageView    iv_menu;
-
-            public ViewHolder(View view) {
-                super(view);
-                parent = (LinearLayout) view.findViewById(R.id.ll_parent);
-                tv_name = (TextView) view.findViewById(R.id.tv_name);
-                iv_menu = (ImageView) view.findViewById(R.id.iv_menu);
-            }
-        }
-
-    }
-
-    public interface OnRecyclerViewItemClickListener {
-
-        void onItemClick(View view, int position);
-    }
+//    public interface OnRecyclerViewItemClickListener {
+//
+//        void onItemClick(View view, int position);
+//    }
 
     private void loadTopAds() {
         JSONObject jsonObject = new JSONObject();
@@ -477,32 +474,32 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
 
     private boolean isShow = true;
 
-    private int getTitleBeanRes(String title) {
-        if ("个性化".equals(title)) {
-            return R.drawable.main_menu_gexinghua;
-        } else if ("全部".equals(title)) {
-            return R.drawable.main_menu_all;
-        } else if ("漫画".equals(title)) {
-            return R.drawable.show_menu_1_sel;
-        } else if ("BD、DVD".equals(title)) {
-            return R.drawable.show_menu_2_sel;
-        } else if ("游戏".equals(title)) {
-            return R.drawable.show_menu_3_sel;
-        } else if ("书籍".equals(title)) {
-            return R.drawable.show_menu_4_sel;
-        } else if ("手办、模型".equals(title)) {
-            return R.drawable.show_menu_6_sel;
-        } else if ("周边".equals(title)) {
-            return R.drawable.show_menu_5_sel;
-        } else if ("音乐、演出".equals(title)) {
-            return R.drawable.show_menu_7_sel;
-        } else if ("服装、COS".equals(title)) {
-            return R.drawable.show_menu_8_sel;
-        } else if ("其他".equals(title)) {
-            return R.drawable.another_icon_sel;
-        }
-        return 0;
-    }
+//    private int getTitleBeanRes(String title) {
+//        if ("个性化".equals(title)) {
+//            return R.drawable.main_menu_gexinghua;
+//        } else if ("全部".equals(title)) {
+//            return R.drawable.main_menu_all;
+//        } else if ("漫画".equals(title)) {
+//            return R.drawable.show_menu_1_sel;
+//        } else if ("BD、DVD".equals(title)) {
+//            return R.drawable.show_menu_2_sel;
+//        } else if ("游戏".equals(title)) {
+//            return R.drawable.show_menu_3_sel;
+//        } else if ("书籍".equals(title)) {
+//            return R.drawable.show_menu_4_sel;
+//        } else if ("手办、模型".equals(title)) {
+//            return R.drawable.show_menu_6_sel;
+//        } else if ("周边".equals(title)) {
+//            return R.drawable.show_menu_5_sel;
+//        } else if ("音乐、演出".equals(title)) {
+//            return R.drawable.show_menu_7_sel;
+//        } else if ("服装、COS".equals(title)) {
+//            return R.drawable.show_menu_8_sel;
+//        } else if ("其他".equals(title)) {
+//            return R.drawable.another_icon_sel;
+//        }
+//        return 0;
+//    }
 
     @Override
     public void onDestroy() {

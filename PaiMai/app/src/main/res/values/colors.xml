@@ -26,4 +26,5 @@
     <color name="tv_show">#404040</color>
     <color name="tv_textview_select">#000000</color>
     <color name="tv_textview_noselect">#808080</color>
+    <color name="text_version_bg">#ffffff</color>
 </resources>

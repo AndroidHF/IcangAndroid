@@ -193,7 +193,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
         setContentView(R.layout.activity_mysale);
         ButterKnife.bind(this);
         tvArrayList = new ArrayList<>();
-        myHeader.init("我卖出的", R.drawable.usercenter_menu_2, new MyHeader.Action() {
+        myHeader.init("我的出品", R.drawable.usercenter_menu_2, new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();

@@ -28,7 +28,7 @@ import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.MySalePaiMainOkBean;
-import com.buycolle.aicang.ui.activity.ConnectionActivity;
+import com.buycolle.aicang.ui.activity.ConectionActivity;
 import com.buycolle.aicang.ui.activity.PaiMaiDealActivity;
 import com.buycolle.aicang.ui.activity.PaiPinDetailActivity;
 import com.buycolle.aicang.ui.activity.WuLiuMsgAcitivty;
@@ -406,7 +406,7 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                     holder.tv_baoyou_show.setVisibility(View.GONE);
                     holder.tv_after_pay.setVisibility(View.GONE);
                     holder.tv_after_msg.setText("您已发货，等待买家确认收货");
-                    holder.tv_action_after.setText("我已发货");
+                    holder.tv_action_after.setText("发货信息");
                     holder.tv_action_after.setBackgroundResource(R.drawable.shape_orange_black);
                     holder.tv_action_after.setOnClickListener(new View.OnClickListener() {
                         @Override
@@ -460,10 +460,15 @@ public class MySalePaiMaiOkFrag extends BaseFragment {
                 }
             });
 
+            /**
+             * 联系买卖家的按钮监听
+             */
             holder.tv_callMaijia.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UIHelper.jump(mActivity, ConnectionActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putInt("product_id",myBuyPaiMainFinishBean.getProduct_id());
+                    UIHelper.jump(mActivity, ConectionActivity.class,bundle);
                 }
             });
 

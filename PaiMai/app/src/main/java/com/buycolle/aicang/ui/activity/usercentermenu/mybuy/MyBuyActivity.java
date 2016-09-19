@@ -192,7 +192,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
         ButterKnife.bind(this);
         tvArrayList = new ArrayList<>();
         imageViewArrayList = new ArrayList<>();
-        myHeader.init("我买到的", R.drawable.usercenter_menu_1, new MyHeader.Action() {
+        myHeader.init("我的竞拍", R.drawable.usercenter_menu_1, new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();

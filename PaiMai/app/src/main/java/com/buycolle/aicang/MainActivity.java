@@ -188,12 +188,6 @@ public class MainActivity extends BaseActivity {
                     initStatus(1);
                     mainViewPager.setCurrentItem(currentIndex, false);
                 }
-//                if (_Bundle.getInt("type") == 5) {
-//                    //UIHelper.t(mContext, "还有20分钟拍卖会就开始");
-//                    currentIndex = 1;
-//                    initStatus(1);
-//                    mainViewPager.setCurrentItem(currentIndex, false);
-//                }
                 if (_Bundle.getInt("type") == 9 || _Bundle.getInt("type") == 10) {
                     Bundle bundle = new Bundle();
                     bundle.putBoolean("isPush", true);
@@ -231,7 +225,7 @@ public class MainActivity extends BaseActivity {
         currentIndex = 0;
         initStatus(0);
         mainViewPager.setCurrentItem(currentIndex, false);
-        homeFrag.refreshByState(0);
+         homeFrag.refreshByState(0);
     }
 
     @OnClick(R.id.iv_main_menu_2)
@@ -296,22 +290,6 @@ public class MainActivity extends BaseActivity {
         mainViewPager.setAdapter(pagerAdapter);
         mainViewPager.setOffscreenPageLimit(fragList.size() - 1);
         mainViewPager.setCurrentItem(currentIndex);
-//        mainViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-//            @Override
-//            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-//
-//            }
-//
-//            @Override
-//            public void onPageSelected(int position) {
-//                initStatus(position);
-//            }
-//
-//            @Override
-//            public void onPageScrollStateChanged(int state) {
-//
-//            }
-//        });
     }
 
 
@@ -448,24 +426,6 @@ public class MainActivity extends BaseActivity {
 	 *  4.对话框show()出来
 	 */
     protected void showUpdataDialog() {
-//        AlertDialog.Builder builer = new AlertDialog.Builder(this);
-//        builer.setTitle("版本升级");
-//        builer.setMessage(info.getContext());
-//        //当点确定按钮时从服务器上下载 新的apk 然后安装   װ
-//        builer.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                Log.i(TAG, "下载apk,更新");
-//                downLoadApk();
-//            }
-//        });
-//        builer.setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//            public void onClick(DialogInterface dialog, int which) {
-//                // TODO Auto-generated method stub
-//                //do sth
-//            }
-//        });
-//        AlertDialog dialog = builer.create();
-//        dialog.initDialog();
         new UpdateDialog(mContext,"版本升级",info.getContext(),info.getVersion()).setCallBack(new UpdateDialog.CallBack() {
             @Override
             public void ok() {

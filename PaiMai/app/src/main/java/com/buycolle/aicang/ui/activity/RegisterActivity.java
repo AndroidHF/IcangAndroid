@@ -75,6 +75,8 @@ public class RegisterActivity extends BaseActivity {
     TextView tv_xieyi;//协议内容
     @Bind(R.id.cb_xieyi_status)
     CheckBox cb_xieyi_status;//是否选中
+    @Bind(R.id.et_version_code)
+    EditText etVersionCode;//邀请码
     private TimeHandler mCodeHandler = new TimeHandler(this);
     private Intent mIntent;
 
@@ -97,7 +99,7 @@ public class RegisterActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register);
+        setContentView(R.layout.activity_register_new);
         ButterKnife.bind(this);
         initTimer();
         if (_Bundle != null) {
@@ -134,6 +136,10 @@ public class RegisterActivity extends BaseActivity {
             @Override
             public void onClick(View view) {
                 subMit();
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH_MR1) {
+//                    new LoginActivity().btnLogin.callOnClick();
+//                }
+//                UIHelper.jump(mActivity, MainActivity.class);
             }
         });
 
@@ -149,6 +155,7 @@ public class RegisterActivity extends BaseActivity {
         });
 
     }
+
 
     /**
      * 获取手机验证码
@@ -235,6 +242,16 @@ public class RegisterActivity extends BaseActivity {
             return;
         }
 
+        //邀请码的逻辑
+        if (etVersionCode.getText().toString().trim().length() == 0){
+            etVersionCode.setText("");
+            btnRegister.setEnabled(true);
+        } else if (etVersionCode.getText().toString().trim().length() > 20) {
+            UIHelper.t(mContext,"请输入正确的邀请码");
+            btnRegister.setEnabled(true);
+            return;
+        }
+
         //add by hufeng:注册协议逻辑
         if(!cb_xieyi_status.isChecked()){
             UIHelper.t(mContext,"您必须同意用户协议");
@@ -248,6 +265,7 @@ public class RegisterActivity extends BaseActivity {
             jsonObject.put("user_phone", etPhone.getText().toString().trim());
             jsonObject.put("user_nick", etUsername.getText().toString().trim());
             jsonObject.put("verific_code", etPhoneCode.getText().toString().trim());
+            jsonObject.put("invitation_code",etVersionCode.getText().toString().trim());
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -269,7 +287,11 @@ public class RegisterActivity extends BaseActivity {
                         UIHelper.t(mContext, "注册成功");
                         if (!isFromLogin) {
                             UIHelper.jump(mActivity, LoginActivity.class);
-                            //login();
+////                            login();
+////                            new LoginActivity().login();
+////                            UIHelper.jump(mActivity, MainActivity.class);
+//                            EventBus.getDefault().post(new LoginEvent());
+
                         }
                         finish();
                     } else {

@@ -4,8 +4,8 @@ package com.buycolle.aicang.api;
  * Created by joe on 15/12/30.
  */
 public class AppUrl {
-    public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
-    //public static final String BASE_URL = "http://139.196.195.196/paimaitest/";//测试url
+    //public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
+    public static final String BASE_URL = "http://139.196.195.196/paimaitest/";//测试url
     public static final String FILEUPLAOD = BASE_URL + "fileuplaod.up";
 
 
@@ -256,4 +256,10 @@ public class AppUrl {
 
     // 首页商品筛选
     public static final String GET_FILTER_AND_SORT_LIST_BY_APP = BASE_URL + "product_getMainPageListByAPP.action";
+
+    //买卖家交互
+    public static final String COMMONAFTERSALES_GETLISTBYAPP = BASE_URL + "commonAftersales_getListByApp.action";
+
+    //提交买卖家交流信息
+    public static final String COMMONAFTERSALES_SUBMITCOMMONBYAPP =BASE_URL+"commonAftersales_submitCommonByApp.action";
 }

@@ -19,7 +19,7 @@ public class DownLoadManager {
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
             URL url = new URL(path);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-            conn.setConnectTimeout(5000);
+            //conn.setConnectTimeout(5000);
             //获取到文件的大小
             pd.setMax(conn.getContentLength());
             InputStream is = conn.getInputStream();
