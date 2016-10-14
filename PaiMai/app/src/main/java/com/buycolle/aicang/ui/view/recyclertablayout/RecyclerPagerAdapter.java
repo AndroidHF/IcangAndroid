@@ -44,7 +44,7 @@ public class RecyclerPagerAdapter extends PagerAdapter {
 
     @Override
     public int getCount() {
-        return mTitle.size() * NUMBER_OF_LOOPS;
+        return mTitle == null? 0:mTitle.size() * NUMBER_OF_LOOPS;
     }
 
     @Override

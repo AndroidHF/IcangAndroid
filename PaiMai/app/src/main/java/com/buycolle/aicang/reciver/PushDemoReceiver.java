@@ -15,6 +15,8 @@ public class PushDemoReceiver extends BroadcastReceiver {
      * 应用未启动, 个推 service已经被唤醒,保存在该时间段内离线消息(此时 GetuiSdkDemoActivity.tLogView == null)
      */
     public static StringBuilder payloadData = new StringBuilder();
+    private int id;
+    private String type = "";
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -40,6 +42,38 @@ public class PushDemoReceiver extends BroadcastReceiver {
 
                     payloadData.append(data);
                     payloadData.append("\n");
+                    Log.i("个推获取的内容", data);
+                    /**
+                     * add by hufeng
+                     * 个推的获取的内容
+                     */
+//                    try {
+//                        JSONObject obj = new JSONObject(data);
+//                        id = obj.getInt("id");
+//                        Log.i("个推id",id+"");
+//                        type = obj.getString("type");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//
+//                    if ("3".equals(type)){
+//                        Intent i = new Intent(context, SubjectActivity.class);  //自定义打开的界面
+//                        i.putExtra("id",id);
+//                        i.putExtra("type",type);
+//                        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(i);
+//                    }
+//                    if("1".equals(type)) {
+//                        Intent update = new Intent(context, PaiPinDetailActivity.class);
+//                        update.putExtra("type",type);
+//                        update.putExtra("product_id",id);
+//                        update.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//                        update.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                        update.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        context.startActivity(update);
+//                    }
+
+
                 }
                 break;
 

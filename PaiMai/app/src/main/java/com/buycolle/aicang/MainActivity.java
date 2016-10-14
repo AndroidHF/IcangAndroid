@@ -36,6 +36,7 @@ import com.buycolle.aicang.util.DoubleClickExitHelper;
 import com.buycolle.aicang.util.DownLoadManager;
 import com.buycolle.aicang.util.FileUtil;
 import com.buycolle.aicang.util.PhoneUtil;
+import com.buycolle.aicang.util.ToastUtil;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.UpdataInfoParser;
 import com.buycolle.aicang.util.superlog.JSONUtil;
@@ -206,7 +207,6 @@ public class MainActivity extends BaseActivity {
                     initStatus(0);
                     mainViewPager.setCurrentItem(currentIndex, false);
                 }
-
             }
         }
 
@@ -367,17 +367,19 @@ public class MainActivity extends BaseActivity {
                     Log.i("hufeng", is.toString());
                 }
                 info = UpdataInfoParser.getUpdataInfo(is);
-                Log.i("info",info.toString());
-                if (info.getVersion().equals(localVersion)) {
-                    Log.i(TAG, "版本号相同");
-                    Message msg = new Message();
-                    msg.what = UPDATA_NONEED;
-                    handler.sendMessage(msg);
-                    // LoginMain();
-                } else {
+                Log.i("info", info.toString());
+                if (info.getVersion().compareTo(localVersion) > 0) {
                     Log.i(TAG, "版本号不相同 ");
                     Message msg = new Message();
                     msg.what = UPDATA_CLIENT;
+                    handler.sendMessage(msg);
+                    // LoginMain();
+                } else {
+                    Log.i("info版本号",info.getVersion());
+                    Log.i("local版本",localVersion);
+                    Log.i(TAG, "版本号相同");
+                    Message msg = new Message();
+                    msg.what = UPDATA_NONEED;
                     handler.sendMessage(msg);
                 }
             } catch (Exception e) {
@@ -405,11 +407,15 @@ public class MainActivity extends BaseActivity {
                     break;
                 case GET_UNDATAINFO_ERROR:
                     //服务器超时
-                    Toast.makeText(getApplicationContext(), "获取服务器更新信息失败", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "获取服务器更新信息失败", Toast.LENGTH_LONG).show();
+                    Toast toast = Toast.makeText(getApplicationContext(), "                     怂那！更新失败了！\n" + "您可以尝试从官网或各大安卓市场下载更新。", Toast.LENGTH_LONG);
+                    ToastUtil.showMyToast(toast, 3000);
                     break;
                 case DOWN_ERROR:
                     //下载apk失败
-                    Toast.makeText(getApplicationContext(), "下载新版本失败", Toast.LENGTH_LONG).show();
+                    //Toast.makeText(getApplicationContext(), "下载新版本失败", Toast.LENGTH_LONG).show();
+                    Toast toast1 = Toast.makeText(getApplicationContext(), "                    怂那！更新失败了！\n" + "您可以尝试从官网或各大安卓市场下载更新。", Toast.LENGTH_LONG);
+                    ToastUtil.showMyToast(toast1, 3000);
                     break;
             }
         }

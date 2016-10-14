@@ -24,6 +24,7 @@ public class MyHeader extends RelativeLayout {
     private ImageView iv_store;
     private ImageView iv_share;
     private FrameLayout paipai_detai;
+    private FrameLayout InfoTrade;
 
     public MyHeader(Context context) {
         super(context);
@@ -40,6 +41,7 @@ public class MyHeader extends RelativeLayout {
         iv_store = (ImageView) findViewById(R.id.iv_store);
         iv_share = (ImageView) findViewById(R.id.iv_share);
         paipai_detai = (FrameLayout) findViewById(R.id.paipai_detai);
+        InfoTrade = (FrameLayout) findViewById(R.id.info_trade);
 //        fl_back.setOnClickListener(new OnClickListener() {
 //            @Override
 //            public void onClick(View view) {
@@ -85,6 +87,21 @@ public class MyHeader extends RelativeLayout {
     public void initPaiPinDetai(String title,Action action){
         fl_back.setVisibility(View.VISIBLE);
         paipai_detai.setVisibility(View.VISIBLE);
+        this.mAction = action;
+        tv_common_topbar_title.setText(title);
+        fl_back.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (mAction != null) {
+                    mAction.leftActio();
+                }
+            }
+        });
+    }
+
+    public void initInfo(String title,Action action){
+        fl_back.setVisibility(View.VISIBLE);
+        InfoTrade.setVisibility(View.VISIBLE);
         this.mAction = action;
         tv_common_topbar_title.setText(title);
         fl_back.setOnClickListener(new OnClickListener() {

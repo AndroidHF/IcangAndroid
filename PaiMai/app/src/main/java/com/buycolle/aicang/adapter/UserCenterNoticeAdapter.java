@@ -33,7 +33,7 @@ public class UserCenterNoticeAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return noticeBeans.size();
+        return noticeBeans==null? 0:noticeBeans.size();
     }
 
     @Override

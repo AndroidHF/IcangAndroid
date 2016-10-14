@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/bg_gray"
+    android:padding="10dip">
+
+    <RelativeLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_white_black"
+        android:padding="2dip"
+        android:layout_alignParentRight="true"
+        android:gravity="center"
+        >
+        <RelativeLayout
+            android:id="@+id/rl_ask"
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:gravity="center_vertical"
+            android:background="@color/orange"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_image_buy"
+                android:layout_width="28dip"
+                android:layout_height="28dip"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="10dip"
+                android:src="@drawable/default_image_tou" />
+
+            <TextView
+                android:id="@+id/tv_time_buy"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toLeftOf="@+id/iv_profile_image_buy"
+                android:paddingBottom="6dp"
+                android:layout_marginLeft="5dip"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="6dp"
+                android:text="2016年8月31号   14:44"
+                android:textColor="@color/black_tv" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/ll_line"
+            android:layout_width="250dip"
+            android:layout_height="2dip"
+            android:background="@color/black"
+            android:layout_below="@+id/rl_ask"/>
+        <TextView
+            android:id="@+id/tv_context_buy"
+            android:layout_width="250dip"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ll_line"
+            android:textSize="16dip"
+            android:textColor="@color/black"
+            android:layout_margin="10dip"
+            android:text="粉红色的粉红色的解放和水电费和电视剧方好沮丧的"/>
+    </RelativeLayout>
+
+</RelativeLayout>

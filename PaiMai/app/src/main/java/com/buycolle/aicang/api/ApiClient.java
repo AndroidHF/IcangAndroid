@@ -1109,4 +1109,40 @@ public class ApiClient {
         post(callback,AppUrl.COMMONAFTERSALES_SUBMITCOMMONBYAPP,data,"买卖家交流列表");
     }
 
+    /**
+     * 获取消息中心首页信息
+     * @param data
+     * @param callback
+     */
+    public void messageCenter_getNewMessagesByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.MESSAGECENTER_GETNEWMESSAGEBYAPP,data,"获取消息中心首页信息");
+    }
+
+    /**
+     * 获取消息列表内容
+     */
+    public void  messageCenter_getMessageListByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.MESSAGECENTER_GETMESSAGELISTBYAPP,data,"获取消息列表信息");
+    }
+
+    /**
+     * 获取消息中心活动列表内容
+     */
+    public void  messageCenter_getEventBannerByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.MESSAGECENTER_GETEVENTBANNERBYAPP,data,"获取消息中心活动列表信息");
+    }
+
+    /**
+     * 更新消息中心的消息为已读
+     */
+    public void messageCenter_updateIsReadByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.MESSAGECENTER_UPDATEISREADBYAPP,data,"更新消息中心的消息为已读");
+    }
+
+    /***
+     * 清空消息中心消息列表的内容
+     */
+    public void messageCenter_deleteMessagesByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.MESSAGECENTER_DELETEMESSAGESBYAPP,data,"清空消息中心消息列表的内容");
+    }
 }

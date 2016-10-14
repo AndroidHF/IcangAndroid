@@ -1,19 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.buycolle.aicang"
-    android:versionCode="1"
+    android:versionCode="2"
     android:versionName="1.0.4"
     >
 
     <permission
         android:name="${applicationId}.permission.JPUSH_MESSAGE"
         android:protectionLevel="signature" />
-    <!--允许程序更新手机电池统计信息-->
-    <!--
-    <uses-permission android:name="android.permission.BATTERY_STATS"/>
-
-    -->
-
     <!--奔溃测试权限-->
     <!-- Required  一些系统要求的权限，如访问网络等-->
     <uses-permission android:name="${applicationId}.permission.JPUSH_MESSAGE" />
@@ -22,7 +16,9 @@
     <uses-permission android:name="android.permission.INTERNET" />
 
     <!--允许程序从非系统拨号器里输入电话号码-->
+    <!--
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    -->
 
     <!--允许使用PowerManager的 WakeLocks保持进程在休眠时从屏幕消失-->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -36,10 +32,6 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
     <!--允许访问振动设备-->
     <uses-permission android:name="android.permission.VIBRATE" />
-    <!--允许访问闪光灯-->
-    <!--
-    <uses-permission android:name="android.permission.FLASHLIGHT"/>
-    -->
     <!--允许程序获取当前或最近运行的应用-->
     <uses-permission android:name="android.permission.GET_TASKS" />
     <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
@@ -65,23 +57,13 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <!--允许程序改变Wi-Fi连接状态-->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+
     <!--通过GPS芯片接收卫星的定位信息，定位精度达10米以内-->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <!--允许程序访问额外的定位提供者指令-->
     <uses-permission android:name="android.permission.ACCESS_LOCATION_EXTRA_COMMANDS" />
     <!--允许程序改变网络连接状态-->
     <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
-
-    <!--add by :胡峰，个推的权限设置-->
-    <!-- iBeancon功能所需权限 -->;
-    <!--允许程序连接配对过的蓝牙设备 -->
-    <!--
-    <uses-permission android:name="android.permission.BLUETOOTH"/>
-    -->
-    <!--允许程序进行发现和配对新的蓝牙设备  -->
-    <!--
-    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
-    -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
@@ -396,6 +378,22 @@
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
+        <activity android:name=".ui.activity.infomation.MyTradeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.infomation.MyDirectActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.infomation.MyActionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.infomation.MySystemActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
         <activity
             android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
             android:configChanges="keyboardHidden|orientation"
@@ -403,6 +401,23 @@
             android:windowSoftInputMode="adjustResize"></activity>
 
         <activity android:name=".ui.activity.TextVersionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.ConnectionActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <!--消息中心界面-->
+        <activity android:name=".ui.activity.InfoCenterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.infomation.NoticeInfoActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
+
+        <activity android:name=".ui.activity.infomation.ActionInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
 
@@ -472,11 +487,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".ui.activity.ConnectionActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateHidden|adjustResize">
 
-        </activity>
 
 
         <!--add by :胡峰，引导界面-->
@@ -564,6 +575,8 @@
             android:enabled="true"
             android:exported="false">
             <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED"/><!--接收开机广播-->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
                 <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
                 <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
                 <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
@@ -576,8 +589,18 @@
         </receiver>
 
         <receiver android:name=".reciver.NotificationReceiver">
-            <intent-filter android:priority="999">
+            <intent-filter>
                 <action android:name="com.aicang.huiwan" />
+                <action android:name="android.intent.action.BOOT_COMPLETED"/><!--接收开机广播-->
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+                <action android:name="cn.jpush.android.intent.REGISTRATION" /> <!--Required  用户注册SDK的intent-->
+                <action android:name="cn.jpush.android.intent.UNREGISTRATION" />
+                <action android:name="cn.jpush.android.intent.MESSAGE_RECEIVED" /> <!--Required  用户接收SDK消息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_RECEIVED" /> <!--Required  用户接收SDK通知栏信息的intent-->
+                <action android:name="cn.jpush.android.intent.NOTIFICATION_OPENED" /> <!--Required  用户打开自定义通知栏的intent-->
+                <action android:name="cn.jpush.android.intent.ACTION_RICHPUSH_CALLBACK" /> <!--Optional 用户接受Rich Push Javascript 回调函数的intent-->
+                <action android:name="cn.jpush.android.intent.CONNECTION" /><!-- 接收网络变化 连接/断开 since 1.6.3 -->
+                <category android:name="${applicationId}" />
             </intent-filter>
         </receiver>
 

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/info_back_ground"
+    android:padding="15dip">
+
+    <LinearLayout
+        android:id="@+id/ll_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dip"
+        android:orientation="vertical">
+            <TextView
+                android:id="@+id/tv_activity_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="2016年10月14日 14:28"
+                android:textSize="14dip"
+                android:textColor="#666666"
+                android:gravity="center"/>
+           <RelativeLayout
+               android:id="@+id/rl_activity"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:background="@drawable/shape_white_black"
+               android:layout_marginTop="25dip"
+               android:padding="2dip">
+               <ImageView
+                   android:id="@+id/iv_activity"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/iv_activity_pic"
+                   android:scaleType="fitXY"
+                   />
+           </RelativeLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

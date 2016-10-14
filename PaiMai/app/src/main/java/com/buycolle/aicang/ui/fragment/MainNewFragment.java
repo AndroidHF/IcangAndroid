@@ -21,6 +21,7 @@ import com.buycolle.aicang.bean.ShangPinFilterBean;
 import com.buycolle.aicang.event.HomeBackEvent;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.event.LoginEvent;
+import com.buycolle.aicang.ui.activity.InfoCenterActivity;
 import com.buycolle.aicang.ui.activity.SearchActivity;
 import com.buycolle.aicang.ui.view.CircleIndicator;
 import com.buycolle.aicang.ui.view.FixedViewPager;
@@ -236,6 +237,17 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         //                isShow = isShow ? false : true;
         //            }
         //        });
+
+
+        /**
+         * 首页图标的监听，跳转到消息中心界面
+         */
+        ll_event_menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jump(mContext, InfoCenterActivity.class);
+            }
+        });
 
         JSONObject topaAdsObj = aCache.getAsJSONObject(Constans.TAG_HOME_TOP_ADS);
         if (topaAdsObj != null) {

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    android:orientation="vertical"
+    android:padding="10dp">
+
+    <LinearLayout
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:background="@drawable/shape_white_black"
+        android:orientation="vertical"
+        android:padding="2dip">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dip"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:background="@color/tv_blue"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/iv_profile_image_ans"
+                android:layout_width="28dip"
+                android:layout_height="28dip"
+                android:layout_centerVertical="true"
+                android:background="@color/tv_blue"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dip"
+                android:src="@drawable/default_image_tou" />
+
+            <TextView
+                android:id="@+id/tv_time_ans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/tv_blue"
+                android:gravity="center"
+                android:paddingBottom="6dp"
+                android:layout_marginLeft="5dip"
+                android:paddingLeft="8dp"
+                android:paddingRight="8dp"
+                android:paddingTop="6dp"
+                android:text="2016年8月31号   14:44"
+                android:textColor="@color/black_tv" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="250dip"
+            android:layout_height="2dip"
+            android:background="@color/black"/>
+        <TextView
+            android:id="@+id/tv_context_ans"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dip"
+            android:textColor="@color/black"
+            android:text="面佛ID司法局搜地接发生的积分奋斗"
+            android:textSize="16dip"
+            />
+    </LinearLayout>
+</LinearLayout>

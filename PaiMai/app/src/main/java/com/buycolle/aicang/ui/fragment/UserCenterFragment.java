@@ -152,7 +152,7 @@ public class UserCenterFragment extends BaseFragment {
         } else {
             initNoLoginView();
         }
-        //usercentermenuadapter.setStatus(0, 0, 0, 0);
+        usercentermenuadapter.setStatus(0, 0, 0, 0);
     }
 
 

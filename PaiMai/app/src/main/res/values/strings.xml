@@ -32,6 +32,7 @@
     <string name="deal_price">成交价</string>
     <string name="max_price">最高价</string>
     <string name="url_server">http://139.196.229.110/download/android.xml</string>
+    <string name="url_server_ceshi">http://139.196.195.196/download/android.xml</string>
 
 
 </resources>

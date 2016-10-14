@@ -262,4 +262,19 @@ public class AppUrl {
 
     //提交买卖家交流信息
     public static final String COMMONAFTERSALES_SUBMITCOMMONBYAPP =BASE_URL+"commonAftersales_submitCommonByApp.action";
+
+    //消息中心首页接口
+    public static final String MESSAGECENTER_GETNEWMESSAGEBYAPP = BASE_URL+"messageCenter_getNewMessagesByApp.action";
+
+    //消息列表接口
+    public static final String MESSAGECENTER_GETMESSAGELISTBYAPP= BASE_URL+"messageCenter_getMessageListByApp.action";
+
+    //消息中心活动列表
+    public static final String MESSAGECENTER_GETEVENTBANNERBYAPP = BASE_URL+"messageCenter_getEventBannerByApp.action";
+
+    //更新消息中心的消息为已读
+    public static final String MESSAGECENTER_UPDATEISREADBYAPP = BASE_URL+"messageCenter_updateIsReadByApp.action";
+
+    //清除消息中心消息列表的内容
+    public static final String MESSAGECENTER_DELETEMESSAGESBYAPP = BASE_URL+"messageCenter_deleteMessagesByApp.action";
 }

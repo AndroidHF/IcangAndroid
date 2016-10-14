@@ -169,10 +169,12 @@ public class EventFragment extends BaseFragment {
         scrollableLayout.setOnScrollListener(new ScrollableLayout.OnScrollListener() {
             @Override
             public void onScroll(int currentY, int maxY) {
-                if (currentY / maxY > 0.5) {
-                    llTabParent.setBackgroundResource(R.color.bg_gray);
-                } else {
-                    llTabParent.setBackgroundResource(R.color.transparent);
+                if (maxY != 0){
+                    if (currentY / maxY > 0.5) {
+                        llTabParent.setBackgroundResource(R.color.bg_gray);
+                    } else {
+                        llTabParent.setBackgroundResource(R.color.transparent);
+                    }
                 }
             }
         });

@@ -82,7 +82,7 @@
                 android:layout_marginLeft="10dip"
                 android:layout_marginRight="10dip"
                 android:scaleType="fitXY"
-                android:src="@drawable/default_image_show" />
+               />
 
             <TextView
                 android:id="@+id/tv_no_pass"

@@ -25,19 +25,27 @@ public class JSONUtil {
             e.printStackTrace();
         }
         return false;
+
+
     }
 
     public static boolean isHasData(JSONObject jsonObject) {
-        try {
-            if (jsonObject.getString("total").equals("0")) {
-                return false;
-            } else {
-                return true;
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+//        try {
+//            if (jsonObject.getString("total").equals("0")) {
+//                return false;
+//            } else {
+//                return true;
+//            }
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        return false;
+        if (jsonObject.optString("total").equals("0")){
+            return false;
+        }else {
+            return true;
         }
-        return false;
+
     }
 
     public static boolean isCanLoadMore(JSONObject jsonObject) {

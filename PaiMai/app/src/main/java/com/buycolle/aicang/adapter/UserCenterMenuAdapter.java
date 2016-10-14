@@ -162,11 +162,12 @@ public class UserCenterMenuAdapter extends BaseAdapter {
             @Override
             public void onClick(View view) {
 //                UIHelper.jump(activiy, Demo?.class);
-                if (MainApplication.getInstance().isLogin()) {
-                    UIHelper.jump(activity, SettingActivity.class);
-                } else {
-                    gotoLogin();
-                }
+//                if (MainApplication.getInstance().isLogin()) {
+//                    UIHelper.jump(activity, SettingActivity.class);
+//                } else {
+//                    gotoLogin();
+//                }
+                UIHelper.jump(activity, SettingActivity.class);
             }
         });
         return contentView;

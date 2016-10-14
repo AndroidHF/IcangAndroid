@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="@color/info_back_ground"
+    android:orientation="vertical">
+
+    <com.buycolle.aicang.ui.view.MyHeader
+        android:id="@+id/info_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dip"
+        android:gravity="center"
+        android:layout_marginBottom="10dip"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/iv_info"
+            android:layout_width="163dip"
+            android:layout_height="30dip"
+            android:layout_marginRight="-2dip"
+            android:src="@drawable/info_pic_select" />
+
+        <ImageView
+            android:id="@+id/iv_notice"
+            android:layout_width="163dip"
+            android:layout_height="30dip"
+            android:layout_marginLeft="-2dp"
+            android:src="@drawable/notice_pic" />
+    </LinearLayout>
+
+    <ViewFlipper
+        android:id="@+id/viewFlipper"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:measureAllChildren="false">
+
+        <ListView
+            android:id="@+id/list_info"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:scrollbars="none" />
+
+        <com.buycolle.aicang.ui.view.xlistview.XListView
+            android:id="@+id/list_notice"
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:cacheColorHint="#00000000"
+            android:divider="@null"
+            android:fadingEdge="none"
+            android:footerDividersEnabled="false"
+            android:headerDividersEnabled="false"
+            android:scrollbars="none" />
+    </ViewFlipper>
+
+</LinearLayout>

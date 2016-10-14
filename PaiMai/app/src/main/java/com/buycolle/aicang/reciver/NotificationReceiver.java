@@ -42,7 +42,7 @@ public class NotificationReceiver extends BroadcastReceiver {
             // 7:解锁
             // 8:离付款超时还差3小时提醒，跳转到我买到--已落拍
             // 9：卖家拍品被中拍提醒，跳转到我卖出的--已落拍
-            // 10:买家付款了，给卖家提醒，跳转到我卖出的--已落拍
+            // 10:买家付款了，给卖家提醒，跳转到我卖出的--已落拍`
             // 11:卖家身份审核成功，跳转出品界面
             // 12:卖家身份没有通过审核，跳转到首页
             // 13：关注的商品，还有30分钟结束，跳转到拍品详情
@@ -136,13 +136,20 @@ public class NotificationReceiver extends BroadcastReceiver {
                     intent1.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(intent1);
+                }else {
+                    Intent intent1 = new Intent(context, MainActivity.class);
+                    intent1.putExtra("isPush", true);
+                    intent1.putExtra("type", type);
+                    intent1.putExtra("id", id);
+                    intent1.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(intent1);
                 }
             }
             if (type == 11) {
                 if (ForegroundUtil.get(MainApplication.getInstance()).isForeground()) {
                     EventBus.getDefault().post(new TobeSallerEvent(0));
                 } else {
-                    Intent intent1 = new Intent(context, MainActivity.class);
+                    Intent intent1 = new Intent(context, SplashActivity.class);
                     intent1.putExtra("isPush", true);
                     intent1.putExtra("type", type);
                     intent1.putExtra("id", id);

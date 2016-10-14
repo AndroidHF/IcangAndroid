@@ -11,6 +11,9 @@ import com.buycolle.aicang.MainActivity;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.UserBean;
+import com.buycolle.aicang.ui.activity.usercentermenu.faq.MyFAQActivity;
+import com.buycolle.aicang.ui.activity.usercentermenu.mybuy.MyBuyActivity;
+import com.buycolle.aicang.ui.activity.usercentermenu.mysale.MySaleActivity;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
 import com.google.gson.Gson;
@@ -44,16 +47,22 @@ public class SplashActivity extends BaseActivity {
 
 
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
         ButterKnife.bind(this);
+
+
         /***
          * add by :胡峰，个推引入
          */
         PushManager.getInstance().initialize(this.getApplicationContext());
         isPush = getIntent().getBooleanExtra("isPush",false);
+        type = getIntent().getIntExtra("type", 0);
+        id = getIntent().getIntExtra("id",0);
 
 //        小米login
 //        mApplication.setShoufaImages(AppUrl.SPLASH_SHOUFA_IMAGE, iv_shoufa);
@@ -74,11 +83,48 @@ public class SplashActivity extends BaseActivity {
                 } catch (InterruptedException e) {
                 }
                 if(isPush){
-                    Bundle bundle = new Bundle();
-                    bundle.putBoolean("isPush",true);
-                    bundle.putInt("type",type);
-                    bundle.putInt("id",id);
-                    UIHelper.jump(mActivity,MainActivity.class,bundle);
+//                    Bundle bundle = new Bundle();
+//                    bundle.putBoolean("isPush",true);
+//                    bundle.putInt("type",type);
+//                    bundle.putInt("id",id);
+//                    UIHelper.jump(mActivity,MainActivity.class,bundle);
+                    if (type == 1 || type == 5 || type == 13){
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isPush",true);
+                        bundle.putInt("type", type);
+                        bundle.putInt("id", id);
+                        UIHelper.jump(mActivity,PaiPinDetailActivity.class,bundle);
+                    }else if (type == 2 || type == 3 || type == 4 || type == 8){
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isPush",true);
+                        bundle.putInt("type", type);
+                        bundle.putInt("id", id);
+                        UIHelper.jump(mActivity, MyBuyActivity.class,bundle);
+                    }else if (type == 9 || type == 10){
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isPush",true);
+                        bundle.putInt("type", type);
+                        bundle.putInt("id", id);
+                        UIHelper.jump(mActivity, MySaleActivity.class,bundle);
+                    }else if (type == 15 || type == 16){
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isPush",true);
+                        bundle.putInt("type", type);
+                        bundle.putInt("id", id);
+                        UIHelper.jump(mActivity, MyFAQActivity.class,bundle);
+                    }else if (type == 17){
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isPush",true);
+                        bundle.putInt("type", type);
+                        bundle.putInt("id", id);
+                        UIHelper.jump(mActivity,ConectionActivity.class,bundle);
+                    }else {
+                        Bundle bundle = new Bundle();
+                        bundle.putBoolean("isPush",true);
+                        bundle.putInt("type", type);
+                        bundle.putInt("id", id);
+                        UIHelper.jump(mActivity,MainActivity.class,bundle);
+                    }
                 }else{
                     /****
                      * add by :胡峰，引导界面的跳转
@@ -170,4 +216,5 @@ public class SplashActivity extends BaseActivity {
         super.onPause();
         JPushInterface.onPause(this);
     }
+
 }

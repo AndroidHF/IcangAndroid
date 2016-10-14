@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
+import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.event.LogOutEvent;
@@ -214,21 +215,20 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
             UIHelper.t(mContext, "清除缓存成功");
         }
     }
-
-    @OnClick(R.id.btn_logout)
-    public void logout() {
-        new NoticeDialog(mContext, "退出提示", "您确定退出当前账号吗？").setCallBack(new NoticeDialog.CallBack() {
-            @Override
-            public void ok() {
-                logOut();
-            }
-
-            @Override
-            public void cancle() {
-
-            }
-        }).show();
-    }
+//    @OnClick(R.id.btn_logout)
+//    public void logout() {
+//        new NoticeDialog(mContext, "退出提示", "您确定退出当前账号吗？").setCallBack(new NoticeDialog.CallBack() {
+//            @Override
+//            public void ok() {
+//                logOut();
+//            }
+//
+//            @Override
+//            public void cancle() {
+//
+//            }
+//        }).show();
+//    }
 
     private void logOut() {
         JSONObject jsonObject = new JSONObject();
@@ -306,6 +306,28 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
                 UIHelper.jump(mActivity, TextVersionActivity.class);
             }
         });
+
+        if (MainApplication.getInstance().isLogin()){
+            btnLogout.setVisibility(View.VISIBLE);
+            btnLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new NoticeDialog(mContext, "退出提示", "您确定退出当前账号吗？").setCallBack(new NoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            logOut();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
+                }
+            });
+        }else {
+            btnLogout.setVisibility(View.GONE);
+        }
     }
 
     @Override
