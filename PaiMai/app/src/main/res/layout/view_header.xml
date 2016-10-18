@@ -143,17 +143,12 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:orientation="horizontal">
-            <TextView
+            <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:layout_marginLeft="5dip"
-                android:ellipsize="end"
-                android:gravity="center"
-                android:lines="1"
-                android:text="清空"
-                android:textColor="@color/white"
-                android:textSize="18dip" />
+                android:src="@drawable/iv_icon_point" />
 
         </LinearLayout>
     </FrameLayout>

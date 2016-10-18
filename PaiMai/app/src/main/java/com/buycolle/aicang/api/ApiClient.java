@@ -1145,4 +1145,11 @@ public class ApiClient {
     public void messageCenter_deleteMessagesByApp(JSONObject data,ApiCallback callback){
         post(callback,AppUrl.MESSAGECENTER_DELETEMESSAGESBYAPP,data,"清空消息中心消息列表的内容");
     }
+
+    /**
+     * 消息中心消息列表一键已读
+     */
+    public void messageCenter_updateMessagesReadByApp(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.MESSAGECENTER_UPDATEMESSAGESREADBYAPP,data,"清空消息中心消息列表一键已读");
+    }
 }

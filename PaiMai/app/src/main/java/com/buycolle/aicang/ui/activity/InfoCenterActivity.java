@@ -16,6 +16,8 @@ import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.infomationbean.InfoNoticeBean;
 import com.buycolle.aicang.bean.infomationbean.MessageCenterHomeBean;
 import com.buycolle.aicang.event.LoginEvent;
+import com.buycolle.aicang.event.UpdateInfoAnimationEvent;
+import com.buycolle.aicang.event.UpdateInfoCenterEvent;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.xlistview.XListView;
 import com.buycolle.aicang.util.UIHelper;
@@ -79,6 +81,14 @@ public class InfoCenterActivity extends BaseActivity {
         }
     }
 
+    //我的交易、我的私信、活动信息，系统消息界面返回触发
+    public void onEventMainThread(UpdateInfoCenterEvent event){
+        if (event.getStatus() == 0 || event.getStatus() == 1||event.getStatus() == 2 || event.getStatus() == 3){
+            LoadInfoData();
+            listInfo.setAdapter(infoCentAdapter);
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +106,7 @@ public class InfoCenterActivity extends BaseActivity {
             @Override
             public void leftActio() {
                 finish();
+                EventBus.getDefault().post(new UpdateInfoAnimationEvent(0));
             }
         });
 

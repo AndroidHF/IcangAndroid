@@ -2,15 +2,21 @@ package com.buycolle.aicang.ui.activity.infomation;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.adapter.MyTradeListAdapter;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.infomationbean.MyTradeListBean;
+import com.buycolle.aicang.event.UpdateInfoCenterEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.NoticeDialog;
@@ -30,6 +36,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by hufeng on 2016/10/9.
@@ -64,6 +71,7 @@ public class MyTradeActivity extends BaseActivity {
 
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +81,10 @@ public class MyTradeActivity extends BaseActivity {
             @Override
             public void leftActio() {
                 finish();
+                EventBus.getDefault().post(new UpdateInfoCenterEvent(0));
             }
         });
+
         type = _Bundle.getInt("type");
         LoadMyTradeDate(true);
         myTradeListBeans = new ArrayList<MyTradeListBean>();
@@ -97,24 +107,54 @@ public class MyTradeActivity extends BaseActivity {
             }
         });
 
-        /***
-         * 清除按钮的监听
-         */
+        //一键已读和一键删除的点击事件
         infoDelete.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                new NoticeDialog(mContext,"清空确认","您即将清空该目录下的所有消\n息，消息删除后将无法恢复。\n\n是否确认提交？").setCallBack(new NoticeDialog.CallBack() {
+            public void onClick(View viewInfoDelete) {
+                View view = LayoutInflater.from(mContext).inflate(R.layout.menu_poup_window,null);
+                TextView tvEmpty = (TextView) view.findViewById(R.id.tv_empty);
+                TextView tvDelete = (TextView) view.findViewById(R.id.tv_delete);
+                final PopupWindow popupWindow = new PopupWindow(view, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,true);
+                tvEmpty.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void ok() {
-                        llNotice_no.setVisibility(View.VISIBLE);
-                        deleteMessages();
+                    public void onClick(View v) {
+                        updateReadMessages();
+                        LoadMyTradeDate(false);
+                        listTrade.setAdapter(myTradeListAdapter);
+                        popupWindow.dismiss();
                     }
+                });
 
+
+                tvDelete.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void cancle() {
+                    public void onClick(View v) {
+                        new NoticeDialog(mContext, "清空确认", "您即将清空该目录下的所有消\n息，消息删除后将无法恢复。\n\n是否确认提交？").setCallBack(new NoticeDialog.CallBack() {
+                            @Override
+                            public void ok() {
+                                llNotice_no.setVisibility(View.VISIBLE);
+                                deleteMessages();
+                                popupWindow.dismiss();
+                            }
 
+                            @Override
+                            public void cancle() {
+                                popupWindow.dismiss();
+                            }
+                        }).show();
                     }
-                }).show();
+                });
+
+                popupWindow.setTouchable(true);
+                popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        return false;
+                    }
+                });
+
+                popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_info_bg));
+                popupWindow.showAsDropDown(viewInfoDelete);
             }
         });
 
@@ -218,13 +258,59 @@ public class MyTradeActivity extends BaseActivity {
         try {
             jsonObject.put("sessionid",LoginConfig.getUserInfo(mContext).getSessionid());
             jsonObject.put("user_id",LoginConfig.getUserInfo(mContext).getUser_id());
-            jsonObject.put("type",type);
-            jsonObject.put("id",myTradeListBeans.get(0).getId());
+            jsonObject.put("type", type);
+            if (myTradeListBeans.size() != 0){
+                jsonObject.put("max_id", myTradeListBeans.get(0).getId());
+                jsonObject.put("min_id",myTradeListBeans.get(myTradeListBeans.size() - 1).getId());
+            }else {
+                jsonObject.put("max_id","");
+                jsonObject.put("min_id","");
+            }
+
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         mApplication.apiClient.messageCenter_deleteMessagesByApp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+
+            }
+        });
+    }
+
+    /***
+     * 消息中心列表一键已读接口
+     */
+    public void updateReadMessages(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("sessionid",LoginConfig.getUserInfo(mContext).getSessionid());
+            jsonObject.put("user_id",LoginConfig.getUserInfo(mContext).getUser_id());
+            jsonObject.put("type", type);
+            if (myTradeListBeans.size() != 0){
+                jsonObject.put("max_id", myTradeListBeans.get(0).getId());
+                jsonObject.put("min_id",myTradeListBeans.get(myTradeListBeans.size() - 1).getId());
+            }else {
+                jsonObject.put("max_id","");
+                jsonObject.put("min_id","");
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mApplication.apiClient.messageCenter_updateMessagesReadByApp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
 

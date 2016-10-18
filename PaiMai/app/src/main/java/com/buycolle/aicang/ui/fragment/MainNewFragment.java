@@ -4,12 +4,15 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.buycolle.aicang.Constans;
 import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.MainApplication;
@@ -18,9 +21,11 @@ import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.HomeFilterMenuBean;
 import com.buycolle.aicang.bean.HomeTopAddBeanNew;
 import com.buycolle.aicang.bean.ShangPinFilterBean;
+import com.buycolle.aicang.bean.infomationbean.MessageCenterHomeBean;
 import com.buycolle.aicang.event.HomeBackEvent;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.event.LoginEvent;
+import com.buycolle.aicang.event.UpdateInfoAnimationEvent;
 import com.buycolle.aicang.ui.activity.InfoCenterActivity;
 import com.buycolle.aicang.ui.activity.SearchActivity;
 import com.buycolle.aicang.ui.view.CircleIndicator;
@@ -92,11 +97,15 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
     @Bind(R.id.ll_event_menu)
     LinearLayout     ll_event_menu;
     @Bind(R.id.iv_show_smile)
-    ImageView        iv_show_smile;
+    ImageView  iv_has_info;//有消息时显示
+    @Bind(R.id.iv_show_smile2)
+    ImageView iv_no_info;//没消息时显示
     @Bind(R.id.circle_indicator)
     CircleIndicator  circleIndicator;
     @Bind(R.id.ll_filter)
     LinearLayout     ll_filter;
+
+
     private ACache                        aCache;
     private ArrayList<HomeTopAddBeanNew>  homeTopAddBeens;
     private ArrayList<HomeFilterMenuBean> menuFilters;
@@ -114,6 +123,20 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
 
     private FilterDialog mFilterDialog;
 
+    //消息列表内容
+    ArrayList<MessageCenterHomeBean> messageCenterHomeBeans;
+    private int pageIndex = 1;
+    private int pageNum = 10;
+    private String  business_id ;//交易信息id
+    private String common_id ;//交流信息id
+    private String other_id ;//其他信息id
+
+    //消息首页列表的消息数
+    private int infoCenterCount;
+
+
+
+
     //登录触发
     public void onEventMainThread(LoginEvent event) {
 
@@ -129,6 +152,14 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         scrollableLayout.scrollTo(0, 0);
     }
 
+    //刷新动画的状态
+    public void onEventMainThread(UpdateInfoAnimationEvent event){
+        if (event.getStatus() == 0){
+            messageCenterHomeBeans.clear();
+            loadInfoList();
+        }
+    }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -136,6 +167,8 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         aCache = ACache.get(mApplication);
         homeTopAddBeens = new ArrayList<>();
         menuFilters = new ArrayList<>();
+        messageCenterHomeBeans = new ArrayList<>();
+        loadInfoList();
     }
 
     @Nullable
@@ -156,7 +189,7 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
             fragmentList.add(ListFragment.newInstance(getMenuType(TAB_TITLE[i]) + ""));
 //            scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(i));
         }
-
+        loadInfoList();
         fragList = new ArrayList<>();
         // TODO
 
@@ -208,8 +241,8 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
                     try {
                         JSONArray rows = resultObj.getJSONArray("rows");
                         ArrayList<ShangPinFilterBean> allDataArrayList = new Gson().fromJson(rows.toString(),
-                                                                                             new TypeToken<List<ShangPinFilterBean>>() {
-                                                                                             }.getType());
+                                new TypeToken<List<ShangPinFilterBean>>() {
+                                }.getType());
                         if (allDataArrayList.size() != 0) {
                             shangPinTypeBeens.addAll(allDataArrayList);
                             mFilterDialog.setData(shangPinTypeBeens);
@@ -225,19 +258,6 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
 
             }
         });
-
-        //        ll_event_menu.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View view) {
-        //                if (!isShow) {
-        //                    iv_show_smile.setImageResource(R.drawable.event_top_icon);
-        //                } else {
-        //                    iv_show_smile.setImageResource(R.drawable.smail_none);
-        //                }
-        //                isShow = isShow ? false : true;
-        //            }
-        //        });
-
 
         /**
          * 首页图标的监听，跳转到消息中心界面
@@ -277,21 +297,6 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
         //                listFragment.refreshByState(type, true);
     }
 
-//    private int currentIndex = 1;
-
-//    private void initHomeMenu() {
-//
-//        String initMenusStr = LoginConfig.getHomeMenu(mContext);
-//        String[] strings = initMenusStr.split(",");
-//        menuFilters.clear();
-//        for (int i = 0; i < strings.length; i++) {
-//            menuFilters.add(new HomeFilterMenuBean(strings[i], getTitleBeanRes(strings[i]), false));
-//        }
-//        //添加一个空数据
-//        menuFilters.add(new HomeFilterMenuBean("", 0, true));
-//    }
-
-//    private GalleryRecyclerAdapter galleryRecyclerAdapter;
 
     @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -317,106 +322,6 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
     public void onPageScrollStateChanged(int state) {
     }
 
-//    public class GalleryRecyclerAdapter extends RecyclerView.Adapter<GalleryRecyclerAdapter.ViewHolder> {
-//
-//        private LayoutInflater                  mInflater;
-//        private OnRecyclerViewItemClickListener onRecyclerViewItemClickListener;
-//
-//        private ArrayList<HomeFilterMenuBean> homeFilterMenuBeens;
-//
-//        public void setOnRecyclerViewItemClickListener(OnRecyclerViewItemClickListener
-//                                                               onRecyclerViewItemClickListener) {
-//            this.onRecyclerViewItemClickListener = onRecyclerViewItemClickListener;
-//        }
-//
-//        public GalleryRecyclerAdapter(Context context, ArrayList<HomeFilterMenuBean> datas) {
-//            mInflater = LayoutInflater.from(context);
-//            homeFilterMenuBeens = new ArrayList<>();
-//            this.homeFilterMenuBeens = datas;
-//        }
-//
-//        /**
-//         * 创建Item View  然后使用ViewHolder来进行承载
-//         *
-//         * @param parent
-//         * @param viewType
-//         * @return
-//         */
-//        @Override
-//        public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-//            final View view = mInflater.inflate(R.layout.aaaaa_demo, parent, false);
-//            ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(UIUtil.getWindowWidth(mContext) / 3,
-//                                                                       ViewGroup.LayoutParams.MATCH_PARENT);
-//            view.setLayoutParams(params);
-//            ViewHolder viewHolder = new ViewHolder(view);
-//            view.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-//                    onRecyclerViewItemClickListener.onItemClick(view, (int) view.getTag());
-//                }
-//            });
-//            return viewHolder;
-//        }
-//
-//        /**
-//         * 进行绑定数据
-//         *
-//         * @param holder
-//         * @param position
-//         */
-//        @Override
-//        public void onBindViewHolder(final ViewHolder holder, int position) {
-//            HomeFilterMenuBean homeFilterMenuBean = homeFilterMenuBeens.get(position);
-//            holder.itemView.setTag(position);
-//            if (position == 0) {
-//                holder.tv_name.setVisibility(View.GONE);
-//                holder.iv_menu.setVisibility(View.VISIBLE);
-//                holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
-//
-//            } else if (position == 1) {
-//                holder.tv_name.setVisibility(View.VISIBLE);
-//                holder.iv_menu.setVisibility(View.VISIBLE);
-//                holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
-//                holder.tv_name.setText(homeFilterMenuBean.getName());
-//            } else {
-//                if (homeFilterMenuBean.isEmpty()) {//最后一个
-//                    holder.tv_name.setVisibility(View.GONE);
-//                    holder.iv_menu.setVisibility(View.GONE);
-//                } else {
-//                    holder.tv_name.setVisibility(View.VISIBLE);
-//                    holder.iv_menu.setVisibility(View.VISIBLE);
-//                    holder.iv_menu.setImageResource(homeFilterMenuBean.getResId());
-//                    holder.tv_name.setText(homeFilterMenuBean.getName());
-//                }
-//            }
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return homeFilterMenuBeens.size();
-//        }
-//
-//        //自定义的ViewHolder，持有每个Item的的所有界面元素
-//        public class ViewHolder extends RecyclerView.ViewHolder {
-//
-//            LinearLayout parent;
-//            TextView     tv_name;
-//            ImageView    iv_menu;
-//
-//            public ViewHolder(View view) {
-//                super(view);
-//                parent = (LinearLayout) view.findViewById(R.id.ll_parent);
-//                tv_name = (TextView) view.findViewById(R.id.tv_name);
-//                iv_menu = (ImageView) view.findViewById(R.id.iv_menu);
-//            }
-//        }
-//
-//    }
-
-//    public interface OnRecyclerViewItemClickListener {
-//
-//        void onItemClick(View view, int position);
-//    }
 
     private void loadTopAds() {
         JSONObject jsonObject = new JSONObject();
@@ -442,8 +347,8 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
                         if (jsonArray.length() > 0) {
                             aCache.put(Constans.TAG_HOME_TOP_ADS, resultObj);
                             ArrayList<HomeTopAddBeanNew> homarrays = new Gson().fromJson(jsonArray.toString(),
-                                                                                         new TypeToken<List<HomeTopAddBeanNew>>() {
-                                                                                         }.getType());
+                                    new TypeToken<List<HomeTopAddBeanNew>>() {
+                                    }.getType());
                             mPagerBanner.setAdapter(new HomeAddImagePagerAdapter(mActivity, homarrays).setInfiniteLoop(
                                     false));
                             mPagerBanner.setInterval(5000);
@@ -485,33 +390,6 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
     }
 
     private boolean isShow = true;
-
-//    private int getTitleBeanRes(String title) {
-//        if ("个性化".equals(title)) {
-//            return R.drawable.main_menu_gexinghua;
-//        } else if ("全部".equals(title)) {
-//            return R.drawable.main_menu_all;
-//        } else if ("漫画".equals(title)) {
-//            return R.drawable.show_menu_1_sel;
-//        } else if ("BD、DVD".equals(title)) {
-//            return R.drawable.show_menu_2_sel;
-//        } else if ("游戏".equals(title)) {
-//            return R.drawable.show_menu_3_sel;
-//        } else if ("书籍".equals(title)) {
-//            return R.drawable.show_menu_4_sel;
-//        } else if ("手办、模型".equals(title)) {
-//            return R.drawable.show_menu_6_sel;
-//        } else if ("周边".equals(title)) {
-//            return R.drawable.show_menu_5_sel;
-//        } else if ("音乐、演出".equals(title)) {
-//            return R.drawable.show_menu_7_sel;
-//        } else if ("服装、COS".equals(title)) {
-//            return R.drawable.show_menu_8_sel;
-//        } else if ("其他".equals(title)) {
-//            return R.drawable.another_icon_sel;
-//        }
-//        return 0;
-//    }
 
     @Override
     public void onDestroy() {
@@ -593,8 +471,8 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
                         aCache.put(Constans.TAG_GOOD_FILTER, resultObj);
                         JSONArray rows = resultObj.getJSONArray("rows");
                         ArrayList<ShangPinFilterBean> allDataArrayList = new Gson().fromJson(rows.toString(),
-                                                                                             new TypeToken<List<ShangPinFilterBean>>() {
-                                                                                             }.getType());
+                                new TypeToken<List<ShangPinFilterBean>>() {
+                                }.getType());
                         mFilterDialog.setData(allDataArrayList);
 
                     } else {
@@ -608,6 +486,64 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
             @Override
             public void onApiFailure(Request request, Exception e) {
                 UIHelper.t(mContext, R.string.net_error);
+            }
+        });
+    }
+
+    /**
+     * 消息中心首页列表的内容
+     */
+    public void loadInfoList(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("sessionid",LoginConfig.getUserInfo(mContext).getSessionid());
+            jsonObject.put("user_id",LoginConfig.getUserInfo(mContext).getUser_id());
+            jsonObject.put("business_id","");
+            jsonObject.put("common_id","");
+            jsonObject.put("other_id","");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        mApplication.apiClient.messageCenter_getNewMessagesByApp(jsonObject, new ApiCallback() {
+            @Override
+            public void onApiStart() {
+
+            }
+
+            @Override
+            public void onApiSuccess(String response) {
+                try {
+                    JSONObject resultObj = new JSONObject(response);
+                    if (JSONUtil.isOK(resultObj)) {
+                        if (JSONUtil.isHasData(resultObj)) {
+                            JSONArray rows = resultObj.getJSONArray("rows");
+                            ArrayList<MessageCenterHomeBean> allDataArrayList = new Gson().fromJson(rows.toString(), new TypeToken<List<MessageCenterHomeBean>>() {
+                            }.getType());
+                            messageCenterHomeBeans.addAll(allDataArrayList);
+                            infoCenterCount = messageCenterHomeBeans.get(0).getCount() + messageCenterHomeBeans.get(1).getCount() + messageCenterHomeBeans.get(2).getCount() + messageCenterHomeBeans.get(3).getCount();
+                            Log.i("消息总数",infoCenterCount+"");
+                            if (infoCenterCount > 0){
+                                Log.i("消息总数2",infoCenterCount+"");
+                                iv_has_info.setVisibility(View.VISIBLE);
+                                iv_no_info.setVisibility(View.GONE);
+                                Glide.with(mContext).load(R.drawable.pic_move).asGif().diskCacheStrategy(DiskCacheStrategy.RESULT).into(iv_has_info);
+                            }else if (infoCenterCount <= 0){
+                                iv_no_info.setVisibility(View.VISIBLE);
+                                iv_has_info.setVisibility(View.GONE);
+                            }
+                        }
+                    } else {
+                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            @Override
+            public void onApiFailure(Request request, Exception e) {
+
             }
         });
     }

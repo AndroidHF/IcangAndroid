@@ -12,7 +12,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.buycolle.aicang.LoginConfig;
-import com.buycolle.aicang.MainActivity;
 import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
@@ -95,9 +94,10 @@ public class MySystemListAdapter extends BaseAdapter {
                 bundle.putInt("type", myTradeListBean.getType());
                 if (myTradeListBean.getType() == 5 || myTradeListBean.getType() == 13) {//关注的还有30分钟、订阅拍卖会还有20分钟结束，跳转到拍品详情界面
                     UIHelper.jump(activity, PaiPinDetailActivity.class, bundle);
-                } else if (myTradeListBean.getType() == 6 || myTradeListBean.getType() == 7 || myTradeListBean.getType() == 11 || myTradeListBean.getType() == 12) {//冻结账户和解锁账户、卖家身份审核通过和不通过，跳转到首页
-                    UIHelper.jump(activity, MainActivity.class, bundle);
                 }
+//                else if (myTradeListBean.getType() == 6 || myTradeListBean.getType() == 7 || myTradeListBean.getType() == 11 || myTradeListBean.getType() == 12) {//冻结账户和解锁账户、卖家身份审核通过和不通过，跳转到首页
+//                    UIHelper.jump(activity, MainActivity.class, bundle);
+//                }
                 UpdateMessageInfo(myTradeListBean.getId());
             }
         });

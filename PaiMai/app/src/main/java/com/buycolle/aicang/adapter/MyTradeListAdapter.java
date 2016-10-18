@@ -3,6 +3,7 @@ package com.buycolle.aicang.adapter;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,6 +53,7 @@ public class MyTradeListAdapter extends BaseAdapter {
     }
     @Override
     public int getCount() {
+        Log.i("单页显示列表的第一条消息", myTradeListBeans.size() + "");
         return myTradeListBeans == null ? 0:myTradeListBeans.size();
     }
 
@@ -145,10 +147,8 @@ public class MyTradeListAdapter extends BaseAdapter {
         try {
             jsonObject.put("sessionid", LoginConfig.getUserInfo(context).getSessionid());
             if (type == 1){
-                //jsonObject.put("business_id",id+"");
                 jsonObject.put("id",id+"");
             }else if(type == 2){
-                //jsonObject.put("common_id",id+"");
                 jsonObject.put("id",id+"");
             }
         } catch (JSONException e) {

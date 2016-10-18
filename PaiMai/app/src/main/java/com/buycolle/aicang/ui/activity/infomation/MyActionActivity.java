@@ -9,6 +9,7 @@ import com.buycolle.aicang.R;
 import com.buycolle.aicang.adapter.MyActionAdapter;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.infomationbean.MyActionListBean;
+import com.buycolle.aicang.event.UpdateInfoCenterEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.xlistview.XListView;
@@ -27,6 +28,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by hufeng on 2016/10/9.
@@ -65,6 +67,7 @@ public class MyActionActivity extends BaseActivity {
             @Override
             public void leftActio() {
                 finish();
+                EventBus.getDefault().post(new UpdateInfoCenterEvent(2));
             }
         });
         LoadActionDate(false);

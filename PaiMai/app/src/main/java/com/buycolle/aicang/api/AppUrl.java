@@ -277,4 +277,7 @@ public class AppUrl {
 
     //清除消息中心消息列表的内容
     public static final String MESSAGECENTER_DELETEMESSAGESBYAPP = BASE_URL+"messageCenter_deleteMessagesByApp.action";
+
+    //消息中心消息列表一键已读接口
+    public static final String MESSAGECENTER_UPDATEMESSAGESREADBYAPP = BASE_URL +"messageCenter_updateMessagesReadByApp.action";
 }

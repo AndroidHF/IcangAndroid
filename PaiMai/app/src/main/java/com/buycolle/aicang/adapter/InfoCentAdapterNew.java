@@ -80,12 +80,16 @@ public class InfoCentAdapterNew extends BaseAdapter {
                 holder.tvMyInfoCount.setVisibility(View.GONE);
                 holder.tvMyInfoTime.setVisibility(View.GONE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfo.setText("现在没有新的消息，敬请期待！");
+                holder.tvMyInfo.setText("暂时没有新的消息");
             }else {
                 holder.tvMyInfoCount.setVisibility(View.VISIBLE);
                 holder.tvMyInfoTime.setVisibility(View.VISIBLE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfoCount.setText(messageCenterHomeBean.getCount()+"");//设置消息数
+                if (messageCenterHomeBean.getCount() > 99){
+                    holder.tvMyInfoCount.setText("99+");
+                }else {
+                    holder.tvMyInfoCount.setText(messageCenterHomeBean.getCount()+"");//设置消息数
+                }
                 holder.tvMyInfoTime.setText(messageCenterHomeBean.getCreate_date());//设置时间
                 holder.tvMyInfo.setText(messageCenterHomeBean.getTitle());//设置标题内容
             }
@@ -98,12 +102,16 @@ public class InfoCentAdapterNew extends BaseAdapter {
                 holder.tvMyInfoCount.setVisibility(View.GONE);
                 holder.tvMyInfoTime.setVisibility(View.GONE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfo.setText("现在没有新的消息，敬请期待！");
+                holder.tvMyInfo.setText("暂时没有新的消息");
             }else {
                 holder.tvMyInfoCount.setVisibility(View.VISIBLE);
                 holder.tvMyInfoTime.setVisibility(View.VISIBLE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfoCount.setText(messageCenterHomeBean.getCount()+"");//设置消息数
+                if (messageCenterHomeBean.getCount() > 99){
+                    holder.tvMyInfoCount.setText("99+");
+                }else {
+                    holder.tvMyInfoCount.setText(messageCenterHomeBean.getCount()+"");//设置消息数
+                }
                 holder.tvMyInfoTime.setText(messageCenterHomeBean.getCreate_date());//设置时间
                 holder.tvMyInfo.setText(messageCenterHomeBean.getTitle());//设置标题内容
             }
@@ -115,7 +123,7 @@ public class InfoCentAdapterNew extends BaseAdapter {
                 holder.tvMyInfoCount.setVisibility(View.GONE);
                 holder.tvMyInfoTime.setVisibility(View.GONE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfo.setText("现在没有新的活动，敬请期待！");
+                holder.tvMyInfo.setText("暂时没有新的活动");
             }else {
                 holder.tvMyInfoCount.setVisibility(View.GONE);
                 holder.tvMyInfoTime.setVisibility(View.VISIBLE);
@@ -132,12 +140,16 @@ public class InfoCentAdapterNew extends BaseAdapter {
                 holder.tvMyInfoCount.setVisibility(View.GONE);
                 holder.tvMyInfoTime.setVisibility(View.GONE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfo.setText("现在没有新的消息，敬请期待！");
+                holder.tvMyInfo.setText("暂时没有新的消息");
             }else {
                 holder.tvMyInfoCount.setVisibility(View.VISIBLE);
                 holder.tvMyInfoTime.setVisibility(View.VISIBLE);
                 holder.llActivityLogo.setVisibility(View.GONE);
-                holder.tvMyInfoCount.setText(messageCenterHomeBean.getCount()+"");//设置消息数
+                if (messageCenterHomeBean.getCount() > 99){
+                    holder.tvMyInfoCount.setText("99+");
+                }else {
+                    holder.tvMyInfoCount.setText(messageCenterHomeBean.getCount()+"");//设置消息数
+                }
                 holder.tvMyInfoTime.setText(messageCenterHomeBean.getCreate_date());//设置时间
                 holder.tvMyInfo.setText(messageCenterHomeBean.getTitle());//设置标题内容
             }
@@ -191,7 +203,7 @@ public class InfoCentAdapterNew extends BaseAdapter {
 
                 }
 
-                finalHolder.tvMyInfoCount.setVisibility(View.GONE);
+//                finalHolder.tvMyInfoCount.setVisibility(View.GONE);
             }
         });
         return convertView;

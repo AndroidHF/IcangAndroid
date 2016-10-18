@@ -35,43 +35,31 @@
                         android:layout_width="83dip"
                         android:layout_height="match_parent"
                         android:layout_alignParentLeft="true"
-                        android:background="@color/black"
+                        android:background="@drawable/main_info_bg"
                         android:gravity="center"
                         android:orientation="vertical">
                         <!--
-                                                <ImageView
-                                                    android:id="@+id/iv_show_smile"
-                                                    android:layout_width="45dip"
-                                                    android:layout_height="31dip"
-                                                    android:src="@drawable/event_top_icon" />
-                                                -->
                         <ImageView
                             android:id="@+id/iv_show_smile"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:paddingBottom="5dip"
                             android:src="@drawable/main_login"/>
+                            -->
+                        <ImageView
+                            android:id="@+id/iv_show_smile"
+                            android:layout_width="35dip"
+                            android:layout_height="35dip"
+                            android:layout_gravity="center"
+                            android:visibility="gone"/>
+                        <ImageView
+                            android:id="@+id/iv_show_smile2"
+                            android:layout_width="50dip"
+                            android:layout_height="50dip"
+                            android:src="@drawable/main_no_info_icon"
+                           android:visibility="gone"/>
                     </LinearLayout>
 
-                    <!--
-                                        <RelativeLayout
-                                            android:id="@+id/rl_search"
-                                            android:layout_width="170dip"
-                                            android:layout_height="30dip"
-                                            android:layout_alignParentRight="true"
-                                            android:layout_centerVertical="true"
-                                            android:layout_marginRight="10dip"
-                                            android:background="@drawable/shape_search_bg">
-
-                                            <ImageView
-                                                android:layout_width="wrap_content"
-                                                android:layout_height="wrap_content"
-                                                android:layout_alignParentRight="true"
-                                                android:layout_centerVertical="true"
-                                                android:paddingRight="10dip"
-                                                android:src="@drawable/commen_search_icon" />
-                                        </RelativeLayout>
-                                        -->
                     <LinearLayout
                         android:id="@+id/ll_search"
                         android:layout_width="45dip"

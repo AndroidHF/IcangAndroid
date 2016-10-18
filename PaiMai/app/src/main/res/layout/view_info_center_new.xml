@@ -58,24 +58,23 @@
         <LinearLayout
             android:id="@+id/ll_activity_logo"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="30dip"
             android:layout_above="@+id/tv_my_info"
             android:layout_toRightOf="@+id/tv_my_info_time"
             android:layout_toEndOf="@+id/tv_my_info_time"
             android:layout_alignTop="@+id/iv_my_info_icon"
             android:layout_marginLeft="5dip"
             android:layout_marginRight="15dip"
-            android:layout_marginBottom="5dip"
             android:gravity="right"
             >
             <ImageView
                 android:id="@+id/iv_activity_logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/activity_logo"
                 android:layout_marginLeft="5dip"
-                android:layout_gravity="end"
-                android:layout_marginBottom="5dip"
+                android:layout_gravity="right"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
                 />
         </LinearLayout>
 
