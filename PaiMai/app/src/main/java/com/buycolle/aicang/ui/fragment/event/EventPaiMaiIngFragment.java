@@ -110,6 +110,7 @@ public class EventPaiMaiIngFragment extends BaseScrollListFragment {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new EventBackEvent(0));
+                list.setSelection(0);
             }
         });
 

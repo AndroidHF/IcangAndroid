@@ -27,9 +27,10 @@ import com.buycolle.aicang.ui.fragment.BaseFragment;
 import com.buycolle.aicang.ui.fragment.MainNewFragment;
 import com.buycolle.aicang.ui.fragment.PostFragment;
 import com.buycolle.aicang.ui.fragment.ShowOffFragment;
-import com.buycolle.aicang.ui.fragment.UserCenterFragment;
-import com.buycolle.aicang.ui.fragment.event.EventFragment;
+import com.buycolle.aicang.ui.fragment.UserCenterFragmentNew;
+import com.buycolle.aicang.ui.fragment.event.EventFragmentNew;
 import com.buycolle.aicang.ui.view.FixedViewPager;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.ui.view.UpdateDialog;
 import com.buycolle.aicang.util.ACache;
 import com.buycolle.aicang.util.DoubleClickExitHelper;
@@ -238,9 +239,24 @@ public class MainActivity extends BaseActivity {
 
     @OnClick(R.id.iv_main_menu_3)
     public void menuPostclick() {
-        currentIndex = 2;
-        initStatus(2);
-        mainViewPager.setCurrentItem(currentIndex, false);
+        if (mApplication.isLogin()){
+            currentIndex = 2;
+            initStatus(2);
+            mainViewPager.setCurrentItem(currentIndex, false);
+        }else {
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    gotoLogin();
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
+        }
+
     }
 
     @OnClick(R.id.iv_main_menu_4)
@@ -273,13 +289,13 @@ public class MainActivity extends BaseActivity {
 
     private void initViewPager() {
         fragList = new ArrayList<BaseFragment>();
-        //homeFrag = new MainFragment();
-        //homeFrag = new MainFragmentNew();
         homeFrag = new MainNewFragment();
-        eventFrag = new EventFragment();
+        //eventFrag = new EventFragment();
+        eventFrag = new EventFragmentNew();
         postFrag = new PostFragment();
         showFrag = new ShowOffFragment();
-        usetFrag = new UserCenterFragment();
+        //usetFrag = new UserCenterFragment();
+        usetFrag = new UserCenterFragmentNew();
         fragList.add(homeFrag);
         fragList.add(eventFrag);
         fragList.add(postFrag);

@@ -8,7 +8,17 @@ public class InfoNoticeBean {
     private String title;//公告内容
     private String create_date;//公告创建时间
     private int remark;//置顶标识位（大于0：置顶图标显示，小于等于0：没有值）
-    private String context;//公告Webview内容
+    private String context;//旧公告Webview内容
+    private String new_context;//新的公告webview内容
+
+    public String getNew_context() {
+        return new_context;
+    }
+
+    public void setNew_context(String new_context) {
+        this.new_context = new_context;
+    }
+
 
     public String getCreate_date() {
         return create_date;
@@ -58,6 +68,7 @@ public class InfoNoticeBean {
                 ", create_date='" + create_date + '\'' +
                 ", remark=" + remark +
                 ", context='" + context + '\'' +
+                ", new_context='" + new_context + '\'' +
                 '}';
     }
 }

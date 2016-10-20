@@ -17,6 +17,7 @@ import com.buycolle.aicang.MainActivity;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.bean.UserBean;
+import com.buycolle.aicang.event.LogInToSetEvent;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.event.LoginEvent;
 import com.buycolle.aicang.util.KeyboardWatcher;
@@ -135,6 +136,7 @@ public class LoginActivity extends BaseActivity {
                         LoginConfig.updateUserInfoPassWord(mContext, Md5Util.getEncodeByMD5(etPsw.getText().toString().trim()));
                         LoginConfig.setUserInfo(mContext, userBean);
                         EventBus.getDefault().post(new LoginEvent());
+                        EventBus.getDefault().post(new LogInToSetEvent(0));
                         setResult(RESULT_OK);
                         finish();
                     } else {

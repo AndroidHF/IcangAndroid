@@ -36,6 +36,7 @@ import com.buycolle.aicang.ui.activity.usercentermenu.mybuy.JingjiaAgainFinishAc
 import com.buycolle.aicang.ui.view.HackyViewPager;
 import com.buycolle.aicang.ui.view.JingPaiDialog;
 import com.buycolle.aicang.ui.view.JingPaiSureNoticeDialog;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.ui.view.MyExpandTextView;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.ShareDialog;
@@ -497,7 +498,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     bundle.putSerializable("entity", paiPinDetailBean);
                     UIHelper.jump(mActivity, ReportActivity.class, bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -539,7 +550,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     bundle.putSerializable("entity", paiPinDetailBean);
                     UIHelper.jump(mActivity, AskAndQuestionActivity.class, bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -552,7 +573,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     bundle.putInt("userid", paiPinDetailBean.getSeller_user_id());
                     UIHelper.jump(mActivity, MainUserCenterActivity.class, bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -573,7 +604,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     bundle.putInt("userid", paiPinDetailBean.getSeller_user_id());
                     UIHelper.jump(mActivity, MainComentActivity.class, bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
 
             }
@@ -587,7 +628,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     bundle.putInt("userid", paiPinDetailBean.getSeller_user_id());
                     UIHelper.jump(mActivity, MainComentActivity.class, bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
 
             }
@@ -601,7 +652,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                     bundle.putInt("userid", paiPinDetailBean.getSeller_user_id());
                     UIHelper.jump(mActivity, MainComentActivity.class, bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
 
             }
@@ -694,7 +755,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                 yiKouJiaDialog.show();
             }
         } else {
-            UIHelper.jump(this, LoginActivity.class);
+            new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mContext, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
         }
     }
 
@@ -1010,7 +1081,17 @@ public class PaiPinDetailActivity extends BaseActivity implements IWeiboHandler.
                         }
                     }
                 } else {
-                    UIHelper.jump(mActivity, LoginActivity.class);
+                    new LoginNoticeDialog(mContext,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mContext, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
 
             }

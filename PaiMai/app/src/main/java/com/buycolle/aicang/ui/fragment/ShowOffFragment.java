@@ -24,6 +24,7 @@ import com.buycolle.aicang.ui.activity.LoginActivity;
 import com.buycolle.aicang.ui.activity.PublicShowActivity;
 import com.buycolle.aicang.ui.activity.SearchActivity;
 import com.buycolle.aicang.ui.activity.ShowDetailActivity;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.ui.view.ShowMenuDialog;
 import com.buycolle.aicang.ui.view.xlistview.XListView;
 import com.buycolle.aicang.util.UIHelper;
@@ -140,7 +141,17 @@ public class ShowOffFragment extends BaseFragment {
                 if (mApplication.isLogin()) {
                     UIHelper.jump(mActivity, PublicShowActivity.class);
                 } else {
-                    UIHelper.jump(mContext, LoginActivity.class);
+                    new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mActivity, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -369,7 +380,17 @@ public class ShowOffFragment extends BaseFragment {
                             }
                         }
                     } else {
-                        UIHelper.jump(mActivity, LoginActivity.class);
+                        new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                            @Override
+                            public void ok() {
+                                UIHelper.jump(mActivity, LoginActivity.class);
+                            }
+
+                            @Override
+                            public void cancle() {
+
+                            }
+                        }).show();
                     }
                 }
             });
@@ -467,7 +488,17 @@ public class ShowOffFragment extends BaseFragment {
                 }
             });
         } else {
-            UIHelper.jump(mActivity, LoginActivity.class);
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mActivity, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
         }
     }
 }

@@ -17,6 +17,9 @@ public class Constans {
     // 获取拍品的商品状态
     public static final String TAG_GOOD_STATUS = "good_status";
 
+    //意见反馈问题类型
+    public static final String TAG_QUESTION_TYPE = "question_type";
+
     // 商品筛选
     public static final String TAG_GOOD_FILTER = "good_filter";
 

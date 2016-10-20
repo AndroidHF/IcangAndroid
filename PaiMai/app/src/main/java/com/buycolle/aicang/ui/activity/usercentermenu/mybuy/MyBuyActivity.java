@@ -18,6 +18,7 @@ import com.buycolle.aicang.adapter.MainPagerAdapter;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.event.UpdateTanNoticeEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
+import com.buycolle.aicang.ui.activity.usercentermenu.setting.FeedBackActivity;
 import com.buycolle.aicang.ui.fragment.BaseFragment;
 import com.buycolle.aicang.ui.view.FixedViewPager;
 import com.buycolle.aicang.ui.view.MyHeader;
@@ -83,6 +84,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
     @Bind(R.id.iv_paimai_noget_notice_icon)
     ImageView point_paimai_noget;
 
+
     private ArrayList<TextView> tvArrayList;
     private ArrayList<ImageView> imageViewArrayList;
 
@@ -96,6 +98,13 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
     private boolean isShowTotal = false;
 
     private int cost;
+
+
+    //售后联系监听
+    @OnClick(R.id.tv_conection)
+    public void tvConection(){
+        UIHelper.jump(mActivity, FeedBackActivity.class);
+    }
 
     @OnClick(R.id.tv_paimai_ing)
     public void paiMainIng() {
@@ -188,7 +197,7 @@ public class MyBuyActivity extends BaseActivity implements IWeiboHandler.Respons
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mybuy);
+        setContentView(R.layout.activity_mybuy_new);
         ButterKnife.bind(this);
         tvArrayList = new ArrayList<>();
         imageViewArrayList = new ArrayList<>();

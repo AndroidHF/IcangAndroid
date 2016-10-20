@@ -115,9 +115,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="118dip"
+        android:layout_height="128dip"
         android:orientation="horizontal"
-        android:paddingTop="10dip">
+        android:paddingTop="20dip">
 
         <RelativeLayout
             android:id="@+id/rl_my_foucus"

@@ -18,6 +18,7 @@ import com.buycolle.aicang.ui.activity.usercentermenu.myfoucus.MyFocusActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.mysale.MySaleActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.myshow.MyShowActivity;
 import com.buycolle.aicang.ui.activity.usercentermenu.setting.SettingActivity;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.util.UIHelper;
 
 /**
@@ -108,7 +109,18 @@ public class UserCenterMenuAdapter extends BaseAdapter {
                     bundle.putInt("my_buy_end",my_buy_end);
                     UIHelper.jump(activity, MyBuyActivity.class,bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(activity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            gotoLogin();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
+
                 }
             }
         });
@@ -121,7 +133,17 @@ public class UserCenterMenuAdapter extends BaseAdapter {
                     bundle.putInt("my_seller_selt",my_seller_selt);
                     UIHelper.jump(activity, MySaleActivity.class,bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(activity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            gotoLogin();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -131,7 +153,17 @@ public class UserCenterMenuAdapter extends BaseAdapter {
                 if (MainApplication.getInstance().isLogin()) {
                     UIHelper.jump(activity, MyShowActivity.class);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(activity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            gotoLogin();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -141,7 +173,17 @@ public class UserCenterMenuAdapter extends BaseAdapter {
                 if (MainApplication.getInstance().isLogin()) {
                     UIHelper.jump(activity, MyFocusActivity.class);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(activity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            gotoLogin();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -154,7 +196,17 @@ public class UserCenterMenuAdapter extends BaseAdapter {
                     bundle.putInt("my_qa_a",my_qa_a);
                     UIHelper.jump(activity, MyFAQActivity.class,bundle);
                 } else {
-                    gotoLogin();
+                    new LoginNoticeDialog(activity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            gotoLogin();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });

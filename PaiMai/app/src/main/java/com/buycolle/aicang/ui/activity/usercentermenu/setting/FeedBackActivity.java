@@ -1,15 +1,19 @@
 package com.buycolle.aicang.ui.activity.usercentermenu.setting;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.ui.activity.BaseActivity;
+import com.buycolle.aicang.ui.activity.QuestionTypeActivity;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.util.UIHelper;
 import com.buycolle.aicang.util.superlog.JSONUtil;
@@ -35,16 +39,30 @@ public class FeedBackActivity extends BaseActivity {
     EditText etContact;
     @Bind(R.id.btn_save)
     Button btnSave;
+    @Bind(R.id.rl_question_type)
+    RelativeLayout rlQuestionType;
+    @Bind(R.id.tv_question_status_value)
+    TextView tvQuestionValue;
+    private final int QUESTION_TYPE = 666;
+    private String opinion_type = "";//问题类型id
+    private String question_type = "";//问题类型内容
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_feed_back);
         ButterKnife.bind(this);
-        myHeader.init("意见反馈", new MyHeader.Action() {
+        myHeader.init("联系客服", new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();
+            }
+        });
+
+        rlQuestionType.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                UIHelper.jumpForResult(mActivity, QuestionTypeActivity.class, QUESTION_TYPE);
             }
         });
 
@@ -52,8 +70,20 @@ public class FeedBackActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 btnSave.setEnabled(false);
+
+                if (TextUtils.isEmpty(question_type)){
+                    UIHelper.t(mContext, "请选择您的问题类型");
+                    btnSave.setEnabled(true);
+                    return;
+                }
                 if (TextUtils.isEmpty(etInput.getText().toString().trim())) {
                     UIHelper.t(mContext, "请写下您的反馈意见");
+                    btnSave.setEnabled(true);
+                    return;
+                }
+
+                if (TextUtils.isEmpty(etContact.getText().toString().trim())){
+                    UIHelper.t(mContext, "请填写您的联系方式");
                     btnSave.setEnabled(true);
                     return;
                 }
@@ -62,12 +92,26 @@ public class FeedBackActivity extends BaseActivity {
         });
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == QUESTION_TYPE && resultCode == mActivity.RESULT_OK){
+            opinion_type = data.getStringExtra("dir_id");
+            question_type = data.getStringExtra("item_name");
+            tvQuestionValue.setText(data.getStringExtra("item_name"));
+            tvQuestionValue.setTextColor(mActivity.getResources().getColor(R.color.black));
+        }
+    }
+
     private void submit() {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("opinion_desc", etInput.getText().toString());
             if (!TextUtils.isEmpty(etContact.getText().toString().trim())) {
                 jsonObject.put("tel", etContact.getText().toString());
+            }
+            if (!TextUtils.isEmpty(tvQuestionValue.getText().toString().trim())){
+                jsonObject.put("opinion_type",opinion_type);
             }
             if (mApplication.isLogin()) {
                 jsonObject.put("sessionid", LoginConfig.getUserInfo(mContext).getSessionid());
@@ -93,7 +137,8 @@ public class FeedBackActivity extends BaseActivity {
                     JSONObject jsonObject1 = new JSONObject(response);
                     if (JSONUtil.isOK(jsonObject1)) {
                         UIHelper.t(mContext, R.string.up_success);
-                        finish();
+                        SubmitSuccessView();
+                        //finish();
                     } else {
                         UIHelper.t(mContext, JSONUtil.getServerMessage(jsonObject1));
                     }
@@ -115,5 +160,22 @@ public class FeedBackActivity extends BaseActivity {
             }
         });
 
+    }
+
+    /**
+     * 数据提交后，还原界面
+     */
+    private void SubmitSuccessView() {
+        question_type = "";
+        opinion_type = "";
+
+        tvQuestionValue.setText("请选择");
+        tvQuestionValue.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+
+        etInput.setText("请简要描述您所遇到的问题");
+        etInput.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
+
+        etContact.setText("请留下您的QQ或邮箱地址");
+        etContact.setTextColor(mActivity.getResources().getColor(R.color.gray_tv));
     }
 }

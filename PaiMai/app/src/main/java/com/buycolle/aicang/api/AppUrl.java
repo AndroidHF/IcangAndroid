@@ -280,4 +280,7 @@ public class AppUrl {
 
     //消息中心消息列表一键已读接口
     public static final String MESSAGECENTER_UPDATEMESSAGESREADBYAPP = BASE_URL +"messageCenter_updateMessagesReadByApp.action";
+
+    //联系客服获取问题类型
+    public static final String DIRTIONARY_GETOPINIONTYPELISTBYAPP = BASE_URL+"dirtionary_getOpinionTypeListByAPP.action";
 }

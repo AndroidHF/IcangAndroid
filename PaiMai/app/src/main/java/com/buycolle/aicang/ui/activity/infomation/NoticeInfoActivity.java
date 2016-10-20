@@ -19,14 +19,14 @@ public class NoticeInfoActivity extends BaseActivity {
     @Bind(R.id.web_notice_info)
     WebView webNoticeInfo;//显示webview内容的控件
 
-    private String context = "";//webview的内容
+    private String new_context = "";//webview的内容
     private String type = "";//公告的标题
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notice_info);
         ButterKnife.bind(this);
-        context  = _Bundle.getString("context");
+        new_context  = _Bundle.getString("new_context");
         type = _Bundle.getString("type");
         myHeader.init(type, new MyHeader.Action() {
             @Override
@@ -40,7 +40,7 @@ public class NoticeInfoActivity extends BaseActivity {
 //        webNoticeInfo.setScrollbarFadingEnabled(false);
 //        webNoticeInfo.setFocusable(false);
 //        webNoticeInfo.setOverScrollMode(View.OVER_SCROLL_NEVER);
-        webNoticeInfo.loadDataWithBaseURL("",context,"text/html","utf-8",null);
+        webNoticeInfo.loadDataWithBaseURL("",new_context,"text/html","utf-8",null);
 
     }
 }

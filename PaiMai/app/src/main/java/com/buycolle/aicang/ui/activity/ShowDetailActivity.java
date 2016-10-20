@@ -38,6 +38,7 @@ import com.buycolle.aicang.commen.PhotoViewMultPicActivity;
 import com.buycolle.aicang.event.LikeShowEvent;
 import com.buycolle.aicang.event.StoreShowEvent;
 import com.buycolle.aicang.ui.fragment.SmileFragment;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.ui.view.MeasuredListView;
 import com.buycolle.aicang.ui.view.MyCommentPop;
 import com.buycolle.aicang.ui.view.ShareDialog;
@@ -287,7 +288,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                     }
                     send();
                 } else {
-                    UIHelper.jump(mActivity, LoginActivity.class);
+                    new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mActivity, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -533,7 +544,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                         }
                     }
                 } else {
-                    UIHelper.jump(mActivity, LoginActivity.class);
+                    new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mActivity, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -552,7 +573,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                         }
                     }
                 } else {
-                    UIHelper.jump(mActivity, LoginActivity.class);
+                    new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            UIHelper.jump(mActivity, LoginActivity.class);
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
                 }
             }
         });
@@ -733,7 +764,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                 }
             });
         } else {
-            UIHelper.jump(mActivity, LoginActivity.class);
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mActivity, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
         }
     }
 
@@ -802,7 +843,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                 }
             });
         } else {
-            UIHelper.jump(mActivity, LoginActivity.class);
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mActivity, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
         }
     }
 
@@ -933,7 +984,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                     if (mApplication.isLogin()) {
                         showCommentPop(recomListEntity);
                     } else {
-                        UIHelper.jump(mActivity, LoginActivity.class);
+                        new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                            @Override
+                            public void ok() {
+                                UIHelper.jump(mActivity, LoginActivity.class);
+                            }
+
+                            @Override
+                            public void cancle() {
+
+                            }
+                        }).show();
                     }
                 }
             });
@@ -1008,7 +1069,17 @@ public class ShowDetailActivity extends BaseActivity implements SmileFragment.On
                 }
             });
         } else {
-            gotoLogin();
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mActivity, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
         }
     }
 

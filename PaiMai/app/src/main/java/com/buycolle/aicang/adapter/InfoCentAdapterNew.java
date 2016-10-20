@@ -20,7 +20,7 @@ import com.buycolle.aicang.ui.activity.infomation.MyActionActivity;
 import com.buycolle.aicang.ui.activity.infomation.MyDirectActivity;
 import com.buycolle.aicang.ui.activity.infomation.MySystemActivity;
 import com.buycolle.aicang.ui.activity.infomation.MyTradeActivity;
-import com.buycolle.aicang.ui.view.NoticeDialog;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.util.UIHelper;
 
 import java.util.ArrayList;
@@ -188,10 +188,10 @@ public class InfoCentAdapterNew extends BaseAdapter {
                         bundle.putInt("type",messageCenterHomeBean.getType());
                         UIHelper.jump(activity, MyActionActivity.class, bundle);
                     }else {
-                        new NoticeDialog(context,"温馨提示","请先登录账号").setCallBack(new NoticeDialog.CallBack() {
+                        new LoginNoticeDialog(context,"温馨提示","请先登录账号").setCallBack(new LoginNoticeDialog.CallBack() {
                             @Override
                             public void ok() {
-                                UIHelper.jump(activity, LoginActivity.class);
+                                UIHelper.jump(context, LoginActivity.class);
                             }
 
                             @Override

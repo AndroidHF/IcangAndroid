@@ -1152,4 +1152,11 @@ public class ApiClient {
     public void messageCenter_updateMessagesReadByApp(JSONObject data,ApiCallback callback){
         post(callback,AppUrl.MESSAGECENTER_UPDATEMESSAGESREADBYAPP,data,"清空消息中心消息列表一键已读");
     }
+
+    /**
+     * 意见反馈中获取问题类型
+     */
+    public void dirtionary_getOpinionTypeListByAPP(JSONObject data,ApiCallback callback){
+        post(callback,AppUrl.DIRTIONARY_GETOPINIONTYPELISTBYAPP,data,"意见反馈问题类型");
+    }
 }

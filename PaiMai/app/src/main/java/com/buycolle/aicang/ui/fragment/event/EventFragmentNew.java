@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,46 +49,27 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 
 /**
  * Created by joe on 16/3/2.
  */
 public class EventFragmentNew extends BaseFragment {
-
-
-    @Bind(R.id.iv_show_smile)
-    ImageView ivShowSmile;
-    @Bind(R.id.ll_event_menu)
-    LinearLayout llEventMenu;
-//    @Bind(R.id.rl_search)
-//    RelativeLayout rlSearch;
-    @Bind(R.id.ll_search)
-    LinearLayout ll_search;
+    @Bind(R.id.lltop)
+    LinearLayout llTop;
     @Bind(R.id.rl_event_top)
     RelativeLayout rlEventTop;
-    @Bind(R.id.lltop)
-    LinearLayout lltop;
-    @Bind(R.id.convenientBanner)
-    AutoScrollViewPager convenientBanner;
-    @Bind(R.id.rl_head)
-    RelativeLayout rlHead;
-    @Bind(R.id.pagerStrip)
-    LinearLayout pagerStrip;
+    @Bind(R.id.ll_event_menu)
+    LinearLayout llEventMenu;
+    @Bind(R.id.ll_search)
+    LinearLayout ll_search;
     @Bind(R.id.scrollableLayout)
     ScrollableLayout scrollableLayout;
-    ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
+    @Bind(R.id.convenientBanner)
+    AutoScrollViewPager convenientBanner;
     @Bind(R.id.viewpager)
     FixedViewPager viewpager;
-    @Bind(R.id.tv_paimai_ing)
-    TextView tvPaimaiIng;
-    @Bind(R.id.tv_paimai_comming)
-    TextView tvPaimaiComming;
-    @Bind(R.id.tv_paimai_finish)
-    TextView tvPaimaiFinish;
-    @Bind(R.id.ll_tab_parent)
-    LinearLayout llTabParent;
+    ArrayList<ScrollAbleFragment> fragmentList = new ArrayList<>();
 
     private ScrollAbleFragment paiMaiIngFrag, paiMaiCommingFrag, paiMaiFinishFrag;
     private MainPagerAdapter pagerAdapter;
@@ -97,6 +79,10 @@ public class EventFragmentNew extends BaseFragment {
     private ArrayList<HomeTopAddBeanNew> homeTopAddBeens;
 
     private int event_type = 0;//正在进行
+
+    private TextView tvPaimaiIng;
+    private TextView tvPaimaiComming;
+    private TextView tvPaimaiFinish;
 
 
     private String[] images = {"http://www.qqc5.com/uploads/allimg/150311/1-1503111G401.jpg",
@@ -112,34 +98,14 @@ public class EventFragmentNew extends BaseFragment {
 
     public void onEventMainThread(EventBackEvent event) {
         initStatus(event.getIndex());
+        viewpager.setCurrentItem(event.getIndex());
     }
 
-    @OnClick(R.id.tv_paimai_ing)
-    public void paiMainIng() {
-        initStatus(0);
-    }
 
-    @OnClick(R.id.tv_paimai_comming)
-    public void paiMainFinish() {
-        initStatus(1);
-    }
-
-    @OnClick(R.id.tv_paimai_finish)
-    public void liuPai() {
-        initStatus(2);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        EventBus.getDefault().register(this);
-    }
-
-    @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.frag_event_new, container, false);
-        ButterKnife.bind(this, view);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.frag_event_new_change,container,false);
+        ButterKnife.bind(this,view);
         return view;
     }
 
@@ -150,10 +116,79 @@ public class EventFragmentNew extends BaseFragment {
         tvArrayList = new ArrayList<>();
         homeTopAddBeens = new ArrayList<>();
         aCache = ACache.get(mApplication);
+        llEventMenu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View eventMenu) {
+                View popWindowView = LayoutInflater.from(mContext).inflate(R.layout.event_popwindow, null);
+                tvPaimaiIng = (TextView) popWindowView.findViewById(R.id.tv_paimai_ing);
+                tvPaimaiComming = (TextView) popWindowView.findViewById(R.id.tv_paimai_comming);
+                tvPaimaiFinish = (TextView) popWindowView.findViewById(R.id.tv_paimai_finish);
+                if (event_type == 0){
+                    tvPaimaiIng.setBackgroundResource(R.drawable.paimai_event_bg);
+                    tvPaimaiComming.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                    tvPaimaiFinish.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                }else if (event_type == 1){
+                    tvPaimaiIng.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                    tvPaimaiComming.setBackgroundResource(R.drawable.paimai_event_bg);
+                    tvPaimaiFinish.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                }else if (event_type == 2){
+                    tvPaimaiIng.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                    tvPaimaiComming.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                    tvPaimaiFinish.setBackgroundResource(R.drawable.paimai_event_bg);
+                }
+                tvPaimaiIng.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvPaimaiIng.setBackgroundResource(R.drawable.paimai_event_bg);
+                        tvPaimaiComming.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                        tvPaimaiFinish.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                        initStatus(0);
+                    }
+                });
 
-        tvArrayList.add(tvPaimaiIng);
-        tvArrayList.add(tvPaimaiComming);
-        tvArrayList.add(tvPaimaiFinish);
+                tvPaimaiComming.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvPaimaiIng.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                        tvPaimaiComming.setBackgroundResource(R.drawable.paimai_event_bg);
+                        tvPaimaiFinish.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                        initStatus(1);
+                    }
+                });
+
+                tvPaimaiFinish.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        tvPaimaiIng.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                        tvPaimaiComming.setBackgroundResource(R.drawable.pamai_event_bg_nosg);
+                        tvPaimaiFinish.setBackgroundResource(R.drawable.paimai_event_bg);
+                        initStatus(2);
+                    }
+                });
+                final PopupWindow popupWindow = new PopupWindow(popWindowView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+                popupWindow.setTouchable(true);
+                popupWindow.setTouchInterceptor(new View.OnTouchListener() {
+                    @Override
+                    public boolean onTouch(View v, MotionEvent event) {
+                        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
+                            popupWindow.dismiss();
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+                popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_white));
+
+                popupWindow.showAsDropDown(eventMenu);
+                popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
+                    @Override
+                    public void onDismiss() {
+
+                    }
+                });
+            }
+        });
+
         paiMaiIngFrag = new EventPaiMaiIngFragment();
         paiMaiCommingFrag = new EventPaiMaiCommingFragment();
         paiMaiFinishFrag = new EventPaiMaiFinishFragment();
@@ -166,18 +201,6 @@ public class EventFragmentNew extends BaseFragment {
         viewpager.setOffscreenPageLimit(fragmentList.size() - 1);
         viewpager.setCurrentItem(0);
         scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(0));
-        scrollableLayout.setOnScrollListener(new ScrollableLayout.OnScrollListener() {
-            @Override
-            public void onScroll(int currentY, int maxY) {
-                if (maxY != 0){
-                    if (currentY / maxY > 0.5) {
-                        llTabParent.setBackgroundResource(R.color.bg_gray);
-                    } else {
-                        llTabParent.setBackgroundResource(R.color.transparent);
-                    }
-                }
-            }
-        });
 
         JSONObject topaAdsObj = aCache.getAsJSONObject(Constans.TAG_EVENT_TOP_ADS);
         if (topaAdsObj != null) {
@@ -220,6 +243,7 @@ public class EventFragmentNew extends BaseFragment {
                 UIHelper.jump(mActivity, SearchActivity.class, bundle);
             }
         });
+
     }
 
     private void loadTopAds() {
@@ -305,13 +329,6 @@ public class EventFragmentNew extends BaseFragment {
 
     private void initStatus(int index) {
         event_type = index;
-        for (int i = 0; i < tvArrayList.size(); i++) {
-            if (index == i) {
-                tvArrayList.get(i).setBackgroundResource(R.drawable.shape_orange_black);
-            } else {
-                tvArrayList.get(i).setBackgroundResource(R.drawable.shape_white_black);
-            }
-        }
         viewpager.setCurrentItem(index);
         scrollableLayout.getHelper().setCurrentScrollableContainer(fragmentList.get(index));
         scrollableLayout.scrollTo(0, 0);

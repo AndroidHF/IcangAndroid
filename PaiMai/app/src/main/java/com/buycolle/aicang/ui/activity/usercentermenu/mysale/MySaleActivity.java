@@ -18,6 +18,7 @@ import com.buycolle.aicang.adapter.MainPagerAdapter;
 import com.buycolle.aicang.api.ApiCallback;
 import com.buycolle.aicang.event.UpdateTanNoticeEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
+import com.buycolle.aicang.ui.activity.usercentermenu.setting.FeedBackActivity;
 import com.buycolle.aicang.ui.fragment.BaseFragment;
 import com.buycolle.aicang.ui.view.FixedViewPager;
 import com.buycolle.aicang.ui.view.MyHeader;
@@ -95,6 +96,12 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
 
     private boolean isShowTotal = false;
 
+
+    //联系客服监听
+    @OnClick(R.id.tv_conection)
+    public void tvConection(){
+        UIHelper.jump(mActivity, FeedBackActivity.class);
+    }
 
     @OnClick(R.id.tv_paimai_ing)
     public void paiMainIng() {
@@ -190,7 +197,7 @@ public class MySaleActivity extends BaseActivity implements IWeiboHandler.Respon
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_mysale);
+        setContentView(R.layout.activity_mysale_new);
         ButterKnife.bind(this);
         tvArrayList = new ArrayList<>();
         myHeader.init("我的出品", R.drawable.usercenter_menu_2, new MyHeader.Action() {

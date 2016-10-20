@@ -16,10 +16,12 @@ import com.buycolle.aicang.LoginConfig;
 import com.buycolle.aicang.MainApplication;
 import com.buycolle.aicang.R;
 import com.buycolle.aicang.api.ApiCallback;
+import com.buycolle.aicang.event.LogInToSetEvent;
 import com.buycolle.aicang.event.LogOutEvent;
 import com.buycolle.aicang.ui.activity.BaseActivity;
 import com.buycolle.aicang.ui.activity.LoginActivity;
 import com.buycolle.aicang.ui.activity.TextVersionActivity;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.ui.view.MyHeader;
 import com.buycolle.aicang.ui.view.NoticeDialog;
 import com.buycolle.aicang.ui.view.ShareDialog;
@@ -72,6 +74,28 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
     @Bind(R.id.rl_text_version)
     RelativeLayout rlTextVersion;//检测新版本
 
+    public void onEventMainThread(LogInToSetEvent event){
+        if (event.getStatus() == 0){
+            btnLogout.setVisibility(View.VISIBLE);
+            btnLogout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new NoticeDialog(mContext, "退出提示", "您确定退出当前账号吗？").setCallBack(new NoticeDialog.CallBack() {
+                        @Override
+                        public void ok() {
+                            logOut();
+                        }
+
+                        @Override
+                        public void cancle() {
+
+                        }
+                    }).show();
+                }
+            });
+        }
+    }
+
 
     @OnClick(R.id.rl_about_us)
     public void aboutUs() {
@@ -85,7 +109,22 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
 
     @OnClick(R.id.rl_push_setting)
     public void pushSetting() {
-        UIHelper.jump(mActivity, PushSettingActivity.class);
+        if (mApplication.isLogin()){
+            UIHelper.jump(mActivity, PushSettingActivity.class);
+        }else {
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mActivity, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
+        }
+
     }
 
     @OnClick(R.id.rl_share_app)
@@ -215,20 +254,6 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
             UIHelper.t(mContext, "清除缓存成功");
         }
     }
-//    @OnClick(R.id.btn_logout)
-//    public void logout() {
-//        new NoticeDialog(mContext, "退出提示", "您确定退出当前账号吗？").setCallBack(new NoticeDialog.CallBack() {
-//            @Override
-//            public void ok() {
-//                logOut();
-//            }
-//
-//            @Override
-//            public void cancle() {
-//
-//            }
-//        }).show();
-//    }
 
     private void logOut() {
         JSONObject jsonObject = new JSONObject();
@@ -251,7 +276,6 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
                     if (JSONUtil.isOK(resultObj)) {
                         LoginConfig.clear(mContext);
                         EventBus.getDefault().post(new LogOutEvent());
-                        UIHelper.jump(mActivity, LoginActivity.class);
                         mApplication.pushNotificationHelper.cancellAll();
                         finish();
                     } else {
@@ -280,6 +304,7 @@ public class SettingActivity extends BaseActivity implements IWeiboHandler.Respo
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting_new);
+        EventBus.getDefault().register(this);
         ButterKnife.bind(this);
         myHeader.init("设置", new MyHeader.Action() {
             @Override

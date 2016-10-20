@@ -420,6 +420,9 @@
         <activity android:name=".ui.activity.infomation.ActionInfoActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden|adjustResize"/>
+        <activity android:name=".ui.activity.QuestionTypeActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"/>
 
 
 
