@@ -27,8 +27,8 @@ public class NoticeInfoActivity extends BaseActivity {
         setContentView(R.layout.activity_notice_info);
         ButterKnife.bind(this);
         new_context  = _Bundle.getString("new_context");
-        type = _Bundle.getString("type");
-        myHeader.init(type, new MyHeader.Action() {
+//        type = _Bundle.getString("type");
+        myHeader.init("公告详情", new MyHeader.Action() {
             @Override
             public void leftActio() {
                 finish();

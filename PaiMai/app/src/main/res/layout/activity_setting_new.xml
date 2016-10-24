@@ -114,11 +114,6 @@
                 android:textColor="@color/black_tv"
                 android:textSize="@dimen/commen_tv_size" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:src="@drawable/commen_right_arrow_white" />
         </RelativeLayout>
 
         <RelativeLayout

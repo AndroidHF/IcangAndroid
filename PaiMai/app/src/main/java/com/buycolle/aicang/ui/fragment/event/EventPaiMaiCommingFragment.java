@@ -19,6 +19,7 @@ import com.buycolle.aicang.bean.EventPaiMaiIngBean;
 import com.buycolle.aicang.event.EventBackEvent;
 import com.buycolle.aicang.ui.activity.LoginActivity;
 import com.buycolle.aicang.ui.fragment.BaseScrollListFragment;
+import com.buycolle.aicang.ui.view.LoginNoticeDialog;
 import com.buycolle.aicang.ui.view.xlistview.XListView;
 import com.buycolle.aicang.util.StringFormatUtil;
 import com.buycolle.aicang.util.UIHelper;
@@ -327,7 +328,17 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
                             }
                         }
                     } else {
-                        UIHelper.jump(mActivity, LoginActivity.class);
+                        new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                            @Override
+                            public void ok() {
+                                UIHelper.jump(mActivity, LoginActivity.class);
+                            }
+
+                            @Override
+                            public void cancle() {
+
+                            }
+                        }).show();
                     }
                 }
             });
@@ -459,7 +470,18 @@ public class EventPaiMaiCommingFragment extends BaseScrollListFragment {
                 }
             });
         } else {
-            UIHelper.jump(mActivity, LoginActivity.class);
+
+            new LoginNoticeDialog(mActivity,"温馨提示","对不起，您还未登录").setCallBack(new LoginNoticeDialog.CallBack() {
+                @Override
+                public void ok() {
+                    UIHelper.jump(mActivity, LoginActivity.class);
+                }
+
+                @Override
+                public void cancle() {
+
+                }
+            }).show();
         }
     }
 

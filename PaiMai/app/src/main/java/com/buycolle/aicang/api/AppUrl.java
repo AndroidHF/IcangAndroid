@@ -4,8 +4,8 @@ package com.buycolle.aicang.api;
  * Created by joe on 15/12/30.
  */
 public class AppUrl {
-    //public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
-    public static final String BASE_URL = "http://139.196.195.196/paimaitest/";//测试url
+    public static final String BASE_URL = "http://139.196.229.110/paimai/";//本帮环境
+    //public static final String BASE_URL = "http://139.196.195.196/paimaitest/";//测试url
     public static final String FILEUPLAOD = BASE_URL + "fileuplaod.up";
 
 

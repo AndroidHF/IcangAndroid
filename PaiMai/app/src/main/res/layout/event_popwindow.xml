@@ -8,40 +8,41 @@
     >
 
     <LinearLayout
-        android:layout_width="320dip"
-        android:layout_height="54dip"
+        android:layout_width="292dip"
+        android:layout_height="42dip"
         android:background="@drawable/event_paimai_bg"
         android:orientation="horizontal"
+        android:paddingBottom="0.6dip"
         android:gravity="center">
         <TextView
             android:id="@+id/tv_paimai_ing"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
+            android:layout_width="90dip"
+            android:layout_height="29dip"
             android:text="正在进行"
             android:textColor="@color/black"
-            android:textSize="18dip"
+            android:textSize="16dip"
             android:textStyle="bold"
             android:gravity="center"
             android:background="@drawable/paimai_event_bg"/>
 
         <TextView
             android:id="@+id/tv_paimai_comming"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
+            android:layout_width="90dip"
+            android:layout_height="29dip"
             android:text="即将进行"
             android:textColor="@color/black"
-            android:textSize="18dip"
+            android:textSize="16dip"
             android:textStyle="bold"
             android:gravity="center"
             />
 
         <TextView
             android:id="@+id/tv_paimai_finish"
-            android:layout_width="100dip"
-            android:layout_height="wrap_content"
+            android:layout_width="90dip"
+            android:layout_height="29dip"
             android:text="拍卖结束"
             android:textColor="@color/black"
-            android:textSize="18dip"
+            android:textSize="16dip"
             android:textStyle="bold"
             android:gravity="center"
             />

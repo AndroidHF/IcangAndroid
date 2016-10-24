@@ -87,7 +87,7 @@ public class InfoNoticeAdapter extends BaseAdapter {
             //跳转时需要的数据
             final Bundle bundle = new Bundle();
             bundle.putString("new_context",infoNoticeBean.getNew_context().toString().trim());
-            bundle.putString("type",infoNoticeBean.getType());
+//            bundle.putString("type",infoNoticeBean.getType());
             holder.rlNoticeJump.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

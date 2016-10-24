@@ -119,6 +119,7 @@ public class MyDirectActivity extends BaseActivity {
                         updateReadMessages();
                         LoadMyTradeDate(false);
                         listDirect.setAdapter(myTradeListAdapter);
+                        myTradeListAdapter.notifyDataSetChanged();
                         popupWindow.dismiss();
                     }
                 });
@@ -195,7 +196,7 @@ public class MyDirectActivity extends BaseActivity {
                     JSONObject resultObj = new JSONObject(response);
                     Log.i("resultObj----------", resultObj.toString());
                     if (JSONUtil.isOK(resultObj)) {
-                        if (!resultObj.getString("cur_page").equals("0")) {
+                        if (JSONUtil.isHasData(resultObj)) {
                             if (pageIndex == 1) {
                                 myTradeListBeans.clear();
                             }

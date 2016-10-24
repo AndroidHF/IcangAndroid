@@ -53,7 +53,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="5dip"
                 android:layout_marginTop="5dip"
-                android:src="@drawable/post_rare_icon" />
+                android:src="@drawable/post_rare_icon"
+                />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -211,6 +212,7 @@
 
                 <ImageView
                     android:id="@+id/iv_2"
+                    android:layout_centerInParent="true"
                     android:layout_width="160dip"
                     android:layout_height="160dip"
                     android:layout_marginLeft="2dip"
@@ -226,7 +228,8 @@
                     android:layout_alignParentTop="true"
                     android:layout_marginRight="5dip"
                     android:layout_marginTop="5dip"
-                    android:src="@drawable/post_rare_icon" />
+                    android:src="@drawable/post_rare_icon"
+                    />
 
                 <RelativeLayout
                     android:layout_width="match_parent"

@@ -177,7 +177,7 @@ public class EventFragmentNew extends BaseFragment {
                         return false;
                     }
                 });
-                popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_white));
+                popupWindow.setBackgroundDrawable(getResources().getDrawable(R.drawable.shape_white_event));
 
                 popupWindow.showAsDropDown(eventMenu);
                 popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {

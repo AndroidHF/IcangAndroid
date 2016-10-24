@@ -122,6 +122,7 @@ public class MySystemActivity extends BaseActivity {
                         updateReadMessages();
                         LoadMyTradeDate(false);
                         listSystem.setAdapter(mySystemListAdapter);
+                        mySystemListAdapter.notifyDataSetChanged();
                         popupWindow.dismiss();
                     }
                 });

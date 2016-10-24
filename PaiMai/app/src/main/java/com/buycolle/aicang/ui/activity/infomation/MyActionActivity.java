@@ -176,6 +176,8 @@ public class MyActionActivity extends BaseActivity {
                            }
                            myActionAdapter.notifyDataSetChanged();
                            hasMoreData = false;
+
+                           llNoticeNo.setVisibility(View.VISIBLE);
                        }
                    }else {
                        UIHelper.t(mContext, JSONUtil.getServerMessage(resultObj));

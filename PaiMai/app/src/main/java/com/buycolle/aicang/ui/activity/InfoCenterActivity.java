@@ -77,7 +77,7 @@ public class InfoCenterActivity extends BaseActivity {
     public void onEventMainThread(LoginEvent event) {
         if (mApplication.isLogin()) {
            LoadInfoData();
-            listInfo.setAdapter(infoCentAdapter);
+            //listInfo.setAdapter(infoCentAdapter);
         }
     }
 
@@ -85,7 +85,7 @@ public class InfoCenterActivity extends BaseActivity {
     public void onEventMainThread(UpdateInfoCenterEvent event){
         if (event.getStatus() == 0 || event.getStatus() == 1||event.getStatus() == 2 || event.getStatus() == 3){
             LoadInfoData();
-            listInfo.setAdapter(infoCentAdapter);
+            //listInfo.setAdapter(infoCentAdapter);
         }
     }
 

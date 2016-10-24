@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="118dip"
         android:orientation="horizontal"
-        android:paddingTop="10dip">
+        android:paddingTop="2dip">
 
         <RelativeLayout
             android:id="@+id/rl_my_buy"
@@ -117,7 +117,7 @@
         android:layout_width="match_parent"
         android:layout_height="128dip"
         android:orientation="horizontal"
-        android:paddingTop="20dip">
+        android:paddingTop="15dip">
 
         <RelativeLayout
             android:id="@+id/rl_my_foucus"

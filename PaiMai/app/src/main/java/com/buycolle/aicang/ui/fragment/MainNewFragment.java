@@ -139,12 +139,14 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
 
     //登录触发
     public void onEventMainThread(LoginEvent event) {
-
+        messageCenterHomeBeans.clear();
+        loadInfoList();
     }
 
     //登出触发
     public void onEventMainThread(LogOutEvent event) {
-
+        messageCenterHomeBeans.clear();
+        loadInfoList();
     }
 
 
@@ -522,13 +524,13 @@ public class MainNewFragment extends BasePagerFragment implements ViewPager.OnPa
                             ArrayList<MessageCenterHomeBean> allDataArrayList = new Gson().fromJson(rows.toString(), new TypeToken<List<MessageCenterHomeBean>>() {
                             }.getType());
                             messageCenterHomeBeans.addAll(allDataArrayList);
-                            infoCenterCount = messageCenterHomeBeans.get(0).getCount() + messageCenterHomeBeans.get(1).getCount() + messageCenterHomeBeans.get(2).getCount() + messageCenterHomeBeans.get(3).getCount();
+                            infoCenterCount = messageCenterHomeBeans.get(0).getCount() + messageCenterHomeBeans.get(1).getCount() + messageCenterHomeBeans.get(3).getCount();
                             Log.i("消息总数",infoCenterCount+"");
                             if (infoCenterCount > 0){
                                 Log.i("消息总数2", infoCenterCount + "");
                                 iv_has_info.setVisibility(View.VISIBLE);
                                 iv_no_info.setVisibility(View.GONE);
-                                Glide.with(mContext).load(R.drawable.pic).asGif().diskCacheStrategy(DiskCacheStrategy.ALL).into(iv_has_info);
+                                Glide.with(mContext).load(R.drawable.main_all_gif).asGif().diskCacheStrategy(DiskCacheStrategy.ALL).placeholder(R.drawable.main_all_jin).into(iv_has_info);
                             }else if (infoCenterCount <= 0){
                                 iv_no_info.setVisibility(View.VISIBLE);
                                 iv_has_info.setVisibility(View.GONE);

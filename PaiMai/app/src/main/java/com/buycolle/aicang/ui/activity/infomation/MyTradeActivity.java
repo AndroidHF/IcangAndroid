@@ -121,6 +121,7 @@ public class MyTradeActivity extends BaseActivity {
                         updateReadMessages();
                         LoadMyTradeDate(false);
                         listTrade.setAdapter(myTradeListAdapter);
+                        myTradeListAdapter.notifyDataSetChanged();
                         popupWindow.dismiss();
                     }
                 });
@@ -183,7 +184,9 @@ public class MyTradeActivity extends BaseActivity {
         mApplication.apiClient.messageCenter_getMessageListByApp(jsonObject, new ApiCallback() {
             @Override
             public void onApiStart() {
-                return;
+                if (!isloadMore) {
+                    showLoadingDialog();
+                }
             }
 
             @Override

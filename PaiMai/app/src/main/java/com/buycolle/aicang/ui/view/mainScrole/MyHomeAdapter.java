@@ -3,6 +3,7 @@ package com.buycolle.aicang.ui.view.mainScrole;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,9 @@ public class MyHomeAdapter extends BaseAdapter {
     private ArrayList<HomeGoodsBean> homeGoodsBeanArrayList;
     private Context mContext;
     private Activity mActivity;
+    private String iv_pic_url = "";//后台传递的地址
+    private String iv_pic_new_url = "";//修改后的地址
+
 
     public MyHomeAdapter(Context mContext, ArrayList<HomeGoodsBean> strList) {
         this.homeGoodsBeanArrayList = strList;
@@ -116,6 +120,7 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_curret_price_1.setText("￥"+StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getMax_pric()));
             }
             myholder.tv_count_1.setText(homeGoodsBean.getHomeGoodsChildBeens().get(0).getJp_count() + "");
+            //星级图标的处理
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getRaretag_icon(), myholder.iv_rate_1);
             myholder.ll_item_1.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -131,6 +136,9 @@ public class MyHomeAdapter extends BaseAdapter {
 
             myholder.tv_good_title_1.setText(homeGoodsBean.getHomeGoodsChildBeens().get(0).getProduct_title());
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getCover_pic(), myholder.iv_1);
+            Log.i("首页列表图片的地址1-----",homeGoodsBean.getHomeGoodsChildBeens().get(0).getCover_pic());
+//            MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getCover_pic().replace("http://pic.buycolle.com","http://picstyle.buycolle.com").replace("$xxx$025_025","$xxx$")+"@!main_page_3",myholder.iv_1);
+//            Log.i("首页列表图片的地址-----",homeGoodsBean.getHomeGoodsChildBeens().get(0).getCover_pic().replace("http://pic.buycolle.com","http://picstyle.buycolle.com").replace("$xxx$025_025","$xxx$")+"@!main_page_3");
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).getOpen_but_it() == 0) {//没有一口价
                 myholder.ll_yikoujia_lay_1.setVisibility(View.VISIBLE);
                 //change by :胡峰，没有开启一口价显示"无"
@@ -151,6 +159,7 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_curret_price_1.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(0).getBegin_auct_price()));
             }
             myholder.tv_count_1.setText(homeGoodsBean.getHomeGoodsChildBeens().get(0).getJp_count() + "");
+            //星级图标的处理
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(0).getRaretag_icon(), myholder.iv_rate_1);
 
             if (homeGoodsBean.getHomeGoodsChildBeens().get(0).isFinish()) {
@@ -163,7 +172,9 @@ public class MyHomeAdapter extends BaseAdapter {
 
             myholder.tv_good_title_2.setText(homeGoodsBean.getHomeGoodsChildBeens().get(1).getProduct_title());
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(1).getCover_pic(), myholder.iv_2);
-
+            Log.i("首页列表图片的地址2-----", homeGoodsBean.getHomeGoodsChildBeens().get(1).getCover_pic());
+//            MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(1).getCover_pic().replace("http://pic.buycolle.com","http://picstyle.buycolle.com").replace("$xxx$025_025","$xxx$")+"@!main_page_3",myholder.iv_2);
+//            Log.i("首页列表图片的地址2-----", homeGoodsBean.getHomeGoodsChildBeens().get(1).getCover_pic().replace("http://pic.buycolle.com","http://picstyle.buycolle.com").replace("$xxx$025_025","$xxx$")+"@!main_page_3");
             if (homeGoodsBean.getHomeGoodsChildBeens().get(1).getOpen_but_it() == 0) {//没有一口价
                 myholder.ll_yikoujia_lay_2.setVisibility(View.VISIBLE);
                 //change by：胡峰，没有一口价，显示"无"
@@ -184,6 +195,7 @@ public class MyHomeAdapter extends BaseAdapter {
                 myholder.tv_curret_price_2.setText("￥" + StringFormatUtil.getDoubleFormatNew(homeGoodsBean.getHomeGoodsChildBeens().get(1).getBegin_auct_price()));
             }
             myholder.tv_count_2.setText(homeGoodsBean.getHomeGoodsChildBeens().get(1).getJp_count() + "");
+            //星级图标的处理
             MainApplication.getInstance().setImages(homeGoodsBean.getHomeGoodsChildBeens().get(1).getRaretag_icon(), myholder.iv_rate_2);
 
             if (homeGoodsBean.getHomeGoodsChildBeens().get(1).isFinish()) {
