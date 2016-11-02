@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="D:\android\QQActivity\app\build\intermediates\exploded-aar\com.android.support\support-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="673d77a5bbddd766037f088e775df525c46407f0">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\classes-f5f794ad38614fdc5f75d883ed65b11eddd7213e.jar" />
+    </item>
+    <item
+        jar="D:\android\QQActivity\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="e4d0cbb0b999604b349062f0214a0a228a7fd151">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\classes-c7109949bc40c3ebc895edf7f7c7383af2124c53.jar" />
+    </item>
+    <item
+        jar="D:\android\QQActivity\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3be474b1b21b31cf2fa93fe6bd641ae108d96452">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\classes-20a5aeda121927b3807533e447a94996ceb8c9ed.jar" />
+    </item>
+    <item
+        jar="D:\android\QQActivity\app\build\intermediates\exploded-aar\com.android.support\animated-vector-drawable\23.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="3469cb457f10f74c28cbc05f069b6c894f6cbdd0">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\classes-5307f4907006cf035798b522c21c5a9b4ee2ad07.jar" />
+    </item>
+    <item
+        jar="D:\android\QQActivity\app\libs\mta-sdk-1.6.2.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="c184c69f43b1fe46390f7123717c65bd844bccb6">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\mta-sdk-1.6.2-831c7d137134b1d80bdc948ade155f603715cfec.jar" />
+    </item>
+    <item
+        jar="D:\android\QQActivity\app\libs\open_sdk_r5509.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="538ea8fb21ea76e8cb424598ac38127cb3344d79">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\open_sdk_r5509-66a181360575bbd187e630a431b4293c69d7862f.jar" />
+    </item>
+    <item
+        jar="D:\android\QQActivity\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.2.1\jars\libs\internal_impl-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="607a3d0b8013b4ccbfeb0b7cb293351994e021fb">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\internal_impl-23.2.1-19070dd7a94f9ed4c5fcbcbd6357411878c62ac7.jar" />
+    </item>
+    <item
+        jar="D:\studio_SDK\extras\android\m2repository\com\android\support\support-annotations\23.2.1\support-annotations-23.2.1.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="ccb693bc0774fcb637246f7360de25b4af7df318">
+        <dex dex="D:\android\QQActivity\app\build\intermediates\pre-dexed\debug\support-annotations-23.2.1-ab996b065ed0ab1975a787ab27bf1bee0aac18a2.jar" />
+    </item>
+
+</items>
